@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+
+<head tpl:include="/resource/app/html/header.html"></head>
+
+<body class="hold-transition sidebar-mini ">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav tpl:include="/resource/app/html/navbar.html"></nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside tpl:include="/resource/app/html/sidebar.html"></aside>
+    <!-- /sidebar -->
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-9">
+
+                    </div><!-- /.col -->
+                    <div class="col-sm-3">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboards</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row" >
+                    <div class="col-12 col-sm-6 col-md-3 card">
+                        <div class="card-header">
+                            <h3 class="card-title">Search</h3>
+                            <div class="card-tools pull-right">
+                                <div class="has-feedback">
+                                    <input id="searchSite" placeholder="Search Site" aria-label="Search" type="search"/>
+                                    <span class="fa fa-search form-control-feedback"> </span>
+                                </div>
+                            </div><!-- /.card-tools -->
+                        </div><!-- /.box-header -->
+                    </div><!-- /.box -->
+
+
+
+
+                </div>
+                <div class="row">
+
+
+
+                    <div class="col-12 col-sm-6 col-md-3 site" tpl:foreach="e:entries/e:entries">
+                        <div class="info-box">
+
+                            <span tpl:if="@SiteStatus=0" class="info-box-icon bg-success"><i class="fa fa-globe"></i></span>
+                            <span tpl:else="@SiteStatus=1" class="info-box-icon bg-warning"><i class="fa fa-globe"></i></span>
+                            <span tpl:else="@SiteStatus=2" class="info-box-icon bg-danger"><i class="fa fa-globe"></i></span>
+                            <span tpl:else="@SiteStatus=3" class="info-box-icon bg-gray"><i class="fa fa-globe"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text siteTitle"><a href="/services?site={{@site}}">{{@site}}</a></span>
+
+                                <span class="info-box-text">
+
+                                 <div class="d-inline-flex p-1 mr-1 badge bg-success">{{@countOk}}</div>
+                                <div  class="d-inline-flex p-1 mr-1  badge bg-warning">{{@countWarning}}</div>
+                                    <div  class="d-inline-flex p-1 mr-1  badge bg-danger">{{@countCritical}}</div>
+                                    <div  class="d-inline-flex p-1 mr-1  badge bg-gray">{{@countUnknown}}</div>
+
+                                </span>
+
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Main Footer -->
+
+    <footer tpl:include="/resource/app/html/footer.html"></footer>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="/resource/app/html/adminlte/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- adminlte -->
+<script src="/resource/app/html/adminlte/dist/js/adminlte.js"></script>
+
+<!-- OPTIONAL SCRIPTS -->
+
+<script src="/resource/app/html/adminlte/dist/js/demo.js"></script>
+
+
+<script>
+    $('#searchSite').keyup(function() {
+
+var valThis = $(this).val();
+searchText = valThis.toLowerCase();
+searchText = searchText.replace(/\s+/g, '');
+
+
+$('.site').each(function() {
+
+var text = $('div.info-box > div.info-box-content > span.info-box-text.siteTitle > a',$(this)).text().toLowerCase();
+boxText = text.toLowerCase();
+boxText = boxText.replace(/\s+/g, '');
+
+$(this).hide();
+
+if (boxText.indexOf(searchText) !== -1)
+$(this).show();
+
+
+});
+
+});
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+    <!-- Brand Logo -->
+    <a href="http://argo.egi.eu" class="brand-link">
+        <img src="/resource/app/img/logo-argo.png" alt="ARGO Logo" class="brand-image img-circle elevation-3"                style="opacity: .8"/>
+        <span class="brand-text">ARGO</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar font-weight-light" >
+
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                     with font-awesome or any other icon font library -->
+                <li class="nav-item has-treeview menu-open">
+                    <a href="#" class="nav-link active">
+                        <i class="nav-icon fa fa-dashboard"></i>
+                        <p>
+                            Reports
+                            <i class="right fa fa-angle-left"></i>
+                        </p>
+                    </a>
+
+                    <ul class="nav nav-treeview" >
+                        <li tpl:foreach="(/tenants/tenant/name)|(/root/@tenant)" class="nav-item">
+                            <a href="/{{text()}}" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>{{text()}} reports</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="nav-header"><h5>ABOUT ARGO</h5></li>
+                <li class="nav-item">
+                    <a href="http://argoeu.github.io/overview" class="nav-link">
+                        <i class="nav-icon fa fa-book"> </i>
+                        <p> Documentation</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/termsofUse" class="nav-link">
+                        <i class="nav-icon fa fa-handshake-o"> </i>
+                        <p> Terms of Use</p>
+                    </a>
+                </li>
+                <br/> <br/> <br/>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-circle-o text-success"> </i>
+                        <p class="text"> v 2.0</p>
+                    </a>
+                </li>
+
+
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
+

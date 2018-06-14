@@ -1,0 +1,97 @@
+<views xmlns="http://software.in2p3.fr/lavoisier/application.xsd">
+    <!-- 
+        Project : argo-eosc 
+        File    : ar.xml
+        Created by cyril on 2018/06/13 
+    -->
+
+
+    <view name="report-ar"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
+
+        <argument name="report"/>
+        <argument name="tenant"/>
+        <argument name="topology"/>
+
+        <argument name="nbdays">10</argument>
+
+        <variable name="api-key" eval="view('tenantsListRaw')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="start_time" eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z')"/>
+        <variable name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"/>
+
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="concat(property('api.report'),'/',$report,'/',$topology,'?start_time=',$start_time,'&amp;end_time=',$end_time)"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/xml</entry>
+            </parameter>
+        </connector>
+
+
+        <processors>
+
+
+            <element out="root">
+                <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="report">$report</attribute-create>
+                <element-ignore in="group">
+                    <element in="results">
+                        <attribute-create out="id">../../@name</attribute-create>
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="root">
+                <element-ignore in="results"/>
+                <element-create>sort_by_string(../results,'@timestamp')</element-create>
+            </element>
+
+
+            <element in="root">
+                <element-create-as-parent out="group" group-by="@timestamp" attributes="@timestamp">
+                    <element in="results"/>
+                </element-create-as-parent>
+            </element>
+
+            <element in="root">
+                <element in="group">
+                    <attribute-create out="availability">sum(../results/@availability) div (count(../results/@availability))</attribute-create>
+                    <attribute-create out="reliability">sum(../results/@reliability) div (count(../results/@reliability))</attribute-create>
+                </element>
+            </element>
+
+
+            <element in="root">
+                <attribute-create out="availability">sum(../group/@availability) div (count(../group/@availability))</attribute-create>
+                <attribute-create out="reliability">sum(../group/@reliability) div (count(../group/@reliability))</attribute-create>
+            </element>
+
+            <element in="root" out="report-ar">
+
+                <attribute in="availability">round(.*100) div 100 </attribute>
+                <attribute in="reliability">round(.*100) div 100 </attribute>
+
+                <element in="group">
+                    <attribute in="availability">round(.*100) div 100 </attribute>
+                    <attribute in="reliability">round(.*100) div 100 </attribute>
+                    <element-ignore/>
+                </element>
+            </element>
+
+
+        </processors>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/report.html</parameter>
+            </renderer>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+    </view>
+
+
+
+</views>

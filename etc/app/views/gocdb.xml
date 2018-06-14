@@ -1,0 +1,116 @@
+<views xmlns="http://software.in2p3.fr/lavoisier/application.xsd">
+    <!-- 
+        Project : argo-eosc 
+        File    : gocdb.xml
+        Created by cyril on 2018/06/13 
+    -->
+
+
+    <view name="gocdb.endpoints"  xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" >
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="property('gocdb.get_service_endpoint')"/>
+            <parameter name="certificate" eval="property('certificate.path')"/>
+            <parameter name="passphrase" eval="property('certificate.password')"/>
+        </connector>
+
+        <processors>
+
+            <element in="results" out="e:entries">
+
+                <element in="SERVICE_ENDPOINT" out="e:entries">
+                    <element-create>entry('id',../@PRIMARY_KEY)</element-create>
+                    <element-create>entry('hostname',../HOSTNAME/text())</element-create>
+                    <element-create>entry('service',../SERVICE_TYPE/text())</element-create>
+                    <element-create>entry('in_production',choose(../IN_PRODUCTION/text()='Y','1','0'))</element-create>
+                    <element-create>entry('monitored',choose(../NODE_MONITORED/text()='Y','1','0'))</element-create>
+                    <element-create>entry('endpoint',concat(../HOSTNAME/text(),'__',../SERVICE_TYPE/text()))</element-create>
+                    <element-create>entry('link',join(../GOCDB_PORTAL_URL/text(),''))</element-create>
+                    <element-ignore/>
+                </element>
+            </element>
+        </processors>
+
+        <cache type="FileCache">
+            <trigger type="DeltaTimeTrigger">
+                <parameter name="minutes">26</parameter>
+            </trigger>
+            <trigger type="ViewNotifiedTrigger"/>
+            <trigger type="ViewCreatedTrigger"/>
+
+        </cache>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
+    <view name="gocdb.downtimes"  xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:str="http://exslt.org/strings" >
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="property('gocdb.get_downtime')"/>
+            <parameter name="certificate" eval="property('certificate.path')"/>
+            <parameter name="passphrase" eval="property('certificate.password')"/>
+        </connector>
+
+        <processors>
+
+            <element in="results" out="downtimes">
+                <element-ignore/>
+                <element-create>sort_by_string(../DOWNTIME,'@PRIMARY_KEY')</element-create>
+            </element>
+
+            <element in="downtimes">
+                <element-create-as-parent out="downtimes"  group-by="@PRIMARY_KEY" attributes="@*">
+                    <element in="DOWNTIME">
+                        <element-create>new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'  ')))</element-create>
+                    </element>
+                </element-create-as-parent>
+            </element>
+
+
+
+            <element in="downtimes">
+                <element in="downtimes">
+                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))</element-create>
+                </element>
+            </element>
+
+            <element in="downtimes">
+                <element-ignore in="downtimes">
+                    <element in="DOWNTIME" if="not(preceding-sibling::DOWNTIME)">
+                            <element-create>new_element('service_endpoints',../../service_endpoints/text())</element-create>
+                    </element>
+                </element-ignore>
+            </element>
+
+
+
+
+
+        </processors>
+
+        <cache type="FileCache">
+            <trigger type="DeltaTimeTrigger">
+                <parameter name="minutes">8</parameter>
+            </trigger>
+            <trigger type="ViewNotifiedTrigger"/>
+            <trigger type="ViewCreatedTrigger"/>
+
+        </cache>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
+
+
+
+</views>

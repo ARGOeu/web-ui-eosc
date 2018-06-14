@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+
+    <title>ARGO | Home</title>
+
+
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="/resource/app/html/adminlte/plugins/font-awesome/css/font-awesome.min.css"/>
+    <!-- IonIcons -->
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/resource/app/html/adminlte/dist/css/adminlte-eosc.css"/>
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"/>
+
+
+</head>
+
+<body class="hold-transition sidebar-mini ">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-light bg-white border-bottom">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="/home" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="mailto:argo-dev@egi.eu" class="nav-link">Contact</a>
+            </li>
+        </ul>
+
+
+
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+            <!-- Messages Dropdown Menu -->
+
+        </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="http://eosc-hub" class="brand-link">
+            <img src="/resource/app/img/logo-argo.png" alt="ARGO Logo" class="brand-image img-circle elevation-3"                style="opacity: .8"/>
+            <span class="brand-text">ARGO</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar font-weight-light">
+
+
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <!-- Add icons to the links using the .nav-icon class
+                         with font-awesome or any other icon font library -->
+
+
+                    <li class="nav-header">ABOUT ARGO</li>
+                    <li class="nav-item">
+                        <a href="https://adminlte.io/docs" class="nav-link">
+                            <i class="nav-icon fa fa-book"></i>
+                            <p>Documentation</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="https://adminlte.io/docs" class="nav-link">
+                            <i class="nav-icon fa fa-handshake-o"></i>
+                            <p>Terms of Use</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-circle-o text-danger"></i>
+                            <p class="text">v 2.0</p>
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+
+                    </div>
+
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+
+
+        <!-- Main content -->
+        <section class="content">
+
+                <!--<h2 class="headline text-warning"> {{@code}}</h2>-->
+
+                <!--<div class="error-content">-->
+                    <!--<h3><i class="fa fa-warning text-warning"></i> {{text()}}</h3>-->
+
+                    <!--<div class="card" tpl:foreach="/error/errors">-->
+                        <!--<div class="card-header bg-critical">-->
+                           <!--Error #{{code/text()}}-->
+                        <!--</div>-->
+                        <!--<div class="card-bdoy">-->
+                            <!--<h5 class="card-title">{{message/text()}}</h5>-->
+                            <!--<h6 class="card-subtitle mb-2 text-muted">{{details/text()}}</h6>-->
+                        <!--</div>-->
+
+                    <!--</div>-->
+
+
+                <!--</div>-->
+
+                <div class="col-lg-9 col-9" tpl:foreach="error[not(contains(text(),'No results found for given query'))]">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>ERROR #{{@code}}</h3>
+
+                            <code>{{text()}}</code>
+                            <code>{{message/text()}}</code>
+                            <code>{{details/text()}}</code>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-alert"></i>
+                        </div>
+                        <a href="/" class="small-box-footer">
+                            HomePage <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+
+
+                </div>
+
+            <div class="col-lg-9 col-9" tpl:foreach="error[contains(text(),'No results found for given query')]">
+                <!-- small card -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>Empty Dataset</h3>
+                        <code>This query doesn't return any results, please try with different parameters </code>
+
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-alert"></i>
+                    </div>
+                    <a href="/" class="small-box-footer">
+                        HomePage <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+
+
+            </div>
+
+
+
+            <!-- /.error-page -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="float-right d-none d-sm-block-down">
+            Anything you want
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright  2018 <a href="https://eosc-hub.eu">EOSC-Hub</a>.</strong> EOSC-hub receives funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 777536.
+    </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="/resource/app/html/adminlte/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE -->
+<script src="/resource/app/html/adminlte/dist/js/adminlte.js"></script>
+
+<!-- OPTIONAL SCRIPTS -->
+<script src="/resource/app/html/adminlte/plugins/chart.js/Chart.min.js"></script>
+<script src="/resource/app/html/adminlte/dist/js/demo.js"></script>
+<script src="/resource/app/html/adminlte/dist/js/pages/dashboard3.js"></script>
+</body>
+</html>

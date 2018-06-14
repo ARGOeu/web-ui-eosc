@@ -1,0 +1,156 @@
+<views xmlns="http://software.in2p3.fr/lavoisier/application.xsd">
+    <!-- 
+        Project : argo-eosc 
+        File    : status.xml.xml
+        Created by cyril on 2018/06/13 
+    -->
+
+    <view name="api-status-last"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+
+        <argument name="report">Critical</argument>
+        <argument name="tenant">egi</argument>
+        <argument name="topology"/>
+        <argument name="nbdays">1</argument>
+        <argument name="last">100</argument>
+
+
+        <variable name="api-key" eval="view('tenantsListRaw')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="start_time" eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z')"/>
+        <variable name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"/>
+
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="concat(property('api.status'),'/',$report,'/',$topology,'?start_time=',$start_time,'&amp;end_time=',$end_time)"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/xml</entry>
+            </parameter>
+        </connector>
+
+        <processors>
+
+
+            <elements path="root/group">
+                <element in="status">
+                    <attribute-create out="site">../../@name</attribute-create>
+                </element>
+            </elements>
+
+
+            <element in="root">
+                <element-ignore in="group"/>
+                <element-create>
+                    sort_by_string(../group/status,'@timestamp',true())
+                </element-create>
+            </element>
+
+
+            <element in="root">
+                <element in="status" if="count(preceding-sibling::status) &lt; $last"/>
+                <element-ignore/>
+            </element>
+
+            <element in="root" out="status-last">
+               <attribute-create out="NbOk">count(../status[@value='OK'])</attribute-create>
+                <attribute-create out="NbWarning">count(../status[@value='WARNING'])</attribute-create>
+                <attribute-create out="NbUnknown">count(../status[@value='UNKNOWN'])</attribute-create>
+                <attribute-create out="NbCritical">count(../status[@value='CRITICAL'])</attribute-create>
+                <attribute-create out="NbMissing">count(../status[@value='MISSING'])</attribute-create>
+            </element>
+
+        </processors>
+    </view>
+
+    <view name="argo-status"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+
+        <argument name="report"/>
+        <argument name="tenant"/>
+        <argument name="topology"/>
+        <argument name="nbdays">10</argument>
+        <argument name="site">_site_</argument>
+
+        <variable name="api-key" eval="view('tenantsListRaw')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="start_time" eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z')"/>
+        <variable name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"/>
+
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="concat(property('api.status'),'/',$report,'/',$topology,'?start_time=',$start_time,'&amp;end_time=',$end_time)"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/xml</entry>
+            </parameter>
+        </connector>
+
+
+        <processors>
+            <element out="root">
+                <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="report">$report</attribute-create>
+            </element>
+
+
+
+            <elements path="root">
+                <element-ignore in="group"/>
+                <element-create>
+                    sort_by_string(../group,'@name')
+                </element-create>
+            </elements>
+
+            <elements path="root">
+                <element-create-as-parent out="group" attributes="@*" group-by="@name">
+                    <element in="group" />
+                </element-create-as-parent>
+            </elements>
+
+            <elements path="root/group">
+                <element-ignore in="group">
+                    <element/>
+                </element-ignore>
+            </elements>
+
+            <elements path="root/group">
+                <element-ignore in="status"/>
+                <element-create>sort_by_string(../status,'@timestamp')</element-create>
+            </elements>
+
+
+
+
+            <element in="root">
+                <set variable="StateColor">view('StateColor')</set>
+
+
+                <element in="group">
+                    <element in="status">
+                        <attribute-create out="color">$StateColor/e:entries/e:entry[@key=current()/../@value]/text()</attribute-create>
+                        <attribute-create out="end_time" if="current()/../following-sibling::status">current()/../following-sibling::status/@timestamp</attribute-create>
+                        <attribute-create out="end_time" if="not(current()/../following-sibling::status)">../ancestor::root/@end_time</attribute-create>
+                    </element>
+                </element>
+
+            </element>
+
+            <element out="root" if="$site!='_site_'">
+                <element-ignore in="group" if="@name!=$site"/>
+            </element>
+
+
+
+
+
+
+        </processors>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/status.html</parameter>
+            </renderer>
+        </renderers>
+    </view>
+
+
+</views>

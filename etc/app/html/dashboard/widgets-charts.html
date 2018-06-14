@@ -1,0 +1,21 @@
+<div  class="col-4"  xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+
+    <div  class="card">
+
+        <div class="d-none dataStatuses" tpl:foreach="/root/status-last/@*">{{.}}</div>
+        <div class="d-none labelStatuses" tpl:foreach="/root/status-last/@*">{{local-name(.)}}</div>
+
+        <canvas id="myChart1"  width="20" height="10"></canvas>
+    </div>
+
+    <div class="card">
+
+        <div class="d-none dataAvailability" tpl:foreach="/root/report-ar/*">{{@availability}}</div>
+        <div class="d-none dataReliability" tpl:foreach="/root/report-ar/*">{{@reliability}}</div>
+        <div class="d-none dataTimestamp" tpl:foreach="/root/report-ar/*">{{@timestamp}}</div>
+
+        <canvas id="myChart2"  width="20" height="10"></canvas>
+    </div>
+
+
+</div>

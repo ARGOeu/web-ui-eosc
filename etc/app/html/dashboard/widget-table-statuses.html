@@ -1,0 +1,43 @@
+<div  class="col-6" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                Last Status Changes
+            </h3>
+
+
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body font-weight-light">
+            <table class="table table-sm table-bordered table-condensed dataTable">
+
+                <thead>
+                <tr>
+                    <th>Site</th>
+                    <th>Status</th>
+                    <th>Timestamp</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr tpl:foreach="root/status-last/status">
+                    <td>{{@site}}</td>
+                    <td>
+                        <span tpl:if="@value='OK'" class="badge bg-success">{{@value}}</span>
+                        <span tpl:else="@value='WARNING'" class="badge bg-warning"> {{@value}}</span>
+                        <span tpl:else="@value='CRITICAL'" class="badge bg-danger"> {{@value}}</span>
+                        <span tpl:else="@value='MISSING'" class="badge bg-info"> {{@value}}</span>
+                        <span tpl:else="" class="badge bg-gray"> {{@value}}</span>
+                    </td>
+                    <td> {{@timestamp}}</td>
+                </tr>
+
+                </tbody>
+
+
+            </table>
+
+        </div>
+
+    </div>
+</div>
