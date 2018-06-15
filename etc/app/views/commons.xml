@@ -119,6 +119,9 @@
                 <attribute-create out="description" if="$tenant='egi'">'Advanced Computing for Research'</attribute-create>
                 <attribute-create out="description" if="$tenant='eudat'">'Collaborative Data Infrastructure'</attribute-create>
 
+                <attribute-create out="url" if="$tenant='egi'">'http://egi.eu'</attribute-create>
+                <attribute-create out="url" if="$tenant='eudat'">'http://eudat.eu'</attribute-create>
+
                 <attribute-create out="twitter" if="$tenant='egi'">'https://twitter.com/egi_einfra'</attribute-create>
                 <attribute-create out="twitter" if="$tenant='eudat'">'https://twitter.com/Eudat_eu'</attribute-create>
 
