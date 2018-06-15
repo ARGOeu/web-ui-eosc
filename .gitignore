@@ -3,3 +3,4 @@ log
 argo-eosc.iml
 /etc/app/app-hidden.properties
 /etc/app/resources/tenants.json
+/etc/service/service.properties
