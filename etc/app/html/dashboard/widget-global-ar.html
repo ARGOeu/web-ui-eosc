@@ -1,13 +1,12 @@
-<div  class="col-3" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+<div  class="col-2" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
 
     <div>
     <!-- small card -->
         <div tpl:if="/root/report-ar/@availability &gt; 80" class="small-box bg-success">
             <div class="inner">
                 <h3>{{/root/report-ar/@availability}}<sup style="font-size: 20px">%</sup></h3>
-
                 <p>Availability</p>
-                <p>Last 10 days</p>
+
             </div>
             <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -20,9 +19,8 @@
         <div tpl:else="" class="small-box bg-danger">
             <div class="inner">
                 <h3>{{/root/report-ar/@availability}}<sup style="font-size: 20px">%</sup></h3>
-
                 <p>Availability</p>
-                <p>Last 10 days</p>
+
             </div>
             <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -42,7 +40,7 @@
                 <h3>{{/root/report-ar/@reliability}}<sup style="font-size: 20px">%</sup></h3>
 
                 <p>Reliability</p>
-                <p>Last 10 days</p>
+
             </div>
             <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -57,7 +55,6 @@
                 <h3>{{/root/report-ar/@reliability}}<sup style="font-size: 20px">%</sup></h3>
 
                 <p>Reliability</p>
-                <p>Last 10 days</p>
             </div>
             <div class="icon">
                 <i class="ion ion-stats-bars"></i>

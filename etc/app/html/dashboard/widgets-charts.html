@@ -1,21 +1,78 @@
 <div  class="col-4"  xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
 
-    <div  class="card">
-
-        <div class="d-none dataStatuses" tpl:foreach="/root/status-last/@*">{{.}}</div>
-        <div class="d-none labelStatuses" tpl:foreach="/root/status-last/@*">{{local-name(.)}}</div>
-
-        <canvas id="myChart1"  width="20" height="10"></canvas>
-    </div>
 
     <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Last statuses</h3>
 
-        <div class="d-none dataAvailability" tpl:foreach="/root/report-ar/*">{{@availability}}</div>
-        <div class="d-none dataReliability" tpl:foreach="/root/report-ar/*">{{@reliability}}</div>
-        <div class="d-none dataTimestamp" tpl:foreach="/root/report-ar/*">{{@timestamp}}</div>
-
-        <canvas id="myChart2"  width="20" height="10"></canvas>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-widget="remove"><i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <div class="d-none dataStatuses" tpl:foreach="/root/status-last/@*">{{.}}</div>
+            <div class="d-none labelStatuses" tpl:foreach="/root/status-last/@*">{{local-name(.)}}</div>
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="chart-responsive">
+                        <canvas id="myChart1" height="150"></canvas>
+                    </div>
+                    <!-- ./chart-responsive -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-3 clearfix visible-lg-block">
+                    <ul class="chart-legend clearfix">
+                        <li><i class="fa fa-circle-o text-success"></i> OK</li>
+                        <li><i class="fa fa-circle-o text-warning"></i> Warning</li>
+                        <li><i class="fa fa-circle-o text-danger"></i> Critical</li>
+                        <li><i class="fa fa-circle-o text-info"></i> Missing</li>
+                        <li><i class="fa fa-circle-o text-gray"></i> Unknown</li>
+                    </ul>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
     </div>
+
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Availability/Reliability - Last 10 days</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-widget="remove"><i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="d-none dataAvailability" tpl:foreach="/root/report-ar/*">{{@availability}}</div>
+            <div class="d-none dataReliability" tpl:foreach="/root/report-ar/*">{{@reliability}}</div>
+            <div class="d-none dataTimestamp" tpl:foreach="/root/report-ar/*">{{@timestamp}}</div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="chart-responsive">
+                        <canvas id="myChart2" height="150"></canvas>
+                    </div>
+                    <!-- ./chart-responsive -->
+                </div>
+                <!-- /.col -->
+
+                <!-- /.col -->
+            </div>
+        </div>
+
+    </div>
+
+
 
 
 </div>

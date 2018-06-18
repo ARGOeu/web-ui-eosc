@@ -13,6 +13,7 @@ $(function () {
     var dataStatuses = [];
     var labelStatuses= [];
 
+
     $( ".dataStatuses" ).each(function( index ) {
       dataStatuses.push($( this ).text());
     });
@@ -32,16 +33,24 @@ $(function () {
 
     var ctx = document.getElementById("myChart1").getContext('2d');
 
+       var cOptions     = {
+               title: {
+                          display: false,
+                        },
+               legend: false
+
+                };
+
+
     var myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
         data: data,
-        options: {
+        options: cOptions
+        });
 
-          title: {
-            display: true,
-            text: 'Distribution of last statuses'
-          }
-        }});
+
+
+        
 
     /////////////////////////
     // barchart chart : ar
@@ -83,12 +92,13 @@ $(function () {
           ]
         },
         options: {
-          title: {
-            display: true,
-            text: 'Availability/Reliability of the infrastructure - last 10 days'
-          }
+         title: {
+                     display: false,
+                }
+
         }
     });
+
 
 
 

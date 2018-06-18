@@ -23,7 +23,7 @@
                     <div class="col-sm-9">
                         <div class="col-sm-4 card">
                             <div class="card-header">
-                                <h3 class="card-title">Select </h3>
+                                <h3 class="visible-lg card-title">Select </h3>
                                 <div class="card-tools pull-right">
                                     <div class="has-feedback">
                                         <select id="profiles">
@@ -62,8 +62,8 @@
                 <div class="row">
 
                     <div tpl:include="/resource/app/html/dashboard/widget-project.html"/>
-                    <div tpl:include="/resource/app/html/dashboard/widget-global-ar.html"/>
-                    <div tpl:include="/resource/app/html/dashboard/widgets-charts.html"/>
+                    <div tpl:if="/root/report-ar/@availability" tpl:include="/resource/app/html/dashboard/widget-global-ar.html"/>
+                    <div tpl:if="/root/status-last/@*" tpl:include="/resource/app/html/dashboard/widgets-charts.html"/>
 
                 </div>
 
@@ -72,8 +72,8 @@
 
                 <div class="row">
 
-                    <div tpl:include="/resource/app/html/dashboard/widget-table-statuses.html"/>
-                    <div tpl:include="/resource/app/html/dashboard/widget-downtimes.html"/>
+                    <div tpl:if="/root/status-last/status" tpl:include="/resource/app/html/dashboard/widget-table-statuses.html"/>
+                    <div tpl:if="/root/downtimes/DOWNTIME" tpl:include="/resource/app/html/dashboard/widget-downtimes.html"/>
 
                 </div>
 
@@ -104,7 +104,7 @@
 
 <!-- OPTIONAL SCRIPTS -->
 <script src="/resource/app/html/adminlte/plugins/chart.js/Chart.min.js"></script>
-
+<!--<script src="/resource/app/html/adminlte/plugins/chart.js/Chart.bundle.min.js"></script>-->
 
 
 <link rel="stylesheet" href="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap.css"/>
