@@ -1,69 +1,90 @@
-<div  class="col-2" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+<div  class="row" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
 
-    <div>
+
     <!-- small card -->
-        <div tpl:if="/root/report-ar/@availability &gt; 80" class="small-box bg-success">
-            <div class="inner">
-                <h3>{{/root/report-ar/@availability}}<sup style="font-size: 20px">%</sup></h3>
-                <p>Availability</p>
 
+        <div class="info-box col-md-5">
+            <span class="info-box-icon bg-success"><i class="ion ion-stats-bars"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Availability</span>
+                <span class="info-box-number">{{/root/report-ar/@availability}}</span>
             </div>
-            <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
+            <!-- /.info-box-content -->
         </div>
 
-        <div tpl:else="" class="small-box bg-danger">
-            <div class="inner">
-                <h3>{{/root/report-ar/@availability}}<sup style="font-size: 20px">%</sup></h3>
-                <p>Availability</p>
+        <div class="info-box col-md-5 offset-1">
+            <span class="info-box-icon bg-success"><i class="ion ion-stats-bars"></i></span>
 
+            <div class="info-box-content">
+                <span class="info-box-text">Reliability</span>
+                <span class="info-box-number">{{/root/report-ar/@reliability}}</span>
             </div>
-            <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
+            <!-- /.info-box-content -->
         </div>
 
-    </div>
+        <!--<div tpl:if="/root/report-ar/@availability &gt; 80" class="small-box bg-success">-->
+            <!--<div class="inner">-->
+                <!--<h3>{{/root/report-ar/@availability}}<sup style="font-size: 20px">%</sup></h3>-->
+                <!--<p>Availability</p>-->
+
+            <!--</div>-->
+            <!--<div class="icon">-->
+                <!--<i class="ion ion-stats-bars"></i>-->
+            <!--</div>-->
+            <!--<a href="#" class="small-box-footer">-->
+                <!--More info <i class="fa fa-arrow-circle-right"></i>-->
+            <!--</a>-->
+        <!--</div>-->
+
+        <!--<div tpl:else="" class="small-box bg-danger">-->
+            <!--<div class="inner">-->
+                <!--<h3>{{/root/report-ar/@availability}}<sup style="font-size: 20px">%</sup></h3>-->
+                <!--<p>Availability</p>-->
+
+            <!--</div>-->
+            <!--<div class="icon">-->
+                <!--<i class="ion ion-stats-bars"></i>-->
+            <!--</div>-->
+            <!--<a href="#" class="small-box-footer">-->
+                <!--More info <i class="fa fa-arrow-circle-right"></i>-->
+            <!--</a>-->
+        <!--</div>-->
+
+    <!--</div>-->
 
 
-    <div>
-        <!-- small card -->
-        <div tpl:if="/root/report-ar/@reliability &gt; 85" class="small-box bg-success">
-            <div class="inner">
-                <h3>{{/root/report-ar/@reliability}}<sup style="font-size: 20px">%</sup></h3>
+    <!--<div>-->
+        <!--&lt;!&ndash; small card &ndash;&gt;-->
+        <!--<div tpl:if="/root/report-ar/@reliability &gt; 85" class="small-box bg-success">-->
+            <!--<div class="inner">-->
+                <!--<h3>{{/root/report-ar/@reliability}}<sup style="font-size: 20px">%</sup></h3>-->
 
-                <p>Reliability</p>
+                <!--<p>Reliability</p>-->
 
-            </div>
-            <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
+            <!--</div>-->
+            <!--<div class="icon">-->
+                <!--<i class="ion ion-stats-bars"></i>-->
+            <!--</div>-->
+            <!--<a href="#" class="small-box-footer">-->
+                <!--More info <i class="fa fa-arrow-circle-right"></i>-->
+            <!--</a>-->
+        <!--</div>-->
 
-        <div tpl:else="" class="small-box bg-danger">
-            <div class="inner">
-                <h3>{{/root/report-ar/@reliability}}<sup style="font-size: 20px">%</sup></h3>
+        <!--<div tpl:else="" class="small-box bg-danger">-->
+            <!--<div class="inner">-->
+                <!--<h3>{{/root/report-ar/@reliability}}<sup style="font-size: 20px">%</sup></h3>-->
 
-                <p>Reliability</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
+                <!--<p>Reliability</p>-->
+            <!--</div>-->
+            <!--<div class="icon">-->
+                <!--<i class="ion ion-stats-bars"></i>-->
+            <!--</div>-->
+            <!--<a href="#" class="small-box-footer">-->
+                <!--More info <i class="fa fa-arrow-circle-right"></i>-->
+            <!--</a>-->
+        <!--</div>-->
 
-    </div>
+    <!--</div>-->
 
 </div>
