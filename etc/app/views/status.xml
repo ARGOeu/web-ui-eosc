@@ -52,11 +52,11 @@
             </element>
 
             <element in="root" out="status-last">
-               <attribute-create out="NbOk">count(../status[@value='OK'])</attribute-create>
-                <attribute-create out="NbWarning">count(../status[@value='WARNING'])</attribute-create>
-                <attribute-create out="NbUnknown">count(../status[@value='UNKNOWN'])</attribute-create>
-                <attribute-create out="NbCritical">count(../status[@value='CRITICAL'])</attribute-create>
-                <attribute-create out="NbMissing">count(../status[@value='MISSING'])</attribute-create>
+               <attribute-create out="Ok">count(../status[@value='OK'])</attribute-create>
+                <attribute-create out="Warning">count(../status[@value='WARNING'])</attribute-create>
+                <attribute-create out="Unknown">count(../status[@value='UNKNOWN'])</attribute-create>
+                <attribute-create out="Critical">count(../status[@value='CRITICAL'])</attribute-create>
+                <attribute-create out="Missing">count(../status[@value='MISSING'])</attribute-create>
             </element>
 
         </processors>

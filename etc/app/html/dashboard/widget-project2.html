@@ -1,0 +1,27 @@
+<div class="col-md-4"  xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+    <!-- Widget: user widget style 1 -->
+
+        <div class="card card-widget widget-user-2">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header">
+                <div class="widget-user-image">
+                    <img class="img-circle elevation-2" src="/resource/app/img/logo-{root/@tenant}.png"  width="160px" height="160px" alt="Logo"/>
+                </div>
+                <!-- /.widget-user-image -->
+                <h3 class="widget-user-username text-uppercase">{{/root/@tenant}}</h3>
+                <h5 class="widget-user-desc">{{/root/report/@description}}</h5>
+            </div>
+            <div class="card-footer p-0">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a tpl:foreach="/root/report/*" href="#" class="nav-link">
+                            {{name()}}<span class="float-right badge bg-primary">{{text()}} </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+    <!-- /.row -->
+</div>
