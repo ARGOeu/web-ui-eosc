@@ -2,18 +2,32 @@
 
 
     <!-- small card -->
+<div class="col-md-6">
 
-        <div class="info-box col-md-5">
-            <span class="info-box-icon bg-success"><i class="ion ion-stats-bars"></i></span>
+    <div tpl:if="/root/report-ar/@availability &gt; 80" class="info-box">
+        <span class="info-box-icon bg-success"><i class="ion ion-stats-bars"></i></span>
 
-            <div class="info-box-content">
-                <span class="info-box-text">Availability</span>
-                <span class="info-box-number">{{/root/report-ar/@availability}}</span>
-            </div>
-            <!-- /.info-box-content -->
+        <div class="info-box-content">
+            <span class="info-box-text">Availability</span>
+            <span class="info-box-number">{{/root/report-ar/@availability}}</span>
         </div>
+        <!-- /.info-box-content -->
+    </div>
 
-        <div class="info-box col-md-5 offset-1">
+    <div tpl:else="" class="info-box">
+        <span class="info-box-icon bg-success"><i class="ion ion-stats-bars"></i></span>
+
+        <div class="info-box-content">
+            <span class="info-box-text">Availability</span>
+            <span class="info-box-number">{{/root/report-ar/@availability}}</span>
+        </div>
+        <!-- /.info-box-content -->
+    </div>
+
+</div>
+
+    <div class="col-md-6">
+        <div class="info-box">
             <span class="info-box-icon bg-success"><i class="ion ion-stats-bars"></i></span>
 
             <div class="info-box-content">
@@ -22,8 +36,8 @@
             </div>
             <!-- /.info-box-content -->
         </div>
-
-        <!--<div tpl:if="/root/report-ar/@availability &gt; 80" class="small-box bg-success">-->
+    </div>
+        <!--<div  class="small-box bg-success">-->
             <!--<div class="inner">-->
                 <!--<h3>{{/root/report-ar/@availability}}<sup style="font-size: 20px">%</sup></h3>-->
                 <!--<p>Availability</p>-->

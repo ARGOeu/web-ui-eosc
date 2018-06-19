@@ -20,7 +20,7 @@
         <div class="card-body">
             <div class="d-none dataAvailability" tpl:foreach="/root/report-ar/*">{{@availability}}</div>
             <div class="d-none dataReliability" tpl:foreach="/root/report-ar/*">{{@reliability}}</div>
-            <div class="d-none dataTimestamp" tpl:foreach="/root/report-ar/*">{{@timestamp}}</div>
+            <div class="d-none dataTimestamp" tpl:foreach="/root/report-ar/*">{{substring-after(@timestamp,'-')}}</div>
 
             <div>
 
