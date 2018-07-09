@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+<head tpl:include="/resource/app/html/header.html"></head>
+
+<body class="hold-transition sidebar-mini ">
+<div class="wrapper">
+
+    <!-- Navbar -->
+    <nav tpl:include="/resource/app/html/navbar.html"></nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside tpl:include="/resource/app/html/sidebar.html"></aside>
+        <!-- /sidebar -->
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboards</li>
+                            <li tpl:foreach="root" class="breadcrumb-item active">Dashboard {{@tenant}}</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+
+
+                            <div class="card" tpl:foreach="/root">
+
+                                <div class="card-header">Availabilities/Reliabilities for {{@group}} - {{@month}}</div>
+
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="ar" class="table m-0">
+                                            <thead>
+                                            <tr>
+                                                <th>Timestamp</th>
+                                                <th>Availability</th>
+                                                <th>Reliability</th>
+                                                <th tpl:if="group/results[1]/@unknown">Unknown</th>
+                                                <th tpl:if="group/results[1]/@downtime">Downtime</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr tpl:foreach="group/results">
+                                                <td>{{@timestamp}}</td>
+
+                                                <td>
+                                                    <span tpl:if="not(@availability) or @availability=-1" class="m-1 badge badge-secondary">N/A</span>
+                                                    <span tpl:else="@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{@availability}}</span>
+                                                    <span tpl:else="@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{@availability}}</span>
+                                                </td>
+                                                <td>
+                                                    <span tpl:if="not(@reliability) or @reliability=-1" class="m-1 badge badge-secondary">N/A</span>
+                                                    <span tpl:else="@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{@reliability}}</span>
+                                                    <span tpl:else="@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{@reliability}}</span>
+                                                </td>
+
+                                                <td tpl:if="@unknown">
+                                                    <span tpl:if="@unknown &gt;= 10" class="m-1 badge badge-danger">{{@unknown}}</span>                                                 
+                                                    <span tpl:else="" class="m-1 badge badge-success">{{@unknown}}</span>
+                                                </td>
+                                                <td tpl:if="@downtime">
+                                                    <span tpl:if="@downtime &gt;= 10" class="m-1 badge badge-danger">{{@downtime}}</span>
+                                                    <span tpl:else="" class="m-1 badge badge-success">{{@downtime}}</span>
+                                                </td>
+
+
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    </div>
+                            </div>
+
+
+
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+        </div>
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Main Footer -->
+        <footer tpl:include="/resource/app/html/footer.html"></footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+
+
+
+<!-- jQuery -->
+<script src="/resource/app/html/adminlte/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- adminlte -->
+<script src="/resource/app/html/adminlte/dist/js/adminlte.js"></script>
+
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/scroller/1.5.0/js/dataTables.scroller.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.2.6/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/colreorder/1.5.0/js/dataTables.colReorder.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.2/js/responsive.bootstrap4.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.6/css/select.dataTables.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/colreorder/1.5.0/css/colReorder.bootstrap4.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/1.5.0/css/scroller.bootstrap4.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.6/css/select.bootstrap4.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css"/>
+
+
+<style>
+ #ar_wrapper .dt-buttons {
+float:left;
+}
+ #ar_wrapper .dataTables_filter{
+float:right;
+}
+ #ar_wrapper .dataTables_length{
+float:right;
+}
+</style>
+
+
+<script>
+
+  $(document).ready(function() {
+    $('#ar').DataTable( {
+
+
+     "dom": "Blftip",
+    buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ],
+     "lengthMenu": [[50, 25, 10, -1], [50, 25, 10, "All"]]
+
+    } );
+
+
+
+} );
+
+</script>
+
+</body>
+</html>

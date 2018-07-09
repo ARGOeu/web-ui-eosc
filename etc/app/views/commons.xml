@@ -80,7 +80,7 @@
 
             <element in="report" if="$tenant='egi' and $report='Critical'">
 
-
+                <attribute-create out="topology">'NGI'</attribute-create>
                 <element-create>
                 new_element('NGIS',new_attribute('icon','fa fa-globe')|new_attribute('bg','bg-primary')|new_text(38))
                 </element-create>
@@ -93,6 +93,7 @@
             </element>
 
             <element in="report" if="$tenant='egi' and $report='OPS-MONITOR-Critical'">
+                <attribute-create out="topology">'NGI'</attribute-create>
                 <element-create>
                     new_element('NGIS',new_attribute('icon','fa fa-globe')|new_attribute('bg','bg-primary')|new_text(18))
                 </element-create>
@@ -106,6 +107,7 @@
 
 
             <element in="report" if="$tenant='eudat' and $report='Critical'">
+                <attribute-create out="topology">'SERVICEGROUPS'</attribute-create>
                 <element-create>
                     new_element('ServiceGroups',new_attribute('icon','fa fa-sitemap')|new_attribute('bg','bg-primary')|new_text(43))
                 </element-create>
@@ -202,7 +204,7 @@
         </renderers>
     </view>
 
-    <view name="report"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
+    <view name="reportAR"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 
         <argument name="report"/>
         <argument name="tenant"/>

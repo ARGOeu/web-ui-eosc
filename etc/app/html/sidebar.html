@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
     <!-- Brand Logo -->
-    <a href="http://argo.egi.eu" class="brand-link">
+    <a href="/" class="brand-link">
         <img src="/resource/app/img/logo-argo.png" alt="ARGO Logo" class="brand-image img-circle elevation-3"                style="opacity: .8"/>
         <span class="brand-text">ARGO</span>
     </a>
@@ -17,19 +17,26 @@
                 <li class="nav-item has-treeview menu-open">
                     <a href="#" class="nav-link active">
                         <i class="nav-icon fa fa-dashboard"></i>
-                        <p>
-                            Reports
+                        <p class="text-uppercase">
+                             {{root/@tenant}} - {{root/@report}}
                             <i class="right fa fa-angle-left"></i>
                         </p>
                     </a>
 
                     <ul class="nav nav-treeview" >
-                        <li tpl:foreach="(/tenants/tenant/name)|(/root/@tenant)" class="nav-item">
-                            <a href="/{{text()}}" class="nav-link">
+                        <li tpl:foreach="/root" class="nav-item">
+                            <a href="/{@tenant}" class="nav-link">
                                 <i class="fa fa-circle-o nav-icon"></i>
-                                <p>{{text()}} reports</p>
+                                <p>Dashboard</p>
                             </a>
                         </li>
+                        <li tpl:foreach="/root" class="nav-item">
+                            <a href="/{@tenant}/report-ar/{@report}/{report/@topology}{@topology}" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>Availability/Reliability</p>
+                            </a>
+                        </li>
+
 
                     </ul>
                 </li>

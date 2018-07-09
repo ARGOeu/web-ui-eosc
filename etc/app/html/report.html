@@ -21,7 +21,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                            <img tpl:foreach="root" src="/resource/app/img/logo-{@tenant}.png"  />
+
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -40,133 +40,164 @@
             <div class="container-fluid">
 
 
-
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#sl" role="tab" aria-controls="SparkLine" aria-selected="true">SparkLine</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#fig" role="tab" aria-controls="Figures" aria-selected="false">Figures</a>
-                        </li>
-                    </ul>
-
-                    <div class="tab-content" id="myTabContent">
-
-                        <div class="tab-pane fade show active" id="sl" role="tabpanel" aria-labelledby="home-tab">
-
                             <div class="card" tpl:foreach="/root">
 
+                                <div class="card-header">Availabilities/Reliabilities</div>
+
+                                <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table m-0">
+                                        <table id="ar" class="table m-0">
                                             <thead>
                                             <tr>
                                                 <th>Name</th>
-                                                <th>Availabilities</th>
-                                                <th>Reliabilities</th>
+                                                <th>{{@month1}}</th>
+                                                <th>{{@month2}}</th>
+                                                <th>{{@month3}}</th>
+                                                <th>{{@month4}}</th>
+                                                <th>{{@month5}}</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
+
+                                            <tbody tpl:if="/root/@details='true' ">
                                             <tr tpl:foreach="group">
-                                                <td>{{@name}}</td>
-
                                                 <td>
-                                                    <div class="sparkbar" data-height="40">{{@spark-av}}</div>
+                                                   <!-- <a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology2}/{@name}/{/root/@topology3}">{{@name}}</a></td> -->
+                                                {{@name}}
                                                 </td>
 
                                                 <td>
-                                                    <div class="sparkbar"  data-height="40">{{@spark-re}}</div>
+
+                                                    <!--
+                                                    href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology2}/{@name}/{/root/@topology3}"
+                                                    -->
+
+
+                                                    <a  href="#" tpl:if="not(results[@timestamp=/root/@month1]/@availability or results[@timestamp=/root/@month1]/@availability=-1)" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month1]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month1]/@availability}}</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month1]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month1]/@availability}}</a>
+
+                                                    <a  href="#" tpl:if="not(results[@timestamp=/root/@month1]/@reliability) or results[@timestamp=/root/@month1]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month1]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month1]/@reliability}}</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month1]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month1]/@reliability}}</a>
+
                                                 </td>
+                                                <td>
+                                                    <a  href="#" tpl:if="not(results[@timestamp=/root/@month2]/@availability) or results[@timestamp=/root/@month2]/@availability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month2]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month2]/@availability}}</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month2]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month2]/@availability}}</a>
+
+                                                    <a  href="#" tpl:if="not(results[@timestamp=/root/@month2]/@reliability) or results[@timestamp=/root/@month2]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month2]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month2]/@reliability}}</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month2]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month2]/@reliability}}</a>
+
+                                                </td>
+                                                <td>
+                                                    <a  href="#" tpl:if="not(results[@timestamp=/root/@month3]/@availability) or results[@timestamp=/root/@month3]/@availability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month3]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month3]/@availability}}</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month3]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month3]/@availability}}</a>
+
+                                                    <a  href="#" tpl:if="not(results[@timestamp=/root/@month3]/@reliability) or results[@timestamp=/root/@month3]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month3]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month3]/@reliability}}</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month3]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month3]/@reliability}}</a>
+
+                                                </td>
+                                                <td>
+                                                    <a  href="#" tpl:if="not(results[@timestamp=/root/@month4]/@availability)  or results[@timestamp=/root/@month4]/@availability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month4]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month4]/@availability}}</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month4]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month4]/@availability}}</a>
+
+                                                    <a  href="#" tpl:if="not(results[@timestamp=/root/@month4]/@reliability) or results[@timestamp=/root/@month4]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month4]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month4]/@reliability}}</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month4]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month4]/@reliability}}</a>
+
+                                                </td>
+                                                <td>
+                                                    <a  href="#" tpl:if="not(results[@timestamp=/root/@month5]/@availability)  or results[@timestamp=/root/@month5]/@availability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month5]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month5]/@availability}}</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month5]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month5]/@availability}}</a>
+
+                                                    <a  href="#" tpl:if="not(results[@timestamp=/root/@month5]/@reliability) or results[@timestamp=/root/@month4]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month5]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month5]/@reliability}}</a>
+                                                    <a  href="#" tpl:else="results[@timestamp=/root/@month5]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month5]/@reliability}}</a>
+
+                                                </td>
+
                                             </tr>
                                             </tbody>
+
+                                            <tbody tpl:else="">
+                                            <tr tpl:foreach="group">
+                                                <td><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{@name}">{{@name}}</a></td>
+
+                                                <td>
+
+
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{@name}" tpl:if="not(results[@timestamp=/root/@month1]/@availability or results[@timestamp=/root/@month1]/@availability=-1)" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month1]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month1]/@availability}}</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month1]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month1]/@availability}}</a>
+
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{@name}" tpl:if="not(results[@timestamp=/root/@month1]/@reliability) or results[@timestamp=/root/@month1]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month1]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month1]/@reliability}}</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month1]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month1]/@reliability}}</a>
+
+                                                </td>
+                                                <td>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month2}/{/root/@topology}/{@name}" tpl:if="not(results[@timestamp=/root/@month2]/@availability) or results[@timestamp=/root/@month2]/@availability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month2}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month2]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month2]/@availability}}</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month2}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month2]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month2]/@availability}}</a>
+
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month2}/{/root/@topology}/{@name}" tpl:if="not(results[@timestamp=/root/@month2]/@reliability) or results[@timestamp=/root/@month2]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month2}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month2]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month2]/@reliability}}</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month2}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month2]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month2]/@reliability}}</a>
+
+                                                </td>
+                                                <td>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month3}/{/root/@topology}/{@name}" tpl:if="not(results[@timestamp=/root/@month3]/@availability) or results[@timestamp=/root/@month3]/@availability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month3}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month3]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month3]/@availability}}</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month3}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month3]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month3]/@availability}}</a>
+
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month3}/{/root/@topology}/{@name}" tpl:if="not(results[@timestamp=/root/@month3]/@reliability) or results[@timestamp=/root/@month3]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month3}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month3]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month3]/@reliability}}</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month3}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month3]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month3]/@reliability}}</a>
+
+                                                </td>
+                                                <td>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month4}/{/root/@topology}/{@name}" tpl:if="not(results[@timestamp=/root/@month4]/@availability)  or results[@timestamp=/root/@month4]/@availability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month4}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month4]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month4]/@availability}}</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month4}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month4]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month4]/@availability}}</a>
+
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month4}/{/root/@topology}/{@name}" tpl:if="not(results[@timestamp=/root/@month4]/@reliability) or results[@timestamp=/root/@month4]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month4}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month4]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month4]/@reliability}}</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month4}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month4]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month4]/@reliability}}</a>
+
+                                                </td>
+                                                <td>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month5}/{/root/@topology}/{@name}" tpl:if="not(results[@timestamp=/root/@month5]/@availability)  or results[@timestamp=/root/@month5]/@availability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month5}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month5]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month5]/@availability}}</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month5}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month5]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month5]/@availability}}</a>
+
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month5}/{/root/@topology}/{@name}" tpl:if="not(results[@timestamp=/root/@month5]/@reliability) or results[@timestamp=/root/@month4]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month5}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month5]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month5]/@reliability}}</a>
+                                                    <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month5}/{/root/@topology}/{@name}" tpl:else="results[@timestamp=/root/@month5]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month5]/@reliability}}</a>
+
+                                                </td>
+
+                                            </tr>
+                                            </tbody>
+
+
+                                            
                                         </table>
+                                    </div>
                                     </div>
                             </div>
 
-                        </div>
 
 
-                        <div class="tab-pane fade" id="fig" role="tabpanel" aria-labelledby="profile-tab">
-
-                            <div class="card" tpl:foreach="/root">
-
-
-                                    <div class="card-header">{{group/@name}}</div>
-
-
-                                    <div class="card-body">
-                                        <table class="table-responsive dataTable">
-                                            <thead>
-                                            <tr>
-
-                                                <th>Timestamp</th>
-                                                <th>Availabilities</th>
-                                                <th>Reliabilities</th>
-                                                <th>Downtime</th>
-                                                <th>Unknown</th>
-
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr tpl:foreach="group/results">
-
-                                                <td>
-                                                    {{@timestamp}}
-                                                </td>
-
-                                                <td>
-                                                    <span tpl:if="@availability &gt;80" class="badge bg-success">{{format-number(@availability,'#.00')}}</span>
-                                                    <span tpl:else="" class="badge bg-danger">{{format-number(@availability,'#.00')}}</span>
-                                                </td>
-
-                                                <td>
-                                                    <span tpl:if="@reliability &gt;85" class="badge bg-success">{{format-number(@reliability,'#.00')}}</span>
-                                                    <span tpl:else="" class="badge bg-danger">{{format-number(@reliability,'#.00')}}</span>
-                                                </td>
-
-                                                <td>
-
-                                                    <span  tpl:if="format-number(@downtime*100,'#.00') &gt; 10" class="minilabel badge bg-warning" title="Downtime : {{format-number(@downtime*100,'#.00')}} % ">
-                                {{format-number(@downtime*100,'#.00')}}
-                            </span>
-                                                    <span  tpl:else="" class="minilabel badge bg-success" title="Downtime : {{format-number(@downtime*100,'#.00')}} % ">
-                                {{format-number(@downtime*100,'#.00')}}
-                                                    </span>
-
-                                                        </td>
-
-                                            <td>
-
-
-                                                    <span  tpl:if="format-number(@unknown*100,'#.00') &gt; 10" class="minilabel badge bg-warning" title="unknown : {{format-number(@unknown*100,'#.00')}} % ">
-                                {{format-number(@unknown*100,'#.00')}}
-                            </span>
-                                                    <span  tpl:else="" class="minilabel badge bg-success" title="unknown : {{format-number(@unknown*100,'#.00')}} % ">
-                                {{format-number(@unknown*100,'#.00')}}
-                            </span>
-
-
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                            </div>
-
-                        </div>
-
-
-                    </div>
-
-
-
-
-
-                <!-- /.row -->
-            </div>
             <!-- /.container-fluid -->
         </div>
         <!-- /.content -->
+        </div>
     </div>
     <!-- /.content-wrapper -->
     <!-- Main Footer -->
@@ -176,17 +207,7 @@
 
 <!-- REQUIRED SCRIPTS -->
 
-<style>
-    span.minilabel
-    {
-        padding:0 2px 0 2px; ;
 
-        font-size: smaller;
-        margin:10px;
-
-
-    }
-</style>
 
 
 <!-- jQuery -->
@@ -196,65 +217,65 @@
 <!-- adminlte -->
 <script src="/resource/app/html/adminlte/dist/js/adminlte.js"></script>
 
-<script src="/resource/app/html/adminlte/plugins/sparkline/jquery.sparkline.min.js"></script>
-
-<script>
-
-   $(function () {
-
-'use strict'
-
-/* SPARKLINE CHARTS
-* ----------------
-* Create a inline charts with spark line
-*/
-
-//-----------------
-//- SPARKLINE BAR -
-//-----------------
-$('.sparkbar').each(function () {
-
-  var range_map = $.range_map({
-    '0:80': 'red',
-    '80:': 'green'
-  })
-
-var $this = $(this)
-$this.sparkline('html', {
-type    : 'bar',
-chartRangeMin: 0,
-colorMap: range_map,
-height  : $this.data('height') ? $this.data('height') : '30'
-
-})
-})
-})
-
-</script>
-
-<link rel="stylesheet" href="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap.css"/>
-<link rel="stylesheet" href="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.css"/>
 
 
-<script src="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap.min.js"></script>
-<script src="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/scroller/1.5.0/js/dataTables.scroller.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.2.6/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/colreorder/1.5.0/js/dataTables.colReorder.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.2/js/responsive.bootstrap4.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.6/css/select.dataTables.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/colreorder/1.5.0/css/colReorder.bootstrap4.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/1.5.0/css/scroller.bootstrap4.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.6/css/select.bootstrap4.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css"/>
+
+<style>
+ #ar_wrapper .dt-buttons {
+float:left;
+}
+ #ar_wrapper .dataTables_filter{
+float:right;
+}
+ #ar_wrapper .dataTables_length{
+float:right;
+}
+</style>
 
 
 <script>
-  $(function () {
 
-     $('.dataTable').dataTable({
-      "paging": true,
-      "searching": true,
-      "ordering": true,
-       buttons: [
-        'copy'
-    ]
-    });
+  $(document).ready(function() {
+    $('#ar').DataTable( {
 
 
+     "dom": "Blftip",
+    buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ],
+     "lengthMenu": [[50, 25, 10, -1], [50, 25, 10, "All"]]
 
-  });
+    } );
+
+
+
+} );
+
 </script>
 
 </body>
