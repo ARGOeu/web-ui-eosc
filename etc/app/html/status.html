@@ -16,23 +16,34 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
+
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                            <img tpl:foreach="root" src="/resource/app/img/logo-{@tenant}.png"  />
+
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/">Home</a></li>
-                            <li class="breadcrumb-item active">Status</li>
-                            <li><a href="/lavoisier/status_report-site?start_date={{root/@start_time}}&amp;end_date={{root/@end_time}}&amp;report={{root/@report}}&amp;accept=html">EGI</a></li>
-                            <li class="active"><a tpl:if="root/@ngi!='all'" href="/lavoisier/status_report-site?start_date={{root/@start_time}}&amp;end_date={{root/@end_time}}&amp;report={{root/@report}}&amp;ngi={{root/@ngi}}&amp;report={{ancestor::root/@report}}&amp;accept=html">{{root/@ngi}}</a></li>
+                            <li class="breadcrumb-item">Status</li>
+                            <li tpl:if="root/@entity1!='_entity_'" class="breadcrumb-item active">
+                                <a href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}">{{/root/@entity1}}</a>
+                            </li>
+                            <li tpl:if="root/@entity2!='_entity_'" class="breadcrumb-item active">
+                                <a href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}/{{/root/@entity2}}">{{/root/@entity2}}</a>
+                            </li>
+                            <li tpl:if="root/@entity3!='_entity_'" class="breadcrumb-item active">
+                                <a href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}/{{/root/@entity2}}/{{/root/@entity3}}">{{/root/@entity3}}</a>
+                            </li>
+
+
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
+
         <!-- /.content-header -->
 
         <!-- Main content -->
@@ -41,7 +52,7 @@
                 <div class="row">
 
                         <div class="card col-lg-12 col-md-8" >
-                           <div class="card-header">EGI</div>
+                           <div class="card-header">Status for {{root/@tenant}} tenant - {{root/@report}} Report</div>
 
                             <div style="display: none"   id="local_groups">
                                 <div  tpl:foreach="/root/group/status" > {{ancestor::group/@name}} - {{ancestor::group/@group}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@color}}</div>
@@ -51,12 +62,19 @@
                                 <div  tpl:foreach="/root/group/status" > {{ancestor::group/@name}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@color}}</div>
                             </div>
 
-                            <div  id="local_links">
-                                <div style="display: none" tpl:foreach="/root/group/status">/lavoisier/{{ancestor::root/@view}}?site={{ancestor::group/@name}}&amp;start_date={{ancestor::root/@start_time}}&amp;end_date={{ancestor::root/@end_time}}&amp;report={{ancestor::root/@report}}&amp;accept=html</div>
+                            <div  style="display: none" tpl:if="contains(/root/@link,'/metrics/')" id="local_links">
+                                <div  tpl:foreach="/root/group/status">/{{ancestor::root/@tenant}}/report-status/{{ancestor::root/@link}}/{{ancestor::group/@name}}/{{@timestamp}}</div>
+                            </div>
+                            <div  style="display: none" tpl:else="" id="local_links">
+                                <div  tpl:foreach="/root/group/status">/{{ancestor::root/@tenant}}/report-status/{{ancestor::root/@link}}/{{ancestor::group/@name}}</div>
                             </div>
 
 
-                            <div id="div_timeline" height="500"></div>
+
+                            <div class="card-body">
+                                <div tpl:foreach="/root" id="div_timeline" style="height:{count(group)*20+200}px"></div>
+                            </div>
+
 
                         </div>
                         <!-- /.card -->
@@ -89,82 +107,15 @@
 <!-- adminlte -->
 <script src="/resource/app/html/adminlte/dist/js/adminlte.js"></script>
 
-
+<script src="/resource/app/js/dashboard.js"></script>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script src="/resource/app/js/timeline.js"></script>
 
+<script src="/resource/app/js/timeline2.js"></script>
 
 
-<script>
-        <!--
-
-
-
-            var newgroup = [];
-            var colorsgroup = [];
-            var links = [];
-            var excludedIndexes =[];
-
-            var local_groups = document.getElementById('local_groups').getElementsByTagName('div');
-            var local_links = document.getElementById('local_links').getElementsByTagName('div');
-
-
-
-            for (j = 0; j < local_groups.length; j++) {
-
-
-
-                var tempArray = local_groups[j].textContent.split(",");
-                var color = tempArray.pop();
-
-                tempArray[4]= '<div class="card">' +
-                '<div class="card-header">'+ tempArray[0] +'</div>'
-                + '<div class="card-body">' +
-                '<label> Status: &nbsp;<span class="badge bg-'+tempArray[1].split("_")[0] +'">'+tempArray[1].split("_")[0] + '</span></label>' +
-                '<label>Start Time : &nbsp;</label>' + tempArray[2] +
-                '<label>End Time : &nbsp;</label>' + tempArray[3] + '</div><div class="card-footer"><em>Click on the bar to access the next granularity level</em></div></div>';
-
-
-
-                tempArray[2] = new Date(tempArray[2].substr(0,19));
-                tempArray[3] = new Date(tempArray[3].substr(0,19));
-
-
-                if (tempArray[2] < tempArray[3]) {
-                    newgroup.push(tempArray);
-                    colorsgroup.push(color);
-                }
-                else
-                {
-                    excludedIndexes.push(j);
-                }
-            }
-
-
-            for (m = 0; m < local_links.length; m++) {
-                if (excludedIndexes.indexOf(m) == -1)
-                links.push(local_links[m].textContent);
-            }
-
-       google.charts.load('current', {packages: ['timeline'] , 'language':'en'});
-       google.charts.setOnLoadCallback(drawChart);
-
-
-
-
-
-
-
-
-
-
-
-
-
-        -->
-    </script>
 
 
 </body>

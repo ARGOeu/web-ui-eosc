@@ -18,76 +18,11 @@
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-9">
-
-                    </div><!-- /.col -->
-                    <div class="col-sm-3">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboards</li>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
-
-        <!-- Main content -->
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 col-sm-6 col-md-3">
-                        <div class="info-box">
-                            <span class="info-box-icon bg-primary"><i class="fa fa-server fa-2x"></i></span>
-
-                            <div class="info-box-content">
-                                <span class="info-box-text"><a href="/services">Services</a></span>
-                                <span class="info-box-number">
-                                    <a href="/services">{{e:entries/@count}}</a>
-
-                                </span>
-                                <span class="info-box-text">
-
-                                <div class="d-inline-flex p-1 mr-1 badge bg-success">{{e:entries/@countOk}}</div>
-                                <div  class="d-inline-flex p-1 mr-1  badge bg-warning">{{e:entries/@countWarning}}</div>
-                                    <div  class="d-inline-flex p-1 mr-1  badge bg-danger">{{e:entries/@countCritical}}</div>
-                                    <div  class="d-inline-flex p-1 mr-1  badge bg-gray">{{e:entries/@countUnknown}}</div>
-
-                                </span>
 
 
-                            <!-- /.info-box-content -->
-                        </div>
-                        <!-- /.info-box -->
-                    </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-3">
-                        <div class="info-box">
-                            <span class="info-box-icon bg-primary"><i class="fa fa-globe fa-2x"></i></span>
+                <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
-                            <div class="info-box-content">
-                                <span class="info-box-text"><a href="/sites">Sites</a></span>
-                                <span class="info-box-number">
-                                    <a href="/sites">{{e:entries/@countSites}}</a>
 
-                                </span>
-                                <span class="info-box-text">
-
-                                 <div class="d-inline-flex p-1 mr-1 badge bg-success">{{e:entries/@countSiteOk}}</div>
-                                <div  class="d-inline-flex p-1 mr-1  badge bg-warning">{{e:entries/@countSiteWarning}}</div>
-                                    <div  class="d-inline-flex p-1 mr-1  badge bg-danger">{{e:entries/@countSiteCritical}}</div>
-                                    <div  class="d-inline-flex p-1 mr-1  badge bg-gray">{{e:entries/@countSiteUnknown}}</div>
-
-                                </span>
-
-                            </div>
-                            <!-- /.info-box-content -->
-                        </div>
-                        <!-- /.info-box -->
-                    </div>
-
-                </div>
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
@@ -115,5 +50,47 @@
 <script src="/resource/app/html/adminlte/plugins/chart.js/Chart.min.js"></script>
 <script src="/resource/app/html/adminlte/dist/js/demo.js"></script>
 <script src="/resource/app/html/adminlte/dist/js/pages/dashboard3.js"></script>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+window.onload = function () {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	animationEnabled: true,
+	title: {
+		text: "Brent Crude Oil Price - 2016"
+	},
+	axisY: {
+		title: "Price(USD/bbl)",
+		prefix: "$",
+		includeZero: false
+	},
+	data: [{
+		type: "rangeColumn",
+		yValueFormatString: "$#,##0.00",
+		xValueFormatString: "MMM YYYY",
+		toolTipContent: "{x}<br/>High: {y[0]}<br/>Low: {y[1]}",
+		dataPoints: [
+			{ x: new Date(2016, 0 ), y: [27.10, 38.99] },
+			{ x: new Date(2016, 1), y: [29.92, 37.00] },
+			{ x: new Date(2016, 2), y: [35.95, 42.54] },
+			{ x: new Date(2016, 3), y: [37.27, 48.50] },
+			{ x: new Date(2016, 4), y: [43.33, 50.51] },
+			{ x: new Date(2016, 5), y: [46.69, 52.86] },
+			{ x: new Date(2016, 6), y: [41.80, 50.75] },
+			{ x: new Date(2016, 7), y: [41.51, 51.22] },
+			{ x: new Date(2016, 8), y: [45.09, 50.14] },
+			{ x: new Date(2016, 9), y: [47.98, 53.73] },
+			{ x: new Date(2016, 10), y: [43.57, 50.49] },
+			{ x: new Date(2016, 11), y: [51.51, 57.89] }
+		]
+	}]
+});
+chart.render();
+
+}
+</script>
+
 </body>
 </html>

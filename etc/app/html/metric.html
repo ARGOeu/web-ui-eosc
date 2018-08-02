@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+<head tpl:include="/resource/app/html/header.html"></head>
+
+<body class="hold-transition sidebar-mini ">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav tpl:include="/resource/app/html/navbar.html"></nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside tpl:include="/resource/app/html/sidebar.html"></aside>
+        <!-- /sidebar -->
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li tpl:foreach="root" class="breadcrumb-item active">Metric Output</li>
+
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+
+                        <div class="col-lg-12 col-md-8" >
+
+
+                            <div class="small-box bg-white border border-success" tpl:if="root/host/metric/status/@value='OK'">
+
+                                    <div  class="inner">
+
+
+
+                                        <h3>Status
+                                            <span  class="badge bg-success">{{root/host/metric/status/@value}}</span>
+
+                                        </h3><br/>
+                                        <p><label class="m-1">Host : </label> {{root/host/@name}}</p>
+                                        <p><label class="m-1">Metric : </label> {{root/host/metric/@name}}</p>
+                                        <p><label class="m-1">Timestamp : </label> {{root/host/metric/status/@timestamp}}</p>
+                                        <code>{{root/host/metric/status/summary/text()}}</code>
+                                        <code>{{root/host/metric/status/message/text()}}</code>
+                                    </div>
+
+                            </div>
+
+                            <div class="small-box bg-white border border-warning" tpl:else="root/host/metric/status/@value='WARNING'">
+
+                                <div  class="inner">
+
+
+
+                                    <h3>Status
+                                        <span  class="badge bg-warning">{{root/host/metric/status/@value}}</span>
+
+                                    </h3><br/>
+                                    <p><label class="m-1">Host: </label> {{root/host/@name}}</p>
+                                    <p><label class="m-1">Metric: </label> {{root/host/metric/@name}}</p>
+                                    <p><label class="m-1">Timestamp: </label> {{root/host/metric/status/@timestamp}}</p>
+                                    <code>{{root/host/metric/status/summary/text()}}</code>
+                                    <code>{{root/host/metric/status/message/text()}}</code>
+                                </div>
+
+                            </div>
+
+                            <div class="small-box bg-white border border-danger" tpl:else="root/host/metric/status/@value='CRITICAL'">
+
+                                <div  class="inner">
+
+
+
+                                    <h3>Status
+                                        <span  class="badge bg-danger">{{root/host/metric/status/@value}}</span>
+
+                                    </h3><br/>
+                                    <p><label class="m-1">Host: </label> {{root/host/@name}}</p>
+                                    <p><label class="m-1">Metric: </label> {{root/host/metric/@name}}</p>
+                                    <p><label class="m-1">Timestamp: </label> {{root/host/metric/status/@timestamp}}</p>
+                                    <code>{{root/host/metric/status/summary/text()}}</code>
+                                    <code>{{root/host/metric/status/message/text()}}</code>
+                                </div>
+
+                            </div>
+
+                            <div class="small-box bg-white border border-info" tpl:else="root/host/metric/status/@value='MISSING'">
+
+                                <div  class="inner">
+
+
+
+                                    <h3>Status
+                                        <span  class="badge bg-info">{{root/host/metric/status/@value}}</span>
+
+                                    </h3><br/>
+                                    <p><label class="m-1">Host: </label> {{root/host/@name}}</p>
+                                    <p><label class="m-1">Metric: </label> {{root/host/metric/@name}}</p>
+                                    <p><label class="m-1">Timestamp: </label> {{root/host/metric/status/@timestamp}}</p>
+                                    <code>{{root/host/metric/status/summary/text()}}</code><br/>
+                                    <code>{{root/host/metric/status/message/text()}}</code>
+                                </div>
+
+                            </div>
+
+                            <div class="small-box bg-white border border-dark" tpl:else="">
+
+                                <div  class="inner">
+
+
+                                    <h3>Status
+                                        <span  class="badge bg-dark">{{root/host/metric/status/@value}}</span>
+
+                                    </h3><br/>
+                                    <p><label class="m-1">Host: </label> {{root/host/@name}}</p>
+                                    <p><label class="m-1">Metric: </label> {{root/host/metric/@name}}</p>
+                                    <p><label class="m-1">Timestamp: </label> {{root/host/metric/status/@timestamp}}</p>
+                                    <code>{{root/host/metric/status/summary/text()}}</code>
+                                    <code>{{root/host/metric/status/message/text()}}</code>
+                                </div>
+
+                            </div>
+
+
+
+                    </div>
+
+
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    </div>
+    <!-- Main Footer -->
+        <footer tpl:include="/resource/app/html/footer.html"></footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+
+
+<!-- jQuery -->
+<script src="/resource/app/html/adminlte/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- adminlte -->
+<script src="/resource/app/html/adminlte/dist/js/adminlte.js"></script>
+
+
+
+
+
+
+
+</body>
+</html>

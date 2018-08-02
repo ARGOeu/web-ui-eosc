@@ -15,30 +15,92 @@
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
                 <li class="nav-item has-treeview menu-open">
-                    <a href="#" class="nav-link active">
-                        <i class="nav-icon fa fa-dashboard"></i>
-                        <p class="text-uppercase">
-                             {{root/@tenant}} - {{root/@report}}
-                            <i class="right fa fa-angle-left"></i>
-                        </p>
-                    </a>
 
-                    <ul class="nav nav-treeview" >
+
+
+                            <select id="profiles" class="custom-select">
+                                <option tpl:if="root/@tenant='egi' and root/@report='Critical'" value="/egi" selected="true">EGI - Critical</option>
+                                <option tpl:else="" value="/egi">EGI - Critical</option>
+
+                                <option  tpl:if="root/@tenant='egi' and root/@report='OPS-MONITOR-Critical'" value="/egi/OPS-MONITOR-Critical" selected="true">EGI - OPSMONITOR-Critical</option>
+                                <option  tpl:else="" value="/egi/OPS-MONITOR-Critical">EGI - OPSMONITOR-Critical</option>
+
+
+                                <option value="/eudat" tpl:if="root/@tenant='eudat'" selected="true">EUDAT - Critical</option>
+                                <option value="/eudat" tpl:else="">EUDAT - Critical</option>
+
+                            </select>
+
+
+
+
+                    <ul class="nav nav-treeview" tpl:if="root/@tenant='egi' and root/@report='Critical'">
                         <li tpl:foreach="/root" class="nav-item">
-                            <a href="/{@tenant}" class="nav-link">
+                            <a href="/egi/Critical" class="nav-link">
                                 <i class="fa fa-circle-o nav-icon"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li tpl:foreach="/root" class="nav-item">
-                            <a href="/{@tenant}/report-ar/{@report}/{report/@topology}{@topology}" class="nav-link">
+                            <a href="/egi/report-ar/Critical/NGI" class="nav-link">
                                 <i class="fa fa-circle-o nav-icon"></i>
                                 <p>Availability/Reliability</p>
                             </a>
                         </li>
 
-
+                        <li tpl:foreach="/root" class="nav-item">
+                            <a href="/egi/report-status/Critical/SITES" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>Status</p>
+                            </a>
+                        </li>
                     </ul>
+
+                    <ul class="nav nav-treeview"  tpl:if="root/@tenant='egi' and root/@report='OPS-MONITOR-Critical'">
+                        <li tpl:foreach="/root" class="nav-item">
+                            <a href="/egi/OPS-MONITOR-Critical" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        <li tpl:foreach="/root" class="nav-item">
+                            <a href="/egi/report-ar/OPS-MONITOR-Critical/NGI" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>Availability/Reliability</p>
+                            </a>
+                        </li>
+
+                        <li tpl:foreach="/root" class="nav-item">
+                            <a href="/egi/report-status/OPS-MONITOR-Critical/SITES" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>Status</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav nav-treeview"  tpl:if="root/@tenant='eudat' and root/@report='Critical'">
+                        <li tpl:foreach="/root" class="nav-item">
+                            <a href="/eudat/Critical" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        <li tpl:foreach="/root" class="nav-item">
+                            <a href="/eudat/report-ar/Critical/SERVICEGROUPS" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>Availability/Reliability</p>
+                            </a>
+                        </li>
+
+                        <li tpl:foreach="/root" class="nav-item">
+                            <a href="/eudat/report-status/Critical/SERVICEGROUPS" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>Status</p>
+                            </a>
+                        </li>
+                    </ul>
+
+
                 </li>
 
                 <li class="nav-header"><h5>ABOUT ARGO</h5></li>
@@ -69,6 +131,9 @@
         </nav>
         <!-- /.sidebar-menu -->
     </div>
+
+
+
     <!-- /.sidebar -->
 </aside>
 

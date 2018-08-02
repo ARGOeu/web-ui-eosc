@@ -5,4 +5,37 @@
               eval="date:add(date:date('1970-01-01T00:00:00'),date:duration($timestamp))">
         <argument>timestamp</argument>
     </function>
+
+    <function name="buildApiStatusUrl"
+    eval="concat(property('api.status'),'/',$report,'/',$topology,
+    choose($entity1!='_entity_' and $entity2='_entity_',concat('/',$entity1,'/services')),
+    choose($entity2!='_entity_' and $entity3='_entity_',concat('/',$entity1,'/services/',$entity2,'/endpoints')),
+    choose($entity3!='_entity_' and $entity4='_entity_',concat('/',$entity1,'/services/',$entity2,'/endpoints/',$entity3,'/metrics')),'?start_time=',$start_time,'&amp;end_time=',$end_time)"
+    >
+        <argument>report</argument>
+        <argument>topology</argument>
+        <argument>entity1</argument>
+        <argument>entity2</argument>
+        <argument>entity3</argument>
+        <argument>entity4</argument>
+        <argument>start_time</argument>
+        <argument>end_time</argument>
+    </function>
+
+    <function name="buildStatusLink"
+              eval="concat($report,'/',$topology,
+    choose($entity1!='_entity_' and $entity2='_entity_',concat('/',$entity1)),
+    choose($entity2!='_entity_' and $entity3='_entity_',concat('/',$entity1,'/',$entity2)),
+    choose($entity3!='_entity_' and $entity4='_entity_' ,concat('/metrics/',$entity3))
+    )"
+    >
+        <argument>report</argument>
+        <argument>topology</argument>
+        <argument>entity1</argument>
+        <argument>entity2</argument>
+        <argument>entity3</argument>
+        <argument>entity4</argument>
+        <argument>start_time</argument>
+        <argument>end_time</argument>
+    </function>
 </functions>

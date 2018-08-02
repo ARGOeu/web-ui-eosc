@@ -5,6 +5,8 @@
         Created by cyril on 2018/06/13 
     -->
 
+
+
     <view name="api-status-last"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
 
         <argument name="report">Critical</argument>
@@ -62,33 +64,59 @@
         </processors>
     </view>
 
-    <view name="argo-status"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+    <view name="report-status"   xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
 
-        <argument name="report"/>
-        <argument name="tenant"/>
-        <argument name="topology"/>
-        <argument name="nbdays">10</argument>
+        <argument name="report">Critical</argument>
+        <argument name="tenant">egi</argument>
+        <argument name="topology">SITES</argument>
+
+        <argument name="entity1">_entity_</argument>
+        <argument name="entity2">_entity_</argument>
+        <argument name="entity3">_entity_</argument>
+        <argument name="entity4">_entity_</argument>
+
+        <argument name="nbdays">7</argument>
         <argument name="site">_site_</argument>
 
-        <variable name="api-key" eval="view('tenantsListRaw')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
-        <variable name="start_time" eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z')"/>
-        <variable name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"/>
 
 
-        <connector type="HTTPConnector">
-            <parameter name="url" eval="concat(property('api.status'),'/',$report,'/',$topology,'?start_time=',$start_time,'&amp;end_time=',$end_time)"/>
-            <parameter name="force-redirect">true</parameter>
-            <parameter name="header">
-                <entry key="x-api-key" eval="$api-key"/>
-                <entry key="Accept">application/xml</entry>
-            </parameter>
-        </connector>
 
+    <variable name="api-key" eval="view('tenantsListRaw')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+    <variable name="start_time" eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z')"/>
+    <variable name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"/>
+    <variable name="url" eval="function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,$start_time,$end_time)"/>
+    <connector type="HTTPConnector">
+        <parameter name="url" eval="$url"/>
+        <parameter name="force-redirect">true</parameter>
+        <parameter name="header">
+            <entry key="x-api-key" eval="$api-key"/>
+            <entry key="Accept">application/xml</entry>
+        </parameter>
+    </connector>
 
         <processors>
-            <element out="root">
+
+            <element in="root">
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="topology">$topology</attribute-create>
+                <attribute-create out="url">$url</attribute-create>
+                <attribute-create out="link">function:buildStatusLink($report,$topology,$entity1,$entity2,$entity3,$entity4,$start_time,$end_time)</attribute-create>
+                <attribute-create out="entity1">$entity1</attribute-create>
+                <attribute-create out="entity2">$entity2</attribute-create>
+                <attribute-create out="entity3">$entity3</attribute-create>
+
+
+                <element-ignore  if="group">
+                        <element-ignore if="endpoint">
+                            <element-ignore if="metric">
+                                <element out="group"/>
+                            </element-ignore>
+                            <element out="group"/>
+                        </element-ignore>
+                    <element out="group"/>
+                </element-ignore>
+
             </element>
 
 
@@ -118,8 +146,6 @@
             </elements>
 
 
-
-
             <element in="root">
                 <set variable="StateColor">view('StateColor')</set>
 
@@ -134,23 +160,59 @@
 
             </element>
 
-            <element out="root" if="$site!='_site_'">
-                <element-ignore in="group" if="@name!=$site"/>
-            </element>
-
-
-
-
-
 
         </processors>
 
         <renderers>
+
             <renderer type="HTMLRenderer">
                 <parameter name="template">app/html/status.html</parameter>
             </renderer>
         </renderers>
+
     </view>
+
+
+    <view name="report-metrics"   xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+
+    <argument name="report">Critical</argument>
+    <argument name="tenant">egi</argument>
+    <argument name="endpoint">SITES</argument>
+    <argument name="metric_name">_entity_</argument>
+    <argument name="exec_time"/>
+
+
+
+    <variable name="api-key" eval="view('tenantsListRaw')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+
+
+    <connector type="HTTPConnector">
+        <parameter name="url" eval="concat(property('api.metrics'),'/',$endpoint,'/',$metric_name,'?exec_time=',$exec_time)"/>
+        <parameter name="force-redirect">true</parameter>
+        <parameter name="header">
+            <entry key="x-api-key" eval="$api-key"/>
+            <entry key="Accept">application/xml</entry>
+        </parameter>
+    </connector>
+
+        <processors>
+
+            <element in="root">
+                <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="topology">$topology</attribute-create>
+            </element>
+        </processors>
+
+        <renderers>
+
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/metric.html</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
 
 
 </views>

@@ -1,5 +1,15 @@
 $(function () {
 
+
+
+
+    $("#profiles").change(function () {
+            window.location.href =   this.value;
+
+    });
+
+
+
     // Tables for the whole page
      $('.dataTable').dataTable({
       "paging": true,

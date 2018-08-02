@@ -21,27 +21,7 @@
                 <div class="row mb-2">
 
                     <div class="col-sm-9">
-                        <div class="col-sm-4 card">
-                            <div class="card-header">
-                                <h3 class="visible-lg card-title">Select </h3>
-                                <div class="card-tools pull-right">
-                                    <div class="has-feedback">
-                                        <select id="profiles">
-                                            <option tpl:if="root/@tenant='egi' and root/@report='Critical'" value="/egi" selected="true">EGI - Critical</option>
-                                            <option tpl:else="" value="/egi">EGI - Critical</option>
 
-                                            <option  tpl:if="root/@tenant='egi' and root/@report='OPS-MONITOR-Critical'" value="/egi/OPS-MONITOR-Critical" selected="true">EGI - OPSMONITOR-Critical</option>
-                                            <option  tpl:else="" value="/egi/OPS-MONITOR-Critical">EGI - OPSMONITOR-Critical</option>
-
-
-                                            <option value="/eudat" tpl:if="root/@tenant='eudat'" selected="true">EUDAT - Critical</option>
-                                             <option value="/eudat" tpl:else="">EUDAT - Critical</option>
-
-                                        </select>
-                                    </div>
-                                </div><!-- /.card-tools -->
-                            </div><!-- /.box-header -->
-                        </div><!-- /.box -->
                     </div><!-- /.col -->
 
                     <div class="col-sm-3">
@@ -115,25 +95,15 @@
 <link rel="stylesheet" href="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap.css"/>
 <link rel="stylesheet" href="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.css"/>
 
-
+<script src="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
 
 <script src="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap.min.js"></script>
-<script src="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
+
 
 
 <script src="/resource/app/js/dashboard.js"></script>
 
-<script>
 
-$(function () {
-
-    $("#profiles").change(function () {
-            window.location.href =   this.value;
-
-
-    });
-});
-</script>
 
 
 

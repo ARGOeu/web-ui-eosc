@@ -44,5 +44,6 @@
 
                 google.visualization.events.addListener(chart, 'onmouseover', myHandler);
 
+
                 chart.draw(dataTable, options);
             }
