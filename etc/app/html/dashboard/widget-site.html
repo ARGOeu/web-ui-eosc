@@ -1,0 +1,46 @@
+<div  xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+    <!-- Widget: user widget style 1 -->
+
+    <div tpl:if="/root/@tenant='egi'" class="card card-widget">
+        <div class="card-header">
+            <span class="card-title">{{/root/SITE/@NAME}}</span>
+        </div>
+        <div class="card-body">
+            <h5><span class="m-1">{{/root/SITE/OFFICIAL_NAME/text()}}</span>  <img src="/resource/app/css/blank.gif" class="flag flag-{/root/SITE/COUNTRY_CODE/text()}" alt="{/root/SITE/COUNTRY/text()}" /></h5>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">PRODUCTION
+                    <i tpl:if="/root/SITE/PRODUCTION_INFRASTRUCTURE/text()='Production'" class="fa fa-check-circle text-success"></i>
+                    <i tpl:else="" class="fa fa-times-circle text-danger"></i>
+
+                </li>
+                <li class="list-group-item">CERTIFIED
+                    <i tpl:if="/root/SITE/CERTIFICATION_STATUS/text()='Certified'" class="fa fa-check-circle text-success"></i>
+                    <i tpl:else="" class="fa fa-times-circle text-danger"></i>
+                </li>
+                <li class="list-group-item">NOTIFICATIONS
+                    <i tpl:if="/root/SITE/NOTIFICATIONS/text()='TRUE'" class="fa fa-check-circle text-success"></i>
+                    <i tpl:else="" class="fa fa-times-circle text-danger"></i>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div tpl:if="/root/@tenant='eudat'" class="card card-widget">
+        <div class="card-header">
+            <span class="card-title">{{root/SERVICE_GROUP/NAME/text()}}</span>
+        </div>
+        <div class="card-body">
+            <h5>{{/root/SERVICE_GROUP/DESCRIPTION/text()}}</h5>
+            <ul class="list-group list-group-flush">
+                <li tpl:foreach="/root/SERVICE_GROUP/SERVICE_ENDPOINT" class="list-group-item">
+                    {{HOSTNAME/text()}}  <a href="{{URL/text()}}"><i class="fa fa-link m-1"></i></a>  <a href="{{DPMT_URL/text()}}"><i class="fa fa-external-link m-1"></i></a>
+                </li>
+            </ul>
+
+
+        </div>
+    </div>
+
+</div>

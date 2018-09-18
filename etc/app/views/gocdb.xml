@@ -6,6 +6,8 @@
     -->
 
 
+
+
     <view name="gocdb.endpoints"  xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" >
 
         <connector type="HTTPConnector">
@@ -111,6 +113,107 @@
     </view>
 
 
+    <view name="gocdb.site"  xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" >
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="property('gocdb.get_site')"/>
+            <parameter name="certificate" eval="property('certificate.path')"/>
+            <parameter name="passphrase" eval="property('certificate.password')"/>
+        </connector>
+
+
+        <processors>
+            <element in="results">
+                <element-ignore in="SITE"/>
+                <element-create>sort_by_string(../SITE,'@NAME')</element-create>
+            </element>
+
+            <element in="results">
+                <element in="SITE">
+
+                    <element if="contains(name(),'COUNTRY')">
+                        <text>lower-case(.)</text>
+                    </element>
+                </element>
+            </element>
+
+        </processors>
+
+
+
+        <cache type="FileCache">
+            <trigger type="DeltaTimeTrigger">
+                <parameter name="minutes">26</parameter>
+            </trigger>
+            <trigger type="ViewNotifiedTrigger"/>
+            <trigger type="ViewCreatedTrigger"/>
+
+        </cache>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
+    <view name="gocdb.downtimes.site"  xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:str="http://exslt.org/strings" xmlns:date="http://exslt.org/dates-and-times">
+
+        <argument name="site"/>
+        <variable name="start_time" eval="substring(date:add(date:date-time(),'-P365D'),0,20)"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="concat(property('gocdb.get_downtime.site'),'&amp;topentity=',$site,'&amp;startdate=',$start_time) "/>
+            <parameter name="certificate" eval="property('certificate.path')"/>
+            <parameter name="passphrase" eval="property('certificate.password')"/>
+        </connector>
+
+        <processors>
+
+            <element in="results" out="downtimes">
+                <element-ignore/>
+                <element-create>sort_by_string(../DOWNTIME,'@PRIMARY_KEY')</element-create>
+            </element>
+
+            <element in="downtimes">
+                <element-create-as-parent out="downtimes"  group-by="@PRIMARY_KEY" attributes="@*">
+                    <element in="DOWNTIME">
+                        <element-create>new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'  ')))</element-create>
+                    </element>
+                </element-create-as-parent>
+            </element>
+
+
+
+            <element in="downtimes">
+                <element in="downtimes">
+                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))</element-create>
+                </element>
+            </element>
+
+            <element in="downtimes">
+                <element-ignore in="downtimes">
+                    <element in="DOWNTIME" if="not(preceding-sibling::DOWNTIME)">
+                        <element-create>new_element('service_endpoints',../../service_endpoints/text())</element-create>
+                    </element>
+                </element-ignore>
+            </element>
+
+
+
+
+        </processors>
+
+
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
 
 
 </views>

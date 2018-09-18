@@ -238,16 +238,18 @@
         <argument name="report"/>
         <argument name="tenant"/>
         <argument name="topology"/>
-
+        <argument name="entity">_entity_</argument>
+        <argument name="group">_group_</argument>
         <argument name="nbdays">10</argument>
 
         <variable name="api-key" eval="view('tenantsListRaw')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
         <variable name="start_time" eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z')"/>
         <variable name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"/>
 
+        <variable name="url" eval="choose($entity='_entity_',concat(property('api.report'),'/',$report,'/',$topology,'?start_time=',$start_time,'&amp;end_time=',$end_time),concat(property('api.report'),'/',$report,'/',$topology,'/',$entity,'?start_time=',$start_time,'&amp;end_time=',$end_time))"/>
 
         <connector type="HTTPConnector">
-            <parameter name="url" eval="concat(property('api.report'),'/',$report,'/',$topology,'?start_time=',$start_time,'&amp;end_time=',$end_time)"/>
+            <parameter name="url" eval="$url"/>
             <parameter name="force-redirect">true</parameter>
             <parameter name="header">
                 <entry key="x-api-key" eval="$api-key"/>
@@ -262,10 +264,16 @@
             <element out="root">
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="url">$url</attribute-create>
                 <element-ignore in="group">
                     <element in="results">
                         <attribute-create out="id">../../@name</attribute-create>
                     </element>
+                    <element-ignore in="group">
+                        <element in="results">
+                            <attribute-create out="id">../../@name</attribute-create>
+                        </element>
+                    </element-ignore>
                 </element-ignore>
             </element>
 

@@ -82,6 +82,7 @@
 
                 <attribute-create out="topology">'NGI'</attribute-create>
                 <attribute-create out="topologyStatus">'SITES'</attribute-create>
+
                 <element-create>
                 new_element('NGIS',new_attribute('icon','fa fa-globe')|new_attribute('bg','bg-primary')|new_text(38))
                 </element-create>
@@ -142,7 +143,49 @@
         </processors>
     </view>
 
-    <view name="dashboard">
+    <view name="dashboard-filter">
+
+        <argument name="report">Critical</argument>
+        <argument name="tenant">egi</argument>
+        <argument name="entity">_entity_</argument>
+
+
+        <variable name="topology-status" eval="choose($tenant='egi','SITES','SERVICEGROUPS')"/>
+        <variable name="topology-ar" eval="choose($tenant='egi','NGI','PROJECT')"/>
+
+        <connector type="XMLConnector">
+            <parameter name="content" eval="new_element('root')"/>
+        </connector>
+
+        <processors>
+
+
+            <element in="root">
+                <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="details">'level1'</attribute-create>
+                <element-create>view('api-status-last',entry('report',$report)|entry('tenant',$tenant)|entry('topology',$topology-status)|entry('entity',$entity))</element-create>
+                <element-create>view('report-ar',entry('report',$report)|entry('tenant',$tenant)|entry('topology',$topology-status)|entry('entity',$entity))</element-create>
+                <element-create if="$tenant='egi'">view('gocdb.downtimes.site', entry('site',$entity))</element-create>
+                <element-create if="$tenant='eudat'">view('dpmt.downtimes.site',entry('site',$entity))</element-create>
+                <element-create if="$tenant='egi'">view('gocdb.site')/results/SITE[@NAME=$entity]</element-create>
+                <element-create if="$tenant='eudat'">view('dpmt.siteProjects')/results/SERVICE_GROUP[NAME/text()=$entity]</element-create>
+            </element>
+        </processors>
+
+
+        <renderers>
+            <!--<renderer type="DefaultRenderer">-->
+                <!--<parameter name="contentType">text/xml</parameter>-->
+            <!--</renderer>-->
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/dashboard/dashboard.html</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
+  <view name="dashboard">
 
         <argument name="report">Critical</argument>
         <argument name="tenant">egi</argument>
@@ -156,9 +199,18 @@
         </connector>
 
         <processors>
+
+            <element in="root">
+
+                <element-create if="$tenant='egi'">new_element('group',view('gocdb.site')/results/SITE[PRODUCTION_INFRASTRUCTURE/text()='Production' and CERTIFICATION_STATUS/text()='Certified']/SHORT_NAME)</element-create>
+                <element-create if="$tenant='eudat'">new_element('group',view('dpmt.siteProjects')/results/SERVICE_GROUP[MONITORED/text()='True']/NAME)</element-create>
+
+            </element>
+
             <element in="root">
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="details">'level0'</attribute-create>
                 <element-create>view('reportDetails',entry('report',$report)|entry('tenant',$tenant))</element-create>
                 <element-create>view('api-status-last',entry('report',$report)|entry('tenant',$tenant)|entry('topology',$topology-status))</element-create>
                 <element-create>view('report-ar',entry('report',$report)|entry('tenant',$tenant)|entry('topology',$topology-ar))</element-create>

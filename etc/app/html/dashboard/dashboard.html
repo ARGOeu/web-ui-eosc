@@ -41,9 +41,15 @@
 
                 <div class="row">
 
-                    <div class="col-3">
-                        <div tpl:include="/resource/app/html/dashboard/widget-project2.html"/>
-                        <div tpl:if="/root/report-ar/@availability" tpl:include="/resource/app/html/dashboard/widget-global-ar.html"/>
+                    <div class="col-3" tpl:if="root/@details!='level1'">
+                        <div  tpl:include="/resource/app/html/dashboard/widget-project2.html"/>
+                        <div  tpl:include="/resource/app/html/dashboard/widget-global-ar.html"/>
+                        <div tpl:include="/resource/app/html/dashboard/widget-list.html" />
+                    </div>
+                    <div class="col-3" tpl:else="">
+                        <div  tpl:include="/resource/app/html/dashboard/widget-site.html"/>
+                        <div  tpl:include="/resource/app/html/dashboard/widget-global-ar.html"/>
+
                     </div>
                     <div class="col-9">
                         <div tpl:if="/root/status-last/@*" tpl:include="/resource/app/html/dashboard/widgets-charts.html"/>
@@ -57,8 +63,8 @@
 
                 <div class="row">
 
-                    <div tpl:if="/root/status-last/status" tpl:include="/resource/app/html/dashboard/widget-table-statuses.html"/>
-                    <div tpl:if="/root/downtimes/DOWNTIME" tpl:include="/resource/app/html/dashboard/widget-downtimes.html"/>
+                    <div tpl:include="/resource/app/html/dashboard/widget-table-statuses.html"/>
+                    <div tpl:include="/resource/app/html/dashboard/widget-downtimes.html"/>
 
                 </div>
 

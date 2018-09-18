@@ -8,6 +8,10 @@ $(function () {
 
     });
 
+   $("#servicesGroup").change(function () {
+            window.location.href =   this.value;
+
+    });
 
 
     // Tables for the whole page
@@ -22,6 +26,8 @@ $(function () {
 
     var dataStatuses = [];
     var labelStatuses= [];
+    var colors = [];
+    var tabColors = { "Ok" : "#28A745", "Warning" :"#B5892E" , "Critical": "#FF0000", "Unknown" : "#bcbcbc","Missing" : "#76A3D6" };
 
 
     $( ".dataStatuses" ).each(function( index ) {
@@ -30,33 +36,40 @@ $(function () {
 
     $( ".labelStatuses" ).each(function( index ) {
       labelStatuses.push($( this ).text());
+      colors.push(tabColors[$( this ).text()]);
     });
 
     data = {
         datasets: [{
             data: dataStatuses,
-             backgroundColor: ["#28A745","#B5892E", "#ADB5BD","#FF0000","#76A3D6"]
+             backgroundColor: colors,
         }],
         labels: labelStatuses
 
     };
 
+
+if(document.getElementById("myChart1") && document.getElementById("myChart1").getContext('2d')) {
+
     var ctx = document.getElementById("myChart1").getContext('2d');
 
-       var cOptions     = {
-               title: {
-                          display: false,
-                        },
-               legend: false
+          var cOptions     = {
+                  title: {
+                             display: false,
+                           },
+                  legend: false
 
-                };
+                   };
 
 
-    var myDoughnutChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: data,
-        options: cOptions
-        });
+       var myDoughnutChart = new Chart(ctx, {
+           type: 'doughnut',
+           data: data,
+           options: cOptions
+           });
+
+}
+
 
 
 
@@ -65,6 +78,10 @@ $(function () {
     /////////////////////////
     // barchart chart : ar
     /////////////////////////
+
+
+if(document.getElementById("myChart2") && document.getElementById("myChart2").getContext('2d')) {
+
 
     var ctx2 = document.getElementById("myChart2").getContext('2d');
     
@@ -110,7 +127,7 @@ $(function () {
     });
 
 
-
+}
 
 });
 

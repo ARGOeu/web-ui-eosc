@@ -6,7 +6,29 @@
     -->
 
 
+    <view name="dpmt.site">
 
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="concat('https://',property('eudat-api-user'),':',property('eudat-api-pwd'),'@dp.eudat.eu/gocdbpi/get_site')"/>
+            <parameter name="force-redirect">true</parameter>
+        </connector>
+
+        <cache type="FileCache">
+            <!--<trigger type="ViewCreatedTrigger"/>-->
+            <trigger type="DeltaTimeTrigger">
+                <parameter name="hours">4</parameter>
+            </trigger>
+            <trigger type="ViewNotifiedTrigger"/>
+            <trigger type="ViewCreatedTrigger"/>
+        </cache>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
 
 
         <view name="dpmt.siteList">
@@ -25,6 +47,12 @@
                 <trigger type="ViewCreatedTrigger"/>
             </cache>
 
+            <renderers>
+                <renderer type="DefaultRenderer">
+                    <parameter name="contentType">text/xml</parameter>
+                </renderer>
+            </renderers>
+
         </view>
 
 
@@ -35,6 +63,25 @@
                 <parameter name="force-redirect">true</parameter>
             </connector>
 
+
+            <processors>
+                <element in="results">
+                    <element-ignore in="SERVICE_GROUP"/>
+                    <element-create>sort_by_string(../SERVICE_GROUP,'NAME/text()')</element-create>
+                </element>
+
+                <element in="results">
+                    <element in="SERVICE_GROUP">
+
+                        <element if="contains(name(),'COUNTRY')">
+                            <text>lower-case(.)</text>
+                        </element>
+                    </element>
+                </element>
+
+
+            </processors>
+
             <cache type="FileCache">
                 <!--<trigger type="ViewCreatedTrigger"/>-->
                 <trigger type="DeltaTimeTrigger">
@@ -44,7 +91,27 @@
                 <trigger type="ViewCreatedTrigger"/>
             </cache>
 
+            <renderers>
+                <renderer type="DefaultRenderer">
+                    <parameter name="contentType">text/xml</parameter>
+                </renderer>
+            </renderers>
         </view>
+
+    <view name="dpmt.downtimes.site" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:str="http://exslt.org/strings">
+
+           <argument name="site"/>
+            <connector type="XMLConnector">
+                <parameter name="content" eval="view('dpmt.downtimes')"/>
+            </connector>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
 
     <view name="dpmt.downtimes" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:str="http://exslt.org/strings">
 
@@ -99,6 +166,12 @@
             <trigger type="ViewNotifiedTrigger"/>
             <trigger type="ViewCreatedTrigger"/>
         </cache>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
 
     </view>
 

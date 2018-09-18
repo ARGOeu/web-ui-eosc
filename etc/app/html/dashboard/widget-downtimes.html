@@ -1,4 +1,4 @@
-<div class="col-6" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+<div class="col-5" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
     <div class="card">
         <div class="card-header">
             <h3 class="card-title" tpl:if="root/@tenant='egi'">
@@ -27,14 +27,14 @@
 
                 <tbody>
                 <tr tpl:foreach="root/downtimes/DOWNTIME">
-                    <td>{{HOSTED_BY/text()}}</td>
+                    <td class="text-nowrap">{{HOSTED_BY/text()}}</td>
                     <td>
                         <span tpl:if="SEVERITY/text()!='OUTAGE'" class="badge bg-success">{{SEVERITY/text()}}</span>
                         <span tpl:else="" class="badge bg-warning">{{SEVERITY/text()}}</span>
                     </td>
 
-                    <td>{{FORMATED_START_DATE/text()}}</td>
-                    <td>{{FORMATED_END_DATE/text()}}</td>
+                    <td class="text-nowrap">{{FORMATED_START_DATE/text()}}</td>
+                    <td class="text-nowrap">{{FORMATED_END_DATE/text()}}</td>
                     <td>
 
                         <!-- Button trigger modal -->

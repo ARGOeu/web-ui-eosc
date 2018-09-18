@@ -11,18 +11,19 @@
 
         <argument name="report">Critical</argument>
         <argument name="tenant">egi</argument>
-        <argument name="topology"/>
-        <argument name="nbdays">1</argument>
-        <argument name="last">100</argument>
+        <argument name="topology">SITES</argument>
+        <argument name="last">500</argument>
+
+        <argument name="entity">_entity_</argument>
 
 
         <variable name="api-key" eval="view('tenantsListRaw')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
-        <variable name="start_time" eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z')"/>
-        <variable name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"/>
+
 
 
         <connector type="HTTPConnector">
-            <parameter name="url" eval="concat(property('api.status'),'/',$report,'/',$topology,'?start_time=',$start_time,'&amp;end_time=',$end_time)"/>
+            <parameter name="url" eval="choose($entity='_entity_',concat(property('api.status.last'),'/',$report,'/',$topology,'?limit=',$last),concat(property('api.status.last'),'/',$report,'/',$topology,'/',$entity,'?limit=',$last))"/>
+
             <parameter name="force-redirect">true</parameter>
             <parameter name="header">
                 <entry key="x-api-key" eval="$api-key"/>
@@ -30,35 +31,28 @@
             </parameter>
         </connector>
 
+        <serializer type="JSONStreamSerializer"/>
+
         <processors>
 
-
-            <elements path="root/group">
-                <element in="status">
-                    <attribute-create out="site">../../@name</attribute-create>
-                </element>
-            </elements>
-
-
-            <element in="root">
-                <element-ignore in="group"/>
-                <element-create>
-                    sort_by_string(../group/status,'@timestamp',true())
-                </element-create>
+            <element in="object" out="status-last">
+                <element-ignore in="data">
+                    <element-ignore in="metric_data">
+                        <element/>                      
+                    </element-ignore>                  
+                    
+                </element-ignore>
+                <element-ignore/>                
             </element>
 
-
-            <element in="root">
-                <element in="status" if="count(preceding-sibling::status) &lt; $last"/>
-                <element-ignore/>
-            </element>
-
-            <element in="root" out="status-last">
-               <attribute-create out="Ok">count(../status[@value='OK'])</attribute-create>
-                <attribute-create out="Warning">count(../status[@value='WARNING'])</attribute-create>
-                <attribute-create out="Unknown">count(../status[@value='UNKNOWN'])</attribute-create>
-                <attribute-create out="Critical">count(../status[@value='CRITICAL'])</attribute-create>
-                <attribute-create out="Missing">count(../status[@value='MISSING'])</attribute-create>
+          
+            
+            <element  out="status-last">
+               <attribute-create out="Ok">count(../object[status/text()='OK'])</attribute-create>
+                <attribute-create out="Warning">count(../object[status/text()='WARNING'])</attribute-create>
+                <attribute-create out="Unknown">count(../object[status/text()='UNKNOWN'])</attribute-create>
+                <attribute-create out="Critical">count(../object[status/text()='CRITICAL'])</attribute-create>
+                <attribute-create out="Missing">count(../object[status/text()='MISSING'])</attribute-create>
             </element>
 
         </processors>
