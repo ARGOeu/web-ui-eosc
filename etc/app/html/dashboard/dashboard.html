@@ -20,14 +20,17 @@
             <div class="container-fluid">
                 <div class="row mb-2">
 
-                    <div class="col-sm-9">
+                    <div class="col-sm-7">
 
                     </div><!-- /.col -->
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-5">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboards</li>
+                            <li class="breadcrumb-item">Dashboard</li>
+                            <li class="breadcrumb-item active" tpl:if="root/@details='level0'"  ><a href="/{{root/@tenant}}/{{root/@report}}">{{root/@tenant}} - {{root/@report}}</a></li>
+                            <li class="breadcrumb-item active" tpl:else=""  ><a href="/{{root/@tenant}}/{{root/@report}}">{{root/@tenant}} - {{root/@report}}</a></li>
+                            <li class="breadcrumb-item active" tpl:if="root/@details='level1'"  ><a href="/{{root/@tenant}}/dashboard/{{root/@report}}/{{root/@group}}">{{root/@group}}</a></li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->

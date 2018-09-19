@@ -8,7 +8,8 @@
         <span class="info-box-icon bg-success"><i class="ion ion-stats-bars"></i></span>
 
         <div class="info-box-content">
-            <span class="info-box-text"><a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/report/@topology}">Availability</a></span>
+            <span class="info-box-text" tpl:if="root/@details='level0'"><a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/report/@topology}">Availability</a></span>
+            <span class="info-box-text" tpl:if="root/@details='level1'"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}">Availability</a></span>
             <span class="info-box-number">{{/root/report-ar/@availability}}</span>
         </div>
         <!-- /.info-box-content -->
@@ -18,7 +19,9 @@
         <span class="info-box-icon bg-success"><i class="ion ion-stats-bars"></i></span>
 
         <div class="info-box-content">
-            <span class="info-box-text"><a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/report/@topology}">Availability</a></span>
+            <span class="info-box-text" tpl:if="root/@details='level0'"><a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/report/@topology}">Availability</a></span>
+            <span class="info-box-text" tpl:if="root/@details='level1'"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}">Availability</a></span>
+
             <span class="info-box-number">{{/root/report-ar/@availability}}</span>
         </div>
         <!-- /.info-box-content -->
@@ -32,7 +35,9 @@
             <span class="info-box-icon bg-success"><i class="ion ion-stats-bars"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text"><a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/report/@topology}">Reliability</a></span>
+                <span class="info-box-text" tpl:if="/root/@details='level0'"><a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/report/@topology}">Reliability</a></span>
+                <span class="info-box-text" tpl:if="/root/@details='level1'"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}">Reliability</a></span>
+
                 <span class="info-box-number">{{/root/report-ar/@reliability}}</span>
             </div>
             <!-- /.info-box-content -->
@@ -42,7 +47,9 @@
             <span class="info-box-icon bg-success"><i class="ion ion-stats-bars"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text"><a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/report/@topology}">Reliability</a></span>
+                <span class="info-box-text" tpl:if="/root/@details='level0'"><a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/report/@topology}">Reliability</a></span>
+                <span class="info-box-text" tpl:if="/root/@details='level1'"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}">Reliability</a></span>
+
                 <span class="info-box-number">{{/root/report-ar/@reliability}}</span>
             </div>
             <!-- /.info-box-content -->

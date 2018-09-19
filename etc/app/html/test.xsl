@@ -436,7 +436,7 @@
                         <xsl:comment>To the right</xsl:comment>
                         <div class="float-right d-none d-sm-block-down"></div>
                         <xsl:comment>Default to the left</xsl:comment>
-                        <strong>Copyright 2018 <a href="https://eosc-hub.eu">EOSC-Hub</a>.
+                        <strong>Copyright 2018 <a href="hhttps://www.eosc-hub.eu/">EOSC-Hub</a>.
                         </strong>
                         EOSC-hub receives funding from the European Union’s Horizon 2020 research and innovation
                         programme under grant agreement No 777536.

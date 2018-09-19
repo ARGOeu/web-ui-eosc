@@ -3,10 +3,10 @@
 
     <div class="card card-widget">
         <div class="card-body">
-            <p tpl:if="/root/@tenant='eudat'">Service group details</p>
-            <p tpl:else="">Site details</p>
             <select class="listServices" id="servicesGroup">
-                <option tpl:foreach="/root/group/*/text()" value="/{/root/@tenant}/dashboard/{.}">{{.}}</option>
+                <option tpl:if="/root/@tenant='eudat'" selected="true">--Select your service group for more details--</option>
+                <option tpl:if="/root/@tenant='egi'" selected="true">--Select your site for more details--</option>
+                <option tpl:foreach="/root/group/*/text()" value="/{/root/@tenant}/dashboard/{/root/@report}/{.}">{{.}}</option>
             </select>
 
         </div>
