@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+
+<head tpl:include="/resource/app/html/header.html"></head>
+
+<body class="hold-transition sidebar-mini ">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav tpl:include="/resource/app/html/navbar.html"></nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside tpl:include="/resource/app/html/sidebar.html"></aside>
+    <!-- /sidebar -->
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+
+                    <div class="col-sm-9">
+
+                    </div><!-- /.col -->
+
+                    <div class="col-sm-3">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboards</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+
+                <div class="row">
+
+                    <input class="d-none" id="tenant" value="{/root/@tenant}"/>
+                    <input class="d-none" id="report" value="{/root/@report}"/>
+
+                    <div class="card m-2">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                Entity
+                            </h3>
+                        </div>
+                            <div class="card-body">
+                                <select id="services">
+                                    <option tpl:foreach="/root/group/*/text()" value="{.}">{{.}}</option>
+                                </select>
+                            </div>
+
+
+                    </div>
+
+                    <div class="card m-2">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                Report Type
+                            </h3>
+                        </div>
+                            <div class="card-body">
+                                <input type="radio" name="type" class="m-2" value="report-ar-dates" checked="true"/>Availability/Reliability<br/>
+                                <input type="radio" name="type" class="m-2" value="report-status"/>Status<br/>
+                            </div>
+
+
+                    </div>
+
+                    <div class="card m-2">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                Timeline
+                            </h3>
+                        </div>
+                            <div class="card-body">
+                                <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                    <i class="fa fa-calendar m-1"></i>
+                                    <span></span> <i class="fa fa-caret-down"></i>
+                                </div>
+                            </div>
+
+
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn col-6 m-2 btn-outline-primary" id="customSub" value="submit">submit</button>
+                </div>
+
+
+                <!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Main Footer -->
+
+    <footer tpl:include="/resource/app/html/footer.html"></footer>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="/resource/app/html/adminlte/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- adminlte -->
+<script src="/resource/app/html/adminlte/dist/js/adminlte.js"></script>
+
+
+
+<link rel="stylesheet" href="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap.css"/>
+<link rel="stylesheet" href="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.css"/>
+
+<script src="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
+
+<script src="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap.min.js"></script>
+
+
+
+<script src="/resource/app/js/dashboard.js"></script>
+
+
+<!-- date range picker -->
+<link rel="stylesheet" href="/resource/app/html/adminlte/plugins/daterangepicker/daterangepicker-bs3.css"/>
+
+<script src="/resource/app/html/adminlte/plugins/daterangepicker/moment.min.js"></script>
+<script src="/resource/app/html/adminlte/plugins/daterangepicker/daterangepicker.js"></script>
+
+
+
+
+ <script type="text/javascript">
+<!--
+$(function() {
+
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+
+    function cb(start, end) {
+        $('#reportrange span').html(start.format('YYYY-MM-DD') + ' / ' + end.format('YYYY-MM-DD'));
+    }
+
+    $('#reportrange').daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+           'Today': [moment(), moment()],
+           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+           'This Month': [moment().startOf('month'), moment().endOf('month')],
+           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    }, cb);
+
+    cb(start, end);
+
+      $("#customSub").click(function () {
+
+        var tenant = $("input#tenant").val() ;
+        var topology ='SITES';
+        if (tenant == 'eudat') {
+            topology = 'SERVICEGROUPS';
+        }
+
+        var report = $("input#report").val() ;
+
+        var view = $("input[name=type]:checked").val() ;
+        var entity = $("#services option:selected").text();
+        var range = 'start_date=' + $('#reportrange span').text().replace(' / ','&end_date=');
+
+
+         var link = '/' + tenant + '/' + view + '/' + report + '/' + topology + '/' + entity + '?' + range;
+
+        window.location=link;
+
+    });
+
+
+
+
+});
+
+-->
+</script>
+
+</body>
+</html>

@@ -71,6 +71,75 @@
 
     </view>
 
+    <view name="report-ar-dates"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
+
+        <argument name="report">Critical</argument>
+        <argument name="tenant">egi</argument>
+        <argument name="topology">NGI</argument>
+        <argument name="entity">_entity_</argument>
+        <argument name="month">2018-06</argument>
+        <argument name="group">NGI_FRANCE</argument>
+
+        <variable name="api-key" eval="view('tenantsListRaw')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+
+        <variable name="start_time" eval="concat($start_date,'T00:00:00Z')"/>
+        <variable name="end_time" eval="concat($end_date,'T23:59:59Z')"/>
+
+        <variable name="url"  eval="concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=daily')"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/xml</entry>
+            </parameter>
+        </connector>
+
+        <processors>
+
+
+            <element in="root" >
+                <element-ignore in="group" if="group">
+                    <element-ignore in="group" if="@name!=$group and ancestor::group/@name!=$group"/>
+                    <element/>
+                </element-ignore>
+            </element>
+
+
+            <element in="root">
+                <attribute-create out="ApiUrl">$url</attribute-create>
+                <attribute-create out="topology">$topology</attribute-create>
+                <attribute-create out="group">$group</attribute-create>
+                <attribute-create out="month">$month</attribute-create>
+                <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="level1">property(concat('availability.treshold.',$tenant))</attribute-create>
+                <attribute-create out="level2">property(concat('reliability.treshold.',$tenant))</attribute-create>
+
+                <element in="group">
+                    <element in="results">
+                        <attribute if="name()!='timestamp'">round(. * 100 ) div 100</attribute>
+                    </element>
+                </element>
+            </element>
+
+        </processors>
+
+
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/report_daily.html</parameter>
+            </renderer>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
+
     <view name="report-ar-group"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 
         <argument name="report">Critical</argument>
@@ -98,8 +167,10 @@
 
         <processors>
 
-            <element in="root">
-                <element-ignore in="group" if="@type='PROJECT'">
+
+            <element in="root" >
+                <element-ignore in="group" if="group">
+                    <element-ignore in="group" if="@name!=$group and ancestor::group/@name!=$group"/>
                     <element/>
                 </element-ignore>
             </element>
@@ -190,21 +261,14 @@
 
             </element>
 
-            <element in="root" if="$tenant='eudat'">
-                <element-ignore in="group">
+            <element in="root" >
+                <element-ignore in="group" if="group">
+                    <element-ignore in="group" if="@name!=$group and ancestor::group/@name!=$group"/>
                     <element/>
                 </element-ignore>
             </element>
 
-            <element in="root">
-                <element-ignore in="group" if="@name!=$group"/>
-            </element>
 
-            <element in="root" if="$tenant='egi'">
-                <element-ignore in="group">
-                    <element/>
-                </element-ignore>
-            </element>
 
 
             <element in="root">

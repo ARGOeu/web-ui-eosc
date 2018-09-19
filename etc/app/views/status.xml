@@ -72,13 +72,16 @@
         <argument name="nbdays">7</argument>
         <argument name="site">_site_</argument>
 
-
-
+        <argument name="start_date">_start_</argument>
+        <argument name="end_date">_end_</argument>
 
     <variable name="api-key" eval="view('tenantsListRaw')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
-    <variable name="start_time" eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z')"/>
-    <variable name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"/>
+    <variable name="start_time" eval="choose($start_date='_start_',concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z'),concat($start_date,'T00:00:00Z'))"/>
+    <variable name="end_time" eval="choose($end_date='_end_',concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z'),concat($end_date,'T00:00:00Z'))"/>
+
+
     <variable name="url" eval="function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,$start_time,$end_time)"/>
+
     <connector type="HTTPConnector">
         <parameter name="url" eval="$url"/>
         <parameter name="force-redirect">true</parameter>

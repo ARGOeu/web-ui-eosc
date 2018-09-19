@@ -54,6 +54,13 @@
                                 <p>Status</p>
                             </a>
                         </li>
+
+                        <li tpl:foreach="/root" class="nav-item">
+                            <a href="/egi/Critical/custom" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>Custom Report</p>
+                            </a>
+                        </li>
                     </ul>
 
                     <ul class="nav nav-treeview"  tpl:if="root/@tenant='egi' and root/@report='OPS-MONITOR-Critical'">
@@ -76,6 +83,14 @@
                                 <p>Status</p>
                             </a>
                         </li>
+
+                        <li tpl:foreach="/root" class="nav-item">
+                            <a href="/egi/OPS-MONITOR-Critical/custom" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>Custom Report</p>
+                            </a>
+                        </li>
+
                     </ul>
 
                     <ul class="nav nav-treeview"  tpl:if="root/@tenant='eudat' and root/@report='Critical'">
@@ -98,6 +113,14 @@
                                 <p>Status</p>
                             </a>
                         </li>
+
+                        <li tpl:foreach="/root" class="nav-item">
+                            <a href="/eudat/Critical/custom" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>Custom Report</p>
+                            </a>
+                        </li>
+
                     </ul>
 
 
