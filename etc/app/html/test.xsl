@@ -132,6 +132,14 @@
                                                             </a>
                                                         </li>
                                                     </xsl:for-each>
+                                                    <xsl:for-each select="/root">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="/egi/Critical/custom">
+                                                                <i class="fa fa-circle-o nav-icon"></i>
+                                                                <p>Custom Report</p>
+                                                            </a>
+                                                        </li>
+                                                    </xsl:for-each>
                                                 </ul>
                                             </xsl:when>
                                         </xsl:choose>
@@ -165,6 +173,14 @@
                                                             </a>
                                                         </li>
                                                     </xsl:for-each>
+                                                    <xsl:for-each select="/root">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="/egi/OPS-MONITOR-Critical/custom">
+                                                                <i class="fa fa-circle-o nav-icon"></i>
+                                                                <p>Custom Report</p>
+                                                            </a>
+                                                        </li>
+                                                    </xsl:for-each>
                                                 </ul>
                                             </xsl:when>
                                         </xsl:choose>
@@ -195,6 +211,14 @@
                                                                href="/eudat/report-status/Critical/SERVICEGROUPS">
                                                                 <i class="fa fa-circle-o nav-icon"></i>
                                                                 <p>Status</p>
+                                                            </a>
+                                                        </li>
+                                                    </xsl:for-each>
+                                                    <xsl:for-each select="/root">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="/eudat/Critical/custom">
+                                                                <i class="fa fa-circle-o nav-icon"></i>
+                                                                <p>Custom Report</p>
                                                             </a>
                                                         </li>
                                                     </xsl:for-each>
@@ -239,14 +263,19 @@
                         <div class="content-header">
                             <div class="container-fluid">
                                 <div class="row mb-2">
-                                    <div class="col-sm-9"></div>
+                                    <div class="col-sm-6"></div>
                                     <xsl:comment>/.col</xsl:comment>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-6">
                                         <ol class="breadcrumb float-sm-right">
                                             <li class="breadcrumb-item">
                                                 <a href="/">Home</a>
                                             </li>
                                             <li class="breadcrumb-item active">Dashboards</li>
+                                            <xsl:for-each select="root">
+                                                <li class="breadcrumb-item active">Dashboard
+                                                    <xsl:value-of select="@tenant"></xsl:value-of>
+                                                </li>
+                                            </xsl:for-each>
                                         </ol>
                                     </div>
                                     <xsl:comment>/.col</xsl:comment>
@@ -255,590 +284,139 @@
                             </div>
                             <xsl:comment>/.container-fluid</xsl:comment>
                         </div>
+                        <xsl:comment>/.content-header</xsl:comment>
                         <xsl:comment>Main content</xsl:comment>
                         <div class="content">
                             <div class="container-fluid">
-                                <div class="row">
-                                    <xsl:choose>
-                                        <xsl:when test="root/@details!=&apos;level1&apos;">
-                                            <div class="col-3">
-                                                <div>
-                                                    <xsl:comment>Widget: user widget style 1</xsl:comment>
-                                                    <div class="card card-widget widget-user-2">
-                                                        <xsl:comment>Add the bg color to the header using any of the
-                                                            bg-* classes
-                                                        </xsl:comment>
-                                                        <div class="widget-user-header border ">
-                                                            <div class="widget-user-image">
-                                                                <img alt="Logo" class="img-circle elevation-2"
-                                                                     height="160px"
-                                                                     src="/resource/app/img/logo-{root/@tenant}.png"
-                                                                     width="160px"></img>
-                                                            </div>
-                                                            <xsl:comment>/.widget-user-image</xsl:comment>
-                                                            <h3 class="widget-user-username text-uppercase">
-                                                                <xsl:value-of select="/root/@tenant"></xsl:value-of>
-                                                            </h3>
-                                                            <h5 class="widget-user-desc">
-                                                                <xsl:value-of
-                                                                        select="/root/report/@description"></xsl:value-of>
-                                                            </h5>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <ul class="nav flex-column">
-                                                                <li class="nav-item">
-                                                                    <xsl:for-each select="/root/report/*">
-                                                                        <a class="nav-link" href="#">
-                                                                            <xsl:value-of
-                                                                                    select="name()"></xsl:value-of>
-                                                                            <span class="float-right badge bg-primary">
-                                                                                <xsl:value-of
-                                                                                        select="text()"></xsl:value-of>
-                                                                            </span>
-                                                                        </a>
-                                                                    </xsl:for-each>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <xsl:comment>/.row</xsl:comment>
+                                <xsl:for-each select="/root">
+                                    <div class="card">
+                                        <xsl:choose>
+                                            <xsl:when test="{{@month}}">
+                                                <div class="card-header">Availabilities/Reliabilities for <xsl:value-of
+                                                        select="@group"></xsl:value-of> -
+                                                    <xsl:value-of select="@month"></xsl:value-of>
                                                 </div>
-                                                <div class="row">
-                                                    <xsl:comment>small card</xsl:comment>
-                                                    <div class="col-md-6">
-                                                        <xsl:choose>
-                                                            <xsl:when test="/root/report-ar/@availability &gt;= 80">
-                                                                <div class="info-box">
-                                                                    <span class="info-box-icon bg-success">
-                                                                        <i class="ion ion-stats-bars"></i>
-                                                                    </span>
-                                                                    <div class="info-box-content">
-                                                                        <span class="info-box-text">
-                                                                            <a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/report/@topology}">
-                                                                                Availability
-                                                                            </a>
-                                                                        </span>
-                                                                        <span class="info-box-number">
-                                                                            <xsl:value-of
-                                                                                    select="/root/report-ar/@availability"></xsl:value-of>
-                                                                        </span>
-                                                                    </div>
-                                                                    <xsl:comment>/.info-box-content</xsl:comment>
-                                                                </div>
-                                                            </xsl:when>
-                                                            <xsl:otherwise>
-                                                                <div class="info-box">
-                                                                    <span class="info-box-icon bg-success">
-                                                                        <i class="ion ion-stats-bars"></i>
-                                                                    </span>
-                                                                    <div class="info-box-content">
-                                                                        <span class="info-box-text">
-                                                                            <a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/report/@topology}">
-                                                                                Availability
-                                                                            </a>
-                                                                        </span>
-                                                                        <span class="info-box-number">
-                                                                            <xsl:value-of
-                                                                                    select="/root/report-ar/@availability"></xsl:value-of>
-                                                                        </span>
-                                                                    </div>
-                                                                    <xsl:comment>/.info-box-content</xsl:comment>
-                                                                </div>
-                                                            </xsl:otherwise>
-                                                        </xsl:choose>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <xsl:choose>
-                                                            <xsl:when test="/root/report-ar/@reliability &gt;= 85">
-                                                                <div class="info-box">
-                                                                    <span class="info-box-icon bg-success">
-                                                                        <i class="ion ion-stats-bars"></i>
-                                                                    </span>
-                                                                    <div class="info-box-content">
-                                                                        <span class="info-box-text">
-                                                                            <a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/report/@topology}">
-                                                                                Reliability
-                                                                            </a>
-                                                                        </span>
-                                                                        <span class="info-box-number">
-                                                                            <xsl:value-of
-                                                                                    select="/root/report-ar/@reliability"></xsl:value-of>
-                                                                        </span>
-                                                                    </div>
-                                                                    <xsl:comment>/.info-box-content</xsl:comment>
-                                                                </div>
-                                                            </xsl:when>
-                                                            <xsl:otherwise>
-                                                                <div class="info-box">
-                                                                    <span class="info-box-icon bg-success">
-                                                                        <i class="ion ion-stats-bars"></i>
-                                                                    </span>
-                                                                    <div class="info-box-content">
-                                                                        <span class="info-box-text">
-                                                                            <a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/report/@topology}">
-                                                                                Reliability
-                                                                            </a>
-                                                                        </span>
-                                                                        <span class="info-box-number">
-                                                                            <xsl:value-of
-                                                                                    select="/root/report-ar/@reliability"></xsl:value-of>
-                                                                        </span>
-                                                                    </div>
-                                                                    <xsl:comment>/.info-box-content</xsl:comment>
-                                                                </div>
-                                                            </xsl:otherwise>
-                                                        </xsl:choose>
-                                                    </div>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <div class="card-header">Availabilities/Reliabilities for <xsl:value-of
+                                                        select="@group"></xsl:value-of>
                                                 </div>
-                                                <div>
-                                                    <xsl:comment>Widget: user widget style 1</xsl:comment>
-                                                    <div class="card card-widget">
-                                                        <div class="card-body">
-                                                            <p>Service group details</p>
-                                                            <select class="listServices" id="servicesGroup">
-                                                                <xsl:for-each select="/root/group/*/text()">
-                                                                    <option value="{/root/@tenant}/dashboard/{.}">
-                                                                        <xsl:value-of select="."></xsl:value-of>
-                                                                    </option>
-                                                                </xsl:for-each>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <div class="col-3">
-                                                <div>
-                                                    <xsl:comment>Widget: user widget style 1</xsl:comment>
-                                                    <div class="card card-widget">
-                                                        <div class="card-body">
-                                                            <p>Details</p>
-                                                            <ul>
-                                                                <li>
-                                                                    <label>NAME :</label>
-                                                                    <xsl:value-of
-                                                                            select="/root/SITE/@NAME"></xsl:value-of><xsl:value-of
-                                                                        select="/root/SERVICE_GROUP/NAME/text()"></xsl:value-of>
-                                                                </li>
-                                                                <li>
-                                                                    <label>DESCRIPTION :</label>
-                                                                    <xsl:value-of
-                                                                            select="/root/SITE/OFFICIAL_NAME/text()"></xsl:value-of><xsl:value-of
-                                                                        select="/root/SERVICE_GROUP/DESCRIPTION/text()"></xsl:value-of>
-                                                                </li>
-                                                                <li>
-                                                                    <label>COUNTRY :</label>
-                                                                    <img alt="{lower-case(/root/SITE/COUNTRY/text()}"
-                                                                         class="flag flag-{lower-case(/root/SITE/COUNTRY_CODE/text()}"
-                                                                         src="/resource/app/css/blank.gif"></img>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <xsl:comment>small card</xsl:comment>
-                                                    <div class="col-md-6">
-                                                        <xsl:choose>
-                                                            <xsl:when test="/root/report-ar/@availability &gt;= 80">
-                                                                <div class="info-box">
-                                                                    <span class="info-box-icon bg-success">
-                                                                        <i class="ion ion-stats-bars"></i>
-                                                                    </span>
-                                                                    <div class="info-box-content">
-                                                                        <span class="info-box-text">
-                                                                            <a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/report/@topology}">
-                                                                                Availability
-                                                                            </a>
-                                                                        </span>
-                                                                        <span class="info-box-number">
-                                                                            <xsl:value-of
-                                                                                    select="/root/report-ar/@availability"></xsl:value-of>
-                                                                        </span>
-                                                                    </div>
-                                                                    <xsl:comment>/.info-box-content</xsl:comment>
-                                                                </div>
-                                                            </xsl:when>
-                                                            <xsl:otherwise>
-                                                                <div class="info-box">
-                                                                    <span class="info-box-icon bg-success">
-                                                                        <i class="ion ion-stats-bars"></i>
-                                                                    </span>
-                                                                    <div class="info-box-content">
-                                                                        <span class="info-box-text">
-                                                                            <a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/report/@topology}">
-                                                                                Availability
-                                                                            </a>
-                                                                        </span>
-                                                                        <span class="info-box-number">
-                                                                            <xsl:value-of
-                                                                                    select="/root/report-ar/@availability"></xsl:value-of>
-                                                                        </span>
-                                                                    </div>
-                                                                    <xsl:comment>/.info-box-content</xsl:comment>
-                                                                </div>
-                                                            </xsl:otherwise>
-                                                        </xsl:choose>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <xsl:choose>
-                                                            <xsl:when test="/root/report-ar/@reliability &gt;= 85">
-                                                                <div class="info-box">
-                                                                    <span class="info-box-icon bg-success">
-                                                                        <i class="ion ion-stats-bars"></i>
-                                                                    </span>
-                                                                    <div class="info-box-content">
-                                                                        <span class="info-box-text">
-                                                                            <a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/report/@topology}">
-                                                                                Reliability
-                                                                            </a>
-                                                                        </span>
-                                                                        <span class="info-box-number">
-                                                                            <xsl:value-of
-                                                                                    select="/root/report-ar/@reliability"></xsl:value-of>
-                                                                        </span>
-                                                                    </div>
-                                                                    <xsl:comment>/.info-box-content</xsl:comment>
-                                                                </div>
-                                                            </xsl:when>
-                                                            <xsl:otherwise>
-                                                                <div class="info-box">
-                                                                    <span class="info-box-icon bg-success">
-                                                                        <i class="ion ion-stats-bars"></i>
-                                                                    </span>
-                                                                    <div class="info-box-content">
-                                                                        <span class="info-box-text">
-                                                                            <a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/report/@topology}">
-                                                                                Reliability
-                                                                            </a>
-                                                                        </span>
-                                                                        <span class="info-box-number">
-                                                                            <xsl:value-of
-                                                                                    select="/root/report-ar/@reliability"></xsl:value-of>
-                                                                        </span>
-                                                                    </div>
-                                                                    <xsl:comment>/.info-box-content</xsl:comment>
-                                                                </div>
-                                                            </xsl:otherwise>
-                                                        </xsl:choose>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                    <div class="col-9">
-                                        <div class="row">
-                                            <div class="col-7">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="card-title">Availability/Reliability - Last 10 days
-                                                        </h3>
-                                                        <div class="card-tools">
-                                                            <button class="btn btn-tool" data-widget="collapse"
-                                                                    type="button">
-                                                                <i class="fa fa-minus"></i>
-                                                            </button>
-                                                            <button class="btn btn-tool" data-widget="remove"
-                                                                    type="button">
-                                                                <i class="fa fa-times"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <xsl:for-each select="/root/report-ar/*">
-                                                            <div class="d-none dataAvailability">
-                                                                <xsl:value-of select="@availability"></xsl:value-of>
-                                                            </div>
-                                                        </xsl:for-each>
-                                                        <xsl:for-each select="/root/report-ar/*">
-                                                            <div class="d-none dataReliability">
-                                                                <xsl:value-of select="@reliability"></xsl:value-of>
-                                                            </div>
-                                                        </xsl:for-each>
-                                                        <xsl:for-each select="/root/report-ar/*">
-                                                            <div class="d-none dataTimestamp">
-                                                                <xsl:value-of
-                                                                        select="substring-after(@timestamp,&apos;-&apos;)"></xsl:value-of>
-                                                            </div>
-                                                        </xsl:for-each>
-                                                        <div>
-                                                            <div class="chart-responsive">
-                                                                <canvas height="160" id="myChart2"></canvas>
-                                                            </div>
-                                                            <xsl:comment>./chart-responsive</xsl:comment>
-                                                            <xsl:comment>/.col</xsl:comment>
-                                                            <xsl:comment>/.col</xsl:comment>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-5">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h3 class="card-title">Last statuses</h3>
-                                                        <div class="card-tools">
-                                                            <button class="btn btn-tool" data-widget="collapse"
-                                                                    type="button">
-                                                                <i class="fa fa-minus"></i>
-                                                            </button>
-                                                            <button class="btn btn-tool" data-widget="remove"
-                                                                    type="button">
-                                                                <i class="fa fa-times"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <xsl:comment>/.card-header</xsl:comment>
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <div class="col-md-9">
-                                                                <div class="chart-responsive">
-                                                                    <canvas height="160" id="myChart1"></canvas>
-                                                                </div>
-                                                                <xsl:comment>./chart-responsive</xsl:comment>
-                                                            </div>
-                                                            <xsl:comment>/.col</xsl:comment>
-                                                            <div class="clearfix col-md-3">
-                                                                <ul class="chart-legend clearfix">
-                                                                    <li>
-                                                                        <i class="fa fa-circle-o text-success"></i>
-                                                                        OK
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="fa fa-circle-o text-warning"></i>
-                                                                        Warning
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="fa fa-circle-o text-danger"></i>
-                                                                        Critical
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="fa fa-circle-o text-info"></i>
-                                                                        Missing
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="fa fa-circle-o text-muted"></i>
-                                                                        Unknown
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <xsl:comment>/.col</xsl:comment>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="clearfix">
-                                                                <br></br>
-                                                                <xsl:for-each select="/root/status-last/@*">
-                                                                    <div class="d-none dataStatuses">
-                                                                        <xsl:value-of select="."></xsl:value-of>
-                                                                    </div>
-                                                                </xsl:for-each>
-                                                                <xsl:for-each select="/root/status-last/@*">
-                                                                    <div class="d-none labelStatuses">
-                                                                        <xsl:value-of
-                                                                                select="local-name(.)"></xsl:value-of>
-                                                                    </div>
-                                                                </xsl:for-each>
-                                                                <ul>
-                                                                    <xsl:for-each select="/root/status-last/@*">
-                                                                        <li>
-                                                                            <xsl:value-of
-                                                                                    select="local-name(.)"></xsl:value-of>
-                                                                            :
-                                                                            <xsl:value-of select="."></xsl:value-of>
-                                                                        </li>
-                                                                    </xsl:for-each>
-                                                                </ul>
-                                                            </div>
-                                                            <xsl:comment>/.col</xsl:comment>
-                                                        </div>
-                                                        <xsl:comment>/.row</xsl:comment>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-7">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3 class="card-title">Last Status Changes</h3>
-                                            </div>
-                                            <xsl:comment>/.card-header</xsl:comment>
-                                            <div class="card-body font-weight-light table-responsive ">
-                                                <table class="table dataTable table-bordered table-condensed">
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table m-0" id="ar">
                                                     <thead>
                                                         <tr>
-                                                            <th class="text-nowrap">Endpoint Group</th>
-                                                            <th>Endpoint</th>
-                                                            <th>Metric</th>
                                                             <th>Timestamp</th>
-                                                            <th></th>
-                                                            <th>Details</th>
+                                                            <th>Availability</th>
+                                                            <th>Reliability</th>
+                                                            <xsl:choose>
+                                                                <xsl:when test="group/results[1]/@unknown">
+                                                                    <th>Unknown</th>
+                                                                </xsl:when>
+                                                            </xsl:choose>
+                                                            <xsl:choose>
+                                                                <xsl:when test="group/results[1]/@downtime">
+                                                                    <th>Downtime</th>
+                                                                </xsl:when>
+                                                            </xsl:choose>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <xsl:for-each select="root/status-last/object">
+                                                        <xsl:for-each select="group/results">
                                                             <tr>
                                                                 <td>
-                                                                    <xsl:value-of
-                                                                            select="endpoint_group/text()"></xsl:value-of>
-                                                                </td>
-                                                                <td>
-                                                                    <xsl:value-of
-                                                                            select="endpoint/text()"></xsl:value-of>
-                                                                </td>
-                                                                <td>
-                                                                    <xsl:value-of select="metric/text()"></xsl:value-of>
-                                                                </td>
-                                                                <td>
-                                                                    <xsl:value-of
-                                                                            select="timestamp/text()"></xsl:value-of>
+                                                                    <xsl:value-of select="@timestamp"></xsl:value-of>
                                                                 </td>
                                                                 <td>
                                                                     <xsl:choose>
-                                                                        <xsl:when test="status/text()=&apos;OK&apos;">
-                                                                            <span class="badge bg-success">
-                                                                                <xsl:value-of
-                                                                                        select="status/text()"></xsl:value-of>
+                                                                        <xsl:when
+                                                                                test="not(@availability) or @availability=-1">
+                                                                            <span class="m-1 badge badge-secondary">
+                                                                                N/A
                                                                             </span>
                                                                         </xsl:when>
                                                                         <xsl:when
-                                                                                test="status/text()=&apos;WARNING&apos;">
-                                                                            <span class="badge bg-warning">
+                                                                                test="@availability &gt;= /root/@level1">
+                                                                            <span class="m-1 badge badge-success">
                                                                                 <xsl:value-of
-                                                                                        select="status/text()"></xsl:value-of>
+                                                                                        select="@availability"></xsl:value-of>
                                                                             </span>
                                                                         </xsl:when>
                                                                         <xsl:when
-                                                                                test="status/text()=&apos;CRITICAL&apos;">
-                                                                            <span class="badge bg-danger">
+                                                                                test="@availability &lt; /root/@level1">
+                                                                            <span class="m-1 badge badge-danger">
                                                                                 <xsl:value-of
-                                                                                        select="status/text()"></xsl:value-of>
+                                                                                        select="@availability"></xsl:value-of>
                                                                             </span>
                                                                         </xsl:when>
-                                                                        <xsl:when
-                                                                                test="status/text()=&apos;MISSING&apos;">
-                                                                            <span class="badge bg-info">
-                                                                                <xsl:value-of
-                                                                                        select="status/text()"></xsl:value-of>
-                                                                            </span>
-                                                                        </xsl:when>
-                                                                        <xsl:otherwise>
-                                                                            <span class="badge bg-gray">
-                                                                                <xsl:value-of
-                                                                                        select="status/text()"></xsl:value-of>
-                                                                            </span>
-                                                                        </xsl:otherwise>
                                                                     </xsl:choose>
                                                                 </td>
                                                                 <td>
-                                                                    <span class="fa fa-search"
-                                                                          data-target="#{metric/text()}_{timestamp/text()}"
-                                                                          data-toggle="modal"></span>
-                                                                    <xsl:comment>Modal</xsl:comment>
-                                                                    <div aria-hidden="true"
-                                                                         aria-labelledby="exampleModalLabel"
-                                                                         class="modal fade"
-                                                                         id="{metric/text()}_{timestamp/text()}"
-                                                                         role="dialog" tabindex="-1">
-                                                                        <div class="modal-dialog modal-lg"
-                                                                             role="document">
-                                                                            <div class="modal-content ">
-                                                                                <div class="modal-header">
-                                                                                    <h5 class="modal-title"
-                                                                                        id="exampleModalLabel">
-                                                                                        <xsl:value-of
-                                                                                                select="endpoint_group/text()"></xsl:value-of>
-                                                                                        / <xsl:value-of
-                                                                                            select="endpoint/text()"></xsl:value-of> / <xsl:value-of
-                                                                                            select="metric/text()"></xsl:value-of> &gt;
-                                                                                        <xsl:choose>
-                                                                                            <xsl:when
-                                                                                                    test="status/text()=&apos;OK&apos;">
-                                                                                                <span class="badge bg-success">
-                                                                                                    <xsl:value-of
-                                                                                                            select="status/text()"></xsl:value-of>
-                                                                                                </span>
-                                                                                            </xsl:when>
-                                                                                            <xsl:when
-                                                                                                    test="status/text()=&apos;WARNING&apos;">
-                                                                                                <span class="badge bg-warning">
-                                                                                                    <xsl:value-of
-                                                                                                            select="status/text()"></xsl:value-of>
-                                                                                                </span>
-                                                                                            </xsl:when>
-                                                                                            <xsl:when
-                                                                                                    test="status/text()=&apos;CRITICAL&apos;">
-                                                                                                <span class="badge bg-danger">
-                                                                                                    <xsl:value-of
-                                                                                                            select="status/text()"></xsl:value-of>
-                                                                                                </span>
-                                                                                            </xsl:when>
-                                                                                            <xsl:when
-                                                                                                    test="status/text()=&apos;MISSING&apos;">
-                                                                                                <span class="badge bg-info">
-                                                                                                    <xsl:value-of
-                                                                                                            select="status/text()"></xsl:value-of>
-                                                                                                </span>
-                                                                                            </xsl:when>
-                                                                                            <xsl:otherwise>
-                                                                                                <span class="badge bg-gray">
-                                                                                                    <xsl:value-of
-                                                                                                            select="status/text()"></xsl:value-of>
-                                                                                                </span>
-                                                                                            </xsl:otherwise>
-                                                                                        </xsl:choose>
-                                                                                    </h5>
-                                                                                    <button aria-label="Close"
-                                                                                            class="close"
-                                                                                            data-dismiss="modal"
-                                                                                            type="button">
-                                                                                        <span aria-hidden="true">x
-                                                                                        </span>
-                                                                                    </button>
-                                                                                </div>
-                                                                                <div class="modal-body text-justify">
-                                                                                    <div>
-                                                                                        <p class="font-weight-bold">
-                                                                                            Timestamp
-                                                                                        </p>
-                                                                                        <xsl:value-of
-                                                                                                select="timestamp/text()"></xsl:value-of>
-                                                                                    </div>
-                                                                                    <div>
-                                                                                        <p class="font-weight-bold">
-                                                                                            Summary
-                                                                                        </p>
-                                                                                        <pre>
-                                                                                            <xsl:value-of
-                                                                                                    select="summary/text()"></xsl:value-of>
-                                                                                        </pre>
-                                                                                    </div>
-                                                                                    <xsl:choose>
-                                                                                        <xsl:when test="message/text()">
-                                                                                            <div>
-                                                                                                <p class="font-weight-bold">
-                                                                                                    Message
-                                                                                                </p>
-                                                                                                <pre>
-                                                                                                    <xsl:value-of
-                                                                                                            select="message/text()"></xsl:value-of>
-                                                                                                </pre>
-                                                                                            </div>
-                                                                                        </xsl:when>
-                                                                                    </xsl:choose>
-                                                                                </div>
-                                                                                <div class="modal-footer">
-                                                                                    <button class="btn btn-secondary"
-                                                                                            data-dismiss="modal"
-                                                                                            type="button">Close
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                    <xsl:choose>
+                                                                        <xsl:when
+                                                                                test="not(@reliability) or @reliability=-1">
+                                                                            <span class="m-1 badge badge-secondary">
+                                                                                N/A
+                                                                            </span>
+                                                                        </xsl:when>
+                                                                        <xsl:when
+                                                                                test="@reliability &gt;= /root/@level2">
+                                                                            <span class="m-1 badge badge-success">
+                                                                                <xsl:value-of
+                                                                                        select="@reliability"></xsl:value-of>
+                                                                            </span>
+                                                                        </xsl:when>
+                                                                        <xsl:when
+                                                                                test="@reliability &lt; /root/@level2">
+                                                                            <span class="m-1 badge badge-danger">
+                                                                                <xsl:value-of
+                                                                                        select="@reliability"></xsl:value-of>
+                                                                            </span>
+                                                                        </xsl:when>
+                                                                    </xsl:choose>
                                                                 </td>
+                                                                <xsl:choose>
+                                                                    <xsl:when test="@unknown">
+                                                                        <td>
+                                                                            <xsl:choose>
+                                                                                <xsl:when test="@unknown &gt;= 10">
+                                                                                    <span class="m-1 badge badge-danger">
+                                                                                        <xsl:value-of
+                                                                                                select="@unknown"></xsl:value-of>
+                                                                                    </span>
+                                                                                </xsl:when>
+                                                                                <xsl:otherwise>
+                                                                                    <span class="m-1 badge badge-success">
+                                                                                        <xsl:value-of
+                                                                                                select="@unknown"></xsl:value-of>
+                                                                                    </span>
+                                                                                </xsl:otherwise>
+                                                                            </xsl:choose>
+                                                                        </td>
+                                                                    </xsl:when>
+                                                                </xsl:choose>
+                                                                <xsl:choose>
+                                                                    <xsl:when test="@downtime">
+                                                                        <td>
+                                                                            <xsl:choose>
+                                                                                <xsl:when test="@downtime &gt;= 10">
+                                                                                    <span class="m-1 badge badge-danger">
+                                                                                        <xsl:value-of
+                                                                                                select="@downtime"></xsl:value-of>
+                                                                                    </span>
+                                                                                </xsl:when>
+                                                                                <xsl:otherwise>
+                                                                                    <span class="m-1 badge badge-success">
+                                                                                        <xsl:value-of
+                                                                                                select="@downtime"></xsl:value-of>
+                                                                                    </span>
+                                                                                </xsl:otherwise>
+                                                                            </xsl:choose>
+                                                                        </td>
+                                                                    </xsl:when>
+                                                                </xsl:choose>
                                                             </tr>
                                                         </xsl:for-each>
                                                     </tbody>
@@ -846,144 +424,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-5">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <xsl:choose>
-                                                    <xsl:when test="root/@tenant=&apos;egi&apos;">
-                                                        <h3 class="card-title">OnGoing Downtimes</h3>
-                                                    </xsl:when>
-                                                    <xsl:otherwise>
-                                                        <h3 class="card-title">Last Downtimes</h3>
-                                                    </xsl:otherwise>
-                                                </xsl:choose>
-                                            </div>
-                                            <xsl:comment>/.card-header</xsl:comment>
-                                            <div class="card-body font-weight-light table-responsive">
-                                                <table class="table table-bordered table-condensed dataTable">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="text-nowrap">Site</th>
-                                                            <th>Status</th>
-                                                            <th>Start (UTC)</th>
-                                                            <th>End (UTC)</th>
-                                                            <th></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <xsl:for-each select="root/downtimes/DOWNTIME">
-                                                            <tr>
-                                                                <td class="text-nowrap">
-                                                                    <xsl:value-of
-                                                                            select="HOSTED_BY/text()"></xsl:value-of>
-                                                                </td>
-                                                                <td>
-                                                                    <xsl:choose>
-                                                                        <xsl:when
-                                                                                test="SEVERITY/text()!=&apos;OUTAGE&apos;">
-                                                                            <span class="badge bg-success">
-                                                                                <xsl:value-of
-                                                                                        select="SEVERITY/text()"></xsl:value-of>
-                                                                            </span>
-                                                                        </xsl:when>
-                                                                        <xsl:otherwise>
-                                                                            <span class="badge bg-warning">
-                                                                                <xsl:value-of
-                                                                                        select="SEVERITY/text()"></xsl:value-of>
-                                                                            </span>
-                                                                        </xsl:otherwise>
-                                                                    </xsl:choose>
-                                                                </td>
-                                                                <td class="text-nowrap">
-                                                                    <xsl:value-of
-                                                                            select="FORMATED_START_DATE/text()"></xsl:value-of>
-                                                                </td>
-                                                                <td class="text-nowrap">
-                                                                    <xsl:value-of
-                                                                            select="FORMATED_END_DATE/text()"></xsl:value-of>
-                                                                </td>
-                                                                <td>
-                                                                    <xsl:comment>Button trigger modal</xsl:comment>
-                                                                    <span class="fa fa-search"
-                                                                          data-target="#{@PRIMARY_KEY}"
-                                                                          data-toggle="modal"></span>
-                                                                    <xsl:comment>Modal</xsl:comment>
-                                                                    <div aria-hidden="true"
-                                                                         aria-labelledby="exampleModalLabel"
-                                                                         class="modal fade" id="{@PRIMARY_KEY}"
-                                                                         role="dialog" tabindex="-1">
-                                                                        <div class="modal-dialog modal-lg"
-                                                                             role="document">
-                                                                            <div class="modal-content ">
-                                                                                <div class="modal-header">
-                                                                                    <h5 class="modal-title"
-                                                                                        id="exampleModalLabel">
-                                                                                        <xsl:value-of
-                                                                                                select="@CLASSIFICATION"></xsl:value-of>
-                                                                                        DOWNTIME :
-                                                                                        <xsl:value-of
-                                                                                                select="HOSTED_BY/text()"></xsl:value-of>
-                                                                                    </h5>
-                                                                                    <button aria-label="Close"
-                                                                                            class="close"
-                                                                                            data-dismiss="modal"
-                                                                                            type="button">
-                                                                                        <span aria-hidden="true">x
-                                                                                        </span>
-                                                                                    </button>
-                                                                                </div>
-                                                                                <div class="modal-body text-justify">
-                                                                                    <div>
-                                                                                        <p class="font-weight-bold">
-                                                                                            Start Date
-                                                                                        </p>
-                                                                                        <xsl:value-of
-                                                                                                select="FORMATED_START_DATE/text()"></xsl:value-of>
-                                                                                    </div>
-                                                                                    <div>
-                                                                                        <p class="font-weight-bold">End
-                                                                                            Date
-                                                                                        </p>
-                                                                                        <xsl:value-of
-                                                                                                select="FORMATED_END_DATE/text()"></xsl:value-of>
-                                                                                    </div>
-                                                                                    <div>
-                                                                                        <p class="font-weight-bold">
-                                                                                            Description
-                                                                                        </p>
-                                                                                        <pre>
-                                                                                            <xsl:value-of
-                                                                                                    select="DESCRIPTION/text()"></xsl:value-of>
-                                                                                        </pre>
-                                                                                    </div>
-                                                                                    <div>
-                                                                                        <p class="font-weight-bold">
-                                                                                            Affected Endpoints
-                                                                                        </p>
-                                                                                        <pre>
-                                                                                            <xsl:value-of
-                                                                                                    select="service_endpoints/text()"></xsl:value-of>
-                                                                                        </pre>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="modal-footer">
-                                                                                    <button class="btn btn-secondary"
-                                                                                            data-dismiss="modal"
-                                                                                            type="button">Close
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </xsl:for-each>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </xsl:for-each>
                                 <xsl:comment>/.container-fluid</xsl:comment>
                             </div>
                             <xsl:comment>/.content</xsl:comment>
@@ -1009,16 +450,45 @@
                 <script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
                 <xsl:comment>adminlte</xsl:comment>
                 <script src="/resource/app/html/adminlte/dist/js/adminlte.js"></script>
-                <xsl:comment>OPTIONAL SCRIPTS</xsl:comment>
-                <script src="/resource/app/html/adminlte/plugins/chart.js/Chart.min.js"></script>
-                <xsl:comment>&lt;script src="/resource/app/html/adminlte/plugins/chart.js/Chart.bundle.min.js"&gt;&lt;/script&gt;</xsl:comment>
-                <link href="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap.css"
-                      rel="stylesheet"></link>
-                <link href="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.css"
-                      rel="stylesheet"></link>
-                <script src="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
-                <script src="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap.min.js"></script>
                 <script src="/resource/app/js/dashboard.js"></script>
+                <script charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"
+                        type="text/javascript"></script>
+                <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+                <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+                <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"
+                        type="text/javascript"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"
+                        type="text/javascript"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"
+                        type="text/javascript"></script>
+                <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+                <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+                <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+                <script src="https://cdn.datatables.net/scroller/1.5.0/js/dataTables.scroller.min.js"></script>
+                <script src="https://cdn.datatables.net/select/1.2.6/js/dataTables.select.min.js"></script>
+                <script src="https://cdn.datatables.net/colreorder/1.5.0/js/dataTables.colReorder.min.js"></script>
+                <script src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>
+                <script src="https://cdn.datatables.net/responsive/2.2.2/js/responsive.bootstrap4.min.js"></script>
+                <link href="https://cdn.datatables.net/select/1.2.6/css/select.dataTables.min.css" rel="stylesheet"
+                      type="text/css"></link>
+                <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet"
+                      type="text/css"></link>
+                <link href="https://cdn.datatables.net/colreorder/1.5.0/css/colReorder.bootstrap4.min.css"
+                      rel="stylesheet" type="text/css"></link>
+                <link href="https://cdn.datatables.net/scroller/1.5.0/css/scroller.bootstrap4.min.css" rel="stylesheet"
+                      type="text/css"></link>
+                <link href="https://cdn.datatables.net/select/1.2.6/css/select.bootstrap4.min.css" rel="stylesheet"
+                      type="text/css"></link>
+                <link href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css"
+                      rel="stylesheet" type="text/css"></link>
+                <style>#ar_wrapper .dt-buttons { float:left; } #ar_wrapper .dataTables_filter{ float:right; }
+                    #ar_wrapper .dataTables_length{ float:right; }
+                </style>
+                <script>$(document).ready(function() { $('#ar').DataTable( { "dom": "Blftip", buttons: [ 'copyHtml5',
+                    'excelHtml5', 'csvHtml5', 'pdfHtml5' ], "lengthMenu": [[50, 25, 10, -1], [50, 25, 10, "All"]] } ); }
+                    );
+                </script>
             </body>
         </html>
     </xsl:template>
