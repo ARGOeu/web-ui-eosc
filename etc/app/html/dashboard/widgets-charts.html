@@ -64,11 +64,7 @@
                     <!-- /.col -->
                     <div class="clearfix col-md-3">
                         <ul class="chart-legend clearfix">
-                            <li><i class="fa fa-circle-o text-success"></i> OK</li>
-                            <li><i class="fa fa-circle-o text-warning"></i> Warning</li>
-                            <li><i class="fa fa-circle-o text-danger"></i> Critical</li>
-                            <li><i class="fa fa-circle-o text-info"></i> Missing</li>
-                            <li><i class="fa fa-circle-o text-muted"></i> Unknown</li>
+
                         </ul>
                     </div>
                     <!-- /.col -->
@@ -79,8 +75,16 @@
                             <br/>
                             <div class="d-none dataStatuses" tpl:foreach="/root/status-last/@*">{{.}}</div>
                             <div class="d-none labelStatuses" tpl:foreach="/root/status-last/@*">{{local-name(.)}}</div>
-                            <ul>
-                                <li tpl:foreach="/root/status-last/@*">{{local-name(.)}} : {{.}}</li>
+                            <ul style="list-style:none">
+                                <li  tpl:foreach="/root/status-last/@*">
+                                    <i tpl:if="local-name(.)='Ok'" class="m-1 fa fa-circle-o text-success"/>
+                                    <i tpl:else="local-name(.)='Warning'" class="m-1 fa fa-circle-o text-warning"/>
+                                    <i tpl:else="local-name(.)='Critical'" class="m-1 fa fa-circle-o text-danger"/>
+                                    <i tpl:else="local-name(.)='Missing'" class="m-1 fa fa-circle-o text-info"/>
+                                    <i tpl:else="" class="m-1 fa fa-circle-o text-muted"/>
+                                    {{local-name(.)}} : {{.}}
+                                </li>
+
                             </ul>
 
                     </div>

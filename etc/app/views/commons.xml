@@ -5,6 +5,32 @@
         Created by cyril on 2018/03/29 
     -->
 
+    <view name="reportTopology">
+
+        <argument name="tenant"/>
+        <argument name="report"/>
+
+        <variable name="api-key" eval="view('tenantsListRaw')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+
+        <variable name="url"  eval="concat(property('api.topology'),'/',$report)"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+        </connector>
+        <serializer type="JSONStreamSerializer"/>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+    </view>
+
     <view name="tenantsListRaw" authenticators="admin">
 
         <connector type="FileConnector">
@@ -66,94 +92,80 @@
 
     <view name="reportDetails">
 
-        <argument name="report">Critical</argument>
-        <argument name="tenant">egi</argument>
 
         <connector type="XMLConnector">
-            <parameter name="content" eval="new_element('report')"/>
+            <parameter name="content" eval="new_element('reports')"/>
         </connector>
 
         <processors>
 
-
-            <element in="report" if="$tenant='egi' and $report='Critical'">
-
-                <attribute-create out="topology">'NGI'</attribute-create>
-                <attribute-create out="topologyStatus">'SITES'</attribute-create>
-
-                <element-create>
-                    new_element('NGIS',new_attribute('icon','fa
-                    fa-globe')|new_attribute('bg','bg-primary')|new_text(38))
-                </element-create>
-                <element-create>
-                    new_element('Sites',new_attribute('icon','fa
-                    fa-university')|new_attribute('bg','bg-danger')|new_text(282))
-                </element-create>
-                <element-create>
-                    new_element('Services',new_attribute('icon','fa
-                    fa-server')|new_attribute('bg','bg-success')|new_text(1438))
-                </element-create>
-            </element>
-
-            <element in="report" if="$tenant='egi' and $report='OPS-MONITOR-Critical'">
-                <attribute-create out="topology">'NGI'</attribute-create>
-                <attribute-create out="topologyStatus">'SITES'</attribute-create>
-                <element-create>
-                    new_element('NGIS',new_attribute('icon','fa
-                    fa-globe')|new_attribute('bg','bg-primary')|new_text(18))
-                </element-create>
-                <element-create>
-                    new_element('Sites',new_attribute('icon','fa
-                    fa-university')|new_attribute('bg','bg-danger')|new_text(162))
-                </element-create>
-                <element-create>
-                    new_element('Services',new_attribute('icon','fa
-                    fa-server')|new_attribute('bg','bg-success')|new_text(1211))
-                </element-create>
+            <element in="reports">
+                <element-create>new_element('report',new_attribute('tenant','egi')|new_attribute('report','Critical'))</element-create>
+                <element-create>new_element('report',new_attribute('tenant','egi')|new_attribute('report','OPS-MONITOR-Critical'))</element-create>
+                <element-create>new_element('report',new_attribute('tenant','eudat')|new_attribute('report','Critical'))</element-create>
             </element>
 
 
-            <element in="report" if="$tenant='eudat' and $report='Critical'">
-                <attribute-create out="topology">'SERVICEGROUPS'</attribute-create>
-                <attribute-create out="topologyStatus">'SERVICEGROUPS'</attribute-create>
-                <element-create>
-                    new_element('ServiceGroups',new_attribute('icon','fa
-                    fa-sitemap')|new_attribute('bg','bg-primary')|new_text(43))
-                </element-create>
-
-                <element-create>
-                    new_element('Services',new_attribute('icon','fa
-                    fa-server')|new_attribute('bg','bg-info')|new_text(87))
-                </element-create>
+            <element in="reports">
+                <element in="report">
+                    <element-create >view('reportTopology',entry('tenant',current()/../@tenant)|entry('report',current()/../@report))/object/data/*</element-create>
+                </element>
             </element>
 
-            <element in="report">
-                <attribute-create out="description" if="$tenant='egi'">'Advanced Computing for Research'
-                </attribute-create>
-                <attribute-create out="description" if="$tenant='eudat'">'Collaborative Data Infrastructure'
-                </attribute-create>
-
-                <attribute-create out="url" if="$tenant='egi'">'http://egi.eu'</attribute-create>
-                <attribute-create out="url" if="$tenant='eudat'">'http://eudat.eu'</attribute-create>
-
-                <attribute-create out="twitter" if="$tenant='egi'">'https://twitter.com/egi_einfra'</attribute-create>
-                <attribute-create out="twitter" if="$tenant='eudat'">'https://twitter.com/Eudat_eu'</attribute-create>
-
-                <attribute-create out="facebook" if="$tenant='egi'">'https://www.facebook.com/EGIeInfrastructure/'
-                </attribute-create>
-                <attribute-create out="facebook" if="$tenant='eudat'">'https://www.facebook.com/EUDAT'
-                </attribute-create>
-
-                <attribute-create out="linkedin" if="$tenant='egi'">
-                    'https://www.linkedin.com/company/stichting-european-grid-initiative'
-                </attribute-create>
-                <attribute-create out="linkedin" if="$tenant='eudat'">
-                    'https://be.linkedin.com/in/eudat-collaborative-data-infrastructure-30aa4551/en'
-                </attribute-create>
+            <element in="reports">
+                <element in="report">
+                    <element>
+                        <element-ignore in="item"/>
+                        <element-create>sort_by_string(../item,'text()')</element-create>
+                    </element>
+                </element>
             </element>
 
 
+            <element in="reports">
+                <element in="report">
+                    <attribute-create out="description" if="../@tenant='egi'">'Advanced Computing for Research'
+                    </attribute-create>
+                    <attribute-create out="description" if="../@tenant='eudat'">'Collaborative Data Infrastructure'
+                    </attribute-create>
+
+                    <attribute-create out="url" if="../@tenant='egi'">'http://egi.eu'</attribute-create>
+                    <attribute-create out="url" if="../@tenant='eudat'">'http://eudat.eu'</attribute-create>
+
+                    <attribute-create out="twitter" if="../@tenant='egi'">'https://twitter.com/egi_einfra'</attribute-create>
+                    <attribute-create out="twitter" if="../@tenant='eudat'">'https://twitter.com/Eudat_eu'</attribute-create>
+
+                    <attribute-create out="facebook" if="../@tenant='egi'">'https://www.facebook.com/EGIeInfrastructure/'
+                    </attribute-create>
+                    <attribute-create out="facebook" if="../@tenant='eudat'">'https://www.facebook.com/EUDAT'
+                    </attribute-create>
+
+                    <attribute-create out="linkedin" if="../@tenant='egi'">
+                        'https://www.linkedin.com/company/stichting-european-grid-initiative'
+                    </attribute-create>
+                    <attribute-create out="linkedin" if="../@tenant='eudat'">
+                        'https://be.linkedin.com/in/eudat-collaborative-data-infrastructure-30aa4551/en'
+                    </attribute-create>
+                </element>
+            </element>
         </processors>
+
+            <cache type="FileCache">
+                <trigger type="DeltaTimeTrigger">
+                    <parameter name="hours">3</parameter>
+                </trigger>
+                <trigger type="ViewNotifiedTrigger"/>
+            </cache>
+
+            <renderers>
+                <renderer type="DefaultRenderer">
+                    <parameter name="contentType">text/xml</parameter>
+                </renderer>
+            </renderers>
+
+
+
+
     </view>
 
     <view name="dashboard-filter">
@@ -179,6 +191,8 @@
                 <attribute-create out="details">'level1'</attribute-create>
                 <attribute-create out="group">$entity</attribute-create>
                 <attribute-create out="topology">$topology-status</attribute-create>
+
+                <element-create>view('reportDetails')/reports/report[@report=$report][@tenant=$tenant]</element-create>
                 <element-create>
                     view('api-status-last',entry('report',$report)|entry('tenant',$tenant)|entry('topology',$topology-status)|entry('entity',$entity))
                 </element-create>
@@ -221,28 +235,14 @@
 
         <processors>
 
-            <element in="root">
 
-                <element-create if="$tenant='egi' and $report='OPS-MONITOR-Critical'">
-                    new_element('group',view('gocdb.site')/results/SITE[PRODUCTION_INFRASTRUCTURE/text()='Production'
-                    and CERTIFICATION_STATUS/text()='Certified']/SHORT_NAME[contains(text(),'GRIDOPS')])
-                </element-create>
-                <element-create if="$tenant='egi' and $report='Critical'">
-                    new_element('group',view('gocdb.site')/results/SITE[PRODUCTION_INFRASTRUCTURE/text()='Production'
-                    and CERTIFICATION_STATUS/text()='Certified']/SHORT_NAME)
-                </element-create>
-                <element-create if="$tenant='eudat'">
-                    new_element('group',view('dpmt.siteProjects')/results/SERVICE_GROUP[MONITORED/text()='True']/NAME)
-                </element-create>
-
-            </element>
 
             <element in="root">
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="details">'level0'</attribute-create>
                 <attribute-create out="topology">$topology-status</attribute-create>
-                <element-create>view('reportDetails',entry('report',$report)|entry('tenant',$tenant))</element-create>
+                <element-create>view('reportDetails')/reports/report[@report=$report][@tenant=$tenant]</element-create>
                 <element-create>
                     view('api-status-last',entry('report',$report)|entry('tenant',$tenant)|entry('topology',$topology-status))
                 </element-create>
@@ -277,17 +277,7 @@
             <element in="root">
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="tenant">$tenant</attribute-create>
-                <element-create if="$tenant='egi' and $report='Critical'">
-                    new_element('group',view('gocdb.site')/results/SITE[PRODUCTION_INFRASTRUCTURE/text()='Production'
-                    and CERTIFICATION_STATUS/text()='Certified']/SHORT_NAME)
-                </element-create>
-                <element-create if="$tenant='egi' and $report='OPS-MONITOR-Critical'">
-                    new_element('group',view('gocdb.site')/results/SITE[PRODUCTION_INFRASTRUCTURE/text()='Production'
-                    and CERTIFICATION_STATUS/text()='Certified']/SHORT_NAME[contains(text(),'GRIDOPS')])
-                </element-create>
-                <element-create if="$tenant='eudat'">
-                    new_element('group',view('dpmt.siteProjects')/results/SERVICE_GROUP[MONITORED/text()='True']/NAME)
-                </element-create>
+                <element-create>view('reportDetails')/reports/report[@report=$report][@tenant=$tenant]</element-create>
 
             </element>
         </processors>

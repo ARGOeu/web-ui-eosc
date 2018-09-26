@@ -26,7 +26,7 @@
 
                     <div class="col-sm-5">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/{{root/@tenant}}">Home</a></li>
                             <li class="breadcrumb-item">Dashboard</li>
                             <li class="breadcrumb-item active" tpl:if="root/@details='level0'"  ><a href="/{{root/@tenant}}/{{root/@report}}">{{root/@tenant}} - {{root/@report}}</a></li>
                             <li class="breadcrumb-item active" tpl:else=""  ><a href="/{{root/@tenant}}/{{root/@report}}">{{root/@tenant}} - {{root/@report}}</a></li>
@@ -47,7 +47,7 @@
                     <div class="col-3" tpl:if="root/@details!='level1'">
                         <div  tpl:include="/resource/app/html/dashboard/widget-project2.html"/>
                         <div  tpl:include="/resource/app/html/dashboard/widget-global-ar.html"/>
-                        <div tpl:include="/resource/app/html/dashboard/widget-list.html" />
+
                     </div>
                     <div class="col-3" tpl:else="">
                         <div  tpl:include="/resource/app/html/dashboard/widget-site.html"/>
@@ -90,27 +90,27 @@
 <!-- REQUIRED SCRIPTS -->
 
 <!-- jQuery -->
-<script src="/resource/app/html/adminlte/plugins/jquery/jquery.min.js"></script>
+<script src="/resource/app/html/adminlte/plugins/jquery/jquery.min.js?v={$app.version}"></script>
 <!-- Bootstrap -->
-<script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js?v={$app.version}"></script>
 <!-- adminlte -->
-<script src="/resource/app/html/adminlte/dist/js/adminlte.js"></script>
+<script src="/resource/app/html/adminlte/dist/js/adminlte.js?v={$app.version}"></script>
 
 <!-- OPTIONAL SCRIPTS -->
-<script src="/resource/app/html/adminlte/plugins/chart.js/Chart.min.js"></script>
+<script src="/resource/app/html/adminlte/plugins/chart.js/Chart.min.js?v={$app.version}"></script>
 <!--<script src="/resource/app/html/adminlte/plugins/chart.js/Chart.bundle.min.js"></script>-->
 
 
-<link rel="stylesheet" href="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap.css"/>
-<link rel="stylesheet" href="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.css"/>
+<link rel="stylesheet" href="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap.css?v={$app.version}"/>
+<link rel="stylesheet" href="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.css?v={$app.version}"/>
 
-<script src="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.js?v={$app.version}"></script>
 
-<script src="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap.min.js?v={$app.version}"></script>
 
 
 
-<script src="/resource/app/js/dashboard.js"></script>
+<script src="/resource/app/js/dashboard.js?v={$app.version}"></script>
 
 
 
