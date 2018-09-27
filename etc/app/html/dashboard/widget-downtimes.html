@@ -11,68 +11,73 @@
 
         </div>
         <!-- /.card-header -->
-        <div class="card-body font-weight-light table-responsive">
-            <table class="table table-bordered table-condensed dataTable">
+        <div class="card-body font-weight-light ">
+            <div class="table-responsive">
 
-                <thead>
-                <tr>
-                    <th class="text-nowrap" >Site</th>
-                    <th>Status</th>
+                <table class="table  table-bordered table-condensed dataTable">
 
-                    <th>Start (UTC)</th>
-                    <th>End (UTC)</th>
-                    <th></th>
-                </tr>
-                </thead>
+                    <thead>
+                    <tr>
+                        <th class="text-nowrap" >Site</th>
+                        <th>Status</th>
 
-                <tbody>
-                <tr tpl:foreach="root/downtimes/DOWNTIME">
-                    <td class="text-nowrap">{{HOSTED_BY/text()}}</td>
-                    <td>
-                        <span tpl:if="SEVERITY/text()!='OUTAGE'" class="badge bg-success">{{SEVERITY/text()}}</span>
-                        <span tpl:else="" class="badge bg-warning">{{SEVERITY/text()}}</span>
-                    </td>
+                        <th>Start (UTC)</th>
+                        <th>End (UTC)</th>
+                        <th></th>
+                    </tr>
+                    </thead>
 
-                    <td class="text-nowrap">{{FORMATED_START_DATE/text()}}</td>
-                    <td class="text-nowrap">{{FORMATED_END_DATE/text()}}</td>
-                    <td>
+                    <tbody>
+                    <tr tpl:foreach="root/downtimes/DOWNTIME">
+                        <td class="text-nowrap">{{HOSTED_BY/text()}}</td>
+                        <td>
+                            <span tpl:if="SEVERITY/text()!='OUTAGE'" class="badge bg-success">{{SEVERITY/text()}}</span>
+                            <span tpl:else="" class="badge bg-warning">{{SEVERITY/text()}}</span>
+                        </td>
 
-                        <!-- Button trigger modal -->
-                        <span class="fa fa-search" data-toggle="modal" data-target="#{{@PRIMARY_KEY}}"></span>
+                        <td class="text-nowrap">{{FORMATED_START_DATE/text()}}</td>
+                        <td class="text-nowrap">{{FORMATED_END_DATE/text()}}</td>
+                        <td>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="{{@PRIMARY_KEY}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content ">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">{{@CLASSIFICATION}} DOWNTIME : {{HOSTED_BY/text()}}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">x</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body text-justify">
-                                        <div><p class="font-weight-bold">Start Date</p> {{FORMATED_START_DATE/text()}}</div>
-                                        <div><p class="font-weight-bold">End Date</p> {{FORMATED_END_DATE/text()}}</div>
-                                        <div><p class="font-weight-bold">Description</p><pre>{{DESCRIPTION/text()}}</pre></div>
-                                        <div><p class="font-weight-bold">Affected Endpoints</p><pre>{{service_endpoints/text()}}</pre></div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <!-- Button trigger modal -->
+                            <span class="fa fa-search" data-toggle="modal" data-target="#{{@PRIMARY_KEY}}"></span>
 
+                            <!-- Modal -->
+                            <div class="modal fade" id="{{@PRIMARY_KEY}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content ">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">{{@CLASSIFICATION}} DOWNTIME : {{HOSTED_BY/text()}}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">x</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-justify">
+                                            <div><p class="font-weight-bold">Start Date</p> {{FORMATED_START_DATE/text()}}</div>
+                                            <div><p class="font-weight-bold">End Date</p> {{FORMATED_END_DATE/text()}}</div>
+                                            <div><p class="font-weight-bold">Description</p><pre>{{DESCRIPTION/text()}}</pre></div>
+                                            <div><p class="font-weight-bold">Affected Endpoints</p><pre>{{service_endpoints/text()}}</pre></div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
 
-                    </td>
+                        </td>
 
-                </tr>
+                    </tr>
 
-                </tbody>
+                    </tbody>
 
 
-            </table>
+                </table>
+
+            </div>
+
 
         </div>
 
