@@ -1,6 +1,12 @@
 $(function () {
 
 
+$("[data-widget='pushmenu']").click(function (){
+ $("#profiles").toggle();
+  $("#servicesGroup").toggle();
+  console.log('test');
+});
+
 
 
     $("#profiles").change(function () {

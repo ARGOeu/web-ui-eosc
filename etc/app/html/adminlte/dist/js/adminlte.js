@@ -370,6 +370,8 @@ var PushMenu = function ($) {
       if (!$(Selector.OVERLAY).length) {
         this._addOverlay();
       }
+
+
     }
 
     // Public
