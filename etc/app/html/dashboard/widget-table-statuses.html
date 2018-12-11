@@ -19,7 +19,7 @@
                     <th>Metric</th>
                     <th>Timestamp</th>
                     <th></th>
-                    <th>Details</th>
+                    <th></th>
                 </tr>
                 </thead>
 
@@ -45,12 +45,13 @@
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content ">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">{{endpoint_group/text()}}  /  {{endpoint/text()}} / {{metric/text()}} &gt;
+                                    <h5 class="modal-title" id="exampleModalLabel">{{endpoint_group/text()}}  /  {{endpoint/text()}} / {{metric/text()}}
                                         <span tpl:if="status/text()='OK'" class="badge bg-success">{{status/text()}}</span>
                                         <span tpl:else="status/text()='WARNING'" class="badge bg-warning"> {{status/text()}}</span>
                                         <span tpl:else="status/text()='CRITICAL'" class="badge bg-danger"> {{status/text()}}</span>
                                         <span tpl:else="status/text()='MISSING'" class="badge bg-info"> {{status/text()}}</span>
-                                        <span tpl:else="" class="badge bg-gray"> {{status/text()}}</span></h5>
+                                        <span tpl:else="" class="badge bg-gray"> {{status/text()}}</span>
+                                    </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">x</span>
                                     </button>
