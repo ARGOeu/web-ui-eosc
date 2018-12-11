@@ -11,16 +11,15 @@
 
         </div>
         <!-- /.card-header -->
-        <div class="card-body font-weight-light ">
+        <div class="card-body font-weight-light">
             <div class="table-responsive">
 
                 <table class="table  table-bordered table-condensed dataTable">
 
                     <thead>
                     <tr>
-                        <th class="text-nowrap" >Site</th>
-                        <th>Status</th>
-
+                        <th >Site</th>
+                        <th>Type</th>
                         <th>Start (UTC)</th>
                         <th>End (UTC)</th>
                         <th></th>
@@ -29,13 +28,13 @@
 
                     <tbody>
                     <tr tpl:foreach="root/downtimes/DOWNTIME">
-                        <td class="text-nowrap">{{HOSTED_BY/text()}}</td>
+                        <td class="text-truncate" style="max-width:250px;">{{HOSTED_BY/text()}}</td>
                         <td>
                             <span tpl:if="SEVERITY/text()!='OUTAGE'" class="badge bg-success">{{SEVERITY/text()}}</span>
                             <span tpl:else="" class="badge bg-warning">{{SEVERITY/text()}}</span>
                         </td>
 
-                        <td class="text-nowrap">{{FORMATED_START_DATE/text()}}</td>
+                        <td class="text-nowrap"> {{FORMATED_START_DATE/text()}}</td>
                         <td class="text-nowrap">{{FORMATED_END_DATE/text()}}</td>
                         <td>
 
