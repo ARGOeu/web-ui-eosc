@@ -30,9 +30,7 @@
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
             </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="/" class="nav-link">Home</a>
-            </li>
+
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="mailto:argo-dev@egi.eu" class="nav-link">Contact</a>
             </li>
@@ -57,7 +55,7 @@
         </a>
 
         <!-- Sidebar -->
-        <div class="sidebar font-weight-light">
+        <div class="sidebar">
 
 
             <!-- Sidebar Menu -->
@@ -67,7 +65,22 @@
                          with font-awesome or any other icon font library -->
 
 
+                    <li class="nav-item">
+                        <a href="/egi" class="nav-link">
+                            <i class="nav-icon fa fa-circle-o text-blue"></i>
+                            <p>EGI ARGO</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/eudat" class="nav-link">
+                            <i class="nav-icon fa fa-circle-o text-warning"></i>
+                            <p>EUDAT ARGO</p>
+                        </a>
+                    </li>
+
                     <li class="nav-header">ABOUT ARGO</li>
+
                     <li class="nav-item">
                         <a href="https://adminlte.io/docs" class="nav-link">
                             <i class="nav-icon fa fa-book"></i>
@@ -75,19 +88,6 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="https://adminlte.io/docs" class="nav-link">
-                            <i class="nav-icon fa fa-handshake-o"></i>
-                            <p>Terms of Use</p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fa fa-circle-o text-danger"></i>
-                            <p class="text">v 2.0</p>
-                        </a>
-                    </li>
 
                 </ul>
             </nav>
@@ -139,7 +139,7 @@
                     <!-- small card -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>ERROR #{{@code}}</h3>
+                            <h3>ERROR #{{code/text()}}</h3>
 
                             <code>{{text()}}</code>
                             <code>{{message/text()}}</code>

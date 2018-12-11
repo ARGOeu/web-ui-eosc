@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
     <!-- Brand Logo -->
-    <a href="/" class="brand-link">
+    <a href="/{{root/@tenant}}" class="brand-link">
         <img src="/resource/app/img/logo-argo.png" alt="ARGO Logo" class="brand-image img-circle elevation-2"   style="opacity: .8"/>
         <span class="brand-text">ARGO</span>
     </a>
@@ -17,7 +17,7 @@
                 <li class="nav-item has-treeview menu-open">
 
 
-                    <ul class="nav nav-treeview sidebar-collapse" style="list-style:none;padding:0;margin:0">
+                    <ul class="nav nav-treeview sidebar-collapse" style="list-style:none;padding:0;margin:0" tpl:if="root/@tenant and root/@report">
 
                         <li  class="nav-item">
                             <p>
@@ -38,7 +38,7 @@
 
                         </li>
 
-                        <li  class="nav-item">
+                        <li  class="nav-item" >
                             <p>
                                 <select class="custom-select" id="servicesGroup">
                                     <option tpl:if="/root/@tenant='eudat'" selected="true" disabled="true">--Select your service group --</option>
@@ -51,12 +51,6 @@
 
                         </li>
                     </ul>
-
-
-
-
-
-
 
 
 
@@ -161,7 +155,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item" tpl:if="root/@tenant='egi'">
                     <a href="/termsofUse" class="nav-link">
                         <i class="nav-icon fa fa-handshake-o"> </i>
                         <p> Terms of Use</p>

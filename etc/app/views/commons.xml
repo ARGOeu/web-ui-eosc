@@ -220,6 +220,7 @@
 
 
 
+
     <view name="dashboard">
 
         <argument name="report">Critical</argument>
@@ -422,7 +423,7 @@
 
     <view name="TermsofUse">
         <connector type="XMLConnector">
-            <parameter name="content" eval="new_element('root')"/>
+            <parameter name="content" eval="new_element('root',new_attribute('tenant','egi'))"/>
         </connector>
 
         <renderers>
