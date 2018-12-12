@@ -116,6 +116,7 @@ if(document.getElementById("myChart2") && document.getElementById("myChart2").ge
             {
               label: "Availability",
               backgroundColor: "#3e95cd",
+
               data: dataAvailability
             }, {
               label: "Reliability",
@@ -124,12 +125,18 @@ if(document.getElementById("myChart2") && document.getElementById("myChart2").ge
             }
           ]
         },
-        options: {
+    options: {
          title: {
                      display: false,
-                }
+                },
+         layout: {
+            padding: {        // Any unspecified dimensions are assumed to be 0
+                left: 10,
+                 bottom: 5
+                 }
 
-        }
+                }
+                }
     });
 
 
