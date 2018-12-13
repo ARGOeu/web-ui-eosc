@@ -26,12 +26,15 @@
                     colors : colorsgroup,
                     timeline: {
                         groupByRowLabel: true,
-                        showBarLabels : false
+                        showBarLabels : false,
+                        rowLabelStyle: { fontSize: 10 },
+                        barLabelStyle: { fontSize: 6 }
 
                     },
                     hAxis: {
                         format: 'dd.MM HH:MM'
-                    }
+                    },
+
 
                 };
 

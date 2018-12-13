@@ -38,7 +38,7 @@
 
                         </li>
 
-                        <li  class="nav-item" >
+                        <li  class="nav-item" tpl:if="count(/root/report/endpoint_group_list/item/text())>1">
                             <p>
                                 <select class="custom-select" id="servicesGroup">
                                     <option tpl:if="/root/@tenant='eudat'" selected="true" disabled="true">--Select your service group --</option>

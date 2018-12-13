@@ -155,6 +155,7 @@
                     <parameter name="hours">3</parameter>
                 </trigger>
                 <trigger type="ViewNotifiedTrigger"/>
+                <trigger type="ViewCreatedTrigger"/>
             </cache>
 
             <renderers>
