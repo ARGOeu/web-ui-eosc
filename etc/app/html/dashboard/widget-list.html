@@ -5,6 +5,7 @@
         <div class="card-body">
             <select class="listServices" id="servicesGroup">
                 <option tpl:if="/root/@tenant='eudat'" selected="true" disabled="true">--Select your service group for more details--</option>
+                <option tpl:if="/root/@tenant='sdc'" selected="true" disabled="true">--Select your service group for more details--</option>
                 <option tpl:if="/root/@tenant='egi'" selected="true" disabled="true">--Select your site for more details--</option>
                 <option tpl:foreach="/root/report/endpoint_group_list/item/text()" value="/{/root/@tenant}/dashboard/{/root/@report}/{.}">{{.}}</option>
             </select>

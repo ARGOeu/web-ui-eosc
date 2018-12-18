@@ -4,12 +4,15 @@
         <div class="card card-widget widget-user-2">
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="widget-user-header border ">
-                <div class="widget-user-image">
-                    <img class="img-circle elevation-2" src="/resource/app/img/logo-{root/@tenant}.png"  width="160px" height="160px" alt="Logo"/>
+                <div class="text-center">
+                    <img  src="/resource/app/img/logo-{root/@tenant}.png" style="max-height:100px" alt="Logo"/>
                 </div>
                 <!-- /.widget-user-image -->
-                <h3 class="widget-user-username text-uppercase">{{/root/@tenant}}</h3>
-                <h5 class="widget-user-desc">{{/root/report/@description}}</h5>
+
+
+                <div class="text-center">
+                    <em>{{/root/report/@description}}</em>
+                </div>
             </div>
             <div class="card-body">
                 <ul class="nav flex-column"  tpl:foreach="/root/report">

@@ -103,6 +103,7 @@
                 <element-create>new_element('report',new_attribute('tenant','egi')|new_attribute('report','Critical'))</element-create>
                 <element-create>new_element('report',new_attribute('tenant','egi')|new_attribute('report','OPS-MONITOR-Critical'))</element-create>
                 <element-create>new_element('report',new_attribute('tenant','eudat')|new_attribute('report','Critical'))</element-create>
+                <element-create>new_element('report',new_attribute('tenant','sdc')|new_attribute('report','Critical'))</element-create>
             </element>
 
 
@@ -124,28 +125,19 @@
 
             <element in="reports">
                 <element in="report">
-                    <attribute-create out="description" if="../@tenant='egi'">'Advanced Computing for Research'
-                    </attribute-create>
-                    <attribute-create out="description" if="../@tenant='eudat'">'Collaborative Data Infrastructure'
-                    </attribute-create>
 
+                    <attribute-create out="description" if="../@tenant='egi'">'Advanced Computing for Research' </attribute-create>
                     <attribute-create out="url" if="../@tenant='egi'">'http://egi.eu'</attribute-create>
+
+
+                    <attribute-create out="description" if="../@tenant='eudat'">'Collaborative Data Infrastructure'</attribute-create>
                     <attribute-create out="url" if="../@tenant='eudat'">'http://eudat.eu'</attribute-create>
 
-                    <attribute-create out="twitter" if="../@tenant='egi'">'https://twitter.com/egi_einfra'</attribute-create>
-                    <attribute-create out="twitter" if="../@tenant='eudat'">'https://twitter.com/Eudat_eu'</attribute-create>
+                    <attribute-create out="description" if="../@tenant='sdc'">'Ocean and marine data management '</attribute-create>
+                    <attribute-create out="url" if="../@tenant='sdc'">'https://www.seadatanet.org/'</attribute-create>
 
-                    <attribute-create out="facebook" if="../@tenant='egi'">'https://www.facebook.com/EGIeInfrastructure/'
-                    </attribute-create>
-                    <attribute-create out="facebook" if="../@tenant='eudat'">'https://www.facebook.com/EUDAT'
-                    </attribute-create>
 
-                    <attribute-create out="linkedin" if="../@tenant='egi'">
-                        'https://www.linkedin.com/company/stichting-european-grid-initiative'
-                    </attribute-create>
-                    <attribute-create out="linkedin" if="../@tenant='eudat'">
-                        'https://be.linkedin.com/in/eudat-collaborative-data-infrastructure-30aa4551/en'
-                    </attribute-create>
+
                 </element>
             </element>
         </processors>
@@ -206,6 +198,7 @@
                 <element-create if="$tenant='eudat'">
                     view('dpmt.siteProjects')/results/SERVICE_GROUP[NAME/text()=$entity]
                 </element-create>
+
             </element>
 
         </processors>

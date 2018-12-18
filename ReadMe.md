@@ -15,30 +15,18 @@ title: Web UI | ARGO
 * yum install java
 * yum install maven
 * yum install git
-
-# Open ports
-* firewall-cmd --zone=public --add-port=80/tcp --permanent
-* firewall-cmd --zone=public --add-port=443/tcp --permanent
-* firewall-cmd --reload
+* yum install wget
 
 
+## Add a new tenant $tenant
 
-# Installation of CAs
-
-Add the following repo-file to the /etc/yum.repos.d/ directory:
-
-[EGI-trustanchors]
-name=EGI-trustanchors
-baseurl=http://repository.egi.eu/sw/production/cas/1/current/
-gpgkey=http://repository.egi.eu/sw/production/cas/1/GPG-KEY-EUGridPMA-RPM-3
-gpgcheck=1
-enabled=1
-
-* yum install ca-policy-egi-core
-
-## Installation & run
-
-mvn exec:java
+* add a css file into etc/app/html/adminlte/dist/css, the name should adminlte-$tenant.css
+* add availability and reliability tresholds into app.properties
+* add key into the tenants.json file /etc/app/resources
+* add the route for the alias into route.properties
+* add the different entries for the tenant into etc/app/html/sidebar.html
+* add a logo for the tenant etc/app/img : logo-$tenant.png
+* add lines for the report and for the description into the commons.xml file , reportDetails view
 
 
 ## Links and further reading

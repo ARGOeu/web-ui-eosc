@@ -33,6 +33,10 @@
                                 <select  id="profiles" tpl:if="/root/@tenant='eudat'" class="custom-select" >
                                     <option value="/eudat" tpl:if="root/@tenant='eudat'" selected="true">EUDAT - Critical</option>
                                 </select>
+
+                                <select   id="profiles"  tpl:if="/root/@tenant='sdc'"  class="custom-select" >
+                                    <option  value="/sdc/Critical">SDC - Critical</option>
+                                </select>
                             </p>
 
 
@@ -43,6 +47,7 @@
                                 <select class="custom-select" id="servicesGroup">
                                     <option tpl:if="/root/@tenant='eudat'" selected="true" disabled="true">--Select your service group --</option>
                                     <option tpl:if="/root/@tenant='egi'" selected="true" disabled="true">--Select your site --</option>
+                                    <option tpl:if="/root/@tenant='sdc'" selected="true" disabled="true">--Select your service group --</option>
                                     <option tpl:foreach="/root/report/endpoint_group_list/item/text()" value="/{/root/@tenant}/dashboard/{/root/@report}/{.}">{{.}}</option>
                                 </select>
 
@@ -137,6 +142,36 @@
 
                         <li tpl:foreach="/root" class="nav-item">
                             <a href="/eudat/Critical/custom" class="nav-link">
+                                <i class="fa fa fa-file nav-icon"></i>
+                                <p>Custom Report</p>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <ul class="nav nav-treeview"  tpl:if="root/@tenant='sdc' and root/@report='Critical'">
+                        <li tpl:foreach="/root" class="nav-item">
+                            <a href="/sdc/Critical" class="nav-link">
+                                <i class="fa fa-eye nav-icon"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        <li tpl:foreach="/root" class="nav-item">
+                            <a href="/sdc/report-ar/Critical/SERVICEGROUPS" class="nav-link">
+                                <i class="fa fa-tachometer nav-icon"></i>
+                                <p>Availability/Reliability</p>
+                            </a>
+                        </li>
+
+                        <li tpl:foreach="/root" class="nav-item">
+                            <a href="/sdc/report-status/Critical/SERVICEGROUPS" class="nav-link">
+                                <i class="fa fa-check-circle  nav-icon"></i>
+                                <p>Status</p>
+                            </a>
+                        </li>
+
+                        <li tpl:foreach="/root" class="nav-item">
+                            <a href="/sdc/Critical/custom" class="nav-link">
                                 <i class="fa fa fa-file nav-icon"></i>
                                 <p>Custom Report</p>
                             </a>
