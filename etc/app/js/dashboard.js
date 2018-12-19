@@ -22,7 +22,6 @@ $("[data-widget='pushmenu']").click(function (){
 
     // Tables for the whole page
      $('.dataTable').dataTable({
-     "dom" : "lfrtp",
       "paging": true,
       "ordering": true
     });
@@ -132,7 +131,7 @@ if(document.getElementById("myChart2") && document.getElementById("myChart2").ge
                 },
          layout: {
             padding: {        // Any unspecified dimensions are assumed to be 0
-                left: 10,
+                left: 5,
                  bottom: 5
                  }
 

@@ -331,7 +331,7 @@
         <argument name="topology"/>
         <argument name="entity">_entity_</argument>
         <argument name="group">_group_</argument>
-        <argument name="nbdays">10</argument>
+        <argument name="nbdays">30</argument>
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
         <variable name="start_time" eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z')"/>

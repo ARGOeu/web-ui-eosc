@@ -5,9 +5,9 @@
 
 
     <div class="col-7">
-    <div class="card" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+    <div class="card card-primary" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
         <div class="card-header">
-            <h3 class="card-title">Availability/Reliability - Last 10 days</h3>
+            <h3 class="card-title">Availability/Reliability - Last 30 days</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -18,20 +18,13 @@
         </div>
 
         <div class="card-body">
-            <div class="d-none dataAvailability" tpl:foreach="/root/report-ar/*">{{@availability}}</div>
-            <div class="d-none dataReliability" tpl:foreach="/root/report-ar/*">{{@reliability}}</div>
-            <div class="d-none dataTimestamp" tpl:foreach="/root/report-ar/*">{{substring-after(@timestamp,'-')}}</div>
+            <div class="d-none dataAvailability" tpl:foreach="/root/report-ar/group">{{@availability}}</div>
+            <div class="d-none dataReliability" tpl:foreach="/root/report-ar/group">{{@reliability}}</div>
+            <div class="d-none dataTimestamp" tpl:foreach="/root/report-ar/group">{{substring-after(@timestamp,'-')}}</div>
 
-            <div>
+            <div class="chart-responsive">
+                        <canvas id="myChart2" width="100%"></canvas>
 
-                    <div class="chart-responsive" >
-                        <canvas id="myChart2" height="160"></canvas>
-                    </div>
-                    <!-- ./chart-responsive -->
-
-                <!-- /.col -->
-
-                <!-- /.col -->
             </div>
         </div>
 
@@ -40,7 +33,7 @@
     </div>
 
     <div class="col-5">
-        <div class="card"  xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+        <div class="card card-primary"  xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
             <div class="card-header">
                 <h3 class="card-title">Last statuses</h3>
 
