@@ -4,7 +4,7 @@ $(function () {
 $("[data-widget='pushmenu']").click(function (){
  $("#profiles").toggle();
   $("#servicesGroup").toggle();
-  console.log('test');
+
 });
 
 
@@ -22,6 +22,7 @@ $("[data-widget='pushmenu']").click(function (){
 
     // Tables for the whole page
      $('.dataTable').dataTable({
+     "dom" : "lfrtp",
       "paging": true,
       "ordering": true
     });
