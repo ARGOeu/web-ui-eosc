@@ -34,7 +34,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <ul>
-                                            <li tpl:foreach="/root/report/group_list/item/text()">{{.}}</li>
+                                            <li tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/group_list/item/text()">{{.}}</li>
                                         </ul>
                                     </div>
                                     <div class="modal-footer">
@@ -63,7 +63,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <ul>
-                                            <li tpl:foreach="/root/report/endpoint_group_list/item/text()">{{.}}</li>
+                                            <li tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()">{{.}}</li>
                                         </ul>
                                     </div>
                                     <div class="modal-footer">
@@ -89,7 +89,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <ul>
-                                                <li tpl:foreach="/root/report/service_list/item/text()">{{.}}</li>
+                                                <li tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/service_list/item/text()">{{.}}</li>
                                             </ul>
                                         </div>
                                         <div class="modal-footer">
