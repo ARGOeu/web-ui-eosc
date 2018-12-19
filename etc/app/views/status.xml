@@ -40,6 +40,7 @@
         <processors>
 
             <element in="object" out="status-last">
+
                 <element-ignore in="data">
                     <element-ignore in="metric_data">
                         <element/>                      
@@ -57,6 +58,10 @@
                 <attribute-create out="Unknown">count(../object[status/text()='UNKNOWN'])</attribute-create>
                 <attribute-create out="Critical">count(../object[status/text()='CRITICAL'])</attribute-create>
                 <attribute-create out="Missing">count(../object[status/text()='MISSING'])</attribute-create>
+
+                <element in="object">
+                    <attribute-create out="id">concat('status_',count(../preceding-sibling::object))</attribute-create>
+                </element>
             </element>
 
         </processors>

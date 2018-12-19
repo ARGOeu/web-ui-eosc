@@ -38,19 +38,21 @@
                         <span tpl:else="" class="badge bg-gray"> {{status/text()}}</span>
                     </td>
                     <td>
-                    <span class="fa fa-search" data-toggle="modal" data-target="#{{metric/text()}}_{{timestamp/text()}}"></span>
+
+                    <span class="showModal fa fa-search" data-toggle="modal" data-target="#{{@id}}"></span>
+
 
                     <!-- Modal -->
-                    <div class="modal fade" id="{{metric/text()}}_{{timestamp/text()}}" tabindex="-1" role="dialog" aria-labelledby="statusLabel" aria-hidden="true">
+                    <div class="modal fade" id="{{@id}}" tabindex="-1" role="dialog" aria-labelledby="StatusLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content ">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="statusLabel">{{endpoint_group/text()}}  /  {{endpoint/text()}} / {{metric/text()}}
-                                        <span tpl:if="status/text()='OK'" class="badge bg-success">{{status/text()}}</span>
-                                        <span tpl:else="status/text()='WARNING'" class="badge bg-warning"> {{status/text()}}</span>
-                                        <span tpl:else="status/text()='CRITICAL'" class="badge bg-danger"> {{status/text()}}</span>
-                                        <span tpl:else="status/text()='MISSING'" class="badge bg-info"> {{status/text()}}</span>
-                                        <span tpl:else="" class="badge bg-gray"> {{status/text()}}</span>
+                                    <h5 class="modal-title" id="{timestamp/text()}Label">{{endpoint_group/text()}}  /  {{endpoint/text()}} / {{metric/text()}} >
+                                        <span tpl:if="status/text()='OK'" class="badge bg-success m-2">{{status/text()}}</span>
+                                        <span tpl:else="status/text()='WARNING'" class="badge bg-warning m-2"> {{status/text()}}</span>
+                                        <span tpl:else="status/text()='CRITICAL'" class="badge bg-danger m-2"> {{status/text()}}</span>
+                                        <span tpl:else="status/text()='MISSING'" class="badge bg-info m-2"> {{status/text()}}</span>
+                                        <span tpl:else="" class="badge bg-gray m-2"> {{status/text()}}</span>
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">x</span>
@@ -64,11 +66,11 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     </td>
                 </tr>
 

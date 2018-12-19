@@ -8,6 +8,11 @@ $("[data-widget='pushmenu']").click(function (){
 });
 
 
+  $('.showModal').click(function () {
+        var selector =  $(this).data("target");
+               $(selector).modal('show');
+                        });
+
 
     $("#profiles").change(function () {
             window.location.href =   this.value;
