@@ -172,9 +172,10 @@
 
                 <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc'">view('gocdb.downtimes.site', entry('site',$entity))</element-create>
                 <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='dpmt'">view('dpmt.downtimes.site',entry('site',$entity))</element-create>
+                <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc-sdc'">view('gocdb.sdc.downtimes.site',entry('site',$entity))</element-create>
                 <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc'">view('gocdb.site')/results/SITE[@NAME=$entity]</element-create>
                 <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='dpmt'">view('dpmt.siteProjects')/results/SERVICE_GROUP[NAME/text()=$entity]</element-create>
-
+                <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc-sdc'">view('gocdb.sdc.site')/results/SITE[@NAME=$entity]</element-create>
                 <element-create>
                     view('api-status-last',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][@report=../@report]/@topologyStatus)|entry('entity',$entity))
                 </element-create>
@@ -228,6 +229,7 @@
 
                 <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc'">view('gocdb.downtimes')</element-create>
                 <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='dpmt'">view('dpmt.downtimes')</element-create>
+                <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc-sdc'">view('gocdb.sdc.downtimes')</element-create>
 
                 <element-create>
                     view('api-status-last',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][@report=../@report]/@topologyStatus))

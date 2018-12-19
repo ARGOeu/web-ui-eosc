@@ -50,7 +50,7 @@
         <name>SDC</name>
         <description>Ocean and marine data management</description>
         <url>https://www.seadatanet.org</url>
-        <topologyReference>dpmt</topologyReference>
+        <topologyReference>goc-sdc</topologyReference>
         <topologyAR>SERVICEGROUPS</topologyAR>
         <topologyStatus>SERVICEGROUPS</topologyStatus>
         <topologyDetails>SERVICES</topologyDetails>
