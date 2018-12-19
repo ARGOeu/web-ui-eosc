@@ -21,34 +21,20 @@
 
                         <li  class="nav-item">
                             <p>
-                                <select tpl:if="/root/@tenant='egi'"  id="profiles"  class="custom-select" >
-                                    <option  tpl:if="/root/@report='Critical'" value="/egi" selected="true">EGI - Critical</option>
-                                    <option  tpl:else="" value="/egi">EGI - Critical</option>
-
-                                    <option tpl:if="/root/@report='OPS-MONITOR-Critical'" value="/egi/OPS-MONITOR-Critical" selected="true">EGI - OPSMONITOR-Critical</option>
-                                    <option tpl:else="" value="/egi/OPS-MONITOR-Critical">EGI - OPSMONITOR-Critical</option>
-                                </select>
-
-
-                                <select  id="profiles" tpl:if="/root/@tenant='eudat'" class="custom-select" >
-                                    <option value="/eudat" tpl:if="root/@tenant='eudat'" selected="true">EUDAT - Critical</option>
-                                </select>
-
-                                <select   id="profiles"  tpl:if="/root/@tenant='sdc'"  class="custom-select" >
-                                    <option  value="/sdc/Critical">SDC - Critical</option>
+                                <select tpl:foreach="/root" id="profiles" class="custom-select">
+                                    <option value="/{{@tenant}}/{{@report}}" selected="true">{{@tenant}} - {{@report}}</option>
+                                    <option tpl:foreach="report[@tenant=/root/@tenant]" value="/{{@tenant}}/{{@report}}" >{{@tenant}} - {{@report}}</option>
                                 </select>
                             </p>
 
 
                         </li>
 
-                        <li  class="nav-item" tpl:if="count(/root/report/endpoint_group_list/item/text())>1">
+                        <li  class="nav-item" tpl:if="count(/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text())>1">
                             <p>
                                 <select class="custom-select" id="servicesGroup">
-                                    <option tpl:if="/root/@tenant='eudat'" selected="true" disabled="true">--Select your service group --</option>
-                                    <option tpl:if="/root/@tenant='egi'" selected="true" disabled="true">--Select your site --</option>
-                                    <option tpl:if="/root/@tenant='sdc'" selected="true" disabled="true">--Select your service group --</option>
-                                    <option tpl:foreach="/root/report/endpoint_group_list/item/text()" value="/{/root/@tenant}/dashboard/{/root/@report}/{.}">{{.}}</option>
+                                    <option selected="true" disabled="true">--Select your  group --</option>
+                                    <option tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()" value="/{/root/@tenant}/dashboard/{/root/@report}/{.}">{{.}}</option>
                                 </select>
 
 
@@ -60,124 +46,35 @@
 
 
 
-                    <ul class="nav nav-treeview" tpl:if="root/@tenant='egi' and root/@report='Critical'">
-                        <li tpl:foreach="/root" class="nav-item">
-                            <a href="/egi/Critical" class="nav-link">
+                    <ul class="nav nav-treeview" tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]">
+                        <li  class="nav-item">
+                            <a href="/{{@tenant}}/{{@report}}" class="nav-link">
                                 <i class="fa fa-eye nav-icon"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                        <li tpl:foreach="/root" class="nav-item">
-                            <a href="/egi/report-ar/Critical/NGI" class="nav-link">
+                        <li class="nav-item">
+                            <a href="/{{@tenant}}/report-ar/{{@report}}/{{@topologyAR}}" class="nav-link">
                                 <i class="fa fa-tachometer nav-icon"></i>
                                 <p>Availability/Reliability</p>
                             </a>
                         </li>
 
-                        <li tpl:foreach="/root" class="nav-item">
-                            <a href="/egi/report-status/Critical/SITES" class="nav-link">
+                        <li  class="nav-item">
+                            <a href="/{{@tenant}}/report-status/{{@report}}/{{@topologyStatus}}" class="nav-link">
                                 <i class="fa fa-check-circle  nav-icon"></i>
                                 <p>Status</p>
                             </a>
                         </li>
 
-                        <li tpl:foreach="/root" class="nav-item">
-                            <a href="/egi/Critical/custom" class="nav-link">
+                        <li  class="nav-item">
+                            <a href="/{{@tenant}}/{{@report}}/custom" class="nav-link">
                                 <i class="fa fa fa-file nav-icon"></i>
                                 <p>Custom Report</p>
                             </a>
                         </li>
                     </ul>
 
-                    <ul class="nav nav-treeview"  tpl:if="root/@tenant='egi' and root/@report='OPS-MONITOR-Critical'">
-                        <li tpl:foreach="/root" class="nav-item">
-                            <a href="/egi/OPS-MONITOR-Critical" class="nav-link">
-                                <i class="fa fa-eye nav-icon"></i>
-                                <p>Dashboard</p>
-                            </a>
-                        </li>
-                        <li tpl:foreach="/root" class="nav-item">
-                            <a href="/egi/report-ar/OPS-MONITOR-Critical/NGI" class="nav-link">
-                                <i class="fa fa-tachometer nav-icon"></i>
-                                <p>Availability/Reliability</p>
-                            </a>
-                        </li>
-
-                        <li tpl:foreach="/root" class="nav-item">
-                            <a href="/egi/report-status/OPS-MONITOR-Critical/SITES" class="nav-link">
-                                <i class="fa fa-check-circle nav-icon"></i>
-                                <p>Status</p>
-                            </a>
-                        </li>
-
-                        <li tpl:foreach="/root" class="nav-item">
-                            <a href="/egi/OPS-MONITOR-Critical/custom" class="nav-link">
-                                <i class="fa fa fa-file nav-icon"></i>
-                                <p>Custom Report</p>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                    <ul class="nav nav-treeview"  tpl:if="root/@tenant='eudat' and root/@report='Critical'">
-                        <li tpl:foreach="/root" class="nav-item">
-                            <a href="/eudat/Critical" class="nav-link">
-                                <i class="fa fa-eye nav-icon"></i>
-                                <p>Dashboard</p>
-                            </a>
-                        </li>
-                        <li tpl:foreach="/root" class="nav-item">
-                            <a href="/eudat/report-ar/Critical/SERVICEGROUPS" class="nav-link">
-                                <i class="fa fa-tachometer nav-icon"></i>
-                                <p>Availability/Reliability</p>
-                            </a>
-                        </li>
-
-                        <li tpl:foreach="/root" class="nav-item">
-                            <a href="/eudat/report-status/Critical/SERVICEGROUPS" class="nav-link">
-                                <i class="fa fa-check-circle  nav-icon"></i>
-                                <p>Status</p>
-                            </a>
-                        </li>
-
-                        <li tpl:foreach="/root" class="nav-item">
-                            <a href="/eudat/Critical/custom" class="nav-link">
-                                <i class="fa fa fa-file nav-icon"></i>
-                                <p>Custom Report</p>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                    <ul class="nav nav-treeview"  tpl:if="root/@tenant='sdc' and root/@report='Critical'">
-                        <li tpl:foreach="/root" class="nav-item">
-                            <a href="/sdc/Critical" class="nav-link">
-                                <i class="fa fa-eye nav-icon"></i>
-                                <p>Dashboard</p>
-                            </a>
-                        </li>
-                        <li tpl:foreach="/root" class="nav-item">
-                            <a href="/sdc/report-ar/Critical/SERVICEGROUPS" class="nav-link">
-                                <i class="fa fa-tachometer nav-icon"></i>
-                                <p>Availability/Reliability</p>
-                            </a>
-                        </li>
-
-                        <li tpl:foreach="/root" class="nav-item">
-                            <a href="/sdc/report-status/Critical/SERVICEGROUPS" class="nav-link">
-                                <i class="fa fa-check-circle  nav-icon"></i>
-                                <p>Status</p>
-                            </a>
-                        </li>
-
-                        <li tpl:foreach="/root" class="nav-item">
-                            <a href="/sdc/Critical/custom" class="nav-link">
-                                <i class="fa fa fa-file nav-icon"></i>
-                                <p>Custom Report</p>
-                            </a>
-                        </li>
-
-                    </ul>
 
 
                 </li>

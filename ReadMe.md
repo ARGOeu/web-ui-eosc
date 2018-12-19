@@ -18,15 +18,21 @@ title: Web UI | ARGO
 * yum install wget
 
 
+
+
 ## Add a new tenant $tenant
 
-* add a css file into etc/app/html/adminlte/dist/css, the name should adminlte-$tenant.css
-* add availability and reliability tresholds into app.properties
-* add key into the tenants.json file /etc/app/resources
+* add the tenant properties into etc/app/resources/tenants.xml
+* add API key into the etc/app/app-hidden.files
+* copy the file etc/app/html/adminlte/dist/css/adminlte.min.css in the same directory under name adminlte-$tenant.css
+
+
+## Customize a new tenant $tenant
+
 * add the route for the alias into route.properties
-* add the different entries for the tenant into etc/app/html/sidebar.html
 * add a logo for the tenant etc/app/img : logo-$tenant.png
-* add lines for the report and for the description into the commons.xml file , reportDetails view
+* modify the adminlte-$tenant.css to adapt it
+
 
 
 ## Links and further reading

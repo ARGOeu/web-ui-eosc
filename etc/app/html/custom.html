@@ -43,6 +43,7 @@
 
                     <input class="d-none" id="tenant" value="{/root/@tenant}"/>
                     <input class="d-none" id="report" value="{/root/@report}"/>
+                    <input class="d-none" id="topology" value="{/root/report[@tenant=/root/@tenant][@report=/root/@report]/@topologyStatus}"/>
 
                     <div class="card m-2">
                         <div class="card-header">
@@ -52,7 +53,7 @@
                         </div>
                             <div class="card-body">
                                 <select id="services">
-                                    <option tpl:foreach="/root/report/endpoint_group_list/item/text()" value="{.}">{{.}}</option>
+                                    <option tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()" value="{.}">{{.}}</option>
                                 </select>
                             </div>
 
@@ -119,12 +120,12 @@
 
 
 
-<link rel="stylesheet" href="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap.css"/>
+<link rel="stylesheet" href="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap4.css"/>
 <link rel="stylesheet" href="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.css"/>
 
 <script src="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
 
-<script src="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap4.min.js"></script>
 
 
 
@@ -168,12 +169,8 @@ $(function() {
 
       $("#customSub").click(function () {
 
-        var tenant = $("input#tenant").val() ;
-        var topology ='SITES';
-        if (tenant == 'eudat') {
-            topology = 'SERVICEGROUPS';
-        }
-
+        var tenant =$("input#tenant").val() ;
+        var topology =$("input#topology").val() ;
         var report = $("input#report").val() ;
 
         var view = $("input[name=type]:checked").val() ;

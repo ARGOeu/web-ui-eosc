@@ -13,7 +13,7 @@
         <argument name="nbmonths">4</argument>
 
 
-    <variable name="api-key" eval="view('tenantsListRaw')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+    <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
     <variable name="start_time" eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z')"/>
     <variable name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"/>
     <variable name="url" eval="concat(property('api.report'),'/',$report,'/',$topology,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=monthly')"/>
@@ -28,13 +28,12 @@
     </connector>
 
         <processors>
-
             <element in="root">
+                <element-create>view('reportDetails')/reports/report</element-create>
                 <element-ignore in="group" if="@type='PROJECT'">
                     <element/>
                 </element-ignore>
             </element>
-
 
             <element in="root">
                 <attribute-create out="ApiUrl">$url</attribute-create>
@@ -43,11 +42,16 @@
                 <attribute-create out="month3">../group[count(results)=$nbmonths+1]/results[3]/@timestamp</attribute-create>
                 <attribute-create out="month4">../group[count(results)=$nbmonths+1]/results[4]/@timestamp</attribute-create>
                 <attribute-create out="month5">../group[count(results)=$nbmonths+1]/results[5]/@timestamp</attribute-create>
-                <attribute-create out="level1">property(concat('availability.treshold.',$tenant))</attribute-create>
-                <attribute-create out="level2">property(concat('reliability.treshold.',$tenant))</attribute-create>
                 <attribute-create out="topology">$topology</attribute-create>
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
+            </element>
+
+
+            <element in="root">
+
+                <attribute-create out="level1">../report[@tenant=../@tenant][@report=../@report]/@thresholdAv</attribute-create>
+                <attribute-create out="level2">../report[@tenant=../@tenant][@report=../@report]/@thresholdRe</attribute-create>
 
                 <element in="group">
                     <element in="results">
@@ -80,7 +84,7 @@
 
         <argument name="group">NGI_FRANCE</argument>
 
-        <variable name="api-key" eval="view('tenantsListRaw')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
 
         <variable name="start_time" eval="concat($start_date,'T00:00:00Z')"/>
         <variable name="end_time" eval="concat($end_date,'T23:59:59Z')"/>
@@ -98,8 +102,8 @@
 
         <processors>
 
-
-            <element in="root" >
+            <element in="root">
+                <element-create>view('reportDetails')/reports/report</element-create>
                 <element-ignore in="group" if="group">
                     <element-ignore in="group" if="@name!=$group and ancestor::group/@name!=$group"/>
                     <element/>
@@ -107,14 +111,21 @@
             </element>
 
 
-            <element in="root">
+            <element in="root" >
+
                 <attribute-create out="ApiUrl">$url</attribute-create>
                 <attribute-create out="topology">$topology</attribute-create>
                 <attribute-create out="group">$group</attribute-create>
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
-                <attribute-create out="level1">property(concat('availability.treshold.',$tenant))</attribute-create>
-                <attribute-create out="level2">property(concat('reliability.treshold.',$tenant))</attribute-create>
+
+            </element>
+
+
+            <element in="root">
+
+                <attribute-create out="level1">../report[@tenant=../@tenant][@report=../@report]/@thresholdAv</attribute-create>
+                <attribute-create out="level2">../report[@tenant=../@tenant][@report=../@report]/@thresholdRe</attribute-create>
 
                 <element in="group">
                     <element in="results">
@@ -148,7 +159,7 @@
         <argument name="month">2018-06</argument>
         <argument name="group">NGI_FRANCE</argument>
 
-        <variable name="api-key" eval="view('tenantsListRaw')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
 
         <variable name="start_time" eval="concat($month,'-01T00:00:00Z')"/>
         <variable name="end_time" eval="concat(str:replace(substring(date:add($start_time,concat('P',1,'M')),0,20),' ','T'),'Z')"/>
@@ -166,24 +177,30 @@
 
         <processors>
 
-
-            <element in="root" >
+            <element in="root">
+                <element-create>view('reportDetails')/reports/report</element-create>
                 <element-ignore in="group" if="group">
                     <element-ignore in="group" if="@name!=$group and ancestor::group/@name!=$group"/>
                     <element/>
                 </element-ignore>
             </element>
 
-
-            <element in="root">
+            <element in="root" >
                 <attribute-create out="ApiUrl">$url</attribute-create>
                 <attribute-create out="topology">$topology</attribute-create>
                 <attribute-create out="group">$group</attribute-create>
                 <attribute-create out="month">$month</attribute-create>
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
-                <attribute-create out="level1">property(concat('availability.treshold.',$tenant))</attribute-create>
-                <attribute-create out="level2">property(concat('reliability.treshold.',$tenant))</attribute-create>
+
+            </element>
+
+
+            <element in="root">
+
+
+                <attribute-create out="level1">../report[@tenant=../@tenant][@report=../@report]/@thresholdAv</attribute-create>
+                <attribute-create out="level2">../report[@tenant=../@tenant][@report=../@report]/@thresholdRe</attribute-create>
 
                 <element in="group">
                     <element in="results">
@@ -217,13 +234,15 @@
         <argument name="group"/>
         <argument name="topology3">_topo3_</argument>
 
-        <variable name="topology2" eval="choose($tenant='egi','SITES','SERVICES')"/>
 
 
-        <variable name="api-key" eval="view('tenantsListRaw')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+
+        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
 
         <variable name="start_time" eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z')"/>
         <variable name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"/>
+
+        <variable name="topology2" eval="view('reportDetails')/reports/report[@tenant=$tenant][@report=$report]/@topologyDetails"/>
 
         <variable name="url"  eval="
         choose($topology3!='_topo3_',
@@ -243,20 +262,29 @@
         <processors>
 
             <element in="root">
+                <attribute-create out="details">true()</attribute-create>
+                <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="ApiUrl">$url</attribute-create>
                 <attribute-create out="month1">../group/group[count(results)=$nbmonths+1]/results[1]/@timestamp</attribute-create>
                 <attribute-create out="month2">../group/group[count(results)=$nbmonths+1]/results[2]/@timestamp</attribute-create>
                 <attribute-create out="month3">../group/group[count(results)=$nbmonths+1]/results[3]/@timestamp</attribute-create>
                 <attribute-create out="month4">../group/group[count(results)=$nbmonths+1]/results[4]/@timestamp</attribute-create>
                 <attribute-create out="month5">../group/group[count(results)=$nbmonths+1]/results[5]/@timestamp</attribute-create>
-                <attribute-create out="level1">property(concat('availability.treshold.',$tenant))</attribute-create>
-                <attribute-create out="level2">property(concat('reliability.treshold.',$tenant))</attribute-create>
+
+                <element-create>view('reportDetails')/reports/report</element-create>
+
+            </element>
+
+            <element in="root">
+
+
+                <attribute-create out="level1">../report[@tenant=../@tenant][@report=../@report]/@thresholdAv</attribute-create>
+                <attribute-create out="level2">../report[@tenant=../@tenant][@report=../@report]/@thresholdRe</attribute-create>
                 <attribute-create out="topology">$topology</attribute-create>
                 <attribute-create out="topology2">$topology2</attribute-create>
                 <attribute-create out="topology3">$topology3</attribute-create>
-                <attribute-create out="details">true()</attribute-create>
-                <attribute-create out="tenant">$tenant</attribute-create>
-                <attribute-create out="report">$report</attribute-create>
+
 
             </element>
 
@@ -305,7 +333,7 @@
         <argument name="group">_group_</argument>
         <argument name="nbdays">10</argument>
 
-        <variable name="api-key" eval="view('tenantsListRaw')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
         <variable name="start_time" eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z')"/>
         <variable name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"/>
 
@@ -325,9 +353,11 @@
 
 
             <element out="root">
+
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="url">$url</attribute-create>
+                <element-create>view('reportDetails')/reports/report</element-create>
                 <element-ignore in="group">
                     <element in="results">
                         <attribute-create out="id">../../@name</attribute-create>
