@@ -19,7 +19,7 @@
         <argument name="last">500</argument>
 
         <argument name="entity">_entity_</argument>
-
+        <argument name="scope">_scope_</argument>
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
 
@@ -49,6 +49,7 @@
                 </element-ignore>
                 <element-ignore/>                
             </element>
+
 
           
             
@@ -83,10 +84,11 @@
 
         <argument name="start_date">_start_</argument>
         <argument name="end_date">_end_</argument>
+        <argument name="filter">_filter_</argument>
 
     <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
     <variable name="start_time" eval="choose($start_date='_start_',concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z'),concat($start_date,'T00:00:00Z'))"/>
-    <variable name="end_time" eval="choose($end_date='_end_',concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z'),concat($end_date,'T00:00:00Z'))"/>
+    <variable name="end_time" eval="choose($end_date='_end_',concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z'),concat($end_date,'T23:59:59Z'))"/>
 
 
     <variable name="url" eval="function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,$start_time,$end_time)"/>
@@ -111,7 +113,9 @@
                 <attribute-create out="entity1">$entity1</attribute-create>
                 <attribute-create out="entity2">$entity2</attribute-create>
                 <attribute-create out="entity3">$entity3</attribute-create>
-
+                <attribute-create out="end_time">$end_time</attribute-create>
+                <attribute-create out="filter">$filter</attribute-create>
+                <element-create>view('gocdb.filter')</element-create>
                 <element-create>view('reportDetails')/reports/report</element-create>
                 <element-ignore  if="group">
                         <element-ignore if="endpoint">
@@ -128,6 +132,7 @@
 
 
             <elements path="root">
+
                 <element-ignore in="group"/>
                 <element-create>
                     sort_by_string(../group,'@name')
@@ -155,15 +160,28 @@
             <element in="root">
                 <set variable="StateColor">view('StateColor')</set>
 
-
                 <element in="group">
                     <element in="status">
+
                         <attribute-create out="color">$StateColor/e:entries/e:entry[@key=current()/../@value]/text()</attribute-create>
                         <attribute-create out="end_time" if="current()/../following-sibling::status">current()/../following-sibling::status/@timestamp</attribute-create>
                         <attribute-create out="end_time" if="not(current()/../following-sibling::status)">../ancestor::root/@end_time</attribute-create>
+
                     </element>
                 </element>
+            </element>
 
+            <element in="root" if="$tenant='egi'">
+                <set variable="listSites">view('gocdb.site')</set>
+
+                <element in="group" if="@type='SITES' and $filter!='_filter_'">
+                    <attribute-create out="filters">choose($listSites/results/SITE[@NAME=current()/../@name]/@filters,$listSites/results/SITE[@NAME=current()/../@name]/@filters,'NA')</attribute-create>
+                </element>
+
+            </element>
+
+            <element in="root" if="$tenant='egi' and $filter!='_filter_'">
+                <element-ignore in="group" if="not(contains(@filters,concat(',',$filter,',')))"/>
             </element>
 
 

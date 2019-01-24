@@ -11,6 +11,7 @@
         <argument name="tenant"/>
         <argument name="topology"/>
         <argument name="nbmonths">4</argument>
+        <argument name="filter">_filter_</argument>
 
 
     <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
@@ -58,6 +59,19 @@
                         <attribute if="name()!='timestamp'">round(. * 100 ) div 100</attribute>
                     </element>
                 </element>
+            </element>
+
+            <element in="root" if="$tenant='egi'">
+                <set variable="listSites">view('gocdb.site')</set>
+
+                <element in="group" if="@type='SITES' and $filter!='_filter_'">
+                    <attribute-create out="filters">choose($listSites/results/SITE[@NAME=current()/../@name]/@filters,$listSites/results/SITE[@NAME=current()/../@name]/@filters,'NA')</attribute-create>
+                </element>
+
+            </element>
+
+            <element in="root" if="$tenant='egi' and $filter!='_filter_'">
+                <element-ignore in="group" if="not(contains(@filters,concat(',',$filter,',')))"/>
             </element>
 
         </processors>

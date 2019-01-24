@@ -4,6 +4,7 @@
         <name>EGI</name>
         <description>Advanced Computing for Research</description>
         <url>http://egi.eu</url>
+        <contact>argo-egi@mailman.egi.eu</contact>
         <topologyReference>goc</topologyReference>
         <topologyAR>NGI</topologyAR>
         <topologyStatus>SITES</topologyStatus>
@@ -22,7 +23,25 @@
                 <thresholdAv>80</thresholdAv>
                 <thresholdRe>85</thresholdRe>
             </report>
+
         </reports>
+    </tenant>
+    <tenant>
+    <id>egi</id>
+    <name>EGI</name>
+        <description>Advanced Computing for Research</description>
+        <url>http://egi.eu</url>
+        <contact>argo-egi@mailman.egi.eu</contact>
+        <topologyReference>goc</topologyReference>
+        <topologyAR>SERVICEGROUPS</topologyAR>
+        <topologyStatus>SERVICEGROUPS</topologyStatus>
+        <topologyDetails>SERVICES</topologyDetails>
+    <report>
+        <tenant>egi</tenant>
+        <id>SLA</id>
+        <thresholdAv>80</thresholdAv>
+        <thresholdRe>85</thresholdRe>
+    </report>
     </tenant>
 
     <tenant>
@@ -30,6 +49,7 @@
         <name>EUDAT</name>
         <description>Collaborative Data Infrastructure</description>
         <url>http://eudat.eu</url>
+        <contact>argo-eudat@eudat.eu</contact>
         <topologyReference>dpmt</topologyReference>
         <topologyAR>SERVICEGROUPS</topologyAR>
         <topologyStatus>SERVICEGROUPS</topologyStatus>
@@ -50,6 +70,7 @@
         <name>SDC</name>
         <description>Ocean and marine data management</description>
         <url>https://www.seadatanet.org</url>
+        <contact>argo-sdc@sdc.eu</contact>
         <topologyReference>goc-sdc</topologyReference>
         <topologyAR>SERVICEGROUPS</topologyAR>
         <topologyStatus>SERVICEGROUPS</topologyStatus>

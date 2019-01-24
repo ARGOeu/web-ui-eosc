@@ -1,3 +1,6 @@
+
+
+
             var newgroup = [];
             var colorsgroup = [];
             var links = [];

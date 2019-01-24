@@ -6,6 +6,86 @@
     -->
 
 
+    <view name="gocdb.services.SLA">
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="property('gocdb.get_service_group')"/>
+            <parameter name="certificate" eval="property('certificate.path')"/>
+            <parameter name="passphrase" eval="property('certificate.password')"/>
+        </connector>
+
+        <processors>
+            <element in="results">
+                <element-ignore in="SERVICE_GROUP" if="@ID!='2147'"/>
+            </element>
+        </processors>
+    </view>
+
+
+    <view name="gocdb.filter">
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="property('gocdb.get_service_endpoint')"/>
+            <parameter name="certificate" eval="property('certificate.path')"/>
+            <parameter name="passphrase" eval="property('certificate.password')"/>
+        </connector>
+
+        <processors>
+            <element in="results" out="filter">
+                <element-ignore in="SERVICE_ENDPOINT">
+                    <element-ignore in="SCOPES">
+                        <element in="SCOPE" out="scope"/>
+                    </element-ignore>
+                </element-ignore>
+            </element>
+
+            <element in="filter">
+                <element-ignore in="scope"/>
+                <element-create>uniq(../scope,'text()')</element-create>
+            </element>
+
+            <element in="filter">
+                <element-create>view('gocdb.ngi')/ngis/*</element-create>
+            </element>
+
+
+        </processors>
+
+
+        <cache type="FileCache">
+            <trigger type="DeltaTimeTrigger">
+                <parameter name="minutes">28</parameter>
+            </trigger>
+            <trigger type="ViewNotifiedTrigger"/>
+            <trigger type="ViewCreatedTrigger"/>
+
+        </cache>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+    </view>
+
+    <view name="gocdb.ngi">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('gocdb.site')"/>
+        </connector>
+
+        <processors>
+            <element in="results" out="ngis">
+                <element-ignore in="SITE">
+                    <element in="ROC" out="ngi"/>
+                </element-ignore>
+
+            </element>
+
+            <element in="ngis">
+                <element-ignore in="ngi"/>
+                <element-create>uniq(../ngi,'text()')</element-create>
+            </element>
+
+        </processors>
+    </view>
 
 
     <view name="gocdb.endpoints"  xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" >
@@ -28,6 +108,9 @@
                     <element-create>entry('monitored',choose(../NODE_MONITORED/text()='Y','1','0'))</element-create>
                     <element-create>entry('endpoint',concat(../HOSTNAME/text(),'__',../SERVICE_TYPE/text()))</element-create>
                     <element-create>entry('link',join(../GOCDB_PORTAL_URL/text(),''))</element-create>
+                    <element-create>entry('filter',concat(',',join(../SCOPES/SCOPE/text(),','),',',../ROC_NAME/text(),',',../SITENAME/text(),','))</element-create>
+                    <element-create>entry('ngi',choose(../ROC_NAME/text(),../ROC_NAME/text(),'NA'))</element-create>
+                    <element-create>entry('site',choose(../SITENAME/text(),../SITENAME/text(),'NA'))</element-create>
                     <element-ignore/>
                 </element>
             </element>
@@ -186,12 +269,14 @@
 
             <element in="results">
                 <element in="SITE">
-
+                    <attribute-create out="filters">concat(',',join(../SCOPES/SCOPE/text(),','),',',../ROC/text(),',')</attribute-create>
                     <element if="contains(name(),'COUNTRY')">
                         <text>lower-case(.)</text>
                     </element>
                 </element>
             </element>
+
+
 
         </processors>
 

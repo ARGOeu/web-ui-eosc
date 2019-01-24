@@ -23,6 +23,16 @@
         </connector>
         <serializer type="JSONStreamSerializer"/>
 
+        <processors>
+            <element in="object">
+                <element in="data" if="$tenant='egi'">
+
+
+                </element>
+            </element>
+
+        </processors>
+
         <renderers>
             <renderer type="DefaultRenderer">
                 <parameter name="contentType">text/xml</parameter>
@@ -85,6 +95,7 @@
                         <attribute-create out="report">../id/text()</attribute-create>
                         <attribute-create out="tenant">../tenant/text()</attribute-create>
                         <attribute-create out="description">../../../description/text()</attribute-create>
+                        <attribute-create out="contact">../../../contact/text()</attribute-create>
                         <attribute-create out="url">../../../url/text()</attribute-create>
                         <attribute-create out="topologyAR">../../../topologyAR/text()</attribute-create>
                         <attribute-create out="topologyStatus">../../../topologyStatus/text()</attribute-create>
@@ -204,7 +215,7 @@
 
         <argument name="report">Critical</argument>
         <argument name="tenant">egi</argument>
-
+        <argument name="scope">_scope_</argument>
 
 
         <connector type="XMLConnector">
@@ -224,7 +235,7 @@
           
             </element>
             
-            <element in="root">
+            <element in="root" if="$scope='_scope_'">
                 <attribute-create out="topology">../report[@tenant=../@tenant][@report=../@report]/@topologyStatus</attribute-create>
 
                 <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc'">view('gocdb.downtimes')</element-create>
@@ -239,7 +250,14 @@
                 </element-create>
 
             </element>
+
+            <element in="root">
+
+
+            </element>
         </processors>
+
+
 
 
         <renderers>
