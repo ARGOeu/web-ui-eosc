@@ -229,8 +229,9 @@ var Layout = function ($) {
       };
       var max = this._max(heights);
 
-      $(Selector.CONTENT).css('min-height', max - heights.header);
+      $(Selector.CONTENT).css('min-height', max - (heights.header + heights.footer))
       $(Selector.SIDEBAR).css('min-height', max - heights.header);
+
     };
 
     // Private

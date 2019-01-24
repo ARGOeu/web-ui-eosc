@@ -74,7 +74,7 @@
                             <div class="card-body">
                                 <div class="row" tpl:if="root/@tenant='egi'">
 
-                                    <div class="m-3" tpl:if="root/@filter='_filter_'">
+                                    <div class="m-2" tpl:if="root/@filter='_filter_'">
 
                                         <select id="filter_select" tpl:foreach="root/filter">
                                             <option>--Filter Status entries --</option>
@@ -87,7 +87,7 @@
                                         </select>
 
                                     </div>
-                                    <div class="m-3" tpl:else="">
+                                    <div class="m-2" tpl:else="">
 
                                        <em>Filter : </em><span class="badge badge-primary">{{root/@filter}}</span><a title="reset the filter"><span id="reset-filter" class="fa fa-trash m-2"></span></a>
 
@@ -96,7 +96,7 @@
 
                                 </div>
 
-                                <div tpl:foreach="/root" id="div_timeline" class="m-4" style="min-height:300px;height:{count(group)*12+250}px;max-height:800px"></div>
+                                <div tpl:foreach="/root" id="div_timeline" class="m-2" style="height:{count(group)*12+180}px;max-height:680px"></div>
                             </div>
 
 
