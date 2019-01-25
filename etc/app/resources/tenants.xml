@@ -27,21 +27,24 @@
         </reports>
     </tenant>
     <tenant>
-    <id>egi</id>
-    <name>EGI</name>
+        <id>egi-sla</id>
+        <name>SLA</name>
         <description>Advanced Computing for Research</description>
         <url>http://egi.eu</url>
         <contact>argo-egi@mailman.egi.eu</contact>
-        <topologyReference>goc</topologyReference>
+        <topologyReference>goc-sla</topologyReference>
         <topologyAR>SERVICEGROUPS</topologyAR>
         <topologyStatus>SERVICEGROUPS</topologyStatus>
         <topologyDetails>SERVICES</topologyDetails>
-    <report>
-        <tenant>egi</tenant>
-        <id>SLA</id>
-        <thresholdAv>80</thresholdAv>
-        <thresholdRe>85</thresholdRe>
-    </report>
+        <reports>
+            <report>
+                <tenant>egi</tenant>
+                <id>SLA</id>
+                <thresholdAv>80</thresholdAv>
+                <thresholdRe>85</thresholdRe>
+            </report>
+        </reports>
+
     </tenant>
 
     <tenant>

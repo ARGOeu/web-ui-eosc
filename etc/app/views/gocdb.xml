@@ -6,7 +6,9 @@
     -->
 
 
-    <view name="gocdb.services.SLA">
+    <view name="gocdb.services.group" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+
+        <argument name="name">EGI_D4SCIENCE_SLA</argument>
         <connector type="HTTPConnector">
             <parameter name="url" eval="property('gocdb.get_service_group')"/>
             <parameter name="certificate" eval="property('certificate.path')"/>
@@ -15,9 +17,41 @@
 
         <processors>
             <element in="results">
-                <element-ignore in="SERVICE_GROUP" if="@ID!='2147'"/>
+                <element-ignore in="SERVICE_GROUP" if="NAME/text()!=$name"/>
+            </element>
+
+            <element in="results">
+                <set variable="endpoints" index="@PRIMARY_KEY">uniq(view('gocdb.endpoints')/e:entries/e:entries,'@PRIMARY_KEY')</set>
+                <element in="SERVICE_GROUP">
+                    <element in="SERVICE_ENDPOINT">
+                        <element-create>find($endpoints,../@PRIMARY_KEY)/e:entry[@key='site']</element-create>
+                    </element>
+                    <element-ignore/>
+                </element>
+            </element>
+
+            <element in="results">
+                <element in="SERVICE_GROUP">
+                    <element in="SERVICE_ENDPOINT">
+                        <element in="e:entry" out="SITE">
+                            <attribute-ignore/>
+                        </element>
+                        <element in="HOSTNAME"/>
+                        <element in="SERVICE_TYPE"/>
+                        <element-ignore/>
+                        <element-create>new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'  ')))</element-create>
+                    </element>
+
+                </element>
+
             </element>
         </processors>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
     </view>
 
 
@@ -171,6 +205,79 @@
                     </element>
                 </element-ignore>
             </element>
+
+
+        </processors>
+
+        <cache type="FileCache">
+            <trigger type="DeltaTimeTrigger">
+                <parameter name="minutes">8</parameter>
+            </trigger>
+            <trigger type="ViewNotifiedTrigger"/>
+            <trigger type="ViewCreatedTrigger"/>
+
+        </cache>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
+
+    <view name="gocdb.sla.downtimes"  xmlns:date="http://exslt.org/dates-and-times" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:str="http://exslt.org/strings" >
+
+        <variable name="start_time" eval="substring(date:add(date:date-time(),concat('-P',200,'D')),0,11)"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="concat(property('gocdb.get_downtime.site'),'&amp;startdate=',$start_time)"/>
+            <parameter name="certificate" eval="property('certificate.path')"/>
+            <parameter name="passphrase" eval="property('certificate.password')"/>
+        </connector>
+
+        <processors>
+
+            <element in="results" out="downtimes">
+                <element-ignore/>
+                <element-create>sort_by_string(../DOWNTIME,'@PRIMARY_KEY')</element-create>
+            </element>
+
+            <element in="downtimes">
+                <element-create-as-parent out="downtimes"  group-by="@PRIMARY_KEY" attributes="@*">
+                    <element in="DOWNTIME">
+                        <element-create>new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'  ')))</element-create>
+                    </element>
+                </element-create-as-parent>
+            </element>
+
+
+
+
+
+            <element in="downtimes">
+                <set variable="endpoints">view('gocdb.services.group',entry('name','EGI_D4SCIENCE_SLA'))/results/SERVICE_GROUP</set>
+                <element in="downtimes">
+                    <element-ignore in="DOWNTIME" if="not(service_endpoint/text()=$endpoints/SERVICE_ENDPOINT/service_endpoint/text())"/>
+                </element>
+            </element>
+
+            <element in="downtimes">
+                <element in="downtimes">
+                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))</element-create>
+                </element>
+            </element>
+
+
+            <element in="downtimes">
+                <element-ignore in="downtimes">
+                    <element in="DOWNTIME" if="not(preceding-sibling::DOWNTIME)">
+                        <element-create>new_element('service_endpoints',../../service_endpoints/text())</element-create>
+                    </element>
+                </element-ignore>
+            </element>
+
 
 
         </processors>

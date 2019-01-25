@@ -241,6 +241,7 @@
                 <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc'">view('gocdb.downtimes')</element-create>
                 <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='dpmt'">view('dpmt.downtimes')</element-create>
                 <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc-sdc'">view('gocdb.sdc.downtimes')</element-create>
+                <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc-sla'">view('gocdb.sla.downtimes')</element-create>
 
                 <element-create>
                     view('api-status-last',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][@report=../@report]/@topologyStatus))

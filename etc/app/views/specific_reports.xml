@@ -1,0 +1,42 @@
+<views xmlns="http://software.in2p3.fr/lavoisier/application.xsd"
+       xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:t="http://software.in2p3.fr/lavoisier/tables.xsd">
+    <!-- 
+        Project : argo-eosc 
+        File    : specific_reports.xml
+        Created by cyril on 2019/01/25 
+    -->
+
+    <!--
+     <argument name="report">Critical</argument>
+        <argument name="tenant">egi</argument>
+        <argument name="topology">SITES</argument>
+
+        <argument name="entity1">_entity_</argument>
+        <argument name="entity2">_entity_</argument>
+        <argument name="entity3">_entity_</argument>
+        <argument name="entity4">_entity_</argument>-->
+
+    <view name="report_service_group">
+
+        <argument name="name"></argument>
+        <argument name="report">Critical</argument>
+        <argument name="tenant">egi</argument>
+        <argument name="topology">SITES</argument>
+
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('gocdb.services.group',entry('name',$name))"></parameter>
+        </connector>
+
+        <processors>
+            <element in="results" out="root">
+                <element in="SERVICE_GROUP" out="results">
+                    <element in="SERVICE_ENDPOINT" out="result">
+                        <element-create>view('report-status',entry('tenant',$tenant)|entry('report',$report)|entry('topology',$topology)|entry('entity1',../SITE/text())|entry('entity2',../SERVICE_TYPE/text()))</element-create>
+                    </element>
+                </element>
+            </element>
+        </processors>
+
+    </view>
+
+</views>
