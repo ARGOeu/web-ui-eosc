@@ -14,7 +14,7 @@
                 <thead>
                 <tr>
                     <th></th>
-                    <th>Endpoint (Endpoint Group)</th>
+                    <th>Endpoint (Group)</th>
                     <th>Metric</th>
                     <th>Timestamp</th>
 
@@ -31,7 +31,7 @@
                         <span tpl:else="status/text()='MISSING'" class="badge bg-info"> {{status/text()}}</span>
                         <span tpl:else="" class="badge bg-gray"> {{status/text()}}</span>
                     </td>
-                    <td>{{endpoint/text()}} ({{endpoint_group/text()}})</td>
+                    <td><a href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{endpoint_group/text()}}/{{service/text()}}/{{endpoint/text()}}">{{endpoint/text()}} ({{endpoint_group/text()}})</a></td>
                     <td>{{metric/text()}}</td>
 
                     <td> {{timestamp/text()}}</td>
