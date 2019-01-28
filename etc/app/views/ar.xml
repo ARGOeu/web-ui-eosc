@@ -35,12 +35,21 @@
     </connector>
 
         <processors>
+
             <element in="root">
+                <attribute-create out="filter">$filter</attribute-create>
+                <element-create if="$tenant='egi' and $topology='SITES'" as="first-child">view('gocdb.filter')</element-create>
                 <element-create>view('reportDetails')/reports/report</element-create>
-                <element-ignore in="group" if="@type='PROJECT'">
-                    <element/>
-                </element-ignore>
+                <element-ignore in="group" if="@type!=$topology"><element/></element-ignore>
+                <element in="group" if="@type=$topology"><element-ignore in="group" if="@type!=$topology"/></element>
             </element>
+
+            <!--<element in="root">-->
+                <!--<element-create>view('reportDetails')/reports/report</element-create>-->
+                <!--<element-ignore in="group" if="@type='PROJECT'">-->
+                    <!--<element/>-->
+                <!--</element-ignore>-->
+            <!--</element>-->
 
             <element in="root">
                 <attribute-create out="ApiUrl">$url</attribute-create>
@@ -68,6 +77,7 @@
                 </element>
             </element>
 
+
             <element in="root" if="$tenant='egi'">
                 <set variable="listSites">view('gocdb.site')</set>
 
@@ -80,6 +90,7 @@
             <element in="root" if="$tenant='egi' and $filter!='_filter_'">
                 <element-ignore in="group" if="not(contains(@filters,concat(',',$filter,',')))"/>
             </element>
+
 
         </processors>
 
@@ -180,6 +191,7 @@
         <argument name="month">2018-06</argument>
         <argument name="group">NGI_FRANCE</argument>
 
+
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
 
         <variable name="start_time" eval="concat($month,'-01T00:00:00Z')"/>
@@ -199,12 +211,20 @@
         <processors>
 
             <element in="root">
+                <element-ignore in="group" if="@type!=$topology"><element/></element-ignore>
+                <element in="group" if="@type=$topology"><element-ignore in="group" if="@type!=$topology"/></element>
+            </element>
+
+
+            <element in="root">
                 <element-create>view('reportDetails')/reports/report</element-create>
                 <element-ignore in="group" if="group">
                     <element-ignore in="group" if="@name!=$group and ancestor::group/@name!=$group"/>
                     <element/>
                 </element-ignore>
             </element>
+
+
 
             <element in="root" >
                 <attribute-create out="ApiUrl">$url</attribute-create>
@@ -215,6 +235,7 @@
                 <attribute-create out="report">$report</attribute-create>
 
             </element>
+
 
 
             <element in="root">
@@ -382,6 +403,7 @@
         <processors>
 
 
+
             <element out="root">
 
                 <attribute-create out="tenant">$tenant</attribute-create>
@@ -399,6 +421,8 @@
                     </element-ignore>
                 </element-ignore>
             </element>
+
+
 
             <element in="root">
                 <element-ignore in="results"/>
@@ -436,6 +460,7 @@
                     <element-ignore/>
                 </element>
             </element>
+
 
 
         </processors>

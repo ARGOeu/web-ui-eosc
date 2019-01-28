@@ -53,7 +53,20 @@
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+
+                        <li tpl:if="@tenant='egi' and @report='Critical'" lass="nav-item">
+                            <a href="/{{@tenant}}/report-ar/{{@report}}/{{@topologyAR}}" title="Availability/Reliability - NGI Reports" class="nav-link">
+                                <i class="fa fa-globe nav-icon"></i>
+                                <p class="text-capitalize">NGIs Report</p>
+                            </a>
+                        </li>
+                        <li tpl:if="@tenant='egi' and @report='Critical'" class="nav-item">
+                            <a href="/{{@tenant}}/report-ar/{{@report}}/SITES" title="Availability/Reliability - Sites reports" class="nav-link">
+                                <i class="fa fa-home nav-icon"></i>
+                                <p class="text-capitalize">Sites Report</p>
+                            </a>
+                        </li>
+                        <li tpl:else="" class="nav-item">
                             <a href="/{{@tenant}}/report-ar/{{@report}}/{{@topologyAR}}" title="Availability/Reliability of {{@topologyAR}}" class="nav-link">
                                 <i class="fa fa-tachometer nav-icon"></i>
                                 <p class="text-capitalize">Availability/Reliability</p>
