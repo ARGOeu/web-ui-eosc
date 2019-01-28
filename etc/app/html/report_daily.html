@@ -42,7 +42,7 @@
 
                             <div class="card" tpl:foreach="/root">
 
-                                <div class="card-header" tpl:if="@month">Availabilities/Reliabilities for {{@group}} - {{@month}}</div>
+                                <div class="card-header" tpl:if="@month">Availabilities/Reliabilities for {{@group}} - {{@month}} <a tpl:if="@statusUrl" class="m-2" href="/{{@statusUrl}}" title="status link" ><span class="badge badge-primary">STATUS</span></a> </div>
                                 <div class="card-header" tpl:else="">Availabilities/Reliabilities for {{@group}} </div>
                                 <div class="card-body">
                                     <div class="table-responsive">

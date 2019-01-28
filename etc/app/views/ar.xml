@@ -151,6 +151,7 @@
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
 
+
             </element>
 
 
@@ -233,7 +234,8 @@
                 <attribute-create out="month">$month</attribute-create>
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
-
+                <attribute-create out="statusUrl" if="$topology!='NGI'">concat($tenant,'/report-status/',$report,'/',$topology,'/',$group,'?start_date=',substring($start_time,0,11),'&amp;end_date=',substring($end_time,0,11))</attribute-create>
+                <attribute-create out="statusUrl" if="$topology='NGI'">concat($tenant,'/report-status/',$report,'/','SITES','?start_date=',substring($start_time,0,11),'&amp;end_date=',substring($end_time,0,11),'&amp;filter=',$group)</attribute-create>
             </element>
 
 
