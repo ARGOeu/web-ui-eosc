@@ -44,12 +44,6 @@
                 <element in="group" if="@type=$topology"><element-ignore in="group" if="@type!=$topology"/></element>
             </element>
 
-            <!--<element in="root">-->
-                <!--<element-create>view('reportDetails')/reports/report</element-create>-->
-                <!--<element-ignore in="group" if="@type='PROJECT'">-->
-                    <!--<element/>-->
-                <!--</element-ignore>-->
-            <!--</element>-->
 
             <element in="root">
                 <attribute-create out="ApiUrl">$url</attribute-create>
@@ -115,13 +109,14 @@
         <argument name="entity">_entity_</argument>
 
         <argument name="group">NGI_FRANCE</argument>
+        <argument name="granularity">daily</argument>
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
 
         <variable name="start_time" eval="concat($start_date,'T00:00:00Z')"/>
         <variable name="end_time" eval="concat($end_date,'T23:59:59Z')"/>
 
-        <variable name="url"  eval="concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=daily')"/>
+        <variable name="url"  eval="concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=',$granularity)"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>
@@ -191,6 +186,7 @@
         <argument name="entity">_entity_</argument>
         <argument name="month">2018-06</argument>
         <argument name="group">NGI_FRANCE</argument>
+        <argument name="details">_details_</argument>
 
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
@@ -198,7 +194,9 @@
         <variable name="start_time" eval="concat($month,'-01T00:00:00Z')"/>
         <variable name="end_time" eval="concat(str:replace(substring(date:add($start_time,concat('P',1,'M')),0,20),' ','T'),'Z')"/>
 
-        <variable name="url"  eval="concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=daily')"/>
+        <variable name="url"  eval="choose($details='_details_',
+        concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=daily'),
+        concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'/services/',$details,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=daily'))"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>
@@ -213,7 +211,6 @@
 
             <element in="root">
                 <element-ignore in="group" if="@type!=$topology"><element/></element-ignore>
-                <element in="group" if="@type=$topology"><element-ignore in="group" if="@type!=$topology"/></element>
             </element>
 
 
@@ -234,6 +231,7 @@
                 <attribute-create out="month">$month</attribute-create>
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
+
                 <attribute-create out="statusUrl" if="$topology!='NGI'">concat($tenant,'/report-status/',$report,'/',$topology,'/',$group,'?start_date=',substring($start_time,0,11),'&amp;end_date=',substring($end_time,0,11))</attribute-create>
                 <attribute-create out="statusUrl" if="$topology='NGI'">concat($tenant,'/report-status/',$report,'/','SITES','?start_date=',substring($start_time,0,11),'&amp;end_date=',substring($end_time,0,11),'&amp;filter=',$group)</attribute-create>
             </element>
@@ -312,11 +310,12 @@
         <processors>
 
             <element in="root">
-                <attribute-create out="details">true()</attribute-create>
+                <attribute-create out="details" if="topology3='_topo3_'">1</attribute-create>
+                <attribute-create out="details" if="topology3!='_topo3_'">2</attribute-create>
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="ApiUrl">$url</attribute-create>
-
+                <attribute-create out="group">$group</attribute-create>
                 <attribute-create out="month1">choose(../group[count(results)=$nbmonths+1]/results[1]/@timestamp,../group[count(results)=$nbmonths+1]/results[1]/@timestamp,$month_1)</attribute-create>
                 <attribute-create out="month2">choose(../group[count(results)=$nbmonths+1]/results[2]/@timestamp,../group[count(results)=$nbmonths+1]/results[2]/@timestamp,$month_2)</attribute-create>
                 <attribute-create out="month3">choose(../group[count(results)=$nbmonths+1]/results[3]/@timestamp,../group[count(results)=$nbmonths+1]/results[3]/@timestamp,$month_3)</attribute-create>

@@ -8,7 +8,7 @@
         <topologyReference>goc</topologyReference>
         <topologyAR>NGI</topologyAR>
         <topologyStatus>SITES</topologyStatus>
-        <topologyDetails>SITES</topologyDetails>
+        <topologyDetails>services</topologyDetails>
 
         <reports>
             <report>
@@ -35,7 +35,7 @@
         <topologyReference>goc-sla</topologyReference>
         <topologyAR>SERVICEGROUPS</topologyAR>
         <topologyStatus>SERVICEGROUPS</topologyStatus>
-        <topologyDetails>SERVICES</topologyDetails>
+        <topologyDetails>services</topologyDetails>
         <reports>
             <report>
                 <tenant>egi</tenant>
@@ -56,7 +56,7 @@
         <topologyReference>dpmt</topologyReference>
         <topologyAR>SERVICEGROUPS</topologyAR>
         <topologyStatus>SERVICEGROUPS</topologyStatus>
-        <topologyDetails>SERVICES</topologyDetails>
+        <topologyDetails>services</topologyDetails>
 
         <reports>
             <report>
@@ -77,7 +77,7 @@
         <topologyReference>goc-sdc</topologyReference>
         <topologyAR>SERVICEGROUPS</topologyAR>
         <topologyStatus>SERVICEGROUPS</topologyStatus>
-        <topologyDetails>SERVICES</topologyDetails>
+        <topologyDetails>services</topologyDetails>
 
         <reports>
             <report>
