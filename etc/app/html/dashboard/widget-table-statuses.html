@@ -11,25 +11,19 @@
         <div class="card-body font-weight-light">
             <div class="table-responsive">
                 <table class="table  dataTable table-bordered table-condensed">
-
                 <thead>
                 <tr>
-                    <th class="text-nowrap" >Endpoint Group</th>
-                    <th>Endpoint</th>
+                    <th></th>
+                    <th>Endpoint (Endpoint Group)</th>
                     <th>Metric</th>
                     <th>Timestamp</th>
-                    <th></th>
+
                     <th></th>
                 </tr>
                 </thead>
 
                 <tbody>
                 <tr tpl:foreach="root/status-last/object">
-                    <td>{{endpoint_group/text()}}</td>
-                    <td>{{endpoint/text()}}</td>
-                    <td>{{metric/text()}}</td>
-
-                    <td> {{timestamp/text()}}</td>
                     <td>
                         <span tpl:if="status/text()='OK'" class="badge bg-success">{{status/text()}}</span>
                         <span tpl:else="status/text()='WARNING'" class="badge bg-warning"> {{status/text()}}</span>
@@ -37,6 +31,11 @@
                         <span tpl:else="status/text()='MISSING'" class="badge bg-info"> {{status/text()}}</span>
                         <span tpl:else="" class="badge bg-gray"> {{status/text()}}</span>
                     </td>
+                    <td>{{endpoint/text()}} ({{endpoint_group/text()}})</td>
+                    <td>{{metric/text()}}</td>
+
+                    <td> {{timestamp/text()}}</td>
+
                     <td>
 
                     <span class="showModal fa fa-search" data-toggle="modal" data-target="#{{@id}}"></span>
