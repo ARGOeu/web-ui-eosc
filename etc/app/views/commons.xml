@@ -157,7 +157,7 @@
         <argument name="report">Critical</argument>
         <argument name="tenant">egi</argument>
         <argument name="entity">_entity_</argument>
-
+        <argument name="status">_status_</argument>
 
 
         <connector type="XMLConnector">
@@ -188,7 +188,7 @@
                 <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='dpmt'">view('dpmt.siteProjects')/results/SERVICE_GROUP[NAME/text()=$entity]</element-create>
                 <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc-sdc'">view('gocdb.sdc.site')/results/SITE[@NAME=$entity]</element-create>
                 <element-create>
-                    view('api-status-last',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][@report=../@report]/@topologyStatus)|entry('entity',$entity))
+                    view('api-status-last',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][@report=../@report]/@topologyStatus)|entry('entity',$entity)|entry('status',$status))
                 </element-create>
                 <element-create>
                     view('report-ar',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][@report=../@report]/@topologyStatus)|entry('entity',$entity))
@@ -216,6 +216,7 @@
         <argument name="report">Critical</argument>
         <argument name="tenant">egi</argument>
         <argument name="scope">_scope_</argument>
+        <argument name="status">_status_</argument>
 
 
         <connector type="XMLConnector">
@@ -244,8 +245,9 @@
                 <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc-sla'">view('gocdb.sla.downtimes')</element-create>
 
                 <element-create>
-                    view('api-status-last',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][@report=../@report]/@topologyStatus))
+                    view('api-status-last',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][@report=../@report]/@topologyStatus)|entry('status',$status))
                 </element-create>
+
                 <element-create>
                     view('report-ar',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][@report=../@report]/@topologyAR))
                 </element-create>

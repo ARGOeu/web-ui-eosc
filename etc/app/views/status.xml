@@ -20,13 +20,16 @@
 
         <argument name="entity">_entity_</argument>
         <argument name="scope">_scope_</argument>
+        <argument name="status">_status_</argument>
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+        <variable name="filter" eval="choose($status!='_status_',$status,'all')"/>
+
 
 
 
         <connector type="HTTPConnector">
-            <parameter name="url" eval="choose($entity='_entity_',concat(property('api.status.last'),'/',$report,'/',$topology,'?limit=',$last),concat(property('api.status.last'),'/',$report,'/',$topology,'/',$entity,'?limit=',$last))"/>
+            <parameter name="url" eval="choose($entity='_entity_',concat(property('api.status.last'),'/',$report,'/',$topology,'?limit=',$last,'&amp;filter=',$filter),concat(property('api.status.last'),'/',$report,'/',$topology,'/',$entity,'?limit=',$last,'&amp;filter=',$filter))"/>
 
             <parameter name="force-redirect">true</parameter>
             <parameter name="header">
@@ -40,7 +43,6 @@
         <processors>
 
             <element in="object" out="status-last">
-
                 <element-ignore in="data">
                     <element-ignore in="metric_data">
                         <element/>                      
