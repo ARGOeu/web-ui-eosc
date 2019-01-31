@@ -197,6 +197,13 @@
 
             </element>
 
+            <element in="root" out="error" if="error" attributes="@*">
+                <element-ignore in="error">
+                    <element/>
+                </element-ignore>
+            </element>
+
+
         </processors>
 
 
@@ -252,12 +259,17 @@
                     view('report-ar',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][@report=../@report]/@topologyAR))
                 </element-create>
 
-            </element>
-
-            <element in="root">
-
 
             </element>
+
+
+            <element in="root" out="error" if="error" attributes="@*">
+                <element-ignore in="error">
+                    <element/>
+                </element-ignore>
+            </element>
+
+
         </processors>
 
 

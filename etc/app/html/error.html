@@ -66,22 +66,22 @@
 
 
                     <li class="nav-item">
-                        <a href="/egi" class="nav-link">
+                        <a href="http://egi-ui.argo.grnet.gr" class="nav-link">
                             <i class="nav-icon fa fa-circle-o text-blue"></i>
                             <p>EGI ARGO</p>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="/eudat" class="nav-link">
+                        <a href="http://eudat-ui.argo.grnet.gr/" class="nav-link">
                             <i class="nav-icon fa fa-circle-o text-warning"></i>
                             <p>EUDAT ARGO</p>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="/sdc" class="nav-link">
-                            <i class="nav-icon fa fa-circle-o text-warning"></i>
+                        <a href="http://sdc-ui.argo.grnet.gr/" class="nav-link">
+                            <i class="nav-icon fa fa-circle-o text-success"></i>
                             <p>SDC ARGO</p>
                         </a>
                     </li>
@@ -123,34 +123,17 @@
         <!-- Main content -->
         <section class="content">
 
-                <!--<h2 class="headline text-warning"> {{@code}}</h2>-->
 
-                <!--<div class="error-content">-->
-                    <!--<h3><i class="fa fa-warning text-warning"></i> {{text()}}</h3>-->
-
-                    <!--<div class="card" tpl:foreach="/error/errors">-->
-                        <!--<div class="card-header bg-critical">-->
-                           <!--Error #{{code/text()}}-->
-                        <!--</div>-->
-                        <!--<div class="card-bdoy">-->
-                            <!--<h5 class="card-title">{{message/text()}}</h5>-->
-                            <!--<h6 class="card-subtitle mb-2 text-muted">{{details/text()}}</h6>-->
-                        <!--</div>-->
-
-                    <!--</div>-->
-
-
-                <!--</div>-->
 
                 <div class="col-lg-9 col-9" tpl:foreach="error[not(contains(text(),'No results found for given query'))]">
                     <!-- small card -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>ERROR #{{code/text()}}</h3>
-
-                            <code>{{text()}}</code>
-                            <code>{{message/text()}}</code>
-                            <code>{{details/text()}}</code>
+                            <h3>ERROR #{{@code}}</h3>
+                            <code>This page isn't available.  </code><br/><br/>
+                            <code><small>{{text()}}</small></code>
+                            <code><small>{{message/text()}}</small></code>
+                            <code><small>{{details/text()}}</small></code>
                         </div>
                         <div class="icon">
                             <i class="ion ion-alert"></i>
