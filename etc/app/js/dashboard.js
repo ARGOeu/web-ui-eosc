@@ -26,7 +26,7 @@ $("[data-widget='pushmenu']").click(function (){
 
 
     // Tables for the whole page
-     $('.dataTable').dataTable({
+     $('.widgetTable').dataTable({
       "paging": true,
       "ordering": true
     });
