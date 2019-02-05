@@ -41,7 +41,8 @@
 
 
                             <div class="card" tpl:foreach="/root">
-
+                                <input class="d-none" id="titlePDF" tpl:if="@month" value="AVAILABILITY/RELIABILITY MONTHLY REPORT : {{@month}} - {{@group}} "/>
+                                <input class="d-none" id="titlePDF" tpl:else="" value="AVAILABILITY/RELIABILITY CUSTOM REPORT : {{@group}} "/>
                                 <div class="card-header" tpl:if="@month">Availabilities/Reliabilities for {{@group}} - {{@month}} <a tpl:if="@statusUrl" class="m-2" href="/{{@statusUrl}}" title="status link" ><span class="badge badge-primary">STATUS</span></a> </div>
                                 <div class="card-header" tpl:else="">Availabilities/Reliabilities for {{@group}} </div>
                                 <div class="card-body">
@@ -115,7 +116,7 @@
 <!-- adminlte -->
 <script src="/resource/app/html/adminlte/dist/js/adminlte.js?v={$app.version}"></script>
 
-<script src="/resource/app/js/dashboard.js?v={$app.version}"></script>
+
 
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
@@ -154,28 +155,7 @@ float:right;
 </style>
 
 
-<script>
-
-  $(document).ready(function() {
-    $('#ar').DataTable( {
-
-
-     "dom": "Blftip",
-    buttons: [
-            'copyHtml5',
-            'excelHtml5',
-            'csvHtml5',
-            'pdfHtml5'
-        ],
-     "lengthMenu": [[50, 25, 10, -1], [50, 25, 10, "All"]]
-
-    } );
-
-
-
-} );
-
-</script>
+<script src="/resource/app/js/dataTablePDF.js?v={$app.version}"></script>
 
 </body>
 </html>

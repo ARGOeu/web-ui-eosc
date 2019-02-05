@@ -12,18 +12,20 @@
         <argument name="topology"/>
         <argument name="nbmonths">4</argument>
         <argument name="filter">_filter_</argument>
+        <argument name="month">1979-01</argument>
 
 
     <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
-    <variable name="start_time" eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z')"/>
-    <variable name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"/>
+    <variable name="start_time" eval="choose($month='1979-01',concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z'),concat(str:replace(substring(date:add($month,concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z'))"/>
+    <variable name="end_time" eval="concat(str:replace(substring(date:add($start_time,concat('P',$nbmonths,'M')),0,20),' ','T'),'Z')"/>
     <variable name="url" eval="concat(property('api.report'),'/',$report,'/',$topology,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=monthly')"/>
 
         <variable name="month_1" eval="substring($start_time,0,8)"/>
-        <variable name="month_2" eval="substring(date:add(date:date-time(),concat('-P',3,'M')),0,8)"/>
-        <variable name="month_3" eval="substring(date:add(date:date-time(),concat('-P',2,'M')),0,8)"/>
-        <variable name="month_4" eval="substring(date:add(date:date-time(),concat('-P',1,'M')),0,8)"/>
-        <variable name="month_5" eval="substring(date:date-time(),0,8)"/>
+        <variable name="month_2" eval="substring(date:add($start_time,concat('P',1,'M')),0,8)"/>
+        <variable name="month_3" eval="substring(date:add($start_time,concat('P',2,'M')),0,8)"/>
+        <variable name="month_4" eval="substring(date:add($start_time,concat('P',3,'M')),0,8)"/>
+        <variable name="month_5" eval="substring(date:add($start_time,concat('P',4,'M')),0,8)"/>
+
 
     <connector type="HTTPConnector">
         <parameter name="url" eval="$url"/>
