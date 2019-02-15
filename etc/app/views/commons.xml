@@ -442,9 +442,10 @@
     </view>
 
 
-    <view name="TermsofUse">
+    <view name="termsofUse">
+        <argument name="tenant"/>
         <connector type="XMLConnector">
-            <parameter name="content" eval="new_element('root',new_attribute('tenant','egi'))"/>
+            <parameter name="content" eval="new_element('root',new_attribute('tenant',$tenant))"/>
         </connector>
 
         <renderers>
