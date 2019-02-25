@@ -8,4 +8,25 @@
     <div tpl:if="/root/@tenant='eudat'">ARGO is a service jointly developed and maintained by <a href="http://www.cnrs.fr/en" title="cnrs website">CNRS</a>, <a href="https://grnet.gr/en/" title="Grnet web site">GRNET</a> and <a href="https://www.srce.unizg.hr/en/" title="SRCE web site">SRCE</a> co-funded by <a href="https://www.eosc-hub.eu/">EOSC-Hub</a> <img class="m-2" src="/resource/app/img/cee.png" width="50px"/> </div>
     <div tpl:if="/root/@tenant='sdc'">ARGO is a service jointly developed and maintained by <a href="http://www.cnrs.fr/en" title="cnrs website">CNRS</a>, <a href="https://grnet.gr/en/" title="Grnet web site">GRNET</a> and <a href="https://www.srce.unizg.hr/en/" title="SRCE web site">SRCE</a>  </div>
 
+
+    <!-- Global site tag (gtag.js) - Google Analytics for EGI-->
+    <script tpl:if="$app.instance='prod' and root/@tenant='eudat'" async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-65947937-2"></script>
+    <script tpl:if="$app.instance='prod' and root/@tenant='egi'">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-65947937-2');
+</script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics for EUDAT -->
+    <script tpl:if="$app.instance='prod' and root/@tenant='eudat'" async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-65947937-3"></script>
+    <script  tpl:if="$app.instance='prod' and root/@tenant='eudat'">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-65947937-3');
+</script>
+
 </footer>

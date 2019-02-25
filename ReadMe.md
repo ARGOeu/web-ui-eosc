@@ -16,6 +16,15 @@ title: Web UI | ARGO
 * yum install maven
 * yum install git
 * yum install wget
+* firewall-cmd --add-service=http --permanent
+* firewall-cmd --reload
+
+
+# Installation
+
+* git clone https://gitlab.in2p3.fr/cc-in2p3-dev/argo-eosc.git
+* add a certificate
+* configure the instance as described below
 
 ## Configuration - etc/app/app-hidden.files
 * add the file and add values to access spmt, api and certificates
@@ -34,6 +43,9 @@ title: Web UI | ARGO
     certificate.password =
     certificate.path =
 ```
+* manage the app version and instance into etc/engine/html.properties
+* manage the ports into etc/service/service.properties
+
 
 
 ## Add a new tenant $tenant
@@ -41,10 +53,6 @@ title: Web UI | ARGO
 * add the tenant properties into etc/app/resources/tenants.xml
 * copy the file etc/app/html/adminlte/dist/css/adminlte.min.css in the same directory under name adminlte-$tenant.css
 
-
-## Manage the instance
-
-* manage the app version and instance into etc/engine/html.properties
 
 ## Customize a new tenant $tenant
 
