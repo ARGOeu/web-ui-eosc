@@ -21,6 +21,7 @@ title: Web UI | ARGO
 * add the file and add values to access gocdb, spmt and api
 * add API key into the etc/app/app-hidden.files, $tenant.api.key = yourKey
 
+```
     ### EUDAT DPMT
     eudat-api-user =
     eudat-api-pwd =
@@ -33,6 +34,8 @@ title: Web UI | ARGO
     ### CERTIFICATES
     certificate.password =
     certificate.path =
+```
+
 
 ## Add a new tenant $tenant
 
