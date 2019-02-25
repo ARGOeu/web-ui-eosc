@@ -10,8 +10,8 @@
 
 
     <!-- Global site tag (gtag.js) - Google Analytics for EGI-->
-    <script tpl:if="$app.instance='prod' and /root/@tenant='egi'" async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-65947937-2"></script>
-    <script tpl:if="$app.instance='prod' and /root/@tenant='egi'">
+    <script tpl:if="/root/@tenant='egi'" async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-65947937-2"></script>
+    <script tpl:if="/root/@tenant='egi'">
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -20,8 +20,8 @@
 </script>
 
     <!-- Global site tag (gtag.js) - Google Analytics for EUDAT -->
-    <script tpl:if="$app.instance='prod' and /root/@tenant='eudat'" async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-65947937-3"></script>
-    <script  tpl:if="$app.instance='prod' and /root/@tenant='eudat'">
+    <script tpl:if="/root/@tenant='eudat'" async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-65947937-3"></script>
+    <script  tpl:if="/root/@tenant='eudat'">
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
