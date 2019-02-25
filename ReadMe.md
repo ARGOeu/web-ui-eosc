@@ -18,21 +18,23 @@ title: Web UI | ARGO
 * yum install wget
 
 ## Configuration - etc/app/app-hidden.files
-* add the file and add values to access gocdb, spmt and api
+* add the file and add values to access spmt, api and certificates
 * add API key into the etc/app/app-hidden.files, $tenant.api.key = yourKey
 
+```
     ### EUDAT DPMT
     eudat-api-user =
     eudat-api-pwd =
 
     ### APIKEYS
-    sdc.api.key=
-    egi.api.key=
-    eudat.api.key=
+    ???.api.key=
+
 
     ### CERTIFICATES
     certificate.password =
     certificate.path =
+```
+
 
 ## Add a new tenant $tenant
 
