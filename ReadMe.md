@@ -17,15 +17,32 @@ title: Web UI | ARGO
 * yum install git
 * yum install wget
 
+## Configuration - etc/app/app-hidden.files
+* add the file and add values to access gocdb, spmt and api
+* add API key into the etc/app/app-hidden.files, $tenant.api.key = yourKey
 
+    ### EUDAT DPMT
+    eudat-api-user =
+    eudat-api-pwd =
 
+    ### APIKEYS
+    sdc.api.key=
+    egi.api.key=
+    eudat.api.key=
+
+    ### CERTIFICATES
+    certificate.password =
+    certificate.path =
 
 ## Add a new tenant $tenant
 
 * add the tenant properties into etc/app/resources/tenants.xml
-* add API key into the etc/app/app-hidden.files, $tenant.api.key = yourKey
 * copy the file etc/app/html/adminlte/dist/css/adminlte.min.css in the same directory under name adminlte-$tenant.css
 
+
+## Manage the instance
+
+* manage the app version and instance into etc/engine/html.properties
 
 ## Customize a new tenant $tenant
 
