@@ -3,9 +3,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
 
-    <title>ARGO | Home</title>
-
-
+    <title tpl:if="$app.instance='prod'">ARGO | Monitore your services</title>
+    <title tpl:else="">ARGO Development instance</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="/resource/app/html/adminlte/plugins/font-awesome/css/font-awesome.min.css?v={$app.version}"/>
@@ -22,7 +21,7 @@
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-65947937-2"></script>
-    <script>
+    <script tpl:if="$app.instance='prod'">
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
