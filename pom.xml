@@ -9,6 +9,13 @@
     <artifactId>argo-eosc</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>logging-mailhandler</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+    </dependencies>
     <repositories>
         <repository>
             <id>IN2P3 maven repository</id>
