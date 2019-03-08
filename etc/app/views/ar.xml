@@ -90,6 +90,7 @@
 
         </processors>
 
+        
 
 
         <renderers>
@@ -99,6 +100,8 @@
             <renderer type="DefaultRenderer">
                 <parameter name="contentType">text/xml</parameter>
             </renderer>
+            <renderer type="ChartRenderer">
+                            </renderer>
         </renderers>
 
     </view>

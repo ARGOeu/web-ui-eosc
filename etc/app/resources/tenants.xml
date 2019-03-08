@@ -23,6 +23,12 @@
                 <thresholdAv>80</thresholdAv>
                 <thresholdRe>85</thresholdRe>
             </report>
+            <report>
+                <tenant>egi</tenant>
+                <id>CriticalUncert</id>
+                <thresholdAv>80</thresholdAv>
+                <thresholdRe>85</thresholdRe>
+            </report>
 
         </reports>
     </tenant>
