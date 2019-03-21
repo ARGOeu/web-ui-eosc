@@ -182,6 +182,113 @@
 
     </view>
 
+    <view name="report-ar-endpoints"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
+
+
+
+        <argument name="report"/>
+        <argument name="tenant"/>
+        <argument name="topology"/>
+        <argument name="topology2"/>
+        <argument name="month"/>
+        <argument name="group"/>
+        <argument name="group2">_group3_</argument>
+        <argument name="group3">_group3_</argument>
+
+
+
+    <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+
+    <variable name="start_time" eval="concat($month,'-01T00:00:00Z')"/>
+    <variable name="end_time" eval="concat(str:replace(substring(date:add($start_time,concat('P',1,'M')),0,20),' ','T'),'Z')"/>
+    <variable name="url"  eval="choose($group3='_group3_',
+    concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'/',$topology2,'/',$group2,'/endpoints?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=daily'),
+    concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'/',$topology2,'/',$group2,'/endpoints/',$group3,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=daily'))"/>
+
+     <variable name="topology3" eval="view('reportDetails')/reports/report[@tenant=$tenant][@report=$report]/@topologyDetails"/>
+
+
+
+
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/xml</entry>
+            </parameter>
+        </connector>
+
+        <!--<connector type="StringConnector">-->
+            <!--<parameter name="content" eval="$url"></parameter>-->
+        <!--</connector>-->
+        <!--<serializer type="EncapsulateSerializer"/>-->
+    <processors>
+
+        <element in="root">
+            <attribute-create out="details">3</attribute-create>
+            <attribute-create out="tenant">$tenant</attribute-create>
+            <attribute-create out="report">$report</attribute-create>
+            <attribute-create out="ApiUrl">$url</attribute-create>
+            <attribute-create out="group">$group</attribute-create>
+
+
+            <element-create>view('reportDetails')/reports/report</element-create>
+
+        </element>
+
+        <element in="root">
+
+
+            <attribute-create out="level1">../report[@tenant=../@tenant][@report=../@report]/@thresholdAv</attribute-create>
+            <attribute-create out="level2">../report[@tenant=../@tenant][@report=../@report]/@thresholdRe</attribute-create>
+            <attribute-create out="month">$month</attribute-create>
+            <attribute-create out="topology">$topology</attribute-create>
+            <attribute-create out="topology2">$topology2</attribute-create>
+            <attribute-create out="topology3">$topology3</attribute-create>
+            <attribute-create out="group2" if="$group2!='_group2_'">$group2</attribute-create>
+            <attribute-create out="group3" if="$group3!='_group3_'">$group3</attribute-create>
+            <attribute-create out="start_time">$start_time</attribute-create>
+            <attribute-create out="end_time">$end_time</attribute-create>
+            <attribute-create out="start_date">substring($start_time,0,11)</attribute-create>
+            <attribute-create out="end_date">substring($end_time,0,11)</attribute-create>
+        </element>
+
+        <element in="root" >
+            <element-ignore in="group">
+                <element-ignore in="group">
+                    <element/>
+                </element-ignore>
+            </element-ignore>
+        </element>
+
+
+
+        <element in="root">
+            <element in="group">
+                <element in="results">
+                    <attribute if="name()!='timestamp'">round(. * 100 ) div 100</attribute>
+                </element>
+            </element>
+        </element>
+
+
+
+    </processors>
+
+
+
+    <renderers>
+        <renderer type="HTMLRenderer">
+            <parameter name="template">app/html/report_daily.html</parameter>
+        </renderer>
+        <renderer type="DefaultRenderer">
+            <parameter name="contentType">text/xml</parameter>
+        </renderer>
+    </renderers>
+
+</view>
 
     <view name="report-ar-group"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 
@@ -236,9 +343,9 @@
                 <attribute-create out="month">$month</attribute-create>
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="start_date">substring($start_time,0,11)</attribute-create>
+                <attribute-create out="end_date">substring($end_time,0,11)</attribute-create>
 
-                <attribute-create out="statusUrl" if="$topology!='NGI'">concat($tenant,'/report-status/',$report,'/',$topology,'/',$group,'?start_date=',substring($start_time,0,11),'&amp;end_date=',substring($end_time,0,11))</attribute-create>
-                <attribute-create out="statusUrl" if="$topology='NGI'">concat($tenant,'/report-status/',$report,'/','SITES','?start_date=',substring($start_time,0,11),'&amp;end_date=',substring($end_time,0,11),'&amp;filter=',$group)</attribute-create>
             </element>
 
 
@@ -349,6 +456,115 @@
                 <element-ignore in="group" if="group">
                     <element-ignore in="group" if="@name!=$group and ancestor::group/@name!=$group"/>
                     <element/>
+                </element-ignore>
+            </element>
+
+
+
+
+            <element in="root">
+
+                <element in="group">
+                    <element in="results">
+                        <attribute if="name()!='timestamp'">round(. * 100 ) div 100</attribute>
+                    </element>
+                </element>
+            </element>
+
+        </processors>
+
+
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/report.html</parameter>
+            </renderer>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
+
+    <view name="report-ar-endpoint-details"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
+
+
+        <argument name="report"/>
+        <argument name="tenant"/>
+        <argument name="topology"/>
+        <argument name="nbmonths">5</argument>
+        <argument name="group"/>
+        <argument name="topology2"/>
+        <argument name="group2"/>
+
+
+        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+
+        <variable name="start_time" eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z')"/>
+        <variable name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"/>
+
+        <variable name="topology3" eval="view('reportDetails')/reports/report[@tenant=$tenant][@report=$report]/@topologyDetails"/>
+
+        <variable name="url"  eval="concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'/',$topology2,'/',$group2,'/endpoints?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=monthly') "/>
+
+        <variable name="month_1" eval="substring($start_time,0,8)"/>
+        <variable name="month_2" eval="substring(date:add(date:date-time(),concat('-P',3,'M')),0,8)"/>
+        <variable name="month_3" eval="substring(date:add(date:date-time(),concat('-P',2,'M')),0,8)"/>
+        <variable name="month_4" eval="substring(date:add(date:date-time(),concat('-P',1,'M')),0,8)"/>
+        <variable name="month_5" eval="substring(date:date-time(),0,8)"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/xml</entry>
+            </parameter>
+        </connector>
+
+
+
+        <processors>
+
+            <element in="root">
+                <attribute-create out="details" if="topology3='_topo3_'">1</attribute-create>
+                <attribute-create out="details" if="topology3!='_topo3_'">2</attribute-create>
+                <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="ApiUrl">$url</attribute-create>
+                <attribute-create out="group">$group</attribute-create>
+                <attribute-create out="month1">choose(../group[count(results)=$nbmonths+1]/results[1]/@timestamp,../group[count(results)=$nbmonths+1]/results[1]/@timestamp,$month_1)</attribute-create>
+                <attribute-create out="month2">choose(../group[count(results)=$nbmonths+1]/results[2]/@timestamp,../group[count(results)=$nbmonths+1]/results[2]/@timestamp,$month_2)</attribute-create>
+                <attribute-create out="month3">choose(../group[count(results)=$nbmonths+1]/results[3]/@timestamp,../group[count(results)=$nbmonths+1]/results[3]/@timestamp,$month_3)</attribute-create>
+                <attribute-create out="month4">choose(../group[count(results)=$nbmonths+1]/results[4]/@timestamp,../group[count(results)=$nbmonths+1]/results[4]/@timestamp,$month_4)</attribute-create>
+                <attribute-create out="month5">choose(../group[count(results)=$nbmonths+1]/results[5]/@timestamp,../group[count(results)=$nbmonths+1]/results[5]/@timestamp,$month_5)</attribute-create>
+
+
+
+                <element-create>view('reportDetails')/reports/report</element-create>
+
+            </element>
+
+            <element in="root">
+
+
+                <attribute-create out="level1">../report[@tenant=../@tenant][@report=../@report]/@thresholdAv</attribute-create>
+                <attribute-create out="level2">../report[@tenant=../@tenant][@report=../@report]/@thresholdRe</attribute-create>
+                <attribute-create out="topology">$topology</attribute-create>
+                <attribute-create out="topology2">$topology2</attribute-create>
+
+
+                <attribute-create out="group">$group</attribute-create>
+                <attribute-create out="group2">$group2</attribute-create>
+                
+            </element>
+
+            <element in="root" >
+                <element-ignore in="group" >
+                    <element-ignore in="group" >
+                        <element/>
+                    </element-ignore>
                 </element-ignore>
             </element>
 

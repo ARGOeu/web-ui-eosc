@@ -23,11 +23,13 @@
                     <div class="col-sm-6">
 
                     </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
+                    <div class="col-sm-6" tpl:if="/root/@month">
+                        <ol class="breadcrumb float-sm-right" tpl:foreach="/root">
                             <li class="breadcrumb-item"><a href="/">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboards</li>
-                            <li tpl:foreach="root" class="breadcrumb-item active">Dashboard {{@tenant}}</li>
+                            <li class="breadcrumb-item">Availabilities / Reliabilities</li>
+                            <li class="breadcrumb-item"><a href="/{@tenant}/report-ar-group/{@report}/{@month}/{@topology}/{@group}">{{@group}}</a></li>
+                            <li class="breadcrumb-item" tpl:if="@group2"><a href="/{@tenant}/report-ar-group/{@report}/{@month}/{@topology}/{@group}/{@topology2}/{@group2}/endpoints">{{@group2}}</a></li>
+                            <li class="breadcrumb-item" tpl:if="@group3"><a href="/{@tenant}/report-ar-group/{@report}/{@month}/{@topology}/{@group}/{@topology2}/{@group2}/endpoints/{@group3}">{{@group3}}</a></li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -41,10 +43,14 @@
 
 
                             <div class="card" tpl:foreach="/root">
-                                <input class="d-none" id="titlePDF" tpl:if="@month" value="AVAILABILITY/RELIABILITY MONTHLY REPORT : {{@month}} - {{@group}} "/>
-                                <input class="d-none" id="titlePDF" tpl:else="" value="AVAILABILITY/RELIABILITY CUSTOM REPORT : {{@group}} "/>
-                                <div class="card-header" tpl:if="@month">Availabilities/Reliabilities for {{@group}} - {{@month}} <a tpl:if="@statusUrl" class="m-2" href="/{{@statusUrl}}" title="status link" ><span class="badge badge-primary">STATUS</span></a> </div>
-                                <div class="card-header" tpl:else="">Availabilities/Reliabilities for {{@group}} </div>
+                                <input class="d-none" id="titlePDF" tpl:if="@month" value="AVAILABILITY/RELIABILITY MONTHLY REPORT : {{@month}} - {{@group}}  {{@group2}}  {{@group3}} "/>
+                                <input class="d-none" id="titlePDF" tpl:else="" value="AVAILABILITY/RELIABILITY CUSTOM REPORT : {{@group}}  {{@group2}}  {{@group3}} "/>
+                                <div class="card-header" tpl:if="@month">Availabilities/Reliabilities - {{@month}}
+                                    <!--<a tpl:if="@statusUrl" class="m-2" href="/{{@statusUrl}}" title="status link" ><span class="badge badge-primary">STATUS</span></a> -->
+                                    <a tpl:if="not(@group2)" class="m-2" href="/{@tenant}/report-status/{@report}/{@topology}/{@group}?start_date={@start_date}&amp;end_date={@end_date}" title="status link" ><span class="badge badge-primary">STATUS</span></a>
+                                    <a tpl:if="@group2 and not(@group3)" class="m-2" href="/{@tenant}/report-status/{@report}/{@topology}/{@group}/{@group2}?start_date={@start_date}&amp;end_date={@end_date}" title="status link" ><span class="badge badge-primary">STATUS</span></a>
+                                </div>
+                                <div class="card-header" tpl:else="">Availabilities/Reliabilities {{@group}} - {{@group2}} - {{@group3}} </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table id="ar" class="table m-0">
