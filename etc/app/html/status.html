@@ -55,7 +55,7 @@
                            <div class="card-header">Status for {{root/@tenant}} tenant - {{root/@report}} Report</div>
 
                             <div style="display: none"   id="local_groups">
-                                <div  tpl:foreach="/root/group/status" > {{ancestor::group/@name}} - {{ancestor::group/@group}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@color}}</div>
+                                <div  tpl:foreach="/root/group/status" > {{ancestor::group/@name}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@color}}</div>
                             </div>
 
                             <div style="display: none" tpl:else=""  id="local_groups">

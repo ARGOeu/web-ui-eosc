@@ -17,7 +17,7 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <div class="content-header">
+        <div class="content-header" >
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
@@ -42,15 +42,29 @@
             <div class="container-fluid">
 
 
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="table-tab" data-toggle="tab" href="#table" role="tab" aria-controls="table" aria-selected="true"><span class="fa fa-table "></span>  Availability/Reliability Table</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="charts-tab" data-toggle="tab" href="#charts" role="tab" aria-controls="charts" aria-selected="false"><span class="fa fa-chart-bar"></span> Availability/Reliability Charts</a>
+                    </li>
+                    <li tpl:foreach="/root">
+
+                        <a class="nav-link" role="tab" aria-controls="table" aria-selected="true"  tpl:if="@group and not(@group2)" href="/{@tenant}/report-status/{@report}/{@topology}/{@group}?start_date={@start_date}&amp;end_date={@end_date}" title="status link" ><span class="fa fa-check "></span> STATUS</a>
+                        <a class="nav-link" role="tab" aria-controls="table" aria-selected="true"  tpl:if="@group2 and not(@group3)" href="/{@tenant}/report-status/{@report}/{@topology}/{@group}/{@group2}?start_date={@start_date}&amp;end_date={@end_date}" title="status link" ><span class="fa fa-check"></span> STATUS</a>
+
+                    </li>
+
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="table" role="tabpanel" aria-labelledby="table-tab">
+
                             <div class="card" tpl:foreach="/root">
-                                <input class="d-none" id="titlePDF" tpl:if="@month" value="AVAILABILITY/RELIABILITY MONTHLY REPORT : {{@month}} - {{@group}}  {{@group2}}  {{@group3}} "/>
-                                <input class="d-none" id="titlePDF" tpl:else="" value="AVAILABILITY/RELIABILITY CUSTOM REPORT : {{@group}}  {{@group2}}  {{@group3}} "/>
-                                <div class="card-header" tpl:if="@month">Availabilities/Reliabilities - {{@month}}
-                                    <!--<a tpl:if="@statusUrl" class="m-2" href="/{{@statusUrl}}" title="status link" ><span class="badge badge-primary">STATUS</span></a> -->
-                                    <a tpl:if="not(@group2)" class="m-2" href="/{@tenant}/report-status/{@report}/{@topology}/{@group}?start_date={@start_date}&amp;end_date={@end_date}" title="status link" ><span class="badge badge-primary">STATUS</span></a>
-                                    <a tpl:if="@group2 and not(@group3)" class="m-2" href="/{@tenant}/report-status/{@report}/{@topology}/{@group}/{@group2}?start_date={@start_date}&amp;end_date={@end_date}" title="status link" ><span class="badge badge-primary">STATUS</span></a>
-                                </div>
-                                <div class="card-header" tpl:else="">Availabilities/Reliabilities {{@group}} - {{@group2}} - {{@group3}} </div>
+                             <input class="d-none" id="titlePDF" tpl:if="@month" value="AVAILABILITY/RELIABILITY MONTHLY REPORT : {{@month}}  "/>
+                                <input class="d-none" id="titlePDF" tpl:else="" value="AVAILABILITY/RELIABILITY CUSTOM REPORT"/>
+                                <input class="d-none" id="subtitlePDF" value="{{@group}}  {{@group2}}  {{@group3}} "/>
+
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table id="ar" class="table m-0">
@@ -94,11 +108,43 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                </div>
+                            </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="charts" role="tabpanel" aria-labelledby="charts-tab">
+                        <div class="card">
+
+                            <div class="row">
+                                <div class="col-11 card-body" tpl:foreach="/root/group">
+
+                                    <div  class="ARdata"  id="table_{@name}">
+                                        <div tpl:foreach="results">
+                                            <div  class="d-none dataAvailability" >{{@availability}}</div>
+                                            <div class="d-none dataReliability" >{{@reliability}}</div>
+                                            <div class="d-none dataTimestamp" >{{@timestamp}}</div>
+
+
+                                        </div>
+
+
                                     </div>
+
+
+                                    <div class="chart-responsive">
+                                        <canvas id="myChart_{@name}" width="100%"></canvas>
+
+                                    </div>
+
+
+                                </div>
                             </div>
 
 
+                        </div>
 
+                    </div>
+                </div>
             <!-- /.container-fluid -->
         </div>
         <!-- /.content -->
@@ -146,6 +192,11 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/1.5.0/css/scroller.bootstrap4.min.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.6/css/select.bootstrap4.min.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css"/>
+
+
+<script src="/resource/app/js/ar_chart.js?v={$app.version}"></script>
+
+<script src="/resource/app/html/adminlte/plugins/chart.js/Chart.min.js?v={$app.version}"></script>
 
 
 <style>

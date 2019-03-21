@@ -25,8 +25,10 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
-                            <li tpl:foreach="root" class="breadcrumb-item active">Availabilities / Reliabilities</li>
+
+                            <li class="breadcrumb-item" tpl:foreach="root" >Availabilities / Reliabilities</li>
+                            <li class="breadcrumb-item" tpl:if="/root/@group"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}/details">{{/root/@group}}</a></li>
+                            <li class="breadcrumb-item" tpl:if="/root/@group2"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{/root/@group2}/endpoints">{{/root/@group2}}</a></li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -40,16 +42,26 @@
 
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="table-tab" data-toggle="tab" href="#table" role="tab" aria-controls="table" aria-selected="true">Availability/Reliability Table</a>
+                        <a class="nav-link active" id="table-tab" data-toggle="tab" href="#table" role="tab" aria-controls="table" aria-selected="true"><span class="fa fa-table "></span>  Availability/Reliability Table</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="charts-tab" data-toggle="tab" href="#charts" role="tab" aria-controls="charts" aria-selected="false">Availability/Reliability Charts</a>
+                        <a class="nav-link" id="charts-tab" data-toggle="tab" href="#charts" role="tab" aria-controls="charts" aria-selected="false"><span class="fa fa-chart-bar"></span> Availability/Reliability Charts</a>
+                    </li>
+                    <li tpl:foreach="/root">
+
+                        <a class="nav-link" role="tab" aria-controls="table" aria-selected="true"  tpl:if="@group and not(@group2)" href="/{@tenant}/report-status/{@report}/{@topology}/{@group}?start_date={@start_date}&amp;end_date={@end_date}" title="status link" ><span class="fa fa-check "></span> STATUS</a>
+                            <a class="nav-link" role="tab" aria-controls="table" aria-selected="true"  tpl:if="@group2 and not(@group3)" href="/{@tenant}/report-status/{@report}/{@topology}/{@group}/{@group2}?start_date={@start_date}&amp;end_date={@end_date}" title="status link" ><span class="fa fa-check"></span> STATUS</a>
+
                     </li>
 
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="table" role="tabpanel" aria-labelledby="table-tab">
-                        <input class="d-none" id="titlePDF" value="AVAILABILITY/RELIABILITY REPORT : {{/root/@month1}} - {{/root/@month5}}"/>
+
+
+                        <input class="d-none" id="titlePDF" tpl:if="@month" value="AVAILABILITY/RELIABILITY MONTHLY REPORT : {{/root/@month1}} - {{/root/@month5}} "/>
+                        <input class="d-none" id="subtitlePDF" value="{{@group}}  {{@group2}}  {{@group3}} "/>
+
                         <div class="card" tpl:foreach="/root">
 
 
@@ -80,6 +92,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
+
                                 <div class="table-responsive">
                                     <table id="ar" class="table m-0">
                                         <thead>
@@ -260,7 +273,7 @@
                                         </tbody>
 
 
-                                        <tbody tpl:else="">
+                                        <tbody tpl:if="/root/@group2">
                                         <tr tpl:foreach="group">
                                             <td>{{@name}}</td>
                                             <td class="text-right">

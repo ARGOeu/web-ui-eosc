@@ -70,11 +70,11 @@
                             <div class="d-none labelStatuses" tpl:foreach="/root/status-last/@*">{{local-name(.)}}</div>
                             <ul style="list-style:none">
                                 <li  tpl:foreach="/root/status-last/@*">
-                                    <i tpl:if="local-name(.)='Ok'" class="m-1 fa fa-circle-o text-success"/>
-                                    <i tpl:else="local-name(.)='Warning'" class="m-1 fa fa-circle-o text-warning"/>
-                                    <i tpl:else="local-name(.)='Critical'" class="m-1 fa fa-circle-o text-danger"/>
-                                    <i tpl:else="local-name(.)='Missing'" class="m-1 fa fa-circle-o text-info"/>
-                                    <i tpl:else="" class="m-1 fa fa-circle-o text-muted"/>
+                                    <i tpl:if="local-name(.)='Ok'" class="m-1 far fa-circle text-success"/>
+                                    <i tpl:else="local-name(.)='Warning'" class="m-1 far fa-circle text-warning"/>
+                                    <i tpl:else="local-name(.)='Critical'" class="m-1 far fa-circle text-danger"/>
+                                    <i tpl:else="local-name(.)='Missing'" class="m-1 far fa-circle text-info"/>
+                                    <i tpl:else="" class="m-1 far fa-circle text-muted"/>
                                     {{local-name(.)}} : {{.}}
                                 </li>
 

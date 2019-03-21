@@ -1,417 +1,741 @@
-<root report="SLA" tenant="egi" details="level0" topology="">
-    <report report="Critical" tenant="egi" description="Advanced Computing for Research" contact="argo-egi@mailman.egi.eu" url="http://egi.eu" topologyAR="NGI" topologyStatus="SITES" topologyReference="goc" topologyDetails="SITES" thresholdAv="80" thresholdRe="85">
-        <group_count>30</group_count>
-        <group_type>NGI</group_type>
-        <group_list>
-            <item>AfricaArabia</item>
-            <item>AsiaPacific</item>
-            <item>CERN</item>
-            <item>NGI_AEGIS</item>
-            <item>NGI_BG</item>
-            <item>NGI_BY</item>
-            <item>NGI_CH</item>
-            <item>NGI_CHINA</item>
-            <item>NGI_CZ</item>
-            <item>NGI_DE</item>
-            <item>NGI_FI</item>
-            <item>NGI_FRANCE</item>
-            <item>NGI_GRNET</item>
-            <item>NGI_HR</item>
-            <item>NGI_HU</item>
-            <item>NGI_IBERGRID</item>
-            <item>NGI_IL</item>
-            <item>NGI_IT</item>
-            <item>NGI_NDGF</item>
-            <item>NGI_NL</item>
-            <item>NGI_PL</item>
-            <item>NGI_RO</item>
-            <item>NGI_SI</item>
-            <item>NGI_SK</item>
-            <item>NGI_TR</item>
-            <item>NGI_UA</item>
-            <item>NGI_UK</item>
-            <item>ROC_Canada</item>
-            <item>ROC_LA</item>
-            <item>Russia</item>
-        </group_list>
-        <endpoint_group_count>234</endpoint_group_count>
-        <endpoint_group_type>SITES</endpoint_group_type>
-        <endpoint_group_list>
-            <item>100IT</item>
-            <item>AEGIS01-IPB-SCL</item>
-            <item>AEGIS02-RCUB</item>
-            <item>AEGIS03-ELEF-LEDA</item>
-            <item>AEGIS11-MISANU</item>
-            <item>ARNES</item>
-            <item>ATLAND</item>
-            <item>AUVERGRID</item>
-            <item>AZ-IFAN</item>
-            <item>AstrogridPUC</item>
-            <item>Australia-ATLAS</item>
-            <item>Australia-T2</item>
-            <item>BEIJING-LCG2</item>
-            <item>BEgrid-BELNET</item>
-            <item>BEgrid-ULB-VUB</item>
-            <item>BG01-IPP</item>
-            <item>BUDAPEST</item>
-            <item>BY-NCPHEP</item>
-            <item>BelGrid-UCL</item>
-            <item>CA-SFU-T2</item>
-            <item>CA-TRIUMF-T2K</item>
-            <item>CA-VICTORIA-WESTGRID-T2</item>
-            <item>CAMK</item>
-            <item>CBPF</item>
-            <item>CERN-PROD</item>
-            <item>CESGA</item>
-            <item>CESNET-MetaCloud</item>
-            <item>CIEMAT-LCG2</item>
-            <item>CIRMMP</item>
-            <item>CLOUDIFIN</item>
-            <item>CNR-ILC-PISA</item>
-            <item>CREATIS-INSA-LYON</item>
-            <item>CSC</item>
-            <item>CSCS-LCG2</item>
-            <item>CYFRONET-CLOUD</item>
-            <item>CYFRONET-LCG2</item>
-            <item>CYFRONET-PROMETHEUS</item>
-            <item>DESY-HH</item>
-            <item>DESY-ZN</item>
-            <item>DZ-01-ARN</item>
-            <item>EELA-UTFSM</item>
-            <item>FI_AA</item>
-            <item>FI_Aalto</item>
-            <item>FI_HIP_T2</item>
-            <item>FI_Helsinki</item>
-            <item>FI_JYU</item>
-            <item>FI_LUT</item>
-            <item>FI_Oulu</item>
-            <item>FI_TUT</item>
-            <item>FI_UEF</item>
-            <item>FI_UTU</item>
-            <item>FMPhI-UNIBA</item>
-            <item>FZJ</item>
-            <item>FZK-LCG2</item>
-            <item>GARR-01-DIR</item>
-            <item>GR-07-UOI-HEPLAB</item>
-            <item>GR-12-TEIKAV</item>
-            <item>GRID-UNAM</item>
-            <item>GRIDIFIN</item>
-            <item>GRIF</item>
-            <item>GRISU-UNINA</item>
-            <item>GoeGrid</item>
-            <item>HEPHY-UIBK</item>
-            <item>HG-02-IASA</item>
-            <item>HG-06-EKT</item>
-            <item>HG-08-Okeanos</item>
-            <item>HG-09-Okeanos-Cloud</item>
-            <item>HK-HKU-CC-01</item>
-            <item>HK-LCG2</item>
-            <item>Hephy-Vienna</item>
-            <item>ICM</item>
-            <item>ICN-UNAM</item>
-            <item>IEPSAS-Kosice</item>
-            <item>IFCA-LCG2</item>
-            <item>IFIC-LCG2</item>
-            <item>IISAS-Bratislava</item>
-            <item>IISAS-FedCloud</item>
-            <item>IISAS-GPUCloud</item>
-            <item>IISAS-Nebula</item>
-            <item>IL-TAU-HEP</item>
-            <item>IN-DAE-VECC-02</item>
-            <item>IN2P3-CC</item>
-            <item>IN2P3-CC-T2</item>
-            <item>IN2P3-CPPM</item>
-            <item>IN2P3-IPNL</item>
-            <item>IN2P3-IRES</item>
-            <item>IN2P3-LAPP</item>
-            <item>IN2P3-LPC</item>
-            <item>IN2P3-LPSC</item>
-            <item>IN2P3-SUBATECH</item>
-            <item>INDIACMS-TIFR</item>
-            <item>INFN-BARI</item>
-            <item>INFN-CATANIA</item>
-            <item>INFN-CATANIA-STACK</item>
-            <item>INFN-CNAF-LHCB</item>
-            <item>INFN-COSENZA</item>
-            <item>INFN-FERRARA</item>
-            <item>INFN-FRASCATI</item>
-            <item>INFN-GENOVA</item>
-            <item>INFN-LECCE</item>
-            <item>INFN-LNL-2</item>
-            <item>INFN-MIB</item>
-            <item>INFN-MILANO-ATLASC</item>
-            <item>INFN-NAPOLI-ATLAS</item>
-            <item>INFN-PADOVA</item>
-            <item>INFN-PADOVA-STACK</item>
-            <item>INFN-PISA</item>
-            <item>INFN-ROMA1</item>
-            <item>INFN-ROMA1-CMS</item>
-            <item>INFN-ROMA3</item>
-            <item>INFN-T1</item>
-            <item>INFN-TORINO</item>
-            <item>INFN-TRIESTE</item>
-            <item>IR-IPM-HEP</item>
-            <item>ITEP</item>
-            <item>JINR-LCG2</item>
-            <item>JINR-T1</item>
-            <item>JP-KEK-CRC-02</item>
-            <item>KR-KISTI-GSDC-01</item>
-            <item>KR-KISTI-GSDC-02</item>
-            <item>KR-KNU-T3</item>
-            <item>Kharkov-KIPT-LCG2</item>
-            <item>LRZ</item>
-            <item>LRZ-LMU</item>
-            <item>MA-01-CNRST</item>
-            <item>MA-04-CNRST-ATLAS</item>
-            <item>MPPMU</item>
-            <item>NCBJ-CIS</item>
-            <item>NCG-INGRID-PT</item>
-            <item>NCP-LCG2</item>
-            <item>NDGF-T1</item>
-            <item>NGI_IT</item>
-            <item>NIHAM</item>
-            <item>NIKHEF-ELPROD</item>
-            <item>OBSPM</item>
-            <item>PSNC</item>
-            <item>RAL-LCG2</item>
-            <item>RECAS-BARI</item>
-            <item>RECAS-NAPOLI</item>
-            <item>RO-02-NIPNE</item>
-            <item>RO-03-UPB</item>
-            <item>RO-07-NIPNE</item>
-            <item>RO-11-NIPNE</item>
-            <item>RO-13-ISS</item>
-            <item>RO-14-ITIM</item>
-            <item>RO-16-UAIC</item>
-            <item>RRC-KI</item>
-            <item>RRC-KI-T1</item>
-            <item>RU-Protvino-IHEP</item>
-            <item>RU-SARFTI</item>
-            <item>RU-SPbSU</item>
-            <item>RWTH-Aachen</item>
-            <item>Ru-Troitsk-INR-LCG2</item>
-            <item>SAMPA</item>
-            <item>SARA-MATRIX</item>
-            <item>SCAI</item>
-            <item>SE-SNIC-T2</item>
-            <item>SUPERCOMPUTO-UNAM</item>
-            <item>SiGNET</item>
-            <item>T2-TH-SUT</item>
-            <item>T2_Estonia</item>
-            <item>T3_CH_PSI</item>
-            <item>TASK</item>
-            <item>TECHNION-HEP</item>
-            <item>TOKYO-LCG2</item>
-            <item>TR-03-METU</item>
-            <item>TR-10-ULAKBIM</item>
-            <item>TR-FC1-ULAKBIM</item>
-            <item>TRIGRID-INFN-CATANIA</item>
-            <item>TRIUMF-LCG2</item>
-            <item>TU-Kosice</item>
-            <item>TW-FTT</item>
-            <item>TW-NCHC</item>
-            <item>TW-NCUHEP</item>
-            <item>TW-NTU-HEP</item>
-            <item>Taiwan-LCG2</item>
-            <item>UA-BITP</item>
-            <item>UA-IFBG</item>
-            <item>UA-IMBG</item>
-            <item>UA-IRE</item>
-            <item>UA-ISMA</item>
-            <item>UA-KNU</item>
-            <item>UA-MHI</item>
-            <item>UA-NSCMBR</item>
-            <item>UA-PIMEE</item>
-            <item>UAM-LCG2</item>
-            <item>UA_BITP_ARC</item>
-            <item>UA_ICMP_ARC</item>
-            <item>UA_ICYB_ARC</item>
-            <item>UA_ILTPE_ARC</item>
-            <item>UKI-LT2-Brunel</item>
-            <item>UKI-LT2-IC-HEP</item>
-            <item>UKI-LT2-QMUL</item>
-            <item>UKI-LT2-RHUL</item>
-            <item>UKI-NORTHGRID-LANCS-HEP</item>
-            <item>UKI-NORTHGRID-LIV-HEP</item>
-            <item>UKI-NORTHGRID-MAN-HEP</item>
-            <item>UKI-NORTHGRID-SHEF-HEP</item>
-            <item>UKI-SCOTGRID-DURHAM</item>
-            <item>UKI-SCOTGRID-ECDF</item>
-            <item>UKI-SCOTGRID-GLASGOW</item>
-            <item>UKI-SOUTHGRID-BHAM-HEP</item>
-            <item>UKI-SOUTHGRID-BRIS-HEP</item>
-            <item>UKI-SOUTHGRID-CAM-HEP</item>
-            <item>UKI-SOUTHGRID-OX-HEP</item>
-            <item>UKI-SOUTHGRID-RALPP</item>
-            <item>UKI-SOUTHGRID-SUSX</item>
-            <item>UMB-BB</item>
-            <item>UNI-BONN</item>
-            <item>UNI-FREIBURG</item>
-            <item>UNI-SIEGEN-HEP</item>
-            <item>UNIBE-ID</item>
-            <item>UNIBE-LHEP</item>
-            <item>UNICPH-NBI</item>
-            <item>UNIGE-DPNC</item>
-            <item>UNINA-EGEE</item>
-            <item>UPV-GRyCAP</item>
-            <item>UPorto</item>
-            <item>USC-LCG2</item>
-            <item>WCSS64</item>
-            <item>WEIZMANN-LCG2</item>
-            <item>WUT</item>
-            <item>ZA-CHPC</item>
-            <item>ZA-WITS-CORE</item>
-            <item>egee.irb.hr</item>
-            <item>egee.srce.hr</item>
-            <item>ifae</item>
-            <item>mainz</item>
-            <item>mainzgrid</item>
-            <item>pic</item>
-            <item>prague_cesnet_lcg2</item>
-            <item>praguelcg2</item>
-            <item>ru-PNPI</item>
-            <item>wuppertalprod</item>
-        </endpoint_group_list>
-        <service_count>9</service_count>
-        <service_list>
-            <item>ARC-CE</item>
-            <item>CREAM-CE</item>
-            <item>GRAM5</item>
-            <item>QCG.Computing</item>
-            <item>SRM</item>
-            <item>Site-BDII</item>
-            <item>eu.egi.cloud.vm-management.occi</item>
-            <item>org.openstack.nova</item>
-            <item>unicore6.TargetSystemFactory</item>
-        </service_list>
-    </report>
-    <report report="OPS-MONITOR-Critical" tenant="egi" description="Advanced Computing for Research" contact="argo-egi@mailman.egi.eu" url="http://egi.eu" topologyAR="NGI" topologyStatus="SITES" topologyReference="goc" topologyDetails="SITES" thresholdAv="80" thresholdRe="85">
-        <group_count>1</group_count>
-        <group_type>NGI</group_type>
-        <group_list>
-            <item>EGI.eu</item>
-        </group_list>
-        <endpoint_group_count>20</endpoint_group_count>
-        <endpoint_group_type>SITES</endpoint_group_type>
-        <endpoint_group_list>
-            <item>EGI-DATAHUB</item>
-            <item>EGI-MARKETPLACE</item>
-            <item>GRIDOPS-ACCPORTAL</item>
-            <item>GRIDOPS-APEL</item>
-            <item>GRIDOPS-APPDB</item>
-            <item>GRIDOPS-CATCHALL</item>
-            <item>GRIDOPS-CSGF</item>
-            <item>GRIDOPS-CTOOLS</item>
-            <item>GRIDOPS-CheckIn</item>
-            <item>GRIDOPS-DIRAC4EGI</item>
-            <item>GRIDOPS-EC3</item>
-            <item>GRIDOPS-GGUS</item>
-            <item>GRIDOPS-GOCDB</item>
-            <item>GRIDOPS-MSG</item>
-            <item>GRIDOPS-OPSPORTAL</item>
-            <item>GRIDOPS-PERUN</item>
-            <item>GRIDOPS-SECTOOLS</item>
-            <item>GRIDOPS-UMDREPO</item>
-            <item>GRIDOPS-WS-PGRADE</item>
-            <item>GRIDOPS-XGUS</item>
-        </endpoint_group_list>
-        <service_count>15</service_count>
-        <service_list>
-            <item>VOMS</item>
-            <item>egi.APELRepository</item>
-            <item>egi.AccountingPortal</item>
-            <item>egi.AppDB</item>
-            <item>egi.GGUS</item>
-            <item>egi.GOCDB</item>
-            <item>egi.MSGBroker</item>
-            <item>egi.OpsPortal</item>
-            <item>egi.Perun</item>
-            <item>egi.Portal</item>
-            <item>egi.aai.oidc</item>
-            <item>egi.aai.saml</item>
-            <item>egi.aai.tts</item>
-            <item>org.onedata.oneprovider</item>
-            <item>org.onedata.onezone</item>
-        </service_list>
-    </report>
-    <report report="Critical" tenant="eudat" description="Collaborative Data Infrastructure" contact="argo-eudat@eudat.eu" url="http://eudat.eu" topologyAR="SERVICEGROUPS" topologyStatus="SERVICEGROUPS" topologyReference="dpmt" topologyDetails="SERVICES" thresholdAv="90" thresholdRe="95">
-        <group_count>1</group_count>
-        <group_type>PROJECT</group_type>
-        <group_list>
-            <item>EUDAT</item>
-        </group_list>
-        <endpoint_group_count>46</endpoint_group_count>
-        <endpoint_group_type>SERVICEGROUPS</endpoint_group_type>
-        <endpoint_group_list>
-            <item>ARCHIVE-DPHEP-MPP</item>
-            <item>B2ACCESS CDI</item>
-            <item>B2ACCESS MYPROXY</item>
-            <item>B2ACCESS-INTEGRATION</item>
-            <item>B2ACCESS4EPOS</item>
-            <item>B2ACCESS4LifeScience</item>
-            <item>B2DROP CDI</item>
-            <item>B2DROP WESTLIFE</item>
-            <item>B2FIND CDI</item>
-            <item>B2FIND ENES</item>
-            <item>B2FIND IST</item>
-            <item>B2FIND-EUROPEANA</item>
-            <item>B2HANDLE CDI</item>
-            <item>B2NOTE CDI</item>
-            <item>B2SAFE ABC</item>
-            <item>B2SAFE CLARIN AT</item>
-            <item>B2SAFE CLARIN EKUT</item>
-            <item>B2SAFE CLARIN REPLIX</item>
-            <item>B2SAFE CLARIN SOAS</item>
-            <item>B2SAFE ClimateModel</item>
-            <item>B2SAFE EISCAT</item>
-            <item>B2SAFE EPOS</item>
-            <item>B2SAFE Herbadrop</item>
-            <item>B2SAFE IST</item>
-            <item>B2SAFE MfN</item>
-            <item>B2SAFE VPH</item>
-            <item>B2SAFE catch all</item>
-            <item>B2SAFE-DIXA</item>
-            <item>B2SHARE CDI</item>
-            <item>B2SHARE JUELICH</item>
-            <item>B2STAGE HybTurb3D</item>
-            <item>B2STAGE MULTINANO</item>
-            <item>B2STAGE SIMCODE</item>
-            <item>B2STAGE SPHINX</item>
-            <item>B2STAGE TURBASE</item>
-            <item>B2STAGE-DSI-B2SAFE</item>
-            <item>B2STAGE-GRIDFTP-Workspace</item>
-            <item>CDI Community Service</item>
-            <item>CDI Versioning Service</item>
-            <item>CDI WEBPRESENCE</item>
-            <item>CDI WIKI SERVICE</item>
-            <item>CDI-ARGO-monitoring</item>
-            <item>CDI-Accounting</item>
-            <item>CDI-DPMT</item>
-            <item>CDI-SPMT</item>
-            <item>CDI-SVMON</item>
-        </endpoint_group_list>
-        <service_count>20</service_count>
-        <service_list>
-            <item>b2access.crowd</item>
-            <item>b2access.myproxy</item>
-            <item>b2access.oauth</item>
-            <item>b2access.openid-bridge</item>
-            <item>b2access.unity</item>
-            <item>b2drop.nextcloud</item>
-            <item>b2find.ckan</item>
-            <item>b2gether.cms.drupal</item>
-            <item>b2handle.handle.api</item>
-            <item>b2note.fe</item>
-            <item>b2safe.dsi</item>
-            <item>b2safe.irods</item>
-            <item>b2share.invenio</item>
-            <item>eudat.cms.confluence</item>
-            <item>eudat.coord.dpmt</item>
-            <item>eudat.its.jira</item>
-            <item>eudat.itsm.spmt</item>
-            <item>eudat.monitoring</item>
-            <item>eudat.rep.gitlab</item>
-            <item>eudat.webpresence</item>
-        </service_list>
-    </report>
-    <report report="Critical" tenant="sdc" description="Ocean and marine data management" contact="argo-sdc@sdc.eu" url="https://www.seadatanet.org" topologyAR="SERVICEGROUPS" topologyStatus="SERVICEGROUPS" topologyReference="goc-sdc" topologyD<?xml-stylesheet type='text/xsl' href='/template//app/html/error.html'?>
+<xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><!-- generated by module html-template-engine -->
+    <xsl:output method="html"></xsl:output>
+    <xsl:variable name="eudat.instance.devel">eudat.ui.devel.argo.grnet.gr</xsl:variable>
+    <xsl:variable name="app.version">2.1.1</xsl:variable>
+    <xsl:variable name="sdc.instance.devel">sdc.ui.devel.argo.grnet.gr</xsl:variable>
+    <xsl:variable name="egi.instance.devel">egi.ui.devel.argo.grnet.gr</xsl:variable>
+    <xsl:variable name="app.instance">prod</xsl:variable>
+    <xsl:variable name="sdc.instance">sdc.ui.argo.grnet.gr</xsl:variable>
+    <xsl:variable name="eudat.instance">eudat.ui.argo.grnet.gr</xsl:variable>
+    <xsl:variable name="egi.instance">egi.ui.argo.grnet.gr</xsl:variable>
+    <xsl:template match="/">
+        <html lang="en" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+            <head>
+                <meta charset="utf-8"></meta>
+                <meta content="width=device-width, initial-scale=1" name="viewport"></meta>
+                <meta content="ie=edge" http-equiv="x-ua-compatible"></meta>
+                <xsl:choose>
+                    <xsl:when test="$app.instance=&apos;prod&apos;">
+                        <title>ARGO | Monitor your services</title>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <title>ARGO Development instance</title>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:comment>Font Awesome Icons</xsl:comment>
+                <link href="/resource/app/html/adminlte/plugins/font-awesome/css/all.css?v={$app.version}"
+                      rel="stylesheet"></link>
+                <xsl:comment>IonIcons</xsl:comment>
+                <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css?v={$app.version}"
+                      rel="stylesheet"></link>
+                <xsl:comment>Theme style</xsl:comment>
+                <xsl:choose>
+                    <xsl:when test="root/@tenant">
+                        <link href="/resource/app/html/adminlte/dist/css/adminlte-{root/@tenant}.css?v={$app.version}"
+                              rel="stylesheet"></link>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <link href="/resource/app/html/adminlte/dist/css/adminlte-eosc.css?v={$app.version}"
+                              rel="stylesheet"></link>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:comment>Google Font: Source Sans Pro</xsl:comment>
+                <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
+                      rel="stylesheet"></link>
+                <link href="/resource/app/css/argo-eosc.css?v={$app.version}" rel="stylesheet"></link>
+                <link href="/resource/app/css/flags.css?v={$app.version}" rel="stylesheet" type="text/css"></link>
+            </head>
+            <body class="hold-transition sidebar-mini ">
+                <div class="wrapper">
+                    <xsl:comment>Navbar</xsl:comment>
+                    <nav class="main-header navbar navbar-expand navbar-light bg-white border-bottom">
+                        <xsl:comment>Left navbar links</xsl:comment>
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" data-widget="pushmenu" href="#">
+                                    <i class="fa fa-bars"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item d-none d-sm-inline-block">
+                                <a class="nav-link" href="/">Home</a>
+                            </li>
+                            <li class="nav-item d-none d-sm-inline-block">
+                                <a class="nav-link"
+                                   href="mailto:{/root/report[@tenant=/root/@tenant][@report=/root/@report]/@contact}">
+                                    Contact
+                                </a>
+                            </li>
+                        </ul>
+                        <xsl:comment>Right navbar links</xsl:comment>
+                        <ul class="navbar-nav ml-auto">
+                            <xsl:comment>Messages Dropdown Menu</xsl:comment>
+                        </ul>
+                    </nav>
+                    <xsl:comment>/.navbar</xsl:comment>
+                    <xsl:comment>Main Sidebar Container</xsl:comment>
+                    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+                        <xsl:comment>Brand Logo</xsl:comment>
+                        <a class="brand-link" href="/">
+                            <xsl:choose>
+                                <xsl:when test="$app.instance=&apos;prod&apos;">
+                                    <img alt="ARGO Logo" class="brand-image img-circle"
+                                         src="/resource/app/img/logo-argo-{$app.instance}.png"
+                                         style="opacity: .8"></img>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <img alt="ARGO Logo" class="brand-image img-circle"
+                                         src="/resource/app/img/logo-argo-devel.png"></img>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <xsl:choose>
+                                <xsl:when test="$app.instance=&apos;prod&apos;">
+                                    <span class="brand-text">ARGO</span>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <span class="brand-text">ARGO
+                                        <xsl:value-of select="$app.instance"></xsl:value-of>
+                                    </span>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </a>
+                        <xsl:comment>Sidebar</xsl:comment>
+                        <div class="sidebar font-weight-light">
+                            <xsl:comment>Sidebar Menu</xsl:comment>
+                            <nav class="mt-2">
+                                <ul class="nav nav-pills nav-sidebar flex-column" data-accordion="false"
+                                    data-widget="treeview" role="menu">
+                                    <xsl:comment>Add icons to the links using the .nav-icon class with font-awesome or
+                                        any other icon font library
+                                    </xsl:comment>
+                                    <li class="nav-item has-treeview menu-open">
+                                        <xsl:choose>
+                                            <xsl:when test="root/@tenant and root/@report">
+                                                <ul class="nav nav-treeview sidebar-collapse"
+                                                    style="list-style:none;padding:0;margin:0">
+                                                    <li class="nav-item">
+                                                        <p>
+                                                            <xsl:for-each select="/root">
+                                                                <select class="custom-select" id="profiles">
+                                                                    <option selected="true"
+                                                                            value="/{@tenant}/{@report}">
+                                                                        <xsl:value-of select="@tenant"></xsl:value-of> -
+                                                                        <xsl:value-of select="@report"></xsl:value-of>
+                                                                    </option>
+                                                                    <xsl:for-each
+                                                                            select="report[@tenant=/root/@tenant]">
+                                                                        <option value="/{@tenant}/{@report}">
+                                                                            <xsl:value-of
+                                                                                    select="@tenant"></xsl:value-of> -
+                                                                            <xsl:value-of
+                                                                                    select="@report"></xsl:value-of>
+                                                                        </option>
+                                                                    </xsl:for-each>
+                                                                </select>
+                                                            </xsl:for-each>
+                                                        </p>
+                                                    </li>
+                                                    <xsl:choose>
+                                                        <xsl:when
+                                                                test="count(/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text())&gt;1">
+                                                            <li class="nav-item">
+                                                                <p>
+                                                                    <select class="custom-select" id="servicesGroup">
+                                                                        <option disabled="true" selected="true">--Select
+                                                                            your group --
+                                                                        </option>
+                                                                        <xsl:for-each
+                                                                                select="/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()">
+                                                                            <option value="/{/root/@tenant}/dashboard/{/root/@report}/{.}">
+                                                                                <xsl:value-of select="."></xsl:value-of>
+                                                                            </option>
+                                                                        </xsl:for-each>
+                                                                    </select>
+                                                                </p>
+                                                            </li>
+                                                        </xsl:when>
+                                                    </xsl:choose>
+                                                </ul>
+                                            </xsl:when>
+                                        </xsl:choose>
+                                        <xsl:for-each
+                                                select="/root/report[@tenant=/root/@tenant][@report=/root/@report]">
+                                            <ul class="nav nav-treeview">
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/{@tenant}/{@report}">
+                                                        <i class="fa fa-eye nav-icon"></i>
+                                                        <p>Dashboard</p>
+                                                    </a>
+                                                </li>
+                                                <xsl:choose>
+                                                    <xsl:when
+                                                            test="@tenant=&apos;egi&apos; and @report=&apos;Critical&apos;">
+                                                        <li lass="nav-item">
+                                                            <a class="nav-link"
+                                                               href="/{@tenant}/report-ar/{@report}/{@topologyAR}"
+                                                               title="Availability/Reliability - NGI Reports">
+                                                                <i class="fa fa-globe nav-icon"></i>
+                                                                <p class="text-capitalize">NGIs Report</p>
+                                                            </a>
+                                                        </li>
+                                                    </xsl:when>
+                                                </xsl:choose>
+                                                <xsl:choose>
+                                                    <xsl:when
+                                                            test="@tenant=&apos;egi&apos; and @report=&apos;Critical&apos;">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link"
+                                                               href="/{@tenant}/report-ar/{@report}/SITES"
+                                                               title="Availability/Reliability - Sites reports">
+                                                                <i class="fa fa-home nav-icon"></i>
+                                                                <p class="text-capitalize">Sites Report</p>
+                                                            </a>
+                                                        </li>
+                                                    </xsl:when>
+                                                    <xsl:otherwise>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link"
+                                                               href="/{@tenant}/report-ar/{@report}/{@topologyAR}"
+                                                               title="Availability/Reliability of {@topologyAR}">
+                                                                <i class="fa fa-tachometer nav-icon"></i>
+                                                                <p class="text-capitalize">Availability/Reliability</p>
+                                                            </a>
+                                                        </li>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
+                                                <li class="nav-item">
+                                                    <a class="nav-link"
+                                                       href="/{@tenant}/report-status/{@report}/{@topologyStatus}"
+                                                       title="Status of {@topologyStatus}">
+                                                        <i class="fa fa-check-circle nav-icon"></i>
+                                                        <p class="text-capitalize">Status</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/{@tenant}/{@report}/custom">
+                                                        <i class="fa fa fa-file nav-icon"></i>
+                                                        <p>Custom Report</p>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </xsl:for-each>
+                                    </li>
+                                    <li class="nav-header">
+                                        <h5>ABOUT ARGO</h5>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="http://argoeu.github.io/overview">
+                                            <i class="nav-icon fa fa-book"></i>
+                                            <p>Documentation</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/{/root/@tenant}/termsofUse">
+                                            <i class="nav-icon fa fa-handshake"></i>
+                                            <p>Terms of Use</p>
+                                        </a>
+                                    </li>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">
+                                            <i class="nav-icon far fa-circle text-success"></i>
+                                            <p class="text">
+                                                <xsl:value-of select="$app.version"></xsl:value-of>
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <xsl:comment>/.sidebar-menu</xsl:comment>
+                        </div>
+                        <xsl:comment>/.sidebar</xsl:comment>
+                    </aside>
+                    <xsl:comment>/sidebar</xsl:comment>
+                    <xsl:comment>Content Wrapper. Contains page content</xsl:comment>
+                    <div class="content-wrapper">
+                        <xsl:comment>Content Header (Page header)</xsl:comment>
+                        <div class="content-header">
+                            <div class="container-fluid">
+                                <div class="row mb-2">
+                                    <div class="col-sm-6"></div>
+                                    <xsl:comment>/.col</xsl:comment>
+                                    <xsl:choose>
+                                        <xsl:when test="/root/@month">
+                                            <div class="col-sm-6">
+                                                <xsl:for-each select="/root">
+                                                    <ol class="breadcrumb float-sm-right">
+                                                        <li class="breadcrumb-item">
+                                                            <a href="/">Home</a>
+                                                        </li>
+                                                        <li class="breadcrumb-item">Availabilities / Reliabilities</li>
+                                                        <li class="breadcrumb-item">
+                                                            <a href="/{@tenant}/report-ar-group/{@report}/{@month}/{@topology}/{@group}">
+                                                                <xsl:value-of select="@group"></xsl:value-of>
+                                                            </a>
+                                                        </li>
+                                                        <xsl:choose>
+                                                            <xsl:when test="@group2">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="/{@tenant}/report-ar-group/{@report}/{@month}/{@topology}/{@group}/{@topology2}/{@group2}/endpoints">
+                                                                        <xsl:value-of select="@group2"></xsl:value-of>
+                                                                    </a>
+                                                                </li>
+                                                            </xsl:when>
+                                                        </xsl:choose>
+                                                        <xsl:choose>
+                                                            <xsl:when test="@group3">
+                                                                <li class="breadcrumb-item">
+                                                                    <a href="/{@tenant}/report-ar-group/{@report}/{@month}/{@topology}/{@group}/{@topology2}/{@group2}/endpoints/{@group3}">
+                                                                        <xsl:value-of select="@group3"></xsl:value-of>
+                                                                    </a>
+                                                                </li>
+                                                            </xsl:when>
+                                                        </xsl:choose>
+                                                    </ol>
+                                                </xsl:for-each>
+                                            </div>
+                                        </xsl:when>
+                                    </xsl:choose>
+                                    <xsl:comment>/.col</xsl:comment>
+                                </div>
+                                <xsl:comment>/.row</xsl:comment>
+                            </div>
+                            <xsl:comment>/.container-fluid</xsl:comment>
+                        </div>
+                        <xsl:comment>/.content-header</xsl:comment>
+                        <xsl:comment>Main content</xsl:comment>
+                        <div class="content">
+                            <div class="container-fluid">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a aria-controls="table" aria-selected="true" class="nav-link active"
+                                           data-toggle="tab" href="#table" id="table-tab" role="tab">
+                                            <span class="fa fa-table "></span>
+                                            Availability/Reliability Table
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a aria-controls="charts" aria-selected="false" class="nav-link"
+                                           data-toggle="tab" href="#charts" id="charts-tab" role="tab">
+                                            <span class="fa fa-chart-bar"></span>
+                                            Availability/Reliability Charts
+                                        </a>
+                                    </li>
+                                    <xsl:for-each select="/root">
+                                        <li>
+                                            <xsl:choose>
+                                                <xsl:when test="@group and not(@group2)">
+                                                    <a aria-controls="table" aria-selected="true" class="nav-link"
+                                                       href="/{@tenant}/report-status/{@report}/{@topology}/{@group}?start_date={@start_date}&amp;end_date={@end_date}"
+                                                       role="tab" title="status link">
+                                                        <span class="fa fa-check "></span>
+                                                        STATUS
+                                                    </a>
+                                                </xsl:when>
+                                            </xsl:choose>
+                                            <xsl:choose>
+                                                <xsl:when test="@group2 and not(@group3)">
+                                                    <a aria-controls="table" aria-selected="true" class="nav-link"
+                                                       href="/{@tenant}/report-status/{@report}/{@topology}/{@group}/{@group2}?start_date={@start_date}&amp;end_date={@end_date}"
+                                                       role="tab" title="status link">
+                                                        <span class="fa fa-check"></span>
+                                                        STATUS
+                                                    </a>
+                                                </xsl:when>
+                                            </xsl:choose>
+                                        </li>
+                                    </xsl:for-each>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div aria-labelledby="table-tab" class="tab-pane fade show active" id="table"
+                                         role="tabpanel">
+                                        <xsl:for-each select="/root">
+                                            <div class="card">
+                                                <xsl:choose>
+                                                    <xsl:when test="@month">
+                                                        <input class="d-none" id="titlePDF"
+                                                               value="AVAILABILITY/RELIABILITY MONTHLY REPORT : {@month} - {@group} {@group2} {@group3} "></input>
+                                                    </xsl:when>
+                                                    <xsl:otherwise>
+                                                        <input class="d-none" id="titlePDF"
+                                                               value="AVAILABILITY/RELIABILITY CUSTOM REPORT : {@group} {@group2} {@group3} "></input>
+                                                    </xsl:otherwise>
+                                                    <xsl:otherwise>
+                                                        <div class="card-header">Availabilities/Reliabilities <xsl:value-of
+                                                                select="@group"></xsl:value-of> - <xsl:value-of
+                                                                select="@group2"></xsl:value-of> - <xsl:value-of
+                                                                select="@group3"></xsl:value-of>
+                                                        </div>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
+                                                <xsl:comment>&lt;div class="card-header" tpl:if="@month"&gt;Availabilities/Reliabilities
+                                                    - {{@month}} &amp;lt;!&amp;ndash;&lt;a tpl:if="@statusUrl"
+                                                    class="m-2" href="/{{@statusUrl}}" title="status link" &gt;&lt;span
+                                                    class="badge badge-primary"&gt;STATUS&lt;/span&gt;&lt;/a&gt; &amp;ndash;&amp;gt;
+                                                    &lt;a tpl:if="not(@group2)" class="m-2"
+                                                    href="/{@tenant}/report-status/{@report}/{@topology}/{@group}?start_date={@start_date}&amp;amp;end_date={@end_date}"
+                                                    title="status link" &gt;&lt;span class="badge badge-primary m-1 p-1"&gt;&lt;span
+                                                    class="fa fa-align-left pl-2"&gt; STATUS&lt;/span&gt;&lt;/span&gt;&lt;/a&gt;
+                                                    &lt;a tpl:if="@group2 and not(@group3)" class="m-2"
+                                                    href="/{@tenant}/report-status/{@report}/{@topology}/{@group}/{@group2}?start_date={@start_date}&amp;amp;end_date={@end_date}"
+                                                    title="status link" &gt;&lt;span class="badge m-1 p-1 badge-primary"&gt;&lt;span
+                                                    class="fa fa-align-left pl-2"&gt;STATUS&lt;/span&gt;&lt;/span&gt;&lt;/a&gt;
+                                                    &lt;/div&gt;
+                                                </xsl:comment>
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table m-0" id="ar">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Timestamp</th>
+                                                                    <th>Availability</th>
+                                                                    <th>Reliability</th>
+                                                                    <xsl:choose>
+                                                                        <xsl:when test="group/results[1]/@unknown">
+                                                                            <th>Unknown</th>
+                                                                        </xsl:when>
+                                                                    </xsl:choose>
+                                                                    <xsl:choose>
+                                                                        <xsl:when test="group/results[1]/@downtime">
+                                                                            <th>Downtime</th>
+                                                                        </xsl:when>
+                                                                    </xsl:choose>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <xsl:for-each select="group/results">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <xsl:value-of
+                                                                                    select="@timestamp"></xsl:value-of>
+                                                                        </td>
+                                                                        <td>
+                                                                            <xsl:choose>
+                                                                                <xsl:when
+                                                                                        test="not(@availability) or @availability=-1">
+                                                                                    <span class="m-1 badge badge-secondary">
+                                                                                        N/A
+                                                                                    </span>
+                                                                                </xsl:when>
+                                                                                <xsl:when
+                                                                                        test="@availability &gt;= /root/@level1">
+                                                                                    <span class="m-1 badge badge-success">
+                                                                                        <xsl:value-of
+                                                                                                select="@availability"></xsl:value-of>
+                                                                                    </span>
+                                                                                </xsl:when>
+                                                                                <xsl:when
+                                                                                        test="@availability &lt; /root/@level1">
+                                                                                    <span class="m-1 badge badge-danger">
+                                                                                        <xsl:value-of
+                                                                                                select="@availability"></xsl:value-of>
+                                                                                    </span>
+                                                                                </xsl:when>
+                                                                            </xsl:choose>
+                                                                        </td>
+                                                                        <td>
+                                                                            <xsl:choose>
+                                                                                <xsl:when
+                                                                                        test="not(@reliability) or @reliability=-1">
+                                                                                    <span class="m-1 badge badge-secondary">
+                                                                                        N/A
+                                                                                    </span>
+                                                                                </xsl:when>
+                                                                                <xsl:when
+                                                                                        test="@reliability &gt;= /root/@level2">
+                                                                                    <span class="m-1 badge badge-success">
+                                                                                        <xsl:value-of
+                                                                                                select="@reliability"></xsl:value-of>
+                                                                                    </span>
+                                                                                </xsl:when>
+                                                                                <xsl:when
+                                                                                        test="@reliability &lt; /root/@level2">
+                                                                                    <span class="m-1 badge badge-danger">
+                                                                                        <xsl:value-of
+                                                                                                select="@reliability"></xsl:value-of>
+                                                                                    </span>
+                                                                                </xsl:when>
+                                                                            </xsl:choose>
+                                                                        </td>
+                                                                        <xsl:choose>
+                                                                            <xsl:when test="@unknown">
+                                                                                <td>
+                                                                                    <xsl:choose>
+                                                                                        <xsl:when
+                                                                                                test="@unknown &gt;= 10">
+                                                                                            <span class="m-1 badge badge-danger">
+                                                                                                <xsl:value-of
+                                                                                                        select="@unknown"></xsl:value-of>
+                                                                                            </span>
+                                                                                        </xsl:when>
+                                                                                        <xsl:otherwise>
+                                                                                            <span class="m-1 badge badge-success">
+                                                                                                <xsl:value-of
+                                                                                                        select="@unknown"></xsl:value-of>
+                                                                                            </span>
+                                                                                        </xsl:otherwise>
+                                                                                    </xsl:choose>
+                                                                                </td>
+                                                                            </xsl:when>
+                                                                        </xsl:choose>
+                                                                        <xsl:choose>
+                                                                            <xsl:when test="@downtime">
+                                                                                <td>
+                                                                                    <xsl:choose>
+                                                                                        <xsl:when
+                                                                                                test="@downtime &gt;= 10">
+                                                                                            <span class="m-1 badge badge-danger">
+                                                                                                <xsl:value-of
+                                                                                                        select="@downtime"></xsl:value-of>
+                                                                                            </span>
+                                                                                        </xsl:when>
+                                                                                        <xsl:otherwise>
+                                                                                            <span class="m-1 badge badge-success">
+                                                                                                <xsl:value-of
+                                                                                                        select="@downtime"></xsl:value-of>
+                                                                                            </span>
+                                                                                        </xsl:otherwise>
+                                                                                    </xsl:choose>
+                                                                                </td>
+                                                                            </xsl:when>
+                                                                        </xsl:choose>
+                                                                    </tr>
+                                                                </xsl:for-each>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </xsl:for-each>
+                                        <div aria-labelledby="charts-tab" class="tab-pane fade" id="charts"
+                                             role="tabpanel">
+                                            <div class="card">
+                                                <div class="row">
+                                                    <xsl:for-each select="/root/group">
+                                                        <div class="col-6 card-body">
+                                                            <div class="ARdata" id="table_{@name}">
+                                                                <xsl:for-each select="results">
+                                                                    <div>
+                                                                        <div class="d-none dataAvailability">
+                                                                            <xsl:value-of
+                                                                                    select="@availability"></xsl:value-of>
+                                                                        </div>
+                                                                        <div class="d-none dataReliability">
+                                                                            <xsl:value-of
+                                                                                    select="@reliability"></xsl:value-of>
+                                                                        </div>
+                                                                        <div class="d-none dataTimestamp">
+                                                                            <xsl:value-of
+                                                                                    select="@timestamp"></xsl:value-of>
+                                                                        </div>
+                                                                    </div>
+                                                                </xsl:for-each>
+                                                            </div>
+                                                            <div class="chart-responsive">
+                                                                <canvas id="myChart_{@name}" width="100%"></canvas>
+                                                            </div>
+                                                        </div>
+                                                    </xsl:for-each>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <xsl:comment>/.container-fluid</xsl:comment>
+                            </div>
+                            <xsl:comment>/.content</xsl:comment>
+                        </div>
+                    </div>
+                    <xsl:comment>/.content-wrapper</xsl:comment>
+                    <xsl:comment>Main Footer</xsl:comment>
+                    <footer class="main-footer">
+                        <xsl:comment>To the right</xsl:comment>
+                        <div class="float-right d-sm-block-down">
+                            <strong>Copyright 2019 - ARGO</strong>
+                        </div>
+                        <xsl:comment>Default to the left</xsl:comment>
+                        <xsl:choose>
+                            <xsl:when test="/root/@tenant=&apos;egi&apos;">
+                                <div>ARGO is a service jointly developed and maintained by <a
+                                        href="http://www.cnrs.fr/en" title="cnrs website">CNRS</a>, <a
+                                        href="https://grnet.gr/en/" title="Grnet web site">GRNET
+                                </a> and <a href="https://www.srce.unizg.hr/en/" title="SRCE web site">SRCE</a> co-funded
+                                    by <a href="https://www.eosc-hub.eu/">EOSC-Hub</a> and
+                                    <a href="http://egi.eu" title="egi web site">EGI Foundation</a>
+                                    <img class="m-2" src="/resource/app/img/cee.png" width="50px"></img>
+                                </div>
+                            </xsl:when>
+                        </xsl:choose>
+                        <xsl:choose>
+                            <xsl:when test="/root/@tenant=&apos;eudat&apos;">
+                                <div>ARGO is a service jointly developed and maintained by <a
+                                        href="http://www.cnrs.fr/en" title="cnrs website">CNRS</a>, <a
+                                        href="https://grnet.gr/en/" title="Grnet web site">GRNET
+                                </a> and <a href="https://www.srce.unizg.hr/en/" title="SRCE web site">SRCE</a> co-funded
+                                    by <a href="https://www.eosc-hub.eu/">EOSC-Hub</a>
+                                    <img class="m-2" src="/resource/app/img/cee.png" width="50px"></img>
+                                </div>
+                            </xsl:when>
+                        </xsl:choose>
+                        <xsl:choose>
+                            <xsl:when test="/root/@tenant=&apos;sdc&apos;">
+                                <div>ARGO is a service jointly developed and maintained by <a
+                                        href="http://www.cnrs.fr/en" title="cnrs website">CNRS</a>, <a
+                                        href="https://grnet.gr/en/" title="Grnet web site">GRNET
+                                </a> and <a href="https://www.srce.unizg.hr/en/" title="SRCE web site">SRCE</a>
+                                </div>
+                            </xsl:when>
+                        </xsl:choose>
+                        <xsl:comment>Global site tag (gtag.js) - Google Analytics for EGI</xsl:comment>
+                        <xsl:choose>
+                            <xsl:when test="/root/@tenant=&apos;egi&apos;">
+                                <script async="true"
+                                        src="https://www.googletagmanager.com/gtag/js?id=UA-65947937-2"></script>
+                            </xsl:when>
+                        </xsl:choose>
+                        <xsl:choose>
+                            <xsl:when test="/root/@tenant=&apos;egi&apos;">
+                                <script>window.dataLayer = window.dataLayer || []; function
+                                    gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config',
+                                    'UA-65947937-2');
+                                </script>
+                            </xsl:when>
+                        </xsl:choose>
+                        <xsl:comment>Global site tag (gtag.js) - Google Analytics for EUDAT</xsl:comment>
+                        <xsl:choose>
+                            <xsl:when test="/root/@tenant=&apos;eudat&apos;">
+                                <script async="true"
+                                        src="https://www.googletagmanager.com/gtag/js?id=UA-65947937-3"></script>
+                            </xsl:when>
+                        </xsl:choose>
+                        <xsl:choose>
+                            <xsl:when test="/root/@tenant=&apos;eudat&apos;">
+                                <script>window.dataLayer = window.dataLayer || []; function
+                                    gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config',
+                                    'UA-65947937-3');
+                                </script>
+                            </xsl:when>
+                        </xsl:choose>
+                    </footer>
+                </div>
+                <xsl:comment>./wrapper</xsl:comment>
+                <xsl:comment>REQUIRED SCRIPTS</xsl:comment>
+                <xsl:comment>jQuery</xsl:comment>
+                <script src="/resource/app/html/adminlte/plugins/jquery/jquery.min.js?v={$app.version}"></script>
+                <xsl:comment>Bootstrap</xsl:comment>
+                <script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js?v={$app.version}"></script>
+                <xsl:comment>adminlte</xsl:comment>
+                <script src="/resource/app/html/adminlte/dist/js/adminlte.js?v={$app.version}"></script>
+                <script charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"
+                        type="text/javascript"></script>
+                <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+                <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+                <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"
+                        type="text/javascript"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"
+                        type="text/javascript"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"
+                        type="text/javascript"></script>
+                <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+                <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+                <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+                <script src="https://cdn.datatables.net/scroller/1.5.0/js/dataTables.scroller.min.js"></script>
+                <script src="https://cdn.datatables.net/select/1.2.6/js/dataTables.select.min.js"></script>
+                <script src="https://cdn.datatables.net/colreorder/1.5.0/js/dataTables.colReorder.min.js"></script>
+                <script src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>
+                <script src="https://cdn.datatables.net/responsive/2.2.2/js/responsive.bootstrap4.min.js"></script>
+                <link href="https://cdn.datatables.net/select/1.2.6/css/select.dataTables.min.css" rel="stylesheet"
+                      type="text/css"></link>
+                <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet"
+                      type="text/css"></link>
+                <link href="https://cdn.datatables.net/colreorder/1.5.0/css/colReorder.bootstrap4.min.css"
+                      rel="stylesheet" type="text/css"></link>
+                <link href="https://cdn.datatables.net/scroller/1.5.0/css/scroller.bootstrap4.min.css" rel="stylesheet"
+                      type="text/css"></link>
+                <link href="https://cdn.datatables.net/select/1.2.6/css/select.bootstrap4.min.css" rel="stylesheet"
+                      type="text/css"></link>
+                <link href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css"
+                      rel="stylesheet" type="text/css"></link>
+                <style>#ar_wrapper .dt-buttons { float:left; } #ar_wrapper .dataTables_filter{ float:right; }
+                    #ar_wrapper .dataTables_length{ float:right; }
+                </style>
+                <script src="/resource/app/js/dataTablePDF.js?v={$app.version}"></script>
+                <script src="/resource/app/js/dashboard.js?v={$app.version}"></script>
+            </body>
+        </html>
+    </xsl:template>
+    <xsl:template name="process-token">
+        <xsl:param name="token"></xsl:param>
+        <xsl:param name="position"></xsl:param>
+        <xsl:param name="last"></xsl:param>
+        <xsl:param name="callback"></xsl:param>
+        <xsl:choose>
+            <xsl:when test="false()"></xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    <xsl:template name="tokenize">
+        <xsl:param name="string"></xsl:param>
+        <xsl:param name="delimiter"></xsl:param>
+        <xsl:param name="callback"></xsl:param>
+        <xsl:param name="position">1</xsl:param>
+        <xsl:choose>
+            <xsl:when test="contains($string, $delimiter)">
+                <xsl:call-template name="process-token">
+                    <xsl:with-param name="token" select="substring-before($string, $delimiter)"></xsl:with-param>
+                    <xsl:with-param name="position" select="$position"></xsl:with-param>
+                    <xsl:with-param name="last" select="false()"></xsl:with-param>
+                    <xsl:with-param name="callback" select="$callback"></xsl:with-param>
+                </xsl:call-template>
+                <xsl:call-template name="tokenize">
+                    <xsl:with-param name="string" select="substring-after($string, $delimiter)"></xsl:with-param>
+                    <xsl:with-param name="delimiter" select="$delimiter"></xsl:with-param>
+                    <xsl:with-param name="callback" select="$callback"></xsl:with-param>
+                    <xsl:with-param name="position" select="$position + 1"></xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="process-token">
+                    <xsl:with-param name="token" select="$string"></xsl:with-param>
+                    <xsl:with-param name="position" select="$position"></xsl:with-param>
+                    <xsl:with-param name="last" select="true()"></xsl:with-param>
+                    <xsl:with-param name="callback" select="$callback"></xsl:with-param>
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    <xsl:template match="*" mode="serialize">
+        <xsl:param name="indent">
+            <xsl:text> </xsl:text>
+        </xsl:param>
+        <xsl:if test="string-length($indent)&gt;1">
+            <xsl:value-of select="$indent"></xsl:value-of>
+        </xsl:if>&lt;<xsl:value-of select="name()"></xsl:value-of>
+        <xsl:apply-templates mode="serialize" select="@*"></xsl:apply-templates>
+        <xsl:choose>
+            <xsl:when test="*">&gt;<xsl:text></xsl:text>
+                <xsl:apply-templates mode="serialize">
+                    <xsl:with-param name="indent" select="concat($indent,&apos; &apos;)"></xsl:with-param>
+                </xsl:apply-templates>
+                <xsl:value-of select="$indent"></xsl:value-of>&lt;/<xsl:value-of select="name()"></xsl:value-of>&gt;<xsl:text></xsl:text>
+            </xsl:when>
+            <xsl:when test="text()|comment()">&gt;<xsl:apply-templates
+                    mode="serialize"></xsl:apply-templates>&lt;/<xsl:value-of select="name()"></xsl:value-of>&gt;
+            </xsl:when>
+            <xsl:otherwise>/&gt;</xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    <xsl:template match="@*" mode="serialize">
+        <xsl:text> </xsl:text><xsl:value-of select="name()"></xsl:value-of>="<xsl:value-of select="."></xsl:value-of>"<xsl:text></xsl:text>
+    </xsl:template>
+    <xsl:template match="text()" mode="serialize">
+        <xsl:value-of select="normalize-space(.)"></xsl:value-of>
+    </xsl:template>
+    <xsl:template match="comment()" mode="serialize">
+        <xsl:comment>
+            <xsl:value-of select="."></xsl:value-of>
+        </xsl:comment>
+    </xsl:template>
+</xsl:stylesheet>
