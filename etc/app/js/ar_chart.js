@@ -54,7 +54,7 @@ $( ".ARdata" ).each(function( index ) {
                  bottom: 5
                  }
 
-                }
+                },
                 scale: {
                             ticks: {
                                 min: 0,
