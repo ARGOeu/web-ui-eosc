@@ -52,8 +52,8 @@
                     <li tpl:foreach="/root">
 
                         <a class="nav-link" role="tab" aria-controls="table" aria-selected="true"  tpl:if="@topology='NGI'" href="/{@tenant}/report-status/{@report}/SITES?filter={@group}&amp;start_date={@start_date}&amp;end_date={@end_date}" title="status link" ><span class="fa fa-check "></span> STATUS</a>
-                        <a class="nav-link" role="tab" aria-controls="table" aria-selected="true"  tpl:if="@group and not(@group2)" href="/{@tenant}/report-status/{@report}/{@topology}/{@group}?start_date={@start_date}&amp;end_date={@end_date}" title="status link" ><span class="fa fa-check "></span> STATUS</a>
-                        <a class="nav-link" role="tab" aria-controls="table" aria-selected="true"  tpl:if="@group2 and not(@group3)" href="/{@tenant}/report-status/{@report}/{@topology}/{@group}/{@group2}?start_date={@start_date}&amp;end_date={@end_date}" title="status link" ><span class="fa fa-check"></span> STATUS</a>
+                        <a class="nav-link" role="tab" aria-controls="table" aria-selected="true"  tpl:else="@group and not(@group2)" href="/{@tenant}/report-status/{@report}/{@topology}/{@group}?start_date={@start_date}&amp;end_date={@end_date}" title="status link" ><span class="fa fa-check "></span> STATUS</a>
+                        <a class="nav-link" role="tab" aria-controls="table" aria-selected="true"  tpl:else="@group2 and not(@group3)" href="/{@tenant}/report-status/{@report}/{@topology}/{@group}/{@group2}?start_date={@start_date}&amp;end_date={@end_date}" title="status link" ><span class="fa fa-check"></span> STATUS</a>
 
                     </li>
 
