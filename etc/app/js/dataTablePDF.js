@@ -17,7 +17,7 @@ var messageB = 'Report Generated on ' + jsDate.toString() +  '- Copyright ARGO '
         text: 'PDF',
         extend: 'pdfHtml5',
         footer: true,
-        title: $("#titlePDF").val()+ '\n' + $("#subtitlePDF").val(),
+        title: $("#titlePDF").val()+ '\n' + $("#subtitlePDF").val() +'\n' + $("#subtitlePDF2").val(),
         filename: 'argo_ar_report.pdf',
         pageSize: 'A4',
 

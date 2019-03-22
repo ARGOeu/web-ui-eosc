@@ -59,12 +59,13 @@
                     <div class="tab-pane fade show active" id="table" role="tabpanel" aria-labelledby="table-tab">
 
 
-                        <input class="d-none" id="titlePDF" tpl:if="@month" value="AVAILABILITY/RELIABILITY MONTHLY REPORT : {{/root/@month1}} - {{/root/@month5}} "/>
-                        <input class="d-none" id="subtitlePDF" value="{{@group}}  {{@group2}}  {{@group3}} "/>
+
 
                         <div class="card" tpl:foreach="/root">
 
-
+                            <input class="d-none" id="titlePDF" tpl:if="@month1 and @month5" value="AVAILABILITY/RELIABILITY MONTHLY REPORT : {{@month1}} - {{@month5}} "/>
+                            <input class="d-none" id="subtitlePDF" value="{{@tenant}} - {{@report}} Report"/>
+                            <input class="d-none" id="subtitlePDF2" tpl:if="@group" value="{{@group}}  {{@group2}}  {{@group3}} "/>
 
                             <div class="card-body">
                                 <div class="row" tpl:if="@tenant='egi' and group[1]/@type='SITES'">
