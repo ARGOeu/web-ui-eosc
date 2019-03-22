@@ -55,6 +55,12 @@ $( ".ARdata" ).each(function( index ) {
                  }
 
                 }
+                scale: {
+                            ticks: {
+                                min: 0,
+                                max: 100
+                            }
+                        }
                 }
     });
 
