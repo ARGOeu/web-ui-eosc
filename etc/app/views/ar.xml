@@ -110,7 +110,7 @@
     <view name="report-ar-dates"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 
         <argument name="report">Critical</argument>
-        <argument name="tenant">egi</argument>
+        <argument name="tenant"></argument>
         <argument name="topology">NGI</argument>
         <argument name="entity">_entity_</argument>
 

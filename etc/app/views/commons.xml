@@ -314,9 +314,7 @@
     <view name="reports">
 
         <argument name="tenant"/>
-        <variable name="api-key"
-                  eval="view('tenantsListRaw')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
-
+        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="property('api.reports')"/>
