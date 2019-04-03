@@ -14,9 +14,15 @@
 
         <processors>
             <element in="root">
-                <element-create>post()</element-create>
+                <element-create>new_element('attributes',post())</element-create>
             </element>
         </processors>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/dashboard/profile.html</parameter>
+            </renderer>
+        </renderers>
 
     </view>
 
@@ -27,9 +33,16 @@
 
         <processors>
             <element in="root">
-                <element-create>post()</element-create>
+                <element-create>new_element('attributes',post())</element-create>
             </element>
         </processors>
 
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/dashboard/profile.html</parameter>
+            </renderer>
+        </renderers>
     </view>
+
+
 </views>
