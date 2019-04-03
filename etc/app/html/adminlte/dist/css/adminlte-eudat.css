@@ -10739,7 +10739,7 @@ label:not(.form-check-label):not(.custom-file-label) {
 .modal-warning .modal-footer .btn-tool:hover,
 .bg-warning-gradient .btn-tool:hover,
 .card-warning:not(.card-outline) .btn-tool:hover {
-  color: #1F2D3D;
+  color: #fff;
 }
 
 .card-danger:not(.card-outline) .card-header {
@@ -10818,6 +10818,36 @@ label:not(.form-check-label):not(.custom-file-label) {
 .bg-dark .btn-tool:hover,
 .bg-dark-gradient .btn-tool:hover,
 .card-dark:not(.card-outline) .btn-tool:hover {
+  color: #ffffff;
+}
+
+.bg-unknown {
+  background-color: #bcbcbc !important;
+}
+
+
+.card-unknown:not(.card-outline) .card-header {
+  background-color: #3B7FBF;
+}
+
+.card-unknow:not(.card-outline) .card-header,
+.card-unknown:not(.card-outline) .card-header a {
+  color: #ffffff;
+}
+
+.card-unknown.card-outline {
+  border-top: 3px solid #3B7FBF;
+}
+
+.bg-unknown.btn-tool,
+.bg-unknown-gradient .btn-tool,
+.card-unknown:not(.card-outline) .btn-tool {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.bg-unknown .btn-tool:hover,
+.bg-unknown-gradient .btn-tool:hover,
+.card-unknown:not(.card-outline) .btn-tool:hover {
   color: #ffffff;
 }
 
@@ -10928,7 +10958,7 @@ label:not(.form-check-label):not(.custom-file-label) {
 .info-box.bg-warning .progress-bar, .info-box.alert-warning .progress-bar, .info-box.label-warning .progress-bar, .modal-warning .info-box.modal-body .progress-bar, .modal-warning .info-box.modal-header .progress-bar,
 .modal-warning .info-box.modal-footer .progress-bar,
 .info-box.bg-warning-gradient .progress-bar {
-  background-color: #1F2D3D;
+  background-color: #B5892E;
 }
 
 .info-box.bg-danger, .info-box.alert-danger,

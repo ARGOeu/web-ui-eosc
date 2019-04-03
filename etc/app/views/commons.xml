@@ -428,11 +428,11 @@
 
         <connector type="XMLConnector">
             <parameter name="content">
-                <entry key="OK">green</entry>
-                <entry key="WARNING">orange</entry>
-                <entry key="UNKNOWN">lightgrey</entry>
-                <entry key="MISSING">#53424a</entry>
-                <entry key="CRITICAL">red</entry>
+                <entry key="OK">#28A745</entry>
+                <entry key="WARNING">#B5892E</entry>
+                <entry key="UNKNOWN">#bcbcbc</entry>
+                <entry key="MISSING">#76A3D6</entry>
+                <entry key="CRITICAL">#FF0000</entry>
                 <entry key="DOWNTIME">grey</entry>
             </parameter>
 

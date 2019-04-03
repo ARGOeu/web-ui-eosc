@@ -26,11 +26,14 @@
                 if (tempArray[1].split("_")[0]=='CRITICAL')
                     bg='danger';
 
+                 if (tempArray[1].split("_")[0]=='WARNING')
+                    bg='warning';
+
                 if (tempArray[1].split("_")[0]=='MISSING')
-                     bg='dark';
+                    bg='dark';
 
                 if (tempArray[1].split("_")[0]=='UNKNOWN')
-                                          bg='light';
+                    bg='unknown';
 
 
 

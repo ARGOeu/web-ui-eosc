@@ -10789,7 +10789,7 @@ label:not(.form-check-label):not(.custom-file-label) {
 }
 
 .card-dark:not(.card-outline) .card-header {
-  background-color: #213D59;
+  background-color: #bcbcbc;
 }
 
 .card-dark:not(.card-outline) .card-header,
@@ -10812,6 +10812,32 @@ label:not(.form-check-label):not(.custom-file-label) {
 .card-dark:not(.card-outline) .btn-tool:hover {
   color: #ffffff;
 }
+
+.card-unknown:not(.card-outline) .card-header {
+  background-color: #bcbcbc;
+}
+
+.card-unknow:not(.card-outline) .card-header,
+.card-unknown:not(.card-outline) .card-header a {
+  color: #ffffff;
+}
+
+.card-unknown.card-outline {
+  border-top: 3px solid #3B7FBF;
+}
+
+.bg-unknown.btn-tool,
+.bg-unknown-gradient .btn-tool,
+.card-unknown:not(.card-outline) .btn-tool {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.bg-unknown .btn-tool:hover,
+.bg-unknown-gradient .btn-tool:hover,
+.card-unknown:not(.card-outline) .btn-tool:hover {
+  color: #ffffff;
+}
+
 
 /*
  * Component: Info Box

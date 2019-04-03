@@ -4390,12 +4390,12 @@ tbody.collapse.show {
 }
 
 .badge-warning {
-  color: #1F2D3D;
+  color: #ffffff;
   background-color: #B5892E;
 }
 
 .badge-warning[href]:hover, .badge-warning[href]:focus {
-  color: #1F2D3D;
+  color: #ffffff;
   text-decoration: none;
   background-color: #d39e00;
 }
@@ -5600,7 +5600,7 @@ button.label-warning:focus,
 .modal-warning button.modal-body:focus,
 .modal-warning button.modal-header:focus,
 .modal-warning button.modal-footer:focus {
-  background-color: #d39e00 !important;
+  background-color: #B5892E !important;
 }
 
 .bg-danger, .alert-danger,
@@ -5716,7 +5716,7 @@ button.bg-dark:focus {
 }
 
 .border-warning {
-  border-color: #B5892E !important;
+  border-color: #c6c8ca !important;
 }
 
 .border-danger {
@@ -10713,7 +10713,7 @@ label:not(.form-check-label):not(.custom-file-label) {
 
 .card-warning:not(.card-outline) .card-header,
 .card-warning:not(.card-outline) .card-header a {
-  color: #1F2D3D;
+  color: #fff;
 }
 
 .card-warning.card-outline {
@@ -10731,7 +10731,7 @@ label:not(.form-check-label):not(.custom-file-label) {
 .modal-warning .modal-footer .btn-tool:hover,
 .bg-warning-gradient .btn-tool:hover,
 .card-warning:not(.card-outline) .btn-tool:hover {
-  color: #1F2D3D;
+  color: #ffffff;
 }
 
 .card-danger:not(.card-outline) .card-header {
@@ -10914,13 +10914,13 @@ label:not(.form-check-label):not(.custom-file-label) {
 .info-box.bg-warning, .info-box.alert-warning, .info-box.label-warning, .modal-warning .info-box.modal-body, .modal-warning .info-box.modal-header,
 .modal-warning .info-box.modal-footer,
 .info-box.bg-warning-gradient {
-  color: #1F2D3D;
+  color: #ffffff;
 }
 
 .info-box.bg-warning .progress-bar, .info-box.alert-warning .progress-bar, .info-box.label-warning .progress-bar, .modal-warning .info-box.modal-body .progress-bar, .modal-warning .info-box.modal-header .progress-bar,
 .modal-warning .info-box.modal-footer .progress-bar,
 .info-box.bg-warning-gradient .progress-bar {
-  background-color: #1F2D3D;
+  background-color: #B5892E;
 }
 
 .info-box.bg-danger, .info-box.alert-danger,
@@ -12418,7 +12418,7 @@ a.text-muted:hover {
 .modal-warning .modal-footer,
 .bg-warning a, .alert-warning a, .label-warning a, .modal-warning .modal-body a, .modal-warning .modal-header a,
 .modal-warning .modal-footer a {
-  color: #1F2D3D;
+  color: #ffffff;
 }
 
 .bg-warning a, .alert-warning a, .label-warning a, .modal-warning .modal-body a, .modal-warning .modal-header a,
@@ -12448,6 +12448,10 @@ a.text-muted:hover {
 
 .bg-light a {
   text-decoration: underline;
+}
+
+.bg-unknown {
+  background-color: #bcbcbc !important;
 }
 
 .bg-dark,
