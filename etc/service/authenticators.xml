@@ -13,43 +13,19 @@
         <authenticator type="OAuth2Authenticator">
             <!-- required: The URL of the OAuth2 Authorization URL (String) -->
             <parameter name="authz_location">https://aai-dev.egi.eu/oidc/authorize</parameter>
-
             <!-- required: The URL of the OAuth2 Token URL (String) -->
             <parameter name="token_location">https://aai-dev.egi.eu/oidc/token</parameter>
-
             <!-- required: The set of permissions requested (String) -->
-            <parameter name="scope">openid profile email</parameter>
-
+            <parameter name="scope">openid profile</parameter>
             <!-- required: The Client ID (or App ID) (String) -->
             <parameter name="client_id">argo_ui_devel</parameter>
-
             <!-- required: The Client secret (or App secret) (String) -->
             <parameter name="client_secret">aEIJmjEQgKJhMbu-cYyHAB6l647fJ1CHzHy5uvAPt5wR7NxV1v4jaaruKG8NCjiv0R_s7I3K-Onnqlqjv_n-Pw</parameter>
 
-
         </authenticator>
     </authenticators>
 
-    <authenticators name="google">
-        <authenticator type="OAuth2Authenticator">
-            <!-- required: The URL of the OAuth2 Authorization URL (String) -->
-            <parameter name="authz_location">https://accounts.google.com/o/oauth2/auth</parameter>
 
-            <!-- required: The URL of the OAuth2 Token URL (String) -->
-            <parameter name="token_location">https://accounts.google.com/o/oauth2/token</parameter>
-
-            <!-- required: The set of permissions requested (String) -->
-            <parameter name="scope">openid profile</parameter>
-
-            <!-- required: The Client ID (or App ID) (String) -->
-            <parameter name="client_id">736424031812-6t44h6ndsq2m91tsmv6qamhvhv9vvp4l.apps.googleusercontent.com</parameter>
-
-            <!-- required: The Client secret (or App secret) (String) -->
-            <parameter name="client_secret">GUjAgPRgWUx1tBN3uG47KhFT</parameter>
-
-
-        </authenticator>
-    </authenticators>
 
 
 
