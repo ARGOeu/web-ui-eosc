@@ -34,7 +34,7 @@
     </view>
 
 
-    <view name="oauth" authenticators="google">
+    <view name="oauth" authenticators="aai">
         <connector type="XMLConnector">
             <parameter name="content" eval="new_element('root')"/>
         </connector>
