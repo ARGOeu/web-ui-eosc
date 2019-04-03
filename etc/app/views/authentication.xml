@@ -28,7 +28,7 @@
 
         <renderers>
             <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/dashboard/profile.html</parameter>
+                <parameter name="template">app/html/profile.html</parameter>
             </renderer>
         </renderers>
     </view>
