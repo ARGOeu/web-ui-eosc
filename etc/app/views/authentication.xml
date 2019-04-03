@@ -1,0 +1,35 @@
+<views xmlns="http://software.in2p3.fr/lavoisier/application.xsd"
+       xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:t="http://software.in2p3.fr/lavoisier/tables.xsd">
+    <!-- 
+        Project : argo-eosc 
+        File    : authentication.xml
+        Created by cyril on 2019/04/03 
+    -->
+
+    <view name="login" authenticators="aai">
+
+        <connector type="XMLConnector">
+            <parameter name="content" eval="new_element('root')"/>
+        </connector>
+
+        <processors>
+            <element in="root">
+                <element-create>post()</element-create>
+            </element>
+        </processors>
+
+    </view>
+
+    <view name="profile" authenticators="aai">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="new_element('root')"/>
+        </connector>
+
+        <processors>
+            <element in="root">
+                <element-create>post()</element-create>
+            </element>
+        </processors>
+
+    </view>
+</views>
