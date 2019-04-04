@@ -6,12 +6,23 @@
         Created by cyril on 2019/04/03 
     -->
 
-    <view name="loginAAI" authenticators="aai">
+    <view name="ouath" authenticators="aai">
 
         <connector type="XMLConnector">
             <parameter name="content" eval="new_element('root')"/>
         </connector>
 
+        <processors>
+            <element in="root">
+                <element-create>new_element('user',user())</element-create>
+            </element>
+        </processors>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/profile.html</parameter>
+            </renderer>
+        </renderers>
 
     </view>
 

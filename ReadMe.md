@@ -17,8 +17,23 @@ title: Web UI | ARGO
 * yum install git
 * yum install wget
 * firewall-cmd --add-service=http --permanent
+* firewall-cmd --add-service=https --permanent
 * firewall-cmd --reload
 
+# Installation of CAs
+
+Add the following repo-file to the /etc/yum.repos.d/ directory:
+
+```
+[EGI-trustanchors]
+name=EGI-trustanchors
+baseurl=http://repository.egi.eu/sw/production/cas/1/current/
+gpgkey=http://repository.egi.eu/sw/production/cas/1/GPG-KEY-EUGridPMA-RPM-3
+gpgcheck=1
+enabled=1
+```
+
+* yum install ca-policy-egi-core
 
 # Installation
 
