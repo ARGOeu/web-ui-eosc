@@ -18,6 +18,7 @@
                 <element-create>new_element('sub',user('sub'))</element-create>
                 <element-create>new_element('email',user('email'))</element-create>
                 <element-create>new_element('given_name',user('given_name'))</element-create>
+                <element-create>new_element('token',user('token'))</element-create>
             </element>
         </processors>
 
