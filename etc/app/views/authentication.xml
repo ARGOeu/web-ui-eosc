@@ -6,7 +6,7 @@
         Created by cyril on 2019/04/03 
     -->
 
-    <view name="ouath" authenticators="aai">
+    <view name="oauth" authenticators="aai">
 
         <connector type="XMLConnector">
             <parameter name="content" eval="new_element('root')"/>
