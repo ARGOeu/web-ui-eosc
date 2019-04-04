@@ -14,7 +14,8 @@
 
         <processors>
             <element in="root">
-                <element-create>new_element('user',user())</element-create>
+                <element-create>new_element('email',user('email'))</element-create>
+                <element-create>new_element('given_name',user('given_name'))</element-create>
             </element>
         </processors>
 
