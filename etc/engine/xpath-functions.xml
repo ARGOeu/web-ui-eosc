@@ -38,4 +38,10 @@
         <argument>start_time</argument>
         <argument>end_time</argument>
     </function>
+
+    <function name="dateUTC"
+              eval="date:format-date(date:date-time(),'X')">
+        <argument>timestamp</argument>
+    </function>
+
 </functions>

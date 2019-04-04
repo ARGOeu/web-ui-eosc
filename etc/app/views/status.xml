@@ -11,6 +11,16 @@
     -->
 
 
+    <view name="UTC-now" xmlns:date="http://exslt.org/dates-and-times">
+        <argument name="format">yyyy-MM-dd HH:mm:ss</argument>
+        <connector type="StringConnector">
+            <parameter name="content" eval="date:format-date(date:date-time(),'X')"/>
+        </connector>
+
+
+    </view>
+
+
     <view name="api-status-last"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
 
         <argument name="report">Critical</argument>
@@ -24,7 +34,6 @@
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
         <variable name="filter" eval="choose($status!='_status_',$status,'all')"/>
-
 
 
 
