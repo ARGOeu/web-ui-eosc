@@ -5,6 +5,7 @@
             <parameter name="addresses">
                 <entry>127.0.0.1</entry>
                 <entry>0:0:0:0:0:0:0:1</entry>
+                <entry>134.158.231.28</entry>
             </parameter>
         </authenticator>
     </authenticators>
