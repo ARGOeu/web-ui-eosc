@@ -53,7 +53,7 @@
                             <div class="card-body">
 
 
-                                <div tpl:foreach="/root/object/*">{{name()}} : {{text()}} {{item/text()}}</div>
+                                <div tpl:foreach="/root/object/*">{{name()}} : {{text()}} <span tpl:foreach="item">{{text()}}<br/></span></div>
 
 
                             </div>
