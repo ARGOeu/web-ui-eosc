@@ -10,21 +10,6 @@
         </authenticator>
     </authenticators>
 
-    <authenticators name="aai">
-        <authenticator type="OAuth2Authenticator">
-            <!-- required: The URL of the OAuth2 Authorization URL (String) -->
-            <parameter name="authz_location">https://aai-dev.egi.eu/oidc/authorize</parameter>
-            <!-- required: The URL of the OAuth2 Token URL (String) -->
-            <parameter name="token_location">https://aai-dev.egi.eu/oidc/token</parameter>
-            <!-- required: The set of permissions requested (String) -->
-            <parameter name="scope">openid profile email eduperson_entitlement eduperson_scoped_affiliation</parameter>
-            <!-- required: The Client ID (or App ID) (String) -->
-            <parameter name="client_id">argo_ui_devel</parameter>
-            <!-- required: The Client secret (or App secret) (String) -->
-            <parameter name="client_secret">aEIJmjEQgKJhMbu-cYyHAB6l647fJ1CHzHy5uvAPt5wR7NxV1v4jaaruKG8NCjiv0R_s7I3K-Onnqlqjv_n-Pw</parameter>
-
-        </authenticator>
-    </authenticators>
 
 
 

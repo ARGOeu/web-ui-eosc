@@ -113,67 +113,7 @@
 
     </view>
 
-    <view name="dpmt.downtimes" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:str="http://exslt.org/strings">
 
-        <connector type="HTTPConnector">
-            <parameter name="url" eval="concat('https://',property('eudat-api-user'),':',property('eudat-api-pwd'),'@dp.eudat.eu/gocdbpi/get_downtime')"/>
-            <parameter name="force-redirect">true</parameter>
-        </connector>
-
-        <processors>
-
-            <element in="results" out="downtimes">
-                <element-ignore/>
-                <element-create>sort_by_string(../DOWNTIME,'@ID')</element-create>
-            </element>
-
-            <element in="downtimes">
-                <element-create-as-parent out="downtimes"  group-by="@ID" attributes="@*">
-                    <element in="DOWNTIME">
-                        <element-create>new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'  ')))</element-create>
-                        <element-ignore in="HOSTED_BY"/>
-                    </element>
-                </element-create-as-parent>
-
-            </element>
-
-
-
-            <element in="downtimes">
-                <element in="downtimes">
-                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))</element-create>
-                </element>
-            </element>
-
-            <element in="downtimes">
-                <element-ignore in="downtimes">
-                    <element in="DOWNTIME" if="not(preceding-sibling::DOWNTIME)">
-                        <element in="ENDPOINT" out="HOSTED_BY"/>
-                        <element-create>new_element('service_endpoints',../../service_endpoints/text())</element-create>
-                    </element>
-                </element-ignore>
-            </element>
-
-
-
-        </processors>
-
-        <cache type="FileCache">
-            <!--<trigger type="ViewCreatedTrigger"/>-->
-            <trigger type="DeltaTimeTrigger">
-                <parameter name="hours">4</parameter>
-            </trigger>
-            <trigger type="ViewNotifiedTrigger"/>
-            <trigger type="ViewCreatedTrigger"/>
-        </cache>
-
-        <renderers>
-            <renderer type="DefaultRenderer">
-                <parameter name="contentType">text/xml</parameter>
-            </renderer>
-        </renderers>
-
-    </view>
 
 
 

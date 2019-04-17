@@ -1,0 +1,58 @@
+<views xmlns="http://software.in2p3.fr/lavoisier/application.xsd"
+       xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:t="http://software.in2p3.fr/lavoisier/tables.xsd">
+    <!-- 
+        Project : argo-eosc 
+        File    : profiles.xml
+        Created by cyril on 2019/04/16 
+    -->
+
+
+    <view name="metric_profiles">
+
+        <argument name="id"/>
+        <argument name="tenant"/>
+
+
+        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+        <variable name="url"  eval="concat(property('api.profiles.metric'),'/',$id)"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+            <fallback eval="new_element('exception',new_attribute('exception',concat('exception with metric profile: ',$id)))">
+                <exception type="java.io.IOException"/>
+            </fallback>
+        </connector>
+
+        <serializer type="JSONStreamSerializer"/>
+    </view>
+
+    <view name="aggregation_profiles">
+
+        <argument name="id"/>
+        <argument name="tenant"/>
+
+
+        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+        <variable name="url"  eval="concat(property('api.profiles.aggregation'),'/',$id)"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+            <fallback eval="new_element('exception',new_attribute('exception',concat('exception with aggregation profile: ',$url)))">
+                <exception type="java.io.IOException"/>
+            </fallback>
+        </connector>
+
+        <serializer type="JSONStreamSerializer"/>
+    </view>
+
+</views>

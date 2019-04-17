@@ -4390,12 +4390,12 @@ tbody.collapse.show {
 }
 
 .badge-warning {
-  color: #1F2D3D;
+  color: #fff;
   background-color: #B5892E;
 }
 
 .badge-warning[href]:hover, .badge-warning[href]:focus {
-  color: #1F2D3D;
+ color: #fff;
   text-decoration: none;
   background-color: #d39e00;
 }
@@ -10952,7 +10952,7 @@ label:not(.form-check-label):not(.custom-file-label) {
 .info-box.bg-warning, .info-box.alert-warning, .info-box.label-warning, .modal-warning .info-box.modal-body, .modal-warning .info-box.modal-header,
 .modal-warning .info-box.modal-footer,
 .info-box.bg-warning-gradient {
-  color: #1F2D3D;
+  color: #fff;
 }
 
 .info-box.bg-warning .progress-bar, .info-box.alert-warning .progress-bar, .info-box.label-warning .progress-bar, .modal-warning .info-box.modal-body .progress-bar, .modal-warning .info-box.modal-header .progress-bar,
@@ -12456,7 +12456,7 @@ a.text-muted:hover {
 .modal-warning .modal-footer,
 .bg-warning a, .alert-warning a, .label-warning a, .modal-warning .modal-body a, .modal-warning .modal-header a,
 .modal-warning .modal-footer a {
-  color: #1F2D3D;
+  color: #fff;
 }
 
 .bg-warning a, .alert-warning a, .label-warning a, .modal-warning .modal-body a, .modal-warning .modal-header a,

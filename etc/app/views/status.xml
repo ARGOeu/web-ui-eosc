@@ -11,14 +11,6 @@
     -->
 
 
-    <view name="UTC-now" xmlns:date="http://exslt.org/dates-and-times">
-        <argument name="format">yyyy-MM-dd HH:mm:ss</argument>
-        <connector type="StringConnector">
-            <parameter name="content" eval="date:format-date(date:date-time(),'X')"/>
-        </connector>
-
-
-    </view>
 
 
     <view name="api-status-last"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
@@ -62,7 +54,6 @@
             </element>
 
 
-          
             
             <element  out="status-last">
                <attribute-create out="Ok">count(../object[status/text()='OK'])</attribute-create>
@@ -98,8 +89,8 @@
         <argument name="filter">_filter_</argument>
 
     <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
-    <variable name="start_time" eval="choose($start_date='_start_',concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z'),concat($start_date,'T00:00:00Z'))"/>
-    <variable name="end_time" eval="choose($end_date='_end_',concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z'),concat($end_date,'T23:59:59Z'))"/>
+    <variable name="start_time" eval="choose($start_date='_start_',concat(str:replace(substring(date:add(function:date-UTC(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z'),concat($start_date,'T00:00:00Z'))"/>
+    <variable name="end_time" eval="choose($end_date='_end_',concat(str:replace(substring(function:date-UTC(),0,20),' ','T'),'Z'),concat($end_date,'T23:59:59Z'))"/>
 
 
     <variable name="url" eval="function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,$start_time,$end_time)"/>
@@ -127,7 +118,7 @@
                 <attribute-create out="end_time">$end_time</attribute-create>
                 <attribute-create out="filter">$filter</attribute-create>
                 <element-create>view('gocdb.filter')</element-create>
-                <element-create>view('reportDetails')/reports/report</element-create>
+                <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
                 <element-ignore  if="group">
                         <element-ignore if="endpoint">
                             <element-ignore if="metric">
@@ -236,7 +227,7 @@
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="topology">$topology</attribute-create>
-                <element-create>view('reportDetails')/reports/report</element-create>
+                <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
             </element>
         </processors>
 

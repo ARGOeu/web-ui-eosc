@@ -41,7 +41,7 @@
             <element in="root">
                 <attribute-create out="filter">$filter</attribute-create>
                 <element-create if="$tenant='egi' and $topology='SITES'" as="first-child">view('gocdb.filter')</element-create>
-                <element-create>view('reportDetails')/reports/report</element-create>
+                <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
                 <element-ignore in="group" if="@type!=$topology"><element/></element-ignore>
                 <element in="group" if="@type=$topology"><element-ignore in="group" if="@type!=$topology"/></element>
             </element>
@@ -138,7 +138,7 @@
         <processors>
 
             <element in="root">
-                <element-create>view('reportDetails')/reports/report</element-create>
+                <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
                 <element-ignore in="group" if="group">
                     <element-ignore in="group" if="@name!=$group and ancestor::group/@name!=$group"/>
                     <element/>
@@ -209,9 +209,9 @@
     concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'/',$topology2,'/',$group2,'/endpoints?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=daily'),
     concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'/',$topology2,'/',$group2,'/endpoints/',$group3,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=daily'))"/>
 
-     <variable name="topology3" eval="view('reportDetails')/reports/report[@tenant=$tenant][@report=$report]/@topologyDetails"/>
+     <variable name="topology3" eval="view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/@topology3"/>
 
-
+      
 
 
 
@@ -236,9 +236,8 @@
             <attribute-create out="report">$report</attribute-create>
             <attribute-create out="ApiUrl">$url</attribute-create>
             <attribute-create out="group">$group</attribute-create>
-
-
-            <element-create>view('reportDetails')/reports/report</element-create>
+           
+            <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
 
         </element>
 
@@ -330,8 +329,8 @@
             </element>
 
 
-            <element in="root">
-                <element-create>view('reportDetails')/reports/report</element-create>
+            <element in="root">               
+                <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
                 <element-ignore in="group" if="group">
                     <element-ignore in="group" if="@name!=$group and ancestor::group/@name!=$group"/>
                     <element/>
@@ -400,7 +399,7 @@
         <variable name="start_time" eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z')"/>
         <variable name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"/>
 
-        <variable name="topology2" eval="view('reportDetails')/reports/report[@tenant=$tenant][@report=$report]/@topologyDetails"/>
+        <variable name="topology2" eval="view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/@topology3"/>
 
         <variable name="url"  eval="
         choose($topology3!='_topo3_',
@@ -441,9 +440,9 @@
                 <attribute-create out="month4">choose(../group[count(results)=$nbmonths+1]/results[4]/@timestamp,../group[count(results)=$nbmonths+1]/results[4]/@timestamp,$month_4)</attribute-create>
                 <attribute-create out="month5">choose(../group[count(results)=$nbmonths+1]/results[5]/@timestamp,../group[count(results)=$nbmonths+1]/results[5]/@timestamp,$month_5)</attribute-create>
 
+                <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
 
 
-                <element-create>view('reportDetails')/reports/report</element-create>
 
             </element>
 
@@ -511,7 +510,7 @@
         <variable name="start_time" eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z')"/>
         <variable name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"/>
 
-        <variable name="topology3" eval="view('reportDetails')/reports/report[@tenant=$tenant][@report=$report]/@topologyDetails"/>
+        <variable name="topology3" eval="view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/@topology3"/>
 
         <variable name="url"  eval="concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'/',$topology2,'/',$group2,'/endpoints?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=monthly') "/>
 
@@ -549,9 +548,9 @@
                 <attribute-create out="month4">choose(../group[count(results)=$nbmonths+1]/results[4]/@timestamp,../group[count(results)=$nbmonths+1]/results[4]/@timestamp,$month_4)</attribute-create>
                 <attribute-create out="month5">choose(../group[count(results)=$nbmonths+1]/results[5]/@timestamp,../group[count(results)=$nbmonths+1]/results[5]/@timestamp,$month_5)</attribute-create>
 
+                <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
 
 
-                <element-create>view('reportDetails')/reports/report</element-create>
 
             </element>
 
@@ -640,7 +639,8 @@
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="url">$url</attribute-create>
-                <element-create>view('reportDetails')/reports/report</element-create>
+                <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
+
                 <element-ignore in="group">
                     <element in="results">
                         <attribute-create out="id">../../@name</attribute-create>

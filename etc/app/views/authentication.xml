@@ -57,6 +57,20 @@
         </renderers>
     </view>
 
+    <view name="dateUTC"  xmlns:date="http://exslt.org/dates-and-times">
+        <connector type="XMLConnector">
+          <parameter name="content" eval="new_element('root')"/>
+        </connector>
+
+        <processors>
+            <element in="root">
+                <attribute-create out="sub1"> substring(date:format-date(date:date-time(),'X'),1,1)</attribute-create>
+                <attribute-create out="date2">function:dateUTC()</attribute-create>
+            </element>
+
+        </processors>
+
+    </view>
 
 
 </views>

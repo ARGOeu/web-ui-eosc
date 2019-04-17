@@ -39,9 +39,10 @@
         <argument>end_time</argument>
     </function>
 
-    <function name="dateUTC"
-              eval="date:format-date(date:date-time(),'X')">
-        <argument>timestamp</argument>
+    <function name="date-UTC"
+              eval="choose(substring(date:format-date(date:date-time(),'X'),1,1)='+',
+                    date:add(date:date-time(),concat('-PT',substring(date:format-date(date:date-time(),'X'),2),'H')),
+                    date:add(date:date-time(),concat('PT',substring(date:format-date(date:date-time(),'X'),2),'H')))">
     </function>
 
 </functions>

@@ -5,6 +5,8 @@
         Created by cyril on 2018/03/29 
     -->
 
+
+
     <view name="reportTopology">
 
         <argument name="tenant"/>
@@ -40,117 +42,6 @@
         </renderers>
     </view>
 
-    <view name="tenantsListRaw" authenticators="admin">
-
-        <connector type="FileConnector">
-            <parameter name="path">app/resources/tenants.xml</parameter>
-        </connector>
-
-
-
-        <cache type="FileCache">
-
-            <trigger type="DeltaTimeTrigger">
-                <parameter name="hours">3</parameter>
-            </trigger>
-
-            <trigger type="ViewCreatedTrigger"/>
-
-            <trigger type="ViewNotifiedTrigger"/>
-        </cache>
-    </view>
-
-    <view name="tenantsList" authenticators="admin">
-
-        <connector type="XMLConnector">
-            <parameter name="content" eval="view('tenantsListRaw')"/>
-        </connector>
-
-
-        <processors>
-            <elements path="tenants/tenant">
-                <element-ignore in="api_key"/>
-                <element in="name">
-                    <text>lower-case(.)</text>
-                </element>
-            </elements>
-        </processors>
-
-    </view>
-
-
-    <view name="reportDetails">
-
-
-        <connector type="XMLConnector">
-            <parameter name="content" eval="view('tenantsListRaw')"/>
-        </connector>
-
-        <processors>
-
-            <element in="tenants" out="reports">
-
-                <elements-ignore path="tenant/reports">
-                    <element in="report">
-                        <attribute-create out="report">../id/text()</attribute-create>
-                        <attribute-create out="tenant">../tenant/text()</attribute-create>
-                        <attribute-create out="description">../../../description/text()</attribute-create>
-                        <attribute-create out="contact">../../../contact/text()</attribute-create>
-                        <attribute-create out="url">../../../url/text()</attribute-create>
-                        <attribute-create out="topologyAR">../../../topologyAR/text()</attribute-create>
-                        <attribute-create out="topologyStatus">../../../topologyStatus/text()</attribute-create>
-                        <attribute-create out="topologyReference">../../../topologyReference/text()</attribute-create>
-                        <attribute-create out="topologyDetails">../../../topologyDetails/text()</attribute-create>
-                        <attribute-create out="thresholdAv">../thresholdAv/text()</attribute-create>
-                        <attribute-create out="thresholdRe">../thresholdRe/text()</attribute-create>
-
-
-                        <element-ignore/>
-                    </element>
-
-                </elements-ignore>
-
-            </element>
-
-
-
-            <element in="reports">
-                <element in="report">
-                    <element-create >view('reportTopology',entry('tenant',../@tenant)|entry('report',../@report))/object/data/*</element-create>
-                </element>
-            </element>
-
-            <element in="reports">
-                <element in="report">
-                    <element>
-                        <element-ignore in="item"/>
-                        <element-create>sort_by_string(../item,'text()')</element-create>
-                    </element>
-                </element>
-            </element>
-
-
-
-        </processors>
-
-            <cache type="FileCache">
-                <trigger type="DeltaTimeTrigger">
-                    <parameter name="hours">3</parameter>
-                </trigger>
-                <trigger type="ViewNotifiedTrigger"/>
-                <trigger type="ViewCreatedTrigger"/>
-            </cache>
-
-            <renderers>
-                <renderer type="DefaultRenderer">
-                    <parameter name="contentType">text/xml</parameter>
-                </renderer>
-            </renderers>
-
-
-
-
-    </view>
 
     <view name="dashboard-filter">
 
@@ -173,25 +64,27 @@
                 <attribute-create out="details">'level1'</attribute-create>
                 <attribute-create out="group">$entity</attribute-create>
 
-                <element-create>view('reportDetails')/reports/report</element-create>
+
+                <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
 
 
             </element>
             
             <element in="root">
-                <attribute-create out="topology">../report[@tenant=../@tenant][@report=../@report]/@topologyStatus</attribute-create>
+                <attribute-create out="topology">../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topology2</attribute-create>
 
-                <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc'">view('gocdb.downtimes.site', entry('site',$entity))</element-create>
-                <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='dpmt'">view('dpmt.downtimes.site',entry('site',$entity))</element-create>
-                <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc-sdc'">view('gocdb.sdc.downtimes.site',entry('site',$entity))</element-create>
-                <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc'">view('gocdb.site')/results/SITE[@NAME=$entity]</element-create>
-                <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='dpmt'">view('dpmt.siteProjects')/results/SERVICE_GROUP[NAME/text()=$entity]</element-create>
-                <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc-sdc'">view('gocdb.sdc.site')/results/SITE[@NAME=$entity]</element-create>
+                <!--<element-create if="../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topologyReference='goc'">view('gocdb.downtimes.site', entry('site',$entity))</element-create>-->
+                <!--<element-create if="../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topologyReference='dpmt'">view('dpmt.downtimes.site',entry('site',$entity))</element-create>-->
+                <!--<element-create if="../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topologyReference='goc-sdc'">view('gocdb.sdc.downtimes.site',entry('site',$entity))</element-create>-->
+                <!--<element-create if="../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topologyReference='goc'">view('gocdb.site')/results/SITE[@NAME=$entity]</element-create>-->
+                <!--<element-create if="../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topologyReference='dpmt'">view('dpmt.siteProjects')/results/SERVICE_GROUP[NAME/text()=$entity]</element-create>-->
+                <!--<element-create if="../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topologyReference='goc-sdc'">view('gocdb.sdc.site')/results/SITE[@NAME=$entity]</element-create>-->
+
                 <element-create>
-                    view('api-status-last',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][@report=../@report]/@topologyStatus)|entry('entity',$entity)|entry('status',$status))
+                    view('api-status-last',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topology2)|entry('entity',$entity)|entry('status',$status))
                 </element-create>
                 <element-create>
-                    view('report-ar',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][@report=../@report]/@topologyStatus)|entry('entity',$entity))
+                    view('report-ar',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topology2)|entry('entity',$entity))
                 </element-create>
 
 
@@ -238,25 +131,22 @@
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="details">'level0'</attribute-create>
-                <element-create>view('reportDetails')/reports/report</element-create>
 
-          
+                <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
             </element>
             
             <element in="root" if="$scope='_scope_'">
-                <attribute-create out="topology">../report[@tenant=../@tenant][@report=../@report]/@topologyStatus</attribute-create>
+                <attribute-create out="topology">../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topology2</attribute-create>
 
-                <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc'">view('gocdb.downtimes')</element-create>
-                <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='dpmt'">view('dpmt.downtimes')</element-create>
-                <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc-sdc'">view('gocdb.sdc.downtimes')</element-create>
-                <element-create if="../report[@tenant=../@tenant][@report=../@report]/@topologyReference='goc-sla'">view('gocdb.sla.downtimes')</element-create>
+                <element-create>view('downtimes',entry('tenant',$tenant)|entry('report',$report))</element-create>
+
 
                 <element-create>
-                    view('api-status-last',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][@report=../@report]/@topologyStatus)|entry('status',$status))
+                    view('api-status-last',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topology2)|entry('status',$status))
                 </element-create>
 
                 <element-create>
-                    view('report-ar',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][@report=../@report]/@topologyAR))
+                    view('report-ar',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topology1))
                 </element-create>
 
 
@@ -297,7 +187,7 @@
             <element in="root">
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="tenant">$tenant</attribute-create>
-                <element-create>view('reportDetails')/reports/report</element-create>
+                <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
 
             </element>
         </processors>
@@ -330,7 +220,7 @@
         <processors>
             <element in="root">
                 <attribute-create out="tenant">lower-case($tenant)</attribute-create>
-                <element-create>view('reportDetails')/reports/report</element-create>
+                <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
             </element>
         </processors>
 
@@ -379,7 +269,7 @@
             <element out="root">
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
-                <element-create>view('reportDetails')/reports/report</element-create>
+                <element-create>view('tenants.reports')/reports/report</element-create>
                 <element in="group">
                     <element in="results">
                         <attribute-create out="avF" if="../following-sibling::results">

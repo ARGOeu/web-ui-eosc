@@ -58,7 +58,7 @@
                         </li>
 
                         <li tpl:if="@tenant='egi' and @report='Critical'" lass="nav-item">
-                            <a href="/{{@tenant}}/report-ar/{{@report}}/{{@topologyAR}}" title="Availability/Reliability - NGI Reports" class="nav-link">
+                            <a href="/{{@tenant}}/report-ar/{{@report}}/{{@topology1}}" title="Availability/Reliability - NGI Reports" class="nav-link">
                                 <i class="fa fa-globe nav-icon"></i>
                                 <p class="text-capitalize">NGIs Report</p>
                             </a>
@@ -70,14 +70,14 @@
                             </a>
                         </li>
                         <li tpl:else="" class="nav-item">
-                            <a href="/{{@tenant}}/report-ar/{{@report}}/{{@topologyAR}}" title="Availability/Reliability of {{@topologyAR}}" class="nav-link">
+                            <a href="/{{@tenant}}/report-ar/{{@report}}/{{@topology1}}" title="Availability/Reliability of {{@topology1}}" class="nav-link">
                                 <i class="fa fa-tachometer-alt nav-icon"></i>
                                 <p class="text-capitalize">Availability/Reliability</p>
                             </a>
                         </li>
 
                         <li  class="nav-item">
-                            <a href="/{{@tenant}}/report-status/{{@report}}/{{@topologyStatus}}" title="Status of {{@topologyStatus}}"  class="nav-link">
+                            <a href="/{{@tenant}}/report-status/{{@report}}/{{@topology2}}" title="Status of {{@topology2}}"  class="nav-link">
                                 <i class="fa fa-check-circle  nav-icon"></i>
                                 <p class="text-capitalize">Status</p>
                             </a>
