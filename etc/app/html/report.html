@@ -142,7 +142,8 @@
 
                                         <tbody tpl:if="group[1]/@type!='endpoint' and group[1]/@type!='service'">
                                         <tr tpl:foreach="group">
-                                            <td tpl:if="@type='NGI'"><a href="/{/root/@tenant}/report-ar/{/root/@report}/SITES?filter={@name}">{{@name}}</a></td>
+                                            <td tpl:if="@type='PROJECT'"><a href="/{/root/@tenant}/report-ar/{/root/@report}/SERVICEGROUPS">{{@name}}</a></td>
+                                            <td tpl:else="@type='NGI'"><a href="/{/root/@tenant}/report-ar/{/root/@report}/SITES?filter={@name}">{{@name}}</a></td>
                                             <td tpl:else="@type='SITES'"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{@type}/{@name}/details">{{@name}}</a></td>
                                             <td tpl:else="@type='SERVICEGROUPS'"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{@type}/{@name}/details">{{@name}}</a></td>
 

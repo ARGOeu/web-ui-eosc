@@ -28,8 +28,8 @@
         <description>Collaborative Data Infrastructure</description>
         <url>http://eudat.eu</url>
         <contact>eudat-mon@lists.grnet.gr</contact>
-        <thresholdAv>90</thresholdAv>
-        <thresholdRe>95</thresholdRe>
+        <thresholdAv>85</thresholdAv>
+        <thresholdRe>90</thresholdRe>
 
     </tenant>
 
@@ -39,8 +39,8 @@
         <description>Ocean and marine data management</description>
         <url>https://www.seadatanet.org</url>
         <contact>sdc-support@lists.grnet.gr</contact>
-        <thresholdAv>90</thresholdAv>
-        <thresholdRe>95</thresholdRe>
+        <thresholdAv>85</thresholdAv>
+        <thresholdRe>90</thresholdRe>
     </tenant>
 
 

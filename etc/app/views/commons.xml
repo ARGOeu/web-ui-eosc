@@ -5,7 +5,36 @@
         Created by cyril on 2018/03/29 
     -->
 
+    <view name="reportDetails">
+        <argument name="report"/>
+        <argument name="tenant"/>
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('reportDetailsRaw')"/>
+        </connector>
 
+        <processors>
+            <element in="root">
+                <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="tenant">$tenant</attribute-create>
+
+                <element in="report" if="@tenant=$tenant and @report=$report">
+                    <attribute-create out="active">true()</attribute-create>
+                </element>
+
+                <element in="report">
+                    <element-ignore  if="../@tenant!=$tenant or ../@report!=$report"/>
+                </element>
+
+            </element>
+        </processors>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/report_details.html</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
 
     <view name="reportTopology">
 

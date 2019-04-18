@@ -94,7 +94,7 @@
                         <attribute-create out="report">../info/name/text()</attribute-create>
                         <attribute-create out="topology1">../topology_schema/group/type/text()</attribute-create>
                         <attribute-create out="topology2">../topology_schema/group/group/type/text()</attribute-create>
-                        <attribute-create out="topology3">'service'</attribute-create>
+                        <attribute-create out="topology3">'services'</attribute-create>
                         <attribute-create out="thresholdAv">../ancestor::tenant/thresholdAv/text()</attribute-create>
                         <attribute-create out="thresholdRe">../ancestor::tenant/thresholdRe/text()</attribute-create>
                         <element-create >view('reportTopology',entry('tenant',../ancestor::tenant/id/text())|entry('report',../info/name/text()))/object/data/*</element-create>
@@ -126,78 +126,75 @@
         </renderers>
     </view>
 
-    <view name="reportDetails">
+
+    <view name="reportDetailsRaw">
 
 
-        <connector type="XMLConnector">
-            <parameter name="content" eval="view('tenantsListRaw')"/>
+        <connector type="FileConnector">
+            <parameter name="path">app/resources/tenants_reports.xml</parameter>
         </connector>
 
         <processors>
+            <element in="tenants">
+                <element in="tenant" if="contains(@env,property('app.instance'))">
+                    <element-create as="last-child">view('reports_tenant',entry('tenant',../id/text()))</element-create>
+                </element>
 
-            <element in="tenants" out="reports">
+            </element>
 
-                <elements-ignore path="tenant/reports">
+            <elements path="/tenants/tenant">
+                <elements path="object/data">
+                    <element in="object" out="report" attributes="info/*">
+                        <attribute-create out="tenant">../ancestor::tenant/id/text()</attribute-create>
+                        <attribute-create out="contact">../ancestor::tenant/contact/text()</attribute-create>
+                        <attribute-create out="report">../info/name/text()</attribute-create>
+                        <attribute-create out="topology1">../topology_schema/group/type/text()</attribute-create>
+                        <attribute-create out="topology2">../topology_schema/group/group/type/text()</attribute-create>
+                        <attribute-create out="topology3">'services'</attribute-create>
+                        <attribute-create out="thresholdAv">../ancestor::tenant/thresholdAv/text()</attribute-create>
+                        <attribute-create out="thresholdRe">../ancestor::tenant/thresholdRe/text()</attribute-create>
+                        <element-create >view('reportTopology',entry('tenant',../ancestor::tenant/id/text())|entry('report',../info/name/text()))/object/data/*</element-create>
+                    </element>
+                </elements>
+            </elements>
+
+            <element in="tenants" out="root">
+                <elements-ignore path="tenant/object/data">
                     <element in="report">
-                        <attribute-create out="report">../id/text()</attribute-create>
-                        <attribute-create out="tenant">../tenant/text()</attribute-create>
-                        <attribute-create out="description">../../../description/text()</attribute-create>
-                        <attribute-create out="contact">../../../contact/text()</attribute-create>
-                        <attribute-create out="url">../../../url/text()</attribute-create>
-                        <attribute-create out="topologyAR">../../../topologyAR/text()</attribute-create>
-                        <attribute-create out="topologyStatus">../../../topologyStatus/text()</attribute-create>
-                        <attribute-create out="topologyReference">../../../topologyReference/text()</attribute-create>
-                        <attribute-create out="topologyDetails">../../../topologyDetails/text()</attribute-create>
-                        <attribute-create out="thresholdAv">../thresholdAv/text()</attribute-create>
-                        <attribute-create out="thresholdRe">../thresholdRe/text()</attribute-create>
+                        <element in="profiles">
+                            <element in="object" out="aggregation"  if="type/text()='aggregation'">
+                                <element-create>view('aggregation_profiles',entry('tenant',../ancestor::report/@tenant)|entry('id',../id/text()))</element-create>
 
+                            </element>
 
-                        <element-ignore/>
+                            <element in="object" out="metrics"  if="type/text()='metric'">
+                                <element-create>view('metric_profiles',entry('tenant',../ancestor::report/@tenant)|entry('id',../id/text()))</element-create>
+                            </element>
+                        </element>
                     </element>
-
                 </elements-ignore>
-
             </element>
-
-
-
-            <element in="reports">
-                <element in="report">
-                    <element-create >view('reportTopology',entry('tenant',../@tenant)|entry('report',../@report))/object/data/*</element-create>
-                </element>
-            </element>
-
-            <element in="reports">
-                <element in="report">
-                    <element>
-                        <element-ignore in="item"/>
-                        <element-create>sort_by_string(../item,'text()')</element-create>
-                    </element>
-                </element>
-            </element>
-
 
 
         </processors>
 
+
         <cache type="FileCache">
+
             <trigger type="DeltaTimeTrigger">
-                <parameter name="hours">3</parameter>
+                <parameter name="hours">2</parameter>
             </trigger>
-            <trigger type="ViewNotifiedTrigger"/>
+
             <trigger type="ViewCreatedTrigger"/>
+
+            <trigger type="ViewNotifiedTrigger"/>
         </cache>
-
-        <renderers>
-            <renderer type="DefaultRenderer">
-                <parameter name="contentType">text/xml</parameter>
-            </renderer>
-        </renderers>
-
 
 
 
     </view>
+
+
 
 
 </views>

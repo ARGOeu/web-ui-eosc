@@ -28,6 +28,30 @@
 
     </view>
 
+    <view name="loginb2safe" authenticators="b2safe">
+
+        <connector type="XMLConnector">
+            <parameter name="content" eval="new_element('root')"/>
+        </connector>
+
+        <processors>
+            <element in="root">
+                <element-create>entry('token',user('token'))</element-create>
+                <element-create>view('userInfo', entry('token',user('token'))|entry('url',property('eudat.oidc.userInfo')))</element-create>
+
+            </element>
+        </processors>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/profile.html</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
+
+
 
     <view name="userInfo">
         <argument name="token"/>
@@ -57,20 +81,7 @@
         </renderers>
     </view>
 
-    <view name="dateUTC"  xmlns:date="http://exslt.org/dates-and-times">
-        <connector type="XMLConnector">
-          <parameter name="content" eval="new_element('root')"/>
-        </connector>
 
-        <processors>
-            <element in="root">
-                <attribute-create out="sub1"> substring(date:format-date(date:date-time(),'X'),1,1)</attribute-create>
-                <attribute-create out="date2">function:dateUTC()</attribute-create>
-            </element>
-
-        </processors>
-
-    </view>
 
 
 </views>
