@@ -141,7 +141,6 @@
                 </element>
 
             </element>
-
             <elements path="/tenants/tenant">
                 <elements path="object/data">
                     <element in="object" out="report" attributes="info/*">
