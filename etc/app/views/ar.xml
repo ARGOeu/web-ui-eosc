@@ -389,7 +389,7 @@
         <argument name="report"/>
         <argument name="tenant"/>
         <argument name="topology"/>
-        <argument name="nbmonths">5</argument>
+        <argument name="nbmonths">4</argument>
         <argument name="group"/>
         <argument name="topology3">_topo3_</argument>
         <argument name="month">1979-01</argument>
