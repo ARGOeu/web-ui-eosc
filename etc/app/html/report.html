@@ -27,7 +27,7 @@
                         <ol class="breadcrumb float-sm-right">
 
                             <li class="breadcrumb-item" tpl:foreach="root" >Availabilities / Reliabilities</li>
-                            <li class="breadcrumb-item" tpl:if="/root/@group"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}/details">{{/root/@group}}</a></li>
+                            <li class="breadcrumb-item" tpl:if="/root/@group"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}">{{/root/@group}}</a></li>
                             <li class="breadcrumb-item" tpl:if="/root/@group2"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{/root/@group2}/endpoints">{{/root/@group2}}</a></li>
                         </ol>
                     </div><!-- /.col -->
@@ -98,7 +98,7 @@
                                     <table id="ar" class="table m-0">
                                         <thead>
                                         <tr class="d-print-none">
-                                            <th>Name</th>
+                                            <th>Month</th>
                                             <th colspan="2" class="text-center">{{@month1}}</th>
                                             <th colspan="2" class="text-center">{{@month2}}</th>
                                             <th colspan="2" class="text-center">{{@month3}}</th>
@@ -120,6 +120,8 @@
 
                                         </tr>
                                         <tr class="d-print-none">
+
+
                                             <th></th>
 
                                             <th class="text-right">Av</th>
@@ -136,7 +138,6 @@
 
                                             <th class="text-right">Av</th>
                                             <th class="text-left">Re</th>
-
                                         </tr>
                                         </thead>
 
@@ -214,63 +215,65 @@
 
                                             <td><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints">{{@name}}</a></td>
 
+
+
                                             <td class="text-right">
 
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:if="not(results[@timestamp=/root/@month1]/@availability or results[@timestamp=/root/@month1]/@availability=-1)" class="m-1 badge badge-secondary">N/A</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month1]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month1]/@availability}}</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month1]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month1]/@availability}}</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:if="not(results[@timestamp=/root/@month1]/@availability or results[@timestamp=/root/@month1]/@availability=-1)" class="m-1 badge badge-secondary">N/A</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month1]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month1]/@availability}}</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month1]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month1]/@availability}}</a>
                                             </td>
                                             <td class="text-left">
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:if="not(results[@timestamp=/root/@month1]/@reliability) or results[@timestamp=/root/@month1]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month1]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month1]/@reliability}}</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month1]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month1]/@reliability}}</a>
-
-                                            </td>
-                                            <td class="text-right">
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month2}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:if="not(results[@timestamp=/root/@month2]/@availability) or results[@timestamp=/root/@month2]/@availability=-1" class="m-1 badge badge-secondary">N/A</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month2}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month2]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month2]/@availability}}</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month2}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month2]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month2]/@availability}}</a>
-                                            </td>
-                                            <td class="text-left">
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month2}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:if="not(results[@timestamp=/root/@month2]/@reliability) or results[@timestamp=/root/@month2]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month2}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month2]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month2]/@reliability}}</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month2}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month2]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month2]/@reliability}}</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:if="not(results[@timestamp=/root/@month1]/@reliability) or results[@timestamp=/root/@month1]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month1]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month1]/@reliability}}</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month1]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month1]/@reliability}}</a>
 
                                             </td>
                                             <td class="text-right">
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month3}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:if="not(results[@timestamp=/root/@month3]/@availability) or results[@timestamp=/root/@month3]/@availability=-1" class="m-1 badge badge-secondary">N/A</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month3}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month3]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month3]/@availability}}</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month3}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month3]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month3]/@availability}}</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month2}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:if="not(results[@timestamp=/root/@month2]/@availability) or results[@timestamp=/root/@month2]/@availability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month2}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month2]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month2]/@availability}}</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month2}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month2]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month2]/@availability}}</a>
                                             </td>
                                             <td class="text-left">
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month3}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:if="not(results[@timestamp=/root/@month3]/@reliability) or results[@timestamp=/root/@month3]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month3}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month3]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month3]/@reliability}}</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month3}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month3]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month3]/@reliability}}</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month2}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:if="not(results[@timestamp=/root/@month2]/@reliability) or results[@timestamp=/root/@month2]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month2}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month2]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month2]/@reliability}}</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month2}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month2]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month2]/@reliability}}</a>
 
                                             </td>
                                             <td class="text-right">
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month4}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:if="not(results[@timestamp=/root/@month4]/@availability)  or results[@timestamp=/root/@month4]/@availability=-1" class="m-1 badge badge-secondary">N/A</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month4}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month4]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month4]/@availability}}</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month4}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month4]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month4]/@availability}}</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month3}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:if="not(results[@timestamp=/root/@month3]/@availability) or results[@timestamp=/root/@month3]/@availability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month3}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month3]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month3]/@availability}}</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month3}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month3]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month3]/@availability}}</a>
                                             </td>
                                             <td class="text-left">
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month4}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:if="not(results[@timestamp=/root/@month4]/@reliability) or results[@timestamp=/root/@month4]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month4}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month4]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month4]/@reliability}}</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month4}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month4]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month4]/@reliability}}</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month3}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:if="not(results[@timestamp=/root/@month3]/@reliability) or results[@timestamp=/root/@month3]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month3}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month3]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month3]/@reliability}}</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month3}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month3]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month3]/@reliability}}</a>
 
                                             </td>
                                             <td class="text-right">
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month5}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:if="not(results[@timestamp=/root/@month5]/@availability)  or results[@timestamp=/root/@month5]/@availability=-1" class="m-1 badge badge-secondary">N/A</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month5}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month5]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month5]/@availability}}</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month5}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month5]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month5]/@availability}}</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month4}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:if="not(results[@timestamp=/root/@month4]/@availability)  or results[@timestamp=/root/@month4]/@availability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month4}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month4]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month4]/@availability}}</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month4}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month4]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month4]/@availability}}</a>
                                             </td>
                                             <td class="text-left">
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month5}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:if="not(results[@timestamp=/root/@month5]/@reliability) or results[@timestamp=/root/@month4]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month5}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month5]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month5]/@reliability}}</a>
-                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month5}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" tpl:else="results[@timestamp=/root/@month5]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month5]/@reliability}}</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month4}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:if="not(results[@timestamp=/root/@month4]/@reliability) or results[@timestamp=/root/@month4]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month4}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month4]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month4]/@reliability}}</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month4}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month4]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month4]/@reliability}}</a>
 
                                             </td>
+                                            <td class="text-right">
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month5}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:if="not(results[@timestamp=/root/@month5]/@availability)  or results[@timestamp=/root/@month5]/@availability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month5}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month5]/@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{results[@timestamp=/root/@month5]/@availability}}</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month5}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month5]/@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month5]/@availability}}</a>
+                                            </td>
+                                            <td class="text-left">
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month5}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:if="not(results[@timestamp=/root/@month5]/@reliability) or results[@timestamp=/root/@month4]/@reliability=-1" class="m-1 badge badge-secondary">N/A</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month5}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month5]/@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{results[@timestamp=/root/@month5]/@reliability}}</a>
+                                                <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month5}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}" tpl:else="results[@timestamp=/root/@month5]/@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{results[@timestamp=/root/@month5]/@reliability}}</a>
 
+                                            </td>
+                                            
                                         </tr>
                                         </tbody>
 
@@ -340,12 +343,22 @@
 
                                         <tfoot>
                                         <tr class="d-print-none">
-                                            <th>Name</th>
-                                            <th colspan="2" class="text-center">{{@month1}}</th>
-                                            <th colspan="2" class="text-center">{{@month2}}</th>
-                                            <th colspan="2" class="text-center">{{@month3}}</th>
-                                            <th colspan="2" class="text-center">{{@month4}}</th>
-                                            <th colspan="2" class="text-center">{{@month5}}</th>
+                                            <th></th>
+
+                                            <th class="text-right">Av</th>
+                                            <th class="text-left">Re</th>
+
+                                            <th class="text-right">Av</th>
+                                            <th class="text-left">Re</th>
+
+                                            <th class="text-right">Av</th>
+                                            <th class="text-left">Re</th>
+
+                                            <th class="text-right">Av</th>
+                                            <th class="text-left">Re</th>
+
+                                            <th class="text-right">Av</th>
+                                            <th class="text-left">Re</th>
                                         </tr>
                                         </tfoot>
 

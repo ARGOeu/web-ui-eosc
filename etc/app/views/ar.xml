@@ -324,6 +324,12 @@
             </parameter>
         </connector>
 
+<!--        <connector type="StringConnector">-->
+<!--            <parameter name="content" eval="$url"></parameter>-->
+<!--        </connector>-->
+
+<!--        <serializer type="EncapsulateSerializer"></serializer>-->
+    
         <processors>
 
             <element in="root">
@@ -517,6 +523,7 @@
         <argument name="group"/>
         <argument name="topology2"/>
         <argument name="group2"/>
+        <argument name="group3">_group3_</argument>
 
         <argument name="month">1979-01</argument>
 
@@ -539,7 +546,11 @@
 
 
         <variable name="topology3" eval="view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/@topology3"/>
-        <variable name="url"  eval="concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'/',$topology2,'/',$group2,'/endpoints?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=monthly') "/>
+        <variable name="group4" eval="choose(
+        $group3='_group3_',
+        '/endpoints?start_time=',
+        concat('/endpoints',$group3,'?start_time='))"></variable>
+        <variable name="url"  eval="concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'/',$topology2,'/',$group2,$group4,$start_time,'&amp;end_time=',$end_time,'&amp;granularity=monthly') "/>
 
 
 
