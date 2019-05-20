@@ -117,6 +117,10 @@
                 <attribute-create out="entity3">$entity3</attribute-create>
                 <attribute-create out="end_time">$end_time</attribute-create>
                 <attribute-create out="filter">$filter</attribute-create>
+
+                <attribute-create out="start_date" if="$start_date!='_start_'">$start_date</attribute-create>
+                <attribute-create out="end_date" if="$end_date!='_end_'">$end_date</attribute-create>
+
                 <element-create>view('gocdb.filter')</element-create>
                 <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
                 <element-ignore  if="group">
