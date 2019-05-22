@@ -4,6 +4,28 @@
         File    : ar.xml
         Created by cyril on 2018/06/13 
     -->
+    <view name="ar-ngi"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
+
+        <argument name="report">Critical</argument>
+        <argument name="tenant">egi</argument>
+        <argument name="topology">NGI</argument>
+    <argument name="nbmonths">4</argument>
+    <argument name="filter">_filter_</argument>
+    <argument name="month">1979-01</argument>
+
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('report-ar-groups',arguments())"/>
+        </connector>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/report.html</parameter>
+            </renderer>
+
+            <renderer type="ChartRenderer">
+            </renderer>
+        </renderers>
+    </view>
 
     <view name="report-ar-groups"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 
@@ -175,7 +197,17 @@
 
         </processors>
 
-
+        <pre-renderers>
+            <row foreach="/root/group/results">
+                <column label="name">ancestor::group/@name</column>
+                <column label="timestamp">@timestamp</column>
+                <column label="availability">@availability</column>
+                <column label="reliability">@reliability</column>
+                <column label="downtime">@downtime</column>
+                <column label="uptime">@uptime</column>
+                <column label="unknown">@unknown</column>
+            </row>
+        </pre-renderers>
 
         <renderers>
             <renderer type="HTMLRenderer">
