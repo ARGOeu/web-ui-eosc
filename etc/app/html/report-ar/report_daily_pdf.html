@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd" xmlns:date="http://exslt.org/dates-and-times">
+<head tpl:include="/resource/app/html/header.html"></head>
+
+<script type="text/javascript">
+    var url = window.location.href;
+    var element = document.getElementById("lien");
+    element.innerHTML = url;
+</script>
+
+<style>
+    body, html {
+        border: 0px }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: Arial, Helvetica, "sans-serif" }
+    body, p { /* Modifications : la couleur de fond de page - la police - l'unité utilisée pour la taille de la police  */
+        background-color :#fff;
+        font-family :Serif;
+        font-size :15pt;
+    }
+
+    code {
+        font-family: Arial, Helvetica, "sans-serif"
+
+    }
+
+    body    {
+        font-family: Arial, Helvetica, "sans-serif";}
+    code        {
+        font-size: 12px; margin-left: 16px; padding-left:16px}
+    hr          {
+        height: 0px; noshade: true; border:1px; width: 100%; }
+
+    footer  { /* Les éléments qui ne seront pas affichés  */
+        display :none;
+    }
+
+
+
+    div, img { max-width: 100% }
+
+    #legend2 {
+        font-size :7pt;
+
+    }
+
+    table {
+
+        width:100%;
+    }
+
+
+    tr {
+        border-collapse: collapse;
+
+    }
+
+
+
+    td {
+        font-size :7pt;
+        noshade: true;
+        border-collapse: collapse;
+        padding:4px;
+        border : 1px solid #0c0c0c;
+
+
+    }
+
+    th {
+        font-size :7pt;
+
+        noshade: true;
+        border-collapse: collapse;
+        padding:4px;
+        border : 1px solid #0c0c0c;
+
+    }
+
+    .noBorder {
+        border:  1px white;
+    }
+
+
+    table {
+        border-collapse: collapse;
+    }
+
+    a {
+        color:black;
+        text-decoration:none;
+    }
+    a:link
+    {
+        text-decoration:none;
+    }
+
+
+
+    .critical {
+        background-color: orangered;
+        padding: 3px;
+        border-collapse: collapse;
+    }
+
+
+    .success {
+        background-color: darkseagreen;
+        padding: 3px;
+        border-collapse: collapse;
+
+    }
+
+    .unknown{
+        background-color: lightgrey;
+        padding: 3px;
+        border-collapse: collapse;
+
+    }
+
+    .small {
+        font-size: xx-small;
+
+    }
+</style>
+
+<body class="hold-transition sidebar-mini ">
+<div class="wrapper">
+
+
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+
+        <!-- /.content-header -->
+        <table style="position: absolute;top:5px;">
+            <thead>
+            <tr>
+                <td class="noBorder"> <img   src="/resource/app/img/logo-{/root/@tenant}.png" height="80px" width="80px"/></td>
+                <td class="noBorder" style="width: 68%"><p id="top" tpl:foreach="/root" style="align:center;text-align: center"> Availability Reliability Report </p></td>
+                <td class="noBorder"><img  src="/resource/app/img/logo-argo-prod.png"  height="46px" width="100px"/></td>
+            </tr>
+            </thead>
+        </table>
+
+        <hr/>
+
+        <table  style="width:90%;align:left">
+            <thead>
+            <tr>
+                <td class="noBorder" style="width:4px;" tpl:if="root/@month3"><span style="font-style: italic;margin: 4px"> Month </span> > {{root/@month3}} / {{root/@month4}} / {{root/@month5}}</td>
+                <td class="noBorder" style="width:4px;" tpl:if="root/@start_date"><span style="font-style: italic;margin: 4px"> Start Date</span> > {{root/@start_date}}</td>
+                <td class="noBorder" style="width:4px;" tpl:if="root/@end_date"><span style="font-style: italic;margin: 4px"> End Date</span> > {{root/@end_date}}</td>
+                <td class="noBorder" ></td>
+                <td class="noBorder" ></td>
+                <td class="noBorder" > </td>
+            </tr>
+            <tr>
+                <td class="noBorder" style="width:4px;"><span style="font-style: italic;margin: 4px">Entity  </span><span style="margin: 4px"> > {{root/@topology}} </span><span style="margin: 4px" tpl:if="root/@filter!='_filter_'"> > {{root/@filter}}</span><span tpl:if="root/@group" style="margin: 4px"> > {{root/@group}}</span><span tpl:if="root/@group2" style="margin: 4px"> > {{root/@group2}}</span></td>
+                <td class="noBorder" ></td>
+                <td class="noBorder" ></td>
+                <td class="noBorder" > </td>
+            </tr>
+            </thead>
+        </table>
+
+
+
+        <hr/>
+
+        <p class="small" tpl:foreach="/root"><small>-- Report generated automatically on {{date:date-time()}}, for any support : argo@mailman.egi.eu</small></p>
+        <br/>
+
+
+        <table id="legend2" style="width:90%;">
+            <tbody>
+            <tr>
+                <th >Audience</th>
+                <td>{/root/@tenant} Infrastructure</td>
+                <td class="noBorder" style="width:20px"> </td>
+                <th>LEGEND</th>
+            </tr>
+            <tr>
+                <th tpl:if="root/@tenant='egi'">Service</th>
+                <th tpl:else=""></th>
+
+                <td tpl:if="root/@tenant='egi'">High-Throughput Compute, File Storage and Cloud Compute</td>
+                <td tpl:else=""></td>
+
+                <td class="noBorder" style="width:20px"></td>
+                <td  class="critical">UNDERPERFORMING</td>
+            </tr>
+            <tr>
+                <th tpl:if="root/@tenant='egi'">Documentation</th>
+                <th tpl:else=""></th>
+
+                <td>https://wiki.egi.eu/wiki/Service_Level_Target_-_Availability_Reliability</td>
+                <td tpl:else=""></td>
+
+                <td class="noBorder" style="width:20px"> </td>
+                <td class="success">ON TARGET</td>
+            </tr>
+            <tr>
+                <th>Link</th>
+                <td id="lien"></td>
+                <td class="noBorder" style="width:20px"> </td>
+                <td class="unknown">NOT AVAILABLE</td>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+
+
+                <div class="tab-content" id="myTabContent">
+                    <div id="table" role="tabpanel" aria-labelledby="table-tab">
+
+                            <div class="card" tpl:foreach="/root">
+                          
+
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="ar" class="table m-0">
+                                            <thead>
+                                            <tr>
+                                                <th>Timestamp</th>
+                                                <th>Availability</th>
+                                                <th>Reliability</th>
+                                                <th tpl:if="group/results[1]/@unknown">Unknown</th>
+                                                <th tpl:if="group/results[1]/@downtime">Downtime</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr tpl:foreach="group/results">
+                                                <td>{{@timestamp}}</td>
+
+                                                
+                                                    <td tpl:if="not(@availability) or @availability=-1" class="unknown">N/A</td>
+                                                    <td tpl:else="@availability &gt;= /root/@level1" class="success">{{@availability}}</td>
+                                                    <td tpl:else="@availability &lt; /root/@level1" class="critical">{{@availability}}</td>
+
+                                                    <td tpl:if="not(@reliability) or @reliability=-1" class="unknown">N/A</td>
+                                                    <td tpl:else="@reliability &gt;= /root/@level2" class="success">{{@reliability}}</td>
+                                                    <td tpl:else="@reliability &lt; /root/@level2" class="critical">{{@reliability}}</td>
+
+
+                                                    <td tpl:if="@unknown &gt;= 10" class="critical">{{@unknown}}</td>
+                                                    <td tpl:else="@unknown" class="success">{{@unknown}}</td>
+
+
+                                                    <td tpl:if="@downtime &gt;= 10" class="critical">{{@downtime}}</td>
+                                                    <td tpl:else="@downtime" class="success">{{@downtime}}</td>
+
+
+
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                    </div>
+
+                                 </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+        </div>
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Main Footer -->
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+
+
+
+<!-- jQuery -->
+<script src="/resource/app/html/adminlte/plugins/jquery/jquery.min.js?v={$app.version}"></script>
+<!-- Bootstrap -->
+<script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js?v={$app.version}"></script>
+<!-- adminlte -->
+<script src="/resource/app/html/adminlte/dist/js/adminlte.js?v={$app.version}"></script>
+
+
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/scroller/1.5.0/js/dataTables.scroller.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.2.6/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/colreorder/1.5.0/js/dataTables.colReorder.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.2/js/responsive.bootstrap4.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.6/css/select.dataTables.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/colreorder/1.5.0/css/colReorder.bootstrap4.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/1.5.0/css/scroller.bootstrap4.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.6/css/select.bootstrap4.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css"/>
+
+
+
+
+
+<script src="/resource/app/js/dataTable.js?v={$app.version}"></script>
+
+<script src="/resource/app/js/dashboard.js?v={$app.version}"></script>
+
+</body>
+</html>

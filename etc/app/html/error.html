@@ -66,21 +66,33 @@
 
 
                     <li class="nav-item">
-                        <a href="http://{$egi.instance}" class="nav-link">
+                        <a tpl:if="$app.instance!='prod'" href="http://{$egi.instance.devel}" class="nav-link">
+                            <i class="nav-icon far fa-circle text-blue"></i>
+                            <p>EGI ARGO</p>
+                        </a>
+                        <a tpl:else="" href="http://{$egi.instance.prod}" class="nav-link">
                             <i class="nav-icon far fa-circle text-blue"></i>
                             <p>EGI ARGO</p>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="http://{$eudat.instance}" class="nav-link">
+                        <a tpl:if="$app.instance!='prod'"  href="http://{$eudat.instance.devel}" class="nav-link">
+                            <i class="nav-icon far fa-circle text-warning"></i>
+                            <p>EUDAT ARGO</p>
+                        </a>
+                        <a tpl:else=""  href="http://{$eudat.instance.prod}" class="nav-link">
                             <i class="nav-icon far fa-circle text-warning"></i>
                             <p>EUDAT ARGO</p>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="http://{$sdc.instance}" class="nav-link">
+                        <a tpl:if="$app.instance!='prod'" href="http://{$sdc.instance.devel}" class="nav-link">
+                            <i class="nav-icon far fa-circle text-success"></i>
+                            <p>SDC ARGO</p>
+                        </a>
+                        <a tpl:else="" href="http://{$sdc.instance.prod}" class="nav-link">
                             <i class="nav-icon far fa-circle text-success"></i>
                             <p>SDC ARGO</p>
                         </a>

@@ -81,19 +81,24 @@
         <argument name="entity3">_entity_</argument>
         <argument name="entity4">_entity_</argument>
 
-        <argument name="nbdays">7</argument>
+        <argument name="nbdays">5</argument>
         <argument name="site">_site_</argument>
 
         <argument name="start_date">_start_</argument>
         <argument name="end_date">_end_</argument>
         <argument name="filter">_filter_</argument>
 
+
+
     <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
     <variable name="start_time" eval="choose($start_date='_start_',concat(str:replace(substring(date:add(function:date-UTC(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z'),concat($start_date,'T00:00:00Z'))"/>
     <variable name="end_time" eval="choose($end_date='_end_',concat(str:replace(substring(function:date-UTC(),0,20),' ','T'),'Z'),concat($end_date,'T23:59:59Z'))"/>
 
 
-    <variable name="url" eval="function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,$start_time,$end_time)"/>
+
+    <variable name="diff" eval="choose($entity3!='_entity_',date:seconds(date:difference($start_time,$end_time)),0)"/>
+
+    <variable name="url" eval="choose($diff &lt;= 432000,function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,$start_time,$end_time),function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,$end_time,$end_time))"/>
 
     <connector type="HTTPConnector">
         <parameter name="url" eval="$url"/>
@@ -117,9 +122,24 @@
                 <attribute-create out="entity3">$entity3</attribute-create>
                 <attribute-create out="end_time">$end_time</attribute-create>
                 <attribute-create out="filter">$filter</attribute-create>
-
+                <attribute-create out="message" if="$diff &gt; 432000">'Your query generates too much data. We have limited the results to the end date day. Please limit the period to 5 days'</attribute-create>
                 <attribute-create out="start_date" if="$start_date!='_start_'">$start_date</attribute-create>
                 <attribute-create out="end_date" if="$end_date!='_end_'">$end_date</attribute-create>
+
+                <attribute-create out="start_date_0" if="$start_date!='_start_'">substring(date:add($start_date,concat('-P',1,'D')),0,11)</attribute-create>
+                <attribute-create out="end_date_0" if="$end_date!='_end_'">substring(date:add($end_date,concat('-P',1,'D')),0,11)</attribute-create>
+
+                <attribute-create out="start_date_0" if="$start_date='_start_'">substring(date:add($start_time,concat('-P',1,'D')),0,11)</attribute-create>
+                <attribute-create out="end_date_0" if="$end_date='_end_'">substring(date:add($end_time,concat('-P',1,'D')),0,11)</attribute-create>
+
+
+
+                <attribute-create out="start_date_1" if="$start_date!='_start_'">substring(date:add($start_date,concat('P',1,'D')),0,11)</attribute-create>
+                <attribute-create out="end_date_1" if="$end_date!='_end_' and date:seconds(date:difference(function:date-UTC(),date:add($end_date,concat('P',1,'D'))))&lt;=0">substring(date:add($end_date,concat('P',1,'D')),0,11)</attribute-create>
+
+                <attribute-create out="start_date_1" if="$start_date='_start_'">substring(date:add($start_time,concat('P',1,'D')),0,11)</attribute-create>
+                <attribute-create out="end_date_1" if="$end_date='_end_' and date:seconds(date:difference(function:date-UTC(),date:add($end_time,concat('P',1,'D'))))&lt;0">substring(date:add($end_time,concat('P',1,'D')),0,11)</attribute-create>
+
 
                 <element-create>view('gocdb.filter')</element-create>
                 <element-create>view('tenants.reports')/tenants/tenant/report</element-create>

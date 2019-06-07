@@ -336,7 +336,7 @@
 
         <renderers>
             <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/report.html</parameter>
+                <parameter name="template">app/html/report-ar/report.html</parameter>
             </renderer>
         </renderers>
     </view>

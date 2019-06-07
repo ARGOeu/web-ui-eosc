@@ -1,0 +1,17 @@
+<div class="content-header" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+
+                    <li class="breadcrumb-item" tpl:foreach="root" >Availabilities / Reliabilities</li>
+                    <li class="breadcrumb-item" tpl:if="/root/@group"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}">{{/root/@group}}</a></li>
+                    <li class="breadcrumb-item" tpl:if="/root/@group2"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{/root/@group2}/endpoints">{{/root/@group2}}</a></li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>

@@ -19,7 +19,10 @@
 
         <renderers>
             <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/report.html</parameter>
+                <parameter name="template">app/html/report-ar/report.html</parameter>
+            </renderer>
+            <renderer type="PDFRenderer">
+                <parameter name="template">app/html/report-ar/report_pdf.html</parameter>
             </renderer>
 
             <renderer type="ChartRenderer">
@@ -120,7 +123,10 @@
 
         <renderers>
             <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/report.html</parameter>
+                <parameter name="template">app/html/report-ar/report.html</parameter>
+            </renderer>
+            <renderer type="PDFRenderer">
+                <parameter name="template">app/html/report-ar/report_pdf.html</parameter>
             </renderer>
             <renderer type="DefaultRenderer">
                 <parameter name="contentType">text/xml</parameter>
@@ -207,11 +213,15 @@
                 <column label="uptime">@uptime</column>
                 <column label="unknown">@unknown</column>
             </row>
+
         </pre-renderers>
 
         <renderers>
             <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/report_daily.html</parameter>
+                <parameter name="template">app/html/report-ar/report_daily.html</parameter>
+            </renderer>
+            <renderer type="PDFRenderer">
+                <parameter name="template">app/html/report-ar/report_daily_pdf.html</parameter>
             </renderer>
             <renderer type="DefaultRenderer">
                 <parameter name="contentType">text/xml</parameter>
@@ -318,7 +328,10 @@
 
     <renderers>
         <renderer type="HTMLRenderer">
-            <parameter name="template">app/html/report_daily.html</parameter>
+            <parameter name="template">app/html/report-ar/report_daily.html</parameter>
+        </renderer>
+        <renderer type="PDFRenderer">
+            <parameter name="template">app/html/report-ar/report_daily_pdf.html</parameter>
         </renderer>
         <renderer type="DefaultRenderer">
             <parameter name="contentType">text/xml</parameter>
@@ -356,11 +369,6 @@
             </parameter>
         </connector>
 
-<!--        <connector type="StringConnector">-->
-<!--            <parameter name="content" eval="$url"></parameter>-->
-<!--        </connector>-->
-
-<!--        <serializer type="EncapsulateSerializer"></serializer>-->
     
         <processors>
 
@@ -412,7 +420,10 @@
 
         <renderers>
             <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/report_daily.html</parameter>
+                <parameter name="template">app/html/report-ar/report_daily.html</parameter>
+            </renderer>
+            <renderer type="PDFRenderer">
+                <parameter name="template">app/html/report-ar/report_daily_pdf.html</parameter>
             </renderer>
             <renderer type="DefaultRenderer">
                 <parameter name="contentType">text/xml</parameter>
@@ -457,11 +468,6 @@
         concat(property('api.report'),'/',$report,'/',$topology2,'/',$group,'/',$topology3,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=monthly'),
         concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'/',$topology2,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=monthly')
                 )"/>
-
-
-
-
-
 
 
 
@@ -535,8 +541,13 @@
 
         <renderers>
             <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/report.html</parameter>
+                <parameter name="template">app/html/report-ar/report.html</parameter>
             </renderer>
+            <renderer type="PDFRenderer">
+                <parameter name="template">app/html/report-ar/report_pdf.html</parameter>
+            </renderer>
+
+
             <renderer type="DefaultRenderer">
                 <parameter name="contentType">text/xml</parameter>
             </renderer>
@@ -660,8 +671,12 @@
 
         <renderers>
             <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/report.html</parameter>
+                <parameter name="template">app/html/report-ar/report.html</parameter>
             </renderer>
+            <renderer type="PDFRenderer">
+                <parameter name="template">app/html/report-ar/report_pdf.html</parameter>
+            </renderer>
+
             <renderer type="DefaultRenderer">
                 <parameter name="contentType">text/xml</parameter>
             </renderer>
@@ -764,8 +779,12 @@
 
         <renderers>
             <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/report.html</parameter>
+                <parameter name="template">app/html/report-ar/report.html</parameter>
             </renderer>
+            <renderer type="PDFRenderer">
+                <parameter name="template">app/html/report-ar/report_pdf.html</parameter>
+            </renderer>
+
             <renderer type="DefaultRenderer">
                 <parameter name="contentType">text/xml</parameter>
             </renderer>
