@@ -139,9 +139,9 @@
         <table style="position: absolute;top:5px;">
             <thead>
             <tr>
-                <td class="noBorder"> <img   src="/resource/app/img/logo-{/root/@tenant}.png" height="80px" width="80px"/></td>
+                <td class="noBorder"> <img   src="http://argo.egi.eu/resource/app/img/logo-{/root/@tenant}.png" height="80px" width="80px"/></td>
                 <td class="noBorder" style="width: 68%"><p id="top" tpl:foreach="/root" style="align:center;text-align: center"> Availability Reliability Report </p></td>
-                <td class="noBorder"><img  src="/resource/app/img/logo-argo-prod.png"  height="46px" width="100px"/></td>
+                <td class="noBorder"><img  src="http://argo.egi.eu/resource/app/img/logo-argo-prod.png"  height="46px" width="100px"/></td>
             </tr>
             </thead>
         </table>
@@ -151,9 +151,8 @@
         <table  style="width:90%;align:left">
             <thead>
             <tr>
-                <td class="noBorder" style="width:4px;" tpl:if="root/@month3"><span style="font-style: italic;margin: 4px"> Month </span> > {{root/@month3}} / {{root/@month4}} / {{root/@month5}}</td>
-                <td class="noBorder" style="width:4px;" tpl:if="root/@start_date"><span style="font-style: italic;margin: 4px"> Start Date</span> > {{root/@start_date}}</td>
-                <td class="noBorder" style="width:4px;" tpl:if="root/@end_date"><span style="font-style: italic;margin: 4px"> End Date</span> > {{root/@end_date}}</td>
+<!--                <td class="noBorder" style="width:4px;" tpl:if="root/@month3"><span style="font-style: italic;margin: 4px"> Month </span> > {{root/@month3}} / {{root/@month4}} / {{root/@month5}}</td>-->
+                <td class="noBorder" style="width:4px;" tpl:if="root/@start_date"><span style="font-style: italic;margin: 4px"> Start Date</span> > <span>{{root/@start_date}}</span><span style="font-style: italic;margin: 6px"> ,  End Date</span> > <span>{{root/@end_date}}</span></td>
                 <td class="noBorder" ></td>
                 <td class="noBorder" ></td>
                 <td class="noBorder" > </td>
@@ -179,7 +178,7 @@
             <tbody>
             <tr>
                 <th >Audience</th>
-                <td>{/root/@tenant} Infrastructure</td>
+                <td>{{/root/@tenant}} Infrastructure</td>
                 <td class="noBorder" style="width:20px"> </td>
                 <th>LEGEND</th>
             </tr>
@@ -197,7 +196,7 @@
                 <th tpl:if="root/@tenant='egi'">Documentation</th>
                 <th tpl:else=""></th>
 
-                <td>https://wiki.egi.eu/wiki/Service_Level_Target_-_Availability_Reliability</td>
+                <td tpl:if="root/@tenant='egi'">https://wiki.egi.eu/wiki/Service_Level_Target_-_Availability_Reliability</td>
                 <td tpl:else=""></td>
 
                 <td class="noBorder" style="width:20px"> </td>
@@ -205,7 +204,7 @@
             </tr>
             <tr>
                 <th>Link</th>
-                <td id="lien"></td>
+                <td>{{/root/@uri}}</td>
                 <td class="noBorder" style="width:20px"> </td>
                 <td class="unknown">NOT AVAILABLE</td>
             </tr>
@@ -252,12 +251,12 @@
                                                     <td tpl:else="@reliability &lt; /root/@level2" class="critical">{{@reliability}}</td>
 
 
-                                                    <td tpl:if="@unknown &gt;= 10" class="critical">{{@unknown}}</td>
-                                                    <td tpl:else="@unknown" class="success">{{@unknown}}</td>
+                                                    <td tpl:if="@unknown * 100 &gt;= 10" class="critical">{{@unknown * 100}}</td>
+                                                    <td tpl:else="@unknown" class="success">{{@unknown * 100}}</td>
 
 
-                                                    <td tpl:if="@downtime &gt;= 10" class="critical">{{@downtime}}</td>
-                                                    <td tpl:else="@downtime" class="success">{{@downtime}}</td>
+                                                    <td tpl:if="@downtime * 100 &gt;= 10" class="critical">{{@downtime * 100}}</td>
+                                                    <td tpl:else="@downtime" class="success">{{@downtime * 100}}</td>
 
 
 

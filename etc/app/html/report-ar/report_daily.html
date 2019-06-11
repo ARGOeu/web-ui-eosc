@@ -96,15 +96,13 @@
                                                 </td>
 
                                                 <td tpl:if="@unknown">
-                                                    <span tpl:if="@unknown &gt;= 10" class="m-1 badge badge-danger">{{@unknown}}</span>                                                 
-                                                    <span tpl:else="" class="m-1 badge badge-success">{{@unknown}}</span>
+                                                    <span tpl:if="@unknown * 100 &gt;= 10" class="m-1 badge badge-danger">{{@unknown * 100}}</span>
+                                                    <span tpl:else="" class="m-1 badge badge-success">{{@unknown * 100}}</span>
                                                 </td>
                                                 <td tpl:if="@downtime">
-                                                    <span tpl:if="@downtime &gt;= 10" class="m-1 badge badge-danger">{{@downtime}}</span>
-                                                    <span tpl:else="" class="m-1 badge badge-success">{{@downtime}}</span>
+                                                    <span tpl:if="@downtime * 100  &gt;= 10" class="m-1 badge badge-danger">{{@downtime *100}}</span>
+                                                    <span tpl:else="" class="m-1 badge badge-success">{{@downtime * 100}}</span>
                                                 </td>
-
-
 
                                             </tr>
                                             </tbody>

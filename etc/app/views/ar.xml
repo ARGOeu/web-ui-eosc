@@ -12,6 +12,7 @@
     <argument name="nbmonths">4</argument>
     <argument name="filter">_filter_</argument>
     <argument name="month">1979-01</argument>
+        <argument name="uri">_uri_</argument>
 
         <connector type="XMLConnector">
             <parameter name="content" eval="view('report-ar-groups',arguments())"/>
@@ -38,7 +39,7 @@
         <argument name="nbmonths">4</argument>
         <argument name="filter">_filter_</argument>
         <argument name="month">1979-01</argument>
-
+        <argument name="uri">_uri_</argument>
 
     <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
     <variable name="start_time" eval="choose($month='1979-01',
@@ -75,6 +76,7 @@
 
 
             <element in="root">
+                <attribute-create out="uri">$uri</attribute-create>
                 <attribute-create out="ApiUrl">$url</attribute-create>
                 <attribute-create out="month1">choose(../group[count(results)=$nbmonths+1]/results[1]/@timestamp,../group[count(results)=$nbmonths+1]/results[1]/@timestamp,$month_1)</attribute-create>
                 <attribute-create out="month2">choose(../group[count(results)=$nbmonths+1]/results[2]/@timestamp,../group[count(results)=$nbmonths+1]/results[2]/@timestamp,$month_2)</attribute-create>
@@ -149,6 +151,8 @@
         <argument name="start_date"></argument>
         <argument name="end_date"></argument>
 
+        <argument name="uri">_uri_</argument>
+
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
 
         <variable name="start_time" eval="concat($start_date,'T00:00:00Z')"/>
@@ -185,7 +189,7 @@
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="start_date">$start_date</attribute-create>
                 <attribute-create out="end_date">$end_date</attribute-create>
-
+                <attribute-create out="uri">$uri</attribute-create>
             </element>
 
 
@@ -242,7 +246,7 @@
         <argument name="group"/>
         <argument name="group2">_group3_</argument>
         <argument name="group3">_group3_</argument>
-
+        <argument name="uri">_uri_</argument>
 
 
     <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
@@ -280,7 +284,8 @@
             <attribute-create out="report">$report</attribute-create>
             <attribute-create out="ApiUrl">$url</attribute-create>
             <attribute-create out="group">$group</attribute-create>
-           
+            <attribute-create out="uri">$uri</attribute-create>
+
             <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
 
         </element>
@@ -349,6 +354,7 @@
         <argument name="month">2018-06</argument>
         <argument name="group">NGI_FRANCE</argument>
         <argument name="details">_details_</argument>
+        <argument name="uri">_uri_</argument>
 
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
@@ -396,7 +402,7 @@
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="start_date">substring($start_time,0,11)</attribute-create>
                 <attribute-create out="end_date">substring($end_time,0,11)</attribute-create>
-
+                <attribute-create out="uri">$uri</attribute-create>
             </element>
 
 
@@ -442,7 +448,7 @@
         <argument name="group"/>
         <argument name="topology3">_topo3_</argument>
         <argument name="month">1979-01</argument>
-
+        <argument name="uri">_uri_</argument>
 
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
@@ -488,7 +494,7 @@
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="ApiUrl">$url</attribute-create>
-
+                <attribute-create out="uri">$uri</attribute-create>
                 <attribute-create out="group">$group</attribute-create>
                <attribute-create out="start_date">substring($start_time,0,11)</attribute-create>
                 <attribute-create out="end_date">substring($end_time,0,11)</attribute-create>
@@ -569,6 +575,7 @@
         <argument name="group3">_group3_</argument>
 
         <argument name="month">1979-01</argument>
+        <argument name="uri">_uri_</argument>
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
 
@@ -616,6 +623,7 @@
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="ApiUrl">$url</attribute-create>
+                <attribute-create out="uri">$uri</attribute-create>
                 <attribute-create out="group">$group</attribute-create>
                <attribute-create out="start_date">substring($start_time,0,11)</attribute-create>
                 <attribute-create out="end_date">substring($end_time,0,11)</attribute-create>
@@ -694,6 +702,7 @@
         <argument name="entity">_entity_</argument>
         <argument name="group">_group_</argument>
         <argument name="nbdays">30</argument>
+        <argument name="uri">_uri_</argument>
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
         <variable name="start_time" eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z')"/>
@@ -720,6 +729,7 @@
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="url">$url</attribute-create>
+                <attribute-create out="uri">$uri</attribute-create>
                 <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
 
                 <element-ignore in="group">

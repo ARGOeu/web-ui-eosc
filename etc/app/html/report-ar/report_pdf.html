@@ -216,44 +216,13 @@
                 <td class="noBorder" style="width:20px"></td>
                 <td class="success">ON TARGET</td>
             </tr>
-            <tr tpl:if="$app.instance='prod'">
+            <tr>
                 <th>Link</th>
-                <td id="lien" tpl:if="/root/@topology='PROJECT' and /root/@filter='_filter_'"><a href="/{/root/@tenant}/report-ar/{/root/@report}/PROJECT">http://{{$ui.instance.prod}}/{{/root/@tenant}}/report-ar/{{/root/@report}}/PROJECT</a></td>
-
-                <td id="lien" tpl:if="/root/@topology='NGI' and /root/@filter='_filter_'"><a href="/{/root/@tenant}/report-ar/{/root/@report}/NGI">http://{{$ui.instance.prod}}/{{/root/@tenant}}/report-ar/{{/root/@report}}/NGI</a></td>
-                <td id="lien" tpl:if="/root/@topology='SITES' and /root/@filter!='_filter_'  and not(/root/@group2)"><a href="/{/root/@tenant}/report-ar/{/root/@report}/SITES?filter={/root/@filter}">http://{{$ui.instance.prod}}/{{/root/@tenant}}/report-ar/{{/root/@report}}/SITES?filter={{/root/@filter}}</a></td>
-                <td id="lien" tpl:if="/root/@topology='SERVICEGROUPS' and /root/@filter='_filter_'  and not(/root/@group)"><a href="/{/root/@tenant}/report-ar/{/root/@report}/SERVICEGROUPS">http://{{$ui.instance.prod}}/{{/root/@tenant}}/report-ar/{{/root/@report}}/SERVICEGROUPS</a></td>
-
-                <td id="lien" tpl:if="/root/@topology='SERVICEGROUPS'  and /root/@group and not(/root/@group2)"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/SERVICEGROUPS/{root/@group}/details">http://{{$ui.instance.prod}}/{{/root/@tenant}}/report-ar-group-details/{{/root/@report}}/SERVICEGROUPS/{{root/@group}}/details</a></td>
-                <td id="lien" tpl:if="/root/@topology='SERVICEGROUPS'  and /root/@group and /root/@group2"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/SERVICEGROUPS/{root/@group}/services/{root/@group2}/endpoints">http://{{$ui.instance.prod}}/{{/root/@tenant}}/report-ar-group-details/{{/root/@report}}/SERVICEGROUPS/{{root/@group}}/services/{{root/@group2}}/endpoints</a></td>
-
-                <td id="lien" tpl:if="/root/@topology='SITES' and /root/@filter='_filter_'  and not(/root/@group)" ><a href="/{/root/@tenant}/report-ar/{/root/@report}/SITES">http://{{$ui.instance.prod}}/{{/root/@tenant}}/report-ar/{{/root/@report}}/SITES</a></td>
-
-                <td id="lien" tpl:if="/root/@topology='SITES'  and /root/@topology2 and /root/@group and not(/root/@group2)"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/SITES/{/root/@group}/details">http://{{$ui.instance.prod}}/{{/root/@tenant}}/report-ar-group-details/{{/root/@report}}/SITES/{{/root/@group}}/details</a></td>
-                <td id="lien" tpl:if="/root/@topology='SITES' and /root/@topology2 and   /root/@group2"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/SITES/{/root/@group}/services/{/root/@group2}/endpoints">http://{{$ui.instance.prod}}/{{/root/@tenant}}/report-ar-group-details/{{/root/@report}}/SITES/{{/root/@group}}/services/{{/root/@group2}}/endpoints</a></td>
-
+                <td>{{root/@uri}}</td>
                 <td class="noBorder" style="width:20px"></td>
                 <td class="unknown">NOT AVAILABLE</td>
             </tr>
-            <tr tpl:else="">
-                <th>Link</th>
-                <td id="lien" tpl:if="/root/@topology='PROJECT' and /root/@filter='_filter_'"><a href="/{/root/@tenant}/report-ar/{/root/@report}/PROJECT">http://{{$ui.instance.devel}}/{{/root/@tenant}}/report-ar/{{/root/@report}}/PROJECT</a></td>
 
-                <td id="lien" tpl:if="/root/@topology='NGI' and /root/@filter='_filter_'"><a href="/{/root/@tenant}/report-ar/{/root/@report}/NGI">http://{{$ui.instance.devel}}/{{/root/@tenant}}/report-ar/{{/root/@report}}/NGI</a></td>
-                <td id="lien" tpl:if="/root/@topology='SITES' and /root/@filter!='_filter_'  and not(/root/@group2)"><a href="/{/root/@tenant}/report-ar/{/root/@report}/SITES?filter={/root/@filter}">http://{{$ui.instance.devel}}/{{/root/@tenant}}/report-ar/{{/root/@report}}/SITES?filter={{/root/@filter}}</a></td>
-                <td id="lien" tpl:if="/root/@topology='SERVICEGROUPS' and /root/@filter='_filter_'  and not(/root/@group)"><a href="/{/root/@tenant}/report-ar/{/root/@report}/SERVICEGROUPS">http://{{$ui.instance.devel}}/{{/root/@tenant}}/report-ar/{{/root/@report}}/SERVICEGROUPS</a></td>
-
-                <td id="lien" tpl:if="/root/@topology='SERVICEGROUPS'  and /root/@group and not(/root/@group2)"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/SERVICEGROUPS/{root/@group}/details">http://{{$ui.instance.devel}}/{{/root/@tenant}}/report-ar-group-details/{{/root/@report}}/SERVICEGROUPS/{{root/@group}}/details</a></td>
-                <td id="lien" tpl:if="/root/@topology='SERVICEGROUPS'  and /root/@group and /root/@group2"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/SERVICEGROUPS/{root/@group}/services/{root/@group2}/endpoints">http://{{$ui.instance.devel}}/{{/root/@tenant}}/report-ar-group-details/{{/root/@report}}/SERVICEGROUPS/{{root/@group}}/services/{{root/@group2}}/endpoints</a></td>
-
-                <td id="lien" tpl:if="/root/@topology='SITES' and /root/@filter='_filter_'  and not(/root/@group)" ><a href="/{/root/@tenant}/report-ar/{/root/@report}/SITES">http://{{$ui.instance.devel}}/{{/root/@tenant}}/report-ar/{{/root/@report}}/SITES</a></td>
-
-                <td id="lien" tpl:if="/root/@topology='SITES'  and /root/@topology2 and /root/@group and not(/root/@group2)"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/SITES/{/root/@group}/details">http://{{$ui.instance.devel}}/{{/root/@tenant}}/report-ar-group-details/{{/root/@report}}/SITES/{{/root/@group}}/details</a></td>
-                <td id="lien" tpl:if="/root/@topology='SITES' and /root/@topology2 and   /root/@group2"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/SITES/{/root/@group}/services/{/root/@group2}/endpoints">http://{{$ui.instance.devel}}/{{/root/@tenant}}/report-ar-group-details/{{/root/@report}}/SITES/{{/root/@group}}/services/{{/root/@group2}}/endpoints</a></td>
-
-                <td class="noBorder" style="width:20px"></td>
-                <td class="unknown">NOT AVAILABLE</td>
-            </tr>
             </tbody>
         </table>
         <br/>
