@@ -4,10 +4,11 @@
       $('#filter_select').on('change', function () {
           var uri = window.location.href;
           if (~uri.indexOf('?')) {
-              var url = uri + '?filter=' + $(this).val(); // get selected value
+              var url = uri + '&filter=' + $(this).val(); // get selected value
           }
           else {
-              var url = uri + '&filter=' + $(this).val(); // get selected value
+              var url = uri + '?filter=' + $(this).val(); // get selected value
+
           }
           if (url) { // require a URL
               window.location = url; // redirect
