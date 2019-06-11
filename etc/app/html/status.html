@@ -81,7 +81,7 @@
 
 
                             <div class="card-body" tpl:if="count(/root/group)&gt;0">
-                                <div tpl:if="/root/@message" class="alert alert-danger" role="alert">{{/root/@message}}</div>
+                                <div tpl:if="/root/@message" class="alert alert-primary" role="alert">{{/root/@message}}</div>
 
 
                                 <div class="row" tpl:if="root/@tenant='egi' and root/@topology='SITES' and root/@entity1='_entity_'">
@@ -109,8 +109,8 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="float-left col-11"><a href="?start_date={{/root/@start_date_0}}&amp;end_date={{/root/@end_date_0}}" title="Slide to one day in the past"><i class=" fa fa-caret-left " ></i></a> </div>
-                                    <div tpl:if="/root/@end_date_1" class="float-right col-1 text-right"><a href="?start_date={{/root/@start_date_1}}&amp;end_date={{/root/@end_date_1}}" title="Slide to one day in the future"><i class="fa fa-caret-right "></i> </a></div>
+                                    <div class="float-left col-11"><a href="?start_date={{/root/@start_date_0}}&amp;end_date={{/root/@end_date_0}}" title="Slide to one day in the past"><i class="fa-2x fa fa-caret-left " ></i></a> </div>
+                                    <div tpl:if="/root/@end_date_1" class="float-right col-1 text-right"><a href="?start_date={{/root/@start_date_1}}&amp;end_date={{/root/@end_date_1}}" title="Slide to one day in the future"><i class="fa-2x fa fa-caret-right "></i> </a></div>
 
                                 </div>
 
