@@ -29,6 +29,19 @@
     </view>
 
 
+    <view name="services">
+        <connector type="FileConnector">
+            <parameter name="path">app/resources/services.xml</parameter>
+        </connector>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/resources/services.html</parameter>
+            </renderer>
+        </renderers>
+
+
+    </view>
 
 
     <view name="tenantsListRaw" authenticators="admin">

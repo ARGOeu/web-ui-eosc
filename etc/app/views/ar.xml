@@ -9,7 +9,7 @@
         <argument name="report">Critical</argument>
         <argument name="tenant">egi</argument>
         <argument name="topology">NGI</argument>
-    <argument name="nbmonths">4</argument>
+    <argument name="nbmonths">5</argument>
     <argument name="filter">_filter_</argument>
     <argument name="month">1979-01</argument>
         <argument name="uri">_uri_</argument>
@@ -36,14 +36,14 @@
         <argument name="report"/>
         <argument name="tenant"/>
         <argument name="topology"/>
-        <argument name="nbmonths">4</argument>
+        <argument name="nbmonths">5</argument>
         <argument name="filter">_filter_</argument>
         <argument name="month">1979-01</argument>
         <argument name="uri">_uri_</argument>
 
     <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
     <variable name="start_time" eval="choose($month='1979-01',
-    concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z'),
+    concat(str:replace(substring(date:add(date:date-time(),'-P5M'),0,20),' ','T'),'Z'),
     concat(str:replace(substring(date:add($month,concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z'))"/>
     <variable name="end_time" eval="concat(str:replace(substring(date:add($start_time,concat('P',5,'M')),0,20),' ','T'),'Z')"/>
     <variable name="url" eval="concat(property('api.report'),'/',$report,'/',$topology,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=monthly')"/>
@@ -139,6 +139,28 @@
 
     </view>
 
+    <view name="reportOpsPortal" xmlns:date="http://exslt.org/dates-and-times">
+        <argument name="report">Critical</argument>
+        <argument name="tenant">egi</argument>
+        <argument name="topology">SITES</argument>
+        <argument name="granularity">daily</argument>
+        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+
+        <variable name="start_time" eval="concat(substring(date:add(date:date-time(),'-P30D'), 0,11),'T00:00:00Z')"/>
+        <variable name="end_time" eval="concat(substring(date:add(date:date-time(),'-P1D'), 0,11),'T00:00:00Z')"/>
+
+        <variable name="url"  eval="concat(property('api.report'),'/',$report,'/',$topology,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=',$granularity)"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/xml</entry>
+            </parameter>
+        </connector>
+    </view>
+
     <view name="report-ar-dates"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 
         <argument name="report">Critical</argument>
@@ -146,7 +168,7 @@
         <argument name="topology">NGI</argument>
         <argument name="entity">_entity_</argument>
 
-        <argument name="group">NGI_FRANCE</argument>
+        <argument name="group">_group_</argument>
         <argument name="granularity">daily</argument>
         <argument name="start_date"></argument>
         <argument name="end_date"></argument>
@@ -457,7 +479,7 @@
         <variable name="topology2" eval="view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/@topology3"/>
 
         <variable name="start_time" eval="choose($month='1979-01',
-    concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z'),
+    concat(str:replace(substring(date:add(date:date-time(),'-P5M')),0,20),' ','T'),'Z'),
     concat(str:replace(substring(date:add($month,concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z'))"/>
         <variable name="end_time" eval="concat(str:replace(substring(date:add($start_time,concat('P',5,'M')),0,20),' ','T'),'Z')"/>
 
@@ -581,7 +603,7 @@
 
 
         <variable name="start_time" eval="choose($month='1979-01',
-    concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z'),
+    concat(str:replace(substring(date:add(date:date-time(),concat('-P5M')),0,20),' ','T'),'Z'),
     concat(str:replace(substring(date:add($month,concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z'))"/>
         <variable name="end_time" eval="concat(str:replace(substring(date:add($start_time,concat('P',5,'M')),0,20),' ','T'),'Z')"/>
 

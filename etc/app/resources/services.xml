@@ -1,0 +1,10 @@
+<services>
+    <category name="dCache">
+        <service instance="LCG" status="OK"/>
+    </category>
+    <category name="xrootd">
+        <service instance="XROOTD_GENERIC" status="OK"/>
+        <service instance="XROOTD_ALICE_TAPE" status="OK"/>
+        <service instance="XROOTD_ALICE_DISK" status="NOK"/>
+    </category>
+</services>
