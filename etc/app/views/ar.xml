@@ -9,7 +9,7 @@
         <argument name="report">Critical</argument>
         <argument name="tenant">egi</argument>
         <argument name="topology">NGI</argument>
-    <argument name="nbmonths">5</argument>
+    <argument name="nbmonths">4</argument>
     <argument name="filter">_filter_</argument>
     <argument name="month">1979-01</argument>
         <argument name="uri">_uri_</argument>
@@ -36,7 +36,7 @@
         <argument name="report"/>
         <argument name="tenant"/>
         <argument name="topology"/>
-        <argument name="nbmonths">5</argument>
+        <argument name="nbmonths">4</argument>
         <argument name="filter">_filter_</argument>
         <argument name="month">1979-01</argument>
         <argument name="uri">_uri_</argument>
