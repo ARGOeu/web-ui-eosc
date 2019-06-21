@@ -479,7 +479,7 @@
         <variable name="topology2" eval="view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/@topology3"/>
 
         <variable name="start_time" eval="choose($month='1979-01',
-    concat(str:replace(substring(date:add(date:date-time(),'-P5M')),0,20),' ','T'),'Z'),
+    concat(str:replace(substring(date:add(date:date-time(),'-P5M'),0,20),' ','T'),'Z'),
     concat(str:replace(substring(date:add($month,concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z'))"/>
         <variable name="end_time" eval="concat(str:replace(substring(date:add($start_time,concat('P',5,'M')),0,20),' ','T'),'Z')"/>
 
@@ -603,7 +603,7 @@
 
 
         <variable name="start_time" eval="choose($month='1979-01',
-    concat(str:replace(substring(date:add(date:date-time(),concat('-P5M')),0,20),' ','T'),'Z'),
+    concat(str:replace(substring(date:add(date:date-time(),'-P5M'),0,20),' ','T'),'Z'),
     concat(str:replace(substring(date:add($month,concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z'))"/>
         <variable name="end_time" eval="concat(str:replace(substring(date:add($start_time,concat('P',5,'M')),0,20),' ','T'),'Z')"/>
 
