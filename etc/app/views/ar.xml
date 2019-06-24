@@ -79,11 +79,11 @@
             <element in="root">
                 <attribute-create out="uri">$uri</attribute-create>
                 <attribute-create out="ApiUrl">$url</attribute-create>
-                <attribute-create out="month1">choose(../group[count(results)=$nbmonths+1]/results[1]/@timestamp,../group[count(results)=$nbmonths+1]/results[1]/@timestamp,$month_1)</attribute-create>
-                <attribute-create out="month2">choose(../group[count(results)=$nbmonths+1]/results[2]/@timestamp,../group[count(results)=$nbmonths+1]/results[2]/@timestamp,$month_2)</attribute-create>
-                <attribute-create out="month3">choose(../group[count(results)=$nbmonths+1]/results[3]/@timestamp,../group[count(results)=$nbmonths+1]/results[3]/@timestamp,$month_3)</attribute-create>
-                <attribute-create out="month4">choose(../group[count(results)=$nbmonths+1]/results[4]/@timestamp,../group[count(results)=$nbmonths+1]/results[4]/@timestamp,$month_4)</attribute-create>
-                <attribute-create out="month5">choose(../group[count(results)=$nbmonths+1]/results[5]/@timestamp,../group[count(results)=$nbmonths+1]/results[5]/@timestamp,$month_5)</attribute-create>
+                <attribute-create out="month1">choose(../group[count(results)=$nbmonths+1]/results[2]/@timestamp,../group[count(results)=$nbmonths+1]/results[2]/@timestamp,$month_1)</attribute-create>
+                <attribute-create out="month2">choose(../group[count(results)=$nbmonths+1]/results[3]/@timestamp,../group[count(results)=$nbmonths+1]/results[3]/@timestamp,$month_2)</attribute-create>
+                <attribute-create out="month3">choose(../group[count(results)=$nbmonths+1]/results[4]/@timestamp,../group[count(results)=$nbmonths+1]/results[4]/@timestamp,$month_3)</attribute-create>
+                <attribute-create out="month4">choose(../group[count(results)=$nbmonths+1]/results[5]/@timestamp,../group[count(results)=$nbmonths+1]/results[5]/@timestamp,$month_4)</attribute-create>
+                <attribute-create out="month5">choose(../group[count(results)=$nbmonths+1]/results[6]/@timestamp,../group[count(results)=$nbmonths+1]/results[6]/@timestamp,$month_5)</attribute-create>
                <attribute-create out="start_date">substring($start_time,0,11)</attribute-create>
                 <attribute-create out="end_date">substring($end_time,0,11)</attribute-create>
                 <attribute-create out="topology">$topology</attribute-create>
@@ -467,7 +467,7 @@
         <argument name="report"/>
         <argument name="tenant"/>
         <argument name="topology"/>
-        <argument name="nbmonths">4</argument>
+        <argument name="nbmonths">5</argument>
         <argument name="group"/>
         <argument name="topology3">_topo3_</argument>
         <argument name="month">1979-01</argument>
@@ -522,11 +522,11 @@
                 <attribute-create out="group">$group</attribute-create>
                <attribute-create out="start_date">substring($start_time,0,11)</attribute-create>
                 <attribute-create out="end_date">substring($end_time,0,11)</attribute-create>
-                <attribute-create out="month1">choose(../group[count(results)=$nbmonths+1]/results[1]/@timestamp,../group[count(results)=$nbmonths+1]/results[1]/@timestamp,$month_1)</attribute-create>
-                <attribute-create out="month2">choose(../group[count(results)=$nbmonths+1]/results[2]/@timestamp,../group[count(results)=$nbmonths+1]/results[2]/@timestamp,$month_2)</attribute-create>
-                <attribute-create out="month3">choose(../group[count(results)=$nbmonths+1]/results[3]/@timestamp,../group[count(results)=$nbmonths+1]/results[3]/@timestamp,$month_3)</attribute-create>
-                <attribute-create out="month4">choose(../group[count(results)=$nbmonths+1]/results[4]/@timestamp,../group[count(results)=$nbmonths+1]/results[4]/@timestamp,$month_4)</attribute-create>
-                <attribute-create out="month5">choose(../group[count(results)=$nbmonths+1]/results[5]/@timestamp,../group[count(results)=$nbmonths+1]/results[5]/@timestamp,$month_5)</attribute-create>
+                <attribute-create out="month1">choose(../group[count(results)=$nbmonths+1]/results[2]/@timestamp,../group[count(results)=$nbmonths+1]/results[2]/@timestamp,$month_1)</attribute-create>
+                <attribute-create out="month2">choose(../group[count(results)=$nbmonths+1]/results[3]/@timestamp,../group[count(results)=$nbmonths+1]/results[3]/@timestamp,$month_2)</attribute-create>
+                <attribute-create out="month3">choose(../group[count(results)=$nbmonths+1]/results[4]/@timestamp,../group[count(results)=$nbmonths+1]/results[4]/@timestamp,$month_3)</attribute-create>
+                <attribute-create out="month4">choose(../group[count(results)=$nbmonths+1]/results[5]/@timestamp,../group[count(results)=$nbmonths+1]/results[5]/@timestamp,$month_4)</attribute-create>
+                <attribute-create out="month5">choose(../group[count(results)=$nbmonths+1]/results[6]/@timestamp,../group[count(results)=$nbmonths+1]/results[6]/@timestamp,$month_5)</attribute-create>
 
                 <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
 
@@ -592,7 +592,7 @@
         <argument name="report"/>
         <argument name="tenant"/>
         <argument name="topology"/>
-        <argument name="nbmonths">4</argument>
+        <argument name="nbmonths">5</argument>
         <argument name="group"/>
         <argument name="topology2"/>
         <argument name="group2"/>
@@ -652,11 +652,11 @@
                 <attribute-create out="group">$group</attribute-create>
                <attribute-create out="start_date">substring($start_time,0,11)</attribute-create>
                 <attribute-create out="end_date">substring($end_time,0,11)</attribute-create>
-                <attribute-create out="month1">choose(../group[count(results)=$nbmonths+1]/results[1]/@timestamp,../group[count(results)=$nbmonths+1]/results[1]/@timestamp,$month_1)</attribute-create>
-                <attribute-create out="month2">choose(../group[count(results)=$nbmonths+1]/results[2]/@timestamp,../group[count(results)=$nbmonths+1]/results[2]/@timestamp,$month_2)</attribute-create>
-                <attribute-create out="month3">choose(../group[count(results)=$nbmonths+1]/results[3]/@timestamp,../group[count(results)=$nbmonths+1]/results[3]/@timestamp,$month_3)</attribute-create>
-                <attribute-create out="month4">choose(../group[count(results)=$nbmonths+1]/results[4]/@timestamp,../group[count(results)=$nbmonths+1]/results[4]/@timestamp,$month_4)</attribute-create>
-                <attribute-create out="month5">choose(../group[count(results)=$nbmonths+1]/results[5]/@timestamp,../group[count(results)=$nbmonths+1]/results[5]/@timestamp,$month_5)</attribute-create>
+                <attribute-create out="month1">choose(../group[count(results)=$nbmonths+1]/results[2]/@timestamp,../group[count(results)=$nbmonths+1]/results[2]/@timestamp,$month_1)</attribute-create>
+                <attribute-create out="month2">choose(../group[count(results)=$nbmonths+1]/results[3]/@timestamp,../group[count(results)=$nbmonths+1]/results[3]/@timestamp,$month_2)</attribute-create>
+                <attribute-create out="month3">choose(../group[count(results)=$nbmonths+1]/results[4]/@timestamp,../group[count(results)=$nbmonths+1]/results[4]/@timestamp,$month_3)</attribute-create>
+                <attribute-create out="month4">choose(../group[count(results)=$nbmonths+1]/results[5]/@timestamp,../group[count(results)=$nbmonths+1]/results[5]/@timestamp,$month_4)</attribute-create>
+                <attribute-create out="month5">choose(../group[count(results)=$nbmonths+1]/results[6]/@timestamp,../group[count(results)=$nbmonths+1]/results[6]/@timestamp,$month_5)</attribute-create>
 
                 <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
 
