@@ -44,16 +44,17 @@
     <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
     <variable name="start_time" eval="choose($month='1979-01',
     concat(str:replace(substring(date:add(date:date-time(),'-P5M'),0,20),' ','T'),'Z'),
-    concat(str:replace(substring(date:add($month,concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z'))"/>
+    concat(str:replace(substring(date:add($month,'-P4M'),0,20),' ','T'),'Z'))"/>
+
     <variable name="end_time" eval="concat(str:replace(substring(date:add($start_time,concat('P',5,'M')),0,20),' ','T'),'Z')"/>
     <variable name="url" eval="concat(property('api.report'),'/',$report,'/',$topology,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=monthly')"/>
 
         <variable name="month_0" eval="substring($start_time,0,8)"/>
-        <variable name="month_1" eval="substring(date:add($start_time,concat('P',1,'M')),0,8)"/>
-        <variable name="month_2" eval="substring(date:add($start_time,concat('P',2,'M')),0,8)"/>
-        <variable name="month_3" eval="substring(date:add($start_time,concat('P',3,'M')),0,8)"/>
-        <variable name="month_4" eval="substring(date:add($start_time,concat('P',4,'M')),0,8)"/>
-        <variable name="month_5" eval="substring(date:add($start_time,concat('P',5,'M')),0,8)"/>
+        <variable  name="month_1" eval="choose($month='1979-01',substring(date:add($start_time,concat('P',1,'M')),0,8),substring($start_time,0,8))"/>
+        <variable name="month_2" eval="choose($month='1979-01',substring(date:add($start_time,concat('P',2,'M')),0,8),substring(date:add($start_time,concat('P',1,'M')),0,8))"/>
+        <variable name="month_3" eval="choose($month='1979-01',substring(date:add($start_time,concat('P',3,'M')),0,8),substring(date:add($start_time,concat('P',2,'M')),0,8))"/>
+        <variable name="month_4" eval="choose($month='1979-01',substring(date:add($start_time,concat('P',4,'M')),0,8),substring(date:add($start_time,concat('P',3,'M')),0,8))"/>
+        <variable name="month_5" eval="choose($month='1979-01',substring(date:add($start_time,concat('P',5,'M')),0,8),substring(date:add($start_time,concat('P',4,'M')),0,8))"/>
 
 
     <connector type="HTTPConnector">
@@ -79,11 +80,11 @@
             <element in="root">
                 <attribute-create out="uri">$uri</attribute-create>
                 <attribute-create out="ApiUrl">$url</attribute-create>
-                <attribute-create out="month1">choose(../group[count(results)=$nbmonths+1]/results[2]/@timestamp,../group[count(results)=$nbmonths+1]/results[2]/@timestamp,$month_1)</attribute-create>
-                <attribute-create out="month2">choose(../group[count(results)=$nbmonths+1]/results[3]/@timestamp,../group[count(results)=$nbmonths+1]/results[3]/@timestamp,$month_2)</attribute-create>
-                <attribute-create out="month3">choose(../group[count(results)=$nbmonths+1]/results[4]/@timestamp,../group[count(results)=$nbmonths+1]/results[4]/@timestamp,$month_3)</attribute-create>
-                <attribute-create out="month4">choose(../group[count(results)=$nbmonths+1]/results[5]/@timestamp,../group[count(results)=$nbmonths+1]/results[5]/@timestamp,$month_4)</attribute-create>
-                <attribute-create out="month5">choose(../group[count(results)=$nbmonths+1]/results[6]/@timestamp,../group[count(results)=$nbmonths+1]/results[6]/@timestamp,$month_5)</attribute-create>
+                <attribute-create out="month1">$month_1</attribute-create>
+                <attribute-create out="month2">$month_2</attribute-create>
+                <attribute-create out="month3">$month_3</attribute-create>
+                <attribute-create out="month4">$month_4</attribute-create>
+                <attribute-create out="month5">$month_5</attribute-create>
                <attribute-create out="start_date">substring($start_time,0,11)</attribute-create>
                 <attribute-create out="end_date">substring($end_time,0,11)</attribute-create>
                 <attribute-create out="topology">$topology</attribute-create>
@@ -479,18 +480,21 @@
 
         <variable name="topology2" eval="view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/@topology3"/>
 
+
         <variable name="start_time" eval="choose($month='1979-01',
     concat(str:replace(substring(date:add(date:date-time(),'-P5M'),0,20),' ','T'),'Z'),
-    concat(str:replace(substring(date:add($month,concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z'))"/>
+    concat(str:replace(substring(date:add($month,'-P4M'),0,20),' ','T'),'Z'))"/>
+
+
         <variable name="end_time" eval="concat(str:replace(substring(date:add($start_time,concat('P',5,'M')),0,20),' ','T'),'Z')"/>
 
 
         <variable name="month_0" eval="substring($start_time,0,8)"/>
-        <variable name="month_1" eval="substring(date:add($start_time,concat('P',1,'M')),0,8)"/>
-        <variable name="month_2" eval="substring(date:add($start_time,concat('P',2,'M')),0,8)"/>
-        <variable name="month_3" eval="substring(date:add($start_time,concat('P',3,'M')),0,8)"/>
-        <variable name="month_4" eval="substring(date:add($start_time,concat('P',4,'M')),0,8)"/>
-        <variable name="month_5" eval="substring(date:add($start_time,concat('P',5,'M')),0,8)"/>
+        <variable  name="month_1" eval="choose($month='1979-01',substring(date:add($start_time,concat('P',1,'M')),0,8),substring($start_time,0,8))"/>
+        <variable name="month_2" eval="choose($month='1979-01',substring(date:add($start_time,concat('P',2,'M')),0,8),substring(date:add($start_time,concat('P',1,'M')),0,8))"/>
+        <variable name="month_3" eval="choose($month='1979-01',substring(date:add($start_time,concat('P',3,'M')),0,8),substring(date:add($start_time,concat('P',2,'M')),0,8))"/>
+        <variable name="month_4" eval="choose($month='1979-01',substring(date:add($start_time,concat('P',4,'M')),0,8),substring(date:add($start_time,concat('P',3,'M')),0,8))"/>
+        <variable name="month_5" eval="choose($month='1979-01',substring(date:add($start_time,concat('P',5,'M')),0,8),substring(date:add($start_time,concat('P',4,'M')),0,8))"/>
 
 
         <variable name="url"  eval="
@@ -522,12 +526,11 @@
                 <attribute-create out="group">$group</attribute-create>
                <attribute-create out="start_date">substring($start_time,0,11)</attribute-create>
                 <attribute-create out="end_date">substring($end_time,0,11)</attribute-create>
-                <attribute-create out="month1">choose(../group[count(results)=$nbmonths+1]/results[2]/@timestamp,../group[count(results)=$nbmonths+1]/results[2]/@timestamp,$month_1)</attribute-create>
-                <attribute-create out="month2">choose(../group[count(results)=$nbmonths+1]/results[3]/@timestamp,../group[count(results)=$nbmonths+1]/results[3]/@timestamp,$month_2)</attribute-create>
-                <attribute-create out="month3">choose(../group[count(results)=$nbmonths+1]/results[4]/@timestamp,../group[count(results)=$nbmonths+1]/results[4]/@timestamp,$month_3)</attribute-create>
-                <attribute-create out="month4">choose(../group[count(results)=$nbmonths+1]/results[5]/@timestamp,../group[count(results)=$nbmonths+1]/results[5]/@timestamp,$month_4)</attribute-create>
-                <attribute-create out="month5">choose(../group[count(results)=$nbmonths+1]/results[6]/@timestamp,../group[count(results)=$nbmonths+1]/results[6]/@timestamp,$month_5)</attribute-create>
-
+                <attribute-create out="month1">$month_1</attribute-create>
+                <attribute-create out="month2">$month_2</attribute-create>
+                <attribute-create out="month3">$month_3</attribute-create>
+                <attribute-create out="month4">$month_4</attribute-create>
+                <attribute-create out="month5">$month_5</attribute-create>
                 <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
 
 
@@ -606,18 +609,18 @@
 
         <variable name="start_time" eval="choose($month='1979-01',
     concat(str:replace(substring(date:add(date:date-time(),'-P5M'),0,20),' ','T'),'Z'),
-    concat(str:replace(substring(date:add($month,concat('-P',$nbmonths,'M')),0,20),' ','T'),'Z'))"/>
+    concat(str:replace(substring(date:add($month,'-P4M'),0,20),' ','T'),'Z'))"/>
+
         <variable name="end_time" eval="concat(str:replace(substring(date:add($start_time,concat('P',5,'M')),0,20),' ','T'),'Z')"/>
 
 
+
         <variable name="month_0" eval="substring($start_time,0,8)"/>
-        <variable name="month_1" eval="substring(date:add($start_time,concat('P',1,'M')),0,8)"/>
-        <variable name="month_2" eval="substring(date:add($start_time,concat('P',2,'M')),0,8)"/>
-        <variable name="month_3" eval="substring(date:add($start_time,concat('P',3,'M')),0,8)"/>
-        <variable name="month_4" eval="substring(date:add($start_time,concat('P',4,'M')),0,8)"/>
-        <variable name="month_5" eval="substring(date:add($start_time,concat('P',5,'M')),0,8)"/>
-
-
+        <variable  name="month_1" eval="choose($month='1979-01',substring(date:add($start_time,concat('P',1,'M')),0,8),substring($start_time,0,8))"/>
+        <variable name="month_2" eval="choose($month='1979-01',substring(date:add($start_time,concat('P',2,'M')),0,8),substring(date:add($start_time,concat('P',1,'M')),0,8))"/>
+        <variable name="month_3" eval="choose($month='1979-01',substring(date:add($start_time,concat('P',3,'M')),0,8),substring(date:add($start_time,concat('P',2,'M')),0,8))"/>
+        <variable name="month_4" eval="choose($month='1979-01',substring(date:add($start_time,concat('P',4,'M')),0,8),substring(date:add($start_time,concat('P',3,'M')),0,8))"/>
+        <variable name="month_5" eval="choose($month='1979-01',substring(date:add($start_time,concat('P',5,'M')),0,8),substring(date:add($start_time,concat('P',4,'M')),0,8))"/>
 
 
         <variable name="topology3" eval="view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/@topology3"/>
@@ -652,11 +655,11 @@
                 <attribute-create out="group">$group</attribute-create>
                <attribute-create out="start_date">substring($start_time,0,11)</attribute-create>
                 <attribute-create out="end_date">substring($end_time,0,11)</attribute-create>
-                <attribute-create out="month1">choose(../group[count(results)=$nbmonths+1]/results[2]/@timestamp,../group[count(results)=$nbmonths+1]/results[2]/@timestamp,$month_1)</attribute-create>
-                <attribute-create out="month2">choose(../group[count(results)=$nbmonths+1]/results[3]/@timestamp,../group[count(results)=$nbmonths+1]/results[3]/@timestamp,$month_2)</attribute-create>
-                <attribute-create out="month3">choose(../group[count(results)=$nbmonths+1]/results[4]/@timestamp,../group[count(results)=$nbmonths+1]/results[4]/@timestamp,$month_3)</attribute-create>
-                <attribute-create out="month4">choose(../group[count(results)=$nbmonths+1]/results[5]/@timestamp,../group[count(results)=$nbmonths+1]/results[5]/@timestamp,$month_4)</attribute-create>
-                <attribute-create out="month5">choose(../group[count(results)=$nbmonths+1]/results[6]/@timestamp,../group[count(results)=$nbmonths+1]/results[6]/@timestamp,$month_5)</attribute-create>
+                <attribute-create out="month1">$month_1</attribute-create>
+                <attribute-create out="month2">$month_2</attribute-create>
+                <attribute-create out="month3">$month_3</attribute-create>
+                <attribute-create out="month4">$month_4</attribute-create>
+                <attribute-create out="month5">$month_5</attribute-create>
 
                 <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
 
