@@ -1,10 +1,75 @@
-<services>
-    <category name="dCache">
-        <service instance="LCG" status="OK"/>
-    </category>
-    <category name="xrootd">
-        <service instance="XROOTD_GENERIC" status="OK"/>
-        <service instance="XROOTD_ALICE_TAPE" status="OK"/>
-        <service instance="XROOTD_ALICE_DISK" status="NOK"/>
-    </category>
-</services>
+<?xml version='1.0' encoding='utf8'?>
+<model xmlns:i18n="http://xml.zope.org/namespaces/i18n" xmlns:security="http://namespaces.plone.org/supermodel/security"
+       xmlns:marshal="http://namespaces.plone.org/supermodel/marshal"
+       xmlns:form="http://namespaces.plone.org/supermodel/form" xmlns="http://namespaces.plone.org/supermodel/schema">
+    <schema>
+        <field name="host" type="zope.schema.TextLine">
+            <description/>
+            <required>False</required>
+            <title>Host</title>
+        </field>
+        <field name="ip" type="zope.schema.TextLine">
+            <description/>
+            <required>False</required>
+            <title>IP</title>
+        </field>
+        <field name="zone_name" type="zope.schema.TextLine">
+            <description/>
+            <required>False</required>
+            <title>Zone name</title>
+        </field>
+        <field name="zone_key" type="zope.schema.TextLine">
+            <description/>
+            <required>False</required>
+            <title>Zone key</title>
+        </field>
+        <field name="monitored" type="zope.schema.TextLine">
+            <description>yes or no</description>
+            <required>True</required>
+            <title>Monitored?</title>
+        </field>
+        <field name="monitoring_user" type="zope.schema.TextLine">
+            <description/>
+            <required>False</required>
+            <title>Monitoring user</title>
+        </field>
+        <field name="system_operations_user" type="zope.schema.TextLine">
+            <description/>
+            <required>False</required>
+            <title>System operations user</title>
+        </field>
+        <field name="remote_user" type="zope.schema.TextLine"><description>Comma separated list of remote user names to
+            be used.</description>/&gt; <required>False</required>
+            <title>Remote user names</title>
+        </field>
+        <field name="path" type="zope.schema.TextLine">
+            <description/>
+            <required>False</required>
+            <title>Path</title>
+        </field>
+        <field name="path_description" type="zope.schema.TextLine">
+            <description/>
+            <required>False</required>
+            <title>Path description</title>
+        </field>
+        <field name="alt_path" type="zope.schema.TextLine">
+            <description/>
+            <required>False</required>
+            <title>Alternative path</title>
+        </field>
+        <field name="alt_path_description" type="zope.schema.TextLine">
+            <description/>
+            <required>False</required>
+            <title>Alternative path description</title>
+        </field>
+        <field name="contacts" type="zope.schema.Text">
+            <description/>
+            <required>False</required>
+            <title>Contacts</title>
+        </field>
+        <field name="text" type="plone.app.textfield.RichText"><description>Anything else to further describe this
+            endpoint</description>/&gt; <required>False</required>
+            <title>Text</title>
+        </field>
+    </schema>
+</model>

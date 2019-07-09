@@ -67,21 +67,26 @@
                                 <input class="d-none" id="subtitlePDF" value="{{@tenant}} - {{@report}} Report"/>
                                 <input class="d-none" id="subtitlePDF2" tpl:if="@group" value="{{@group}}  {{@group2}}  {{@group3}} "/>
 
-                                <div class="card-body">
+                                <div class="card-body" tpl:foreach="group" >
+                                    <h2 class="card-title"><span>{{@name}}</span> <a tpl:if="@type!='endpoint'" href="javascript:my_link('{@name}')"   title="Drilldown to details" class="text-white m-2 badge badge-primary">DETAILS</a> </h2>
+                                    <hr/>
                                     <div class="table-responsive">
-                                        <table id="ar" class="table m-0">
+                                        <table id="ar_{{@name}}" class="ar table m-0">
                                             <thead>
                                             <tr>
+
                                                 <th>Timestamp</th>
                                                 <th>Availability</th>
                                                 <th>Reliability</th>
-                                                <th tpl:if="group/results[1]/@unknown">Unknown</th>
-                                                <th tpl:if="group/results[1]/@downtime">Downtime</th>
+                                                <th tpl:if="results[1]/@unknown">Unknown</th>
+                                                <th tpl:if="results[1]/@downtime">Downtime</th>
 
                                             </tr>
                                             </thead>
-                                            <tbody>
-                                            <tr tpl:foreach="group/results">
+                                            <tbody >
+
+                                            <tr tpl:foreach="results">
+
                                                 <td>{{@timestamp}}</td>
 
                                                 <td>
@@ -200,15 +205,18 @@
 
 
 <style>
- #ar_wrapper .dt-buttons {
+  .dt-buttons {
 float:left;
 }
- #ar_wrapper .dataTables_filter{
+  .dataTables_filter{
 float:right;
 }
- #ar_wrapper .dataTables_length{
+ .dataTables_length{
 float:right;
 }
+
+
+
 </style>
 
 

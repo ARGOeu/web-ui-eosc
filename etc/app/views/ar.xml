@@ -171,18 +171,24 @@
         <argument name="entity">_entity_</argument>
 
         <argument name="group">_group_</argument>
+        <argument name="group2">_group2_</argument>
         <argument name="granularity">daily</argument>
         <argument name="start_date"></argument>
         <argument name="end_date"></argument>
 
         <argument name="uri">_uri_</argument>
+        <argument name="level">_level_</argument>
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+        <variable name="options" eval="choose($group2!='_group2_',concat('/services/',$group2,'/endpoints'),'/services')"/>
 
         <variable name="start_time" eval="concat($start_date,'T00:00:00Z')"/>
         <variable name="end_time" eval="concat($end_date,'T23:59:59Z')"/>
 
-        <variable name="url"  eval="concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=',$granularity)"/>
+        <variable name="url"  eval="choose($level='_level_',
+        concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=',$granularity),
+        concat(property('api.report'),'/',$report,'/',$topology,'/',$group,$options,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=',$granularity))
+        "/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>
@@ -198,7 +204,7 @@
             <element in="root">
                 <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
                 <element-ignore in="group" if="group">
-                    <element-ignore in="group" if="@name!=$group and ancestor::group/@name!=$group"/>
+                    <element-ignore in="group" if="@name!=$group and ancestor::group/@name!=$group or $group2!='_group2_' "><element/></element-ignore>
                     <element/>
                 </element-ignore>
             </element>
