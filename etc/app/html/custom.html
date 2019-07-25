@@ -43,7 +43,8 @@
 
                     <input class="d-none" id="tenant" value="{/root/@tenant}"/>
                     <input class="d-none" id="report" value="{/root/@report}"/>
-                    <input class="d-none" id="topology" value="{/root/report[@tenant=/root/@tenant][@report=/root/@report]/@topology2}"/>
+                    <input class="d-none" id="topology"
+                           value="{/root/report[@tenant=/root/@tenant][@report=/root/@report]/@topology2}"/>
 
                     <div class="card m-2">
                         <div class="card-header">
@@ -51,11 +52,13 @@
                                 Entity
                             </h3>
                         </div>
-                            <div class="card-body">
-                                <select id="services">
-                                    <option tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()" value="{.}">{{.}}</option>
-                                </select>
-                            </div>
+                        <div class="card-body">
+                            <select id="services">
+                                <option tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()"
+                                        value="{.}">{{.}}
+                                </option>
+                            </select>
+                        </div>
 
 
                     </div>
@@ -66,11 +69,13 @@
                                 Report Type
                             </h3>
                         </div>
-                            <div class="card-body">
-                                <input type="radio" name="type" class="m-2" value="report-ar-dates-1" checked="true"/>Availability/Reliability - Daily values<br/>
-                                <input type="radio" name="type" class="m-2" value="report-ar-dates-2" />Availability/Reliability - Monthly values<br/>
-                                <input type="radio" name="type" class="m-2" value="report-status"/>Status<br/>
-                            </div>
+                        <div class="card-body">
+                            <input type="radio" name="type" class="m-2" value="report-ar-dates-1" checked="true"/>Availability/Reliability
+                            - Daily values<br/>
+                            <input type="radio" name="type" class="m-2" value="report-ar-dates-2"/>Availability/Reliability
+                            - Monthly values<br/>
+                            <input type="radio" name="type" class="m-2" value="report-status"/>Status<br/>
+                        </div>
 
 
                     </div>
@@ -81,12 +86,13 @@
                                 Timeline
                             </h3>
                         </div>
-                            <div class="card-body">
-                                <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
-                                    <i class="fa fa-calendar m-1"></i>
-                                    <span></span> <i class="fa fa-caret-down"></i>
-                                </div>
+                        <div class="card-body">
+                            <div id="reportrange"
+                                 style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                <i class="fa fa-calendar m-1"></i>
+                                <span></span> <i class="fa fa-caret-down"></i>
                             </div>
+                        </div>
 
 
                     </div>
@@ -120,14 +126,12 @@
 <script src="/resource/app/html/adminlte/dist/js/adminlte.js"></script>
 
 
-
 <link rel="stylesheet" href="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap4.css"/>
 <link rel="stylesheet" href="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.css"/>
 
 <script src="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
 
 <script src="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap4.min.js"></script>
-
 
 
 <script src="/resource/app/js/dashboard.js"></script>
@@ -140,9 +144,7 @@
 <script src="/resource/app/html/adminlte/plugins/daterangepicker/daterangepicker.js"></script>
 
 
-
-
- <script type="text/javascript">
+<script type="text/javascript">
 <!--
 $(function() {
 
@@ -193,6 +195,7 @@ $(function() {
 });
 
 -->
+
 </script>
 
 </body>

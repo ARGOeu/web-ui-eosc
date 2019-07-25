@@ -1,42 +1,50 @@
-<div  class="row" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+<div class="row" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
 
 
     <!-- small card -->
-<div class="col-md-6">
-
-    <div tpl:if="/root/report-ar/@availability &gt;= /root/report[@tenant=/root/@tenant][@report=/root/@report]/@thresholdAv" class="info-box">
-        <span class="info-box-icon bg-success"><i class="ion ion-stats-bars"></i></span>
-
-        <div class="info-box-content">
-            <span class="info-box-text" tpl:if="root/@details='level0'"><a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/@topology}">Availability</a></span>
-            <span class="info-box-text" tpl:if="root/@details='level1'"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}">Availability</a></span>
-            <span class="info-box-number">{{/root/report-ar/@availability}}</span>
-        </div>
-        <!-- /.info-box-content -->
-    </div>
-
-    <div tpl:else="" class="info-box">
-        <span class="info-box-icon bg-danger"><i class="ion ion-stats-bars"></i></span>
-
-        <div class="info-box-content">
-            <span class="info-box-text" tpl:if="root/@details='level0'"><a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/@topology}">Availability</a></span>
-            <span class="info-box-text" tpl:if="root/@details='level1'"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}">Availability</a></span>
-
-            <span class="info-box-number">{{/root/report-ar/@availability}}</span>
-        </div>
-        <!-- /.info-box-content -->
-    </div>
-
-</div>
-
     <div class="col-md-6">
 
-        <div tpl:if="/root/report-ar/@reliability &gt;= /root/report[@tenant=/root/@tenant][@report=/root/@report]/@thresholdRe" class="info-box">
+        <div tpl:if="/root/report-ar/@availability &gt;= /root/report[@tenant=/root/@tenant][@report=/root/@report]/@thresholdAv"
+             class="info-box">
             <span class="info-box-icon bg-success"><i class="ion ion-stats-bars"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text" tpl:if="/root/@details='level0'"><a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/@topology}">Reliability</a></span>
-                <span class="info-box-text" tpl:if="/root/@details='level1'"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}">Reliability</a></span>
+                <span class="info-box-text" tpl:if="root/@details='level0'"><a
+                        href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/@topology}">Availability</a></span>
+                <span class="info-box-text" tpl:if="root/@details='level1'"><a
+                        href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}">Availability</a></span>
+                <span class="info-box-number">{{/root/report-ar/@availability}}</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+
+        <div tpl:else="" class="info-box">
+            <span class="info-box-icon bg-danger"><i class="ion ion-stats-bars"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text" tpl:if="root/@details='level0'"><a
+                        href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/@topology}">Availability</a></span>
+                <span class="info-box-text" tpl:if="root/@details='level1'"><a
+                        href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}">Availability</a></span>
+
+                <span class="info-box-number">{{/root/report-ar/@availability}}</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div tpl:if="/root/report-ar/@reliability &gt;= /root/report[@tenant=/root/@tenant][@report=/root/@report]/@thresholdRe"
+             class="info-box">
+            <span class="info-box-icon bg-success"><i class="ion ion-stats-bars"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text" tpl:if="/root/@details='level0'"><a
+                        href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/@topology}">Reliability</a></span>
+                <span class="info-box-text" tpl:if="/root/@details='level1'"><a
+                        href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}">Reliability</a></span>
 
                 <span class="info-box-number">{{/root/report-ar/@reliability}}</span>
             </div>
@@ -47,19 +55,18 @@
             <span class="info-box-icon bg-danger"><i class="ion ion-stats-bars"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text" tpl:if="/root/@details='level0'"><a href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/@topology}">Reliability</a></span>
-                <span class="info-box-text" tpl:if="/root/@details='level1'"><a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}">Reliability</a></span>
+                <span class="info-box-text" tpl:if="/root/@details='level0'"><a
+                        href="/{/root/@tenant}/report-ar/{/root/@report}/{/root/@topology}">Reliability</a></span>
+                <span class="info-box-text" tpl:if="/root/@details='level1'"><a
+                        href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}">Reliability</a></span>
 
                 <span class="info-box-number">{{/root/report-ar/@reliability}}</span>
             </div>
             <!-- /.info-box-content -->
         </div>
-        
-        
+
+
     </div>
-       
-
-
 
 
 </div>

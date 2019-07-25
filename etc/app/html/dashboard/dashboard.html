@@ -29,9 +29,14 @@
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/">Home</a></li>
                             <li class="breadcrumb-item">Dashboard</li>
-                            <li class="breadcrumb-item active" tpl:if="root/@details='level0'"  ><a href="/{{root/@tenant}}/{{root/@report}}">{{root/@tenant}} - {{root/@report}}</a></li>
-                            <li class="breadcrumb-item active" tpl:else=""  ><a href="/{{root/@tenant}}/{{root/@report}}">{{root/@tenant}} - {{root/@report}}</a></li>
-                            <li class="breadcrumb-item active" tpl:if="root/@details='level1'"  ><a href="/{{root/@tenant}}/dashboard/{{root/@report}}/{{root/@group}}">{{root/@group}}</a></li>
+                            <li class="breadcrumb-item active" tpl:if="root/@details='level0'"><a
+                                    href="/{{root/@tenant}}/{{root/@report}}">{{root/@tenant}} - {{root/@report}}</a>
+                            </li>
+                            <li class="breadcrumb-item active" tpl:else=""><a href="/{{root/@tenant}}/{{root/@report}}">{{root/@tenant}}
+                                - {{root/@report}}</a></li>
+                            <li class="breadcrumb-item active" tpl:if="root/@details='level1'"><a
+                                    href="/{{root/@tenant}}/dashboard/{{root/@report}}/{{root/@group}}">{{root/@group}}</a>
+                            </li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -46,23 +51,22 @@
                 <div class="row" tpl:if="not(error)">
 
                     <div class="col-3" tpl:if="root/@details!='level1'">
-                        <div  tpl:include="/resource/app/html/dashboard/widget-project2.html"/>
-                        <div  tpl:include="/resource/app/html/dashboard/widget-global-ar.html"/>
+                        <div tpl:include="/resource/app/html/dashboard/widget-project2.html"/>
+                        <div tpl:include="/resource/app/html/dashboard/widget-global-ar.html"/>
 
                     </div>
                     <div class="col-3" tpl:else="">
-                        <div  tpl:include="/resource/app/html/dashboard/widget-site.html"/>
-                        <div  tpl:include="/resource/app/html/dashboard/widget-global-ar.html"/>
+                        <div tpl:include="/resource/app/html/dashboard/widget-site.html"/>
+                        <div tpl:include="/resource/app/html/dashboard/widget-global-ar.html"/>
 
                     </div>
                     <div class="col-9">
-                        <div tpl:if="/root/status-last/@*" tpl:include="/resource/app/html/dashboard/widgets-charts.html"/>
+                        <div tpl:if="/root/status-last/@*"
+                             tpl:include="/resource/app/html/dashboard/widgets-charts.html"/>
                     </div>
 
 
                 </div>
-
-
 
 
                 <div class="row" tpl:if="not(error)">
@@ -73,10 +77,9 @@
                 </div>
 
 
-
-            <!-- /.container-fluid -->
+                <!-- /.container-fluid -->
             </div>
-        <!-- /.content -->
+            <!-- /.content -->
         </div>
 
     </div>
@@ -102,19 +105,17 @@
 <!--<script src="/resource/app/html/adminlte/plugins/chart.js/Chart.bundle.min.js"></script>-->
 
 
-<link rel="stylesheet" href="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap4.css?v={$app.version}"/>
-<link rel="stylesheet" href="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.css?v={$app.version}"/>
+<link rel="stylesheet"
+      href="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap4.css?v={$app.version}"/>
+<link rel="stylesheet"
+      href="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.css?v={$app.version}"/>
 
 <script src="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.js?v={$app.version}"></script>
 
 <script src="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap4.min.js?v={$app.version}"></script>
 
 
-
 <script src="/resource/app/js/dashboard.js?v={$app.version}"></script>
-
-
-
 
 
 </body>

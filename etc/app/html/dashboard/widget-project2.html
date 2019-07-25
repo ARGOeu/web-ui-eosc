@@ -1,109 +1,119 @@
-<div  xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+<div xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
     <!-- Widget: user widget style 1 -->
 
-        <div class="card card-widget widget-user-2  border border-primary">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header">
-                <div class="text-center">
-                   <h1><img  src="/resource/app/img/logo-{root/@tenant}.png" style="max-height:100px" alt="{root/@tenant}"/></h1>
-                </div>
-                <!-- /.widget-user-image -->
-
-
-                <div class="text-center">
-                    <em>{{/root/report[@tenant=/root/@tenant][@report=/root/@report]/@description}}</em>
-                </div>
+    <div class="card card-widget widget-user-2  border border-primary">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="widget-user-header">
+            <div class="text-center">
+                <h1><img src="/resource/app/img/logo-{root/@tenant}.png" style="max-height:100px" alt="{root/@tenant}"/>
+                </h1>
             </div>
-            <div class="card-body">
-                <ul class="nav flex-column"  tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]">
-                    <li class="nav-item">
-                        <a  href="#" class="nav-link" data-toggle="modal" data-target="#{{group_type/text()}}" >
-                            {{group_type/text()}}<span class="float-right badge bg-primary">{{group_count/text()}} </span>
-                        </a>
+            <!-- /.widget-user-image -->
 
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="{{group_type/text()}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">{{group_type/text()}} List</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">x</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <ul>
-                                            <li tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/group_list/item/text()">{{.}}</li>
-                                        </ul>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        </li>
-
-                    <li>
-                        <a  href="#" class="nav-link" data-toggle="modal" data-target="#{{endpoint_group_type/text()}}" >
-                            {{endpoint_group_type/text()}}<span class="float-right badge bg-primary">{{endpoint_group_count/text()}} </span>
-                        </a>
-                        <!-- Modal -->
-                        <div class="modal fade" id="{{endpoint_group_type/text()}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" >{{endpoint_group_type/text()}} List</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">x</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <ul>
-                                            <li tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()">{{.}}</li>
-                                        </ul>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a  href="#" class="nav-link" data-toggle="modal" data-target="#services">
-                            SERVICE TYPES<span class="float-right badge bg-primary">{{service_count/text()}} </span>
-                        </a>
-                            <div class="modal fade" id="services" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" >Service Types List</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">x</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <ul>
-                                                <li tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/service_list/item/text()">{{.}}</li>
-                                            </ul>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                    </li>
-                </ul>
+            <div class="text-center">
+                <em>{{/root/report[@tenant=/root/@tenant][@report=/root/@report]/@description}}</em>
             </div>
         </div>
+        <div class="card-body">
+            <ul class="nav flex-column" tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]">
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-toggle="modal" data-target="#{{group_type/text()}}">
+                        {{group_type/text()}}<span class="float-right badge bg-primary">{{group_count/text()}} </span>
+                    </a>
+
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="{{group_type/text()}}" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">{{group_type/text()}} List</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">x</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <ul>
+                                        <li tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/group_list/item/text()">
+                                            {{.}}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+
+                <li>
+                    <a href="#" class="nav-link" data-toggle="modal" data-target="#{{endpoint_group_type/text()}}">
+                        {{endpoint_group_type/text()}}<span class="float-right badge bg-primary">{{endpoint_group_count/text()}} </span>
+                    </a>
+                    <!-- Modal -->
+                    <div class="modal fade" id="{{endpoint_group_type/text()}}" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">{{endpoint_group_type/text()}} List</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">x</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <ul>
+                                        <li tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()">
+                                            {{.}}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-toggle="modal" data-target="#services">
+                        SERVICE TYPES<span class="float-right badge bg-primary">{{service_count/text()}} </span>
+                    </a>
+                    <div class="modal fade" id="services" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Service Types List</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">x</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <ul>
+                                        <li tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/service_list/item/text()">
+                                            {{.}}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+    </div>
 
 
     <!-- /.row -->

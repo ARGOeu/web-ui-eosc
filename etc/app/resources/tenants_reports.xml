@@ -1,13 +1,13 @@
 <tenants>
 
-   <tenant env="devel">
+    <tenant env="devel">
         <id>ARGOTEST</id>
         <name>ARGOTEST</name>
         <description>Playground tenant</description>
         <url>http://argo.eu</url>
         <contact>argo@mailman.egi.eu</contact>
-       <thresholdAv>80</thresholdAv>
-       <thresholdRe>85</thresholdRe>
+        <thresholdAv>80</thresholdAv>
+        <thresholdRe>85</thresholdRe>
 
     </tenant>
 

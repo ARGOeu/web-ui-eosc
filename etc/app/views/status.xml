@@ -11,9 +11,8 @@
     -->
 
 
-
-
-    <view name="api-status-last"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+    <view name="api-status-last" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings"
+          xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
 
         <argument name="report">Critical</argument>
         <argument name="tenant">egi</argument>
@@ -28,9 +27,9 @@
         <variable name="filter" eval="choose($status!='_status_',$status,'all')"/>
 
 
-
         <connector type="HTTPConnector">
-            <parameter name="url" eval="choose($entity='_entity_',concat(property('api.status.last'),'/',$report,'/',$topology,'?limit=',$last,'&amp;filter=',$filter),concat(property('api.status.last'),'/',$report,'/',$topology,'/',$entity,'?limit=',$last,'&amp;filter=',$filter))"/>
+            <parameter name="url"
+                       eval="choose($entity='_entity_',concat(property('api.status.last'),'/',$report,'/',$topology,'?limit=',$last,'&amp;filter=',$filter),concat(property('api.status.last'),'/',$report,'/',$topology,'/',$entity,'?limit=',$last,'&amp;filter=',$filter))"/>
 
             <parameter name="force-redirect">true</parameter>
             <parameter name="header">
@@ -46,17 +45,16 @@
             <element in="object" out="status-last">
                 <element-ignore in="data">
                     <element-ignore in="metric_data">
-                        <element/>                      
-                    </element-ignore>                  
-                    
+                        <element/>
+                    </element-ignore>
+
                 </element-ignore>
-                <element-ignore/>                
+                <element-ignore/>
             </element>
 
 
-            
-            <element  out="status-last">
-               <attribute-create out="Ok">count(../object[status/text()='OK'])</attribute-create>
+            <element out="status-last">
+                <attribute-create out="Ok">count(../object[status/text()='OK'])</attribute-create>
                 <attribute-create out="Warning">count(../object[status/text()='WARNING'])</attribute-create>
                 <attribute-create out="Unknown">count(../object[status/text()='UNKNOWN'])</attribute-create>
                 <attribute-create out="Critical">count(../object[status/text()='CRITICAL'])</attribute-create>
@@ -70,7 +68,9 @@
         </processors>
     </view>
 
-    <view name="report-status"   xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+    <view name="report-status" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd"
+          xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings"
+          xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
 
         <argument name="report">Critical</argument>
         <argument name="tenant">egi</argument>
@@ -89,25 +89,27 @@
         <argument name="filter">_filter_</argument>
 
 
+        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+        <variable name="start_time"
+                  eval="choose($start_date='_start_',concat(str:replace(substring(date:add(function:date-UTC(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z'),concat($start_date,'T00:00:00Z'))"/>
+        <variable name="end_time"
+                  eval="choose($end_date='_end_',concat(str:replace(substring(function:date-UTC(),0,20),' ','T'),'Z'),concat($end_date,'T23:59:59Z'))"/>
 
-    <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
-    <variable name="start_time" eval="choose($start_date='_start_',concat(str:replace(substring(date:add(function:date-UTC(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z'),concat($start_date,'T00:00:00Z'))"/>
-    <variable name="end_time" eval="choose($end_date='_end_',concat(str:replace(substring(function:date-UTC(),0,20),' ','T'),'Z'),concat($end_date,'T23:59:59Z'))"/>
 
+        <variable name="diff"
+                  eval="choose($entity3!='_entity_',date:seconds(date:difference($start_time,$end_time)),0)"/>
 
+        <variable name="url"
+                  eval="choose($diff &lt;= 432000,function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,$start_time,$end_time),function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,$end_time,$end_time))"/>
 
-    <variable name="diff" eval="choose($entity3!='_entity_',date:seconds(date:difference($start_time,$end_time)),0)"/>
-
-    <variable name="url" eval="choose($diff &lt;= 432000,function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,$start_time,$end_time),function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,$end_time,$end_time))"/>
-
-    <connector type="HTTPConnector">
-        <parameter name="url" eval="$url"/>
-        <parameter name="force-redirect">true</parameter>
-        <parameter name="header">
-            <entry key="x-api-key" eval="$api-key"/>
-            <entry key="Accept">application/xml</entry>
-        </parameter>
-    </connector>
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/xml</entry>
+            </parameter>
+        </connector>
 
         <processors>
 
@@ -116,45 +118,65 @@
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="topology">$topology</attribute-create>
                 <attribute-create out="url">$url</attribute-create>
-                <attribute-create out="link">function:buildStatusLink($report,$topology,$entity1,$entity2,$entity3,$entity4,$start_time,$end_time)</attribute-create>
+                <attribute-create out="link">
+                    function:buildStatusLink($report,$topology,$entity1,$entity2,$entity3,$entity4,$start_time,$end_time)
+                </attribute-create>
                 <attribute-create out="entity1">$entity1</attribute-create>
                 <attribute-create out="entity2">$entity2</attribute-create>
                 <attribute-create out="entity3">$entity3</attribute-create>
                 <attribute-create out="end_time">$end_time</attribute-create>
                 <attribute-create out="filter">$filter</attribute-create>
-                <attribute-create out="message" if="$diff &gt; 432000">'Your query generates too much data. We have limited the results to the end date day. Please limit the period to 5 days'</attribute-create>
+                <attribute-create out="message" if="$diff &gt; 432000">'Your query generates too much data. We have
+                    limited the results to the end date day. Please limit the period to 5 days'
+                </attribute-create>
                 <attribute-create out="start_date" if="$start_date!='_start_'">$start_date</attribute-create>
                 <attribute-create out="end_date" if="$end_date!='_end_'">$end_date</attribute-create>
 
-                <attribute-create out="start_date_0" if="$start_date!='_start_'">substring(date:add($start_date,concat('-P',1,'D')),0,11)</attribute-create>
-                <attribute-create out="end_date_0" if="$end_date!='_end_'">substring(date:add($end_date,concat('-P',1,'D')),0,11)</attribute-create>
+                <attribute-create out="start_date_0" if="$start_date!='_start_'">
+                    substring(date:add($start_date,concat('-P',1,'D')),0,11)
+                </attribute-create>
+                <attribute-create out="end_date_0" if="$end_date!='_end_'">
+                    substring(date:add($end_date,concat('-P',1,'D')),0,11)
+                </attribute-create>
 
-                <attribute-create out="start_date_0" if="$start_date='_start_'">substring(date:add($start_time,concat('-P',1,'D')),0,11)</attribute-create>
-                <attribute-create out="end_date_0" if="$end_date='_end_'">substring(date:add($end_time,concat('-P',1,'D')),0,11)</attribute-create>
+                <attribute-create out="start_date_0" if="$start_date='_start_'">
+                    substring(date:add($start_time,concat('-P',1,'D')),0,11)
+                </attribute-create>
+                <attribute-create out="end_date_0" if="$end_date='_end_'">
+                    substring(date:add($end_time,concat('-P',1,'D')),0,11)
+                </attribute-create>
 
 
+                <attribute-create out="start_date_1" if="$start_date!='_start_'">
+                    substring(date:add($start_date,concat('P',1,'D')),0,11)
+                </attribute-create>
+                <attribute-create out="end_date_1"
+                                  if="$end_date!='_end_' and date:seconds(date:difference(function:date-UTC(),date:add($end_date,concat('P',1,'D'))))&lt;=0">
+                    substring(date:add($end_date,concat('P',1,'D')),0,11)
+                </attribute-create>
 
-                <attribute-create out="start_date_1" if="$start_date!='_start_'">substring(date:add($start_date,concat('P',1,'D')),0,11)</attribute-create>
-                <attribute-create out="end_date_1" if="$end_date!='_end_' and date:seconds(date:difference(function:date-UTC(),date:add($end_date,concat('P',1,'D'))))&lt;=0">substring(date:add($end_date,concat('P',1,'D')),0,11)</attribute-create>
-
-                <attribute-create out="start_date_1" if="$start_date='_start_'">substring(date:add($start_time,concat('P',1,'D')),0,11)</attribute-create>
-                <attribute-create out="end_date_1" if="$end_date='_end_' and date:seconds(date:difference(function:date-UTC(),date:add($end_time,concat('P',1,'D'))))&lt;0">substring(date:add($end_time,concat('P',1,'D')),0,11)</attribute-create>
+                <attribute-create out="start_date_1" if="$start_date='_start_'">
+                    substring(date:add($start_time,concat('P',1,'D')),0,11)
+                </attribute-create>
+                <attribute-create out="end_date_1"
+                                  if="$end_date='_end_' and date:seconds(date:difference(function:date-UTC(),date:add($end_time,concat('P',1,'D'))))&lt;0">
+                    substring(date:add($end_time,concat('P',1,'D')),0,11)
+                </attribute-create>
 
 
                 <element-create>view('gocdb.filter')</element-create>
                 <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
-                <element-ignore  if="group">
-                        <element-ignore if="endpoint">
-                            <element-ignore if="metric">
-                                <element out="group"/>
-                            </element-ignore>
+                <element-ignore if="group">
+                    <element-ignore if="endpoint">
+                        <element-ignore if="metric">
                             <element out="group"/>
                         </element-ignore>
+                        <element out="group"/>
+                    </element-ignore>
                     <element out="group"/>
                 </element-ignore>
 
             </element>
-
 
 
             <elements path="root">
@@ -167,7 +189,7 @@
 
             <elements path="root">
                 <element-create-as-parent out="group" attributes="@*" group-by="@name">
-                    <element in="group" />
+                    <element in="group"/>
                 </element-create-as-parent>
             </elements>
 
@@ -189,9 +211,14 @@
                 <element in="group">
                     <element in="status">
 
-                        <attribute-create out="color">$StateColor/e:entries/e:entry[@key=current()/../@value]/text()</attribute-create>
-                        <attribute-create out="end_time" if="current()/../following-sibling::status">current()/../following-sibling::status/@timestamp</attribute-create>
-                        <attribute-create out="end_time" if="not(current()/../following-sibling::status)">../ancestor::root/@end_time</attribute-create>
+                        <attribute-create out="color">$StateColor/e:entries/e:entry[@key=current()/../@value]/text()
+                        </attribute-create>
+                        <attribute-create out="end_time" if="current()/../following-sibling::status">
+                            current()/../following-sibling::status/@timestamp
+                        </attribute-create>
+                        <attribute-create out="end_time" if="not(current()/../following-sibling::status)">
+                            ../ancestor::root/@end_time
+                        </attribute-create>
 
                     </element>
                 </element>
@@ -201,7 +228,9 @@
                 <set variable="listSites">view('gocdb.site')</set>
 
                 <element in="group" if="@type='SITES' and $filter!='_filter_'">
-                    <attribute-create out="filters">choose($listSites/results/SITE[@NAME=current()/../@name]/@filters,$listSites/results/SITE[@NAME=current()/../@name]/@filters,'NA')</attribute-create>
+                    <attribute-create out="filters">
+                        choose($listSites/results/SITE[@NAME=current()/../@name]/@filters,$listSites/results/SITE[@NAME=current()/../@name]/@filters,'NA')
+                    </attribute-create>
                 </element>
 
             </element>
@@ -223,27 +252,29 @@
     </view>
 
 
-    <view name="report-metrics"   xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+    <view name="report-metrics" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd"
+          xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings"
+          xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
 
-    <argument name="report">Critical</argument>
-    <argument name="tenant">egi</argument>
-    <argument name="endpoint">SITES</argument>
-    <argument name="metric_name">_entity_</argument>
-    <argument name="exec_time"/>
-
-
-
-    <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+        <argument name="report">Critical</argument>
+        <argument name="tenant">egi</argument>
+        <argument name="endpoint">SITES</argument>
+        <argument name="metric_name">_entity_</argument>
+        <argument name="exec_time"/>
 
 
-    <connector type="HTTPConnector">
-        <parameter name="url" eval="concat(property('api.metrics'),'/',$endpoint,'/',$metric_name,'?exec_time=',$exec_time)"/>
-        <parameter name="force-redirect">true</parameter>
-        <parameter name="header">
-            <entry key="x-api-key" eval="$api-key"/>
-            <entry key="Accept">application/xml</entry>
-        </parameter>
-    </connector>
+        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+
+
+        <connector type="HTTPConnector">
+            <parameter name="url"
+                       eval="concat(property('api.metrics'),'/',$endpoint,'/',$metric_name,'?exec_time=',$exec_time)"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/xml</entry>
+            </parameter>
+        </connector>
 
         <processors>
 
@@ -263,7 +294,6 @@
         </renderers>
 
     </view>
-
 
 
 </views>

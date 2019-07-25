@@ -10,7 +10,7 @@
 
     <!-- Main Sidebar Container -->
     <aside tpl:include="/resource/app/html/sidebar.html"></aside>
-        <!-- /sidebar -->
+    <!-- /sidebar -->
 
 
     <!-- Content Wrapper. Contains page content -->
@@ -28,18 +28,23 @@
                             <li class="breadcrumb-item"><a href="/">Home</a></li>
                             <li class="breadcrumb-item">Status</li>
                             <li tpl:if="root/@entity1!='_entity_'" class="breadcrumb-item active">
-                                <a tpl:if="/root/@start_date and /root/@end_date" href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}?start_date={{/root/@start_date}}&amp;end_date={{/root/@end_date}}">{{/root/@entity1}}</a>
-                                <a tpl:else="" href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}">{{/root/@entity1}}</a>
+                                <a tpl:if="/root/@start_date and /root/@end_date"
+                                   href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}?start_date={{/root/@start_date}}&amp;end_date={{/root/@end_date}}">{{/root/@entity1}}</a>
+                                <a tpl:else=""
+                                   href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}">{{/root/@entity1}}</a>
                             </li>
                             <li tpl:if="root/@entity2!='_entity_'" class="breadcrumb-item active">
-                                <a tpl:if="/root/@start_date and /root/@end_date" href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}/{{/root/@entity2}}?start_date={{/root/@start_date}}&amp;end_date={{/root/@end_date}}">{{/root/@entity2}}</a>
-                                <a tpl:else="" href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}/{{/root/@entity2}}">{{/root/@entity2}}</a>
+                                <a tpl:if="/root/@start_date and /root/@end_date"
+                                   href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}/{{/root/@entity2}}?start_date={{/root/@start_date}}&amp;end_date={{/root/@end_date}}">{{/root/@entity2}}</a>
+                                <a tpl:else=""
+                                   href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}/{{/root/@entity2}}">{{/root/@entity2}}</a>
                             </li>
                             <li tpl:if="root/@entity3!='_entity_'" class="breadcrumb-item active">
-                                <a tpl:if="/root/@start_date and /root/@end_date" href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}/{{/root/@entity2}}/{{/root/@entity3}}?start_date={{/root/@start_date}}&amp;end_date={{/root/@end_date}}">{{/root/@entity3}}</a>
-                                <a tpl:else="" href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}/{{/root/@entity2}}/{{/root/@entity3}}">{{/root/@entity3}}</a>
+                                <a tpl:if="/root/@start_date and /root/@end_date"
+                                   href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}/{{/root/@entity2}}/{{/root/@entity3}}?start_date={{/root/@start_date}}&amp;end_date={{/root/@end_date}}">{{/root/@entity3}}</a>
+                                <a tpl:else=""
+                                   href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}/{{/root/@entity2}}/{{/root/@entity3}}">{{/root/@entity3}}</a>
                             </li>
-
 
 
                         </ol>
@@ -55,83 +60,101 @@
             <div class="container-fluid">
                 <div class="row">
 
-                        <div class="card col-lg-12 col-md-8" >
-                           <div class="card-header">Status for {{root/@tenant}} tenant - {{root/@report}} Report</div>
+                    <div class="card col-lg-12 col-md-8">
+                        <div class="card-header">Status for {{root/@tenant}} tenant - {{root/@report}} Report</div>
 
 
+                        <div style="display: none" id="local_groups">
+                            <div tpl:foreach="/root/group/status">
+                                {{ancestor::group/@name}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@color}}
+                            </div>
+                        </div>
 
-                            <div style="display: none"   id="local_groups">
-                                <div  tpl:foreach="/root/group/status" > {{ancestor::group/@name}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@color}}</div>
+                        <div style="display: none" tpl:else="" id="local_groups">
+                            <div tpl:foreach="/root/group/status">
+                                {{ancestor::group/@name}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@color}}
+                            </div>
+                        </div>
+
+                        <div style="display: none" tpl:if="contains(/root/@link,'/metrics/')" id="local_links">
+                            <div tpl:foreach="/root/group/status">
+                                /{{ancestor::root/@tenant}}/report-status/{{ancestor::root/@link}}/{{ancestor::group/@name}}/{{@timestamp}}
+                            </div>
+                        </div>
+                        <div style="display: none" tpl:else="/root/@start_date and /root/@end_date" id="local_links">
+                            <div tpl:foreach="/root/group/status">
+                                /{{ancestor::root/@tenant}}/report-status/{{ancestor::root/@link}}/{{ancestor::group/@name}}?start_date={{/root/@start_date}}&amp;end_date={{/root/@end_date}}
+                            </div>
+                        </div>
+                        <div style="display: none" tpl:else="" id="local_links">
+                            <div tpl:foreach="/root/group/status">
+                                /{{ancestor::root/@tenant}}/report-status/{{ancestor::root/@link}}/{{ancestor::group/@name}}
+                            </div>
+                        </div>
+
+
+                        <div class="card-body" tpl:if="count(/root/group)&gt;0">
+                            <div tpl:if="/root/@message" class="alert alert-primary" role="alert">{{/root/@message}}
                             </div>
 
-                            <div style="display: none" tpl:else=""  id="local_groups">
-                                <div  tpl:foreach="/root/group/status" > {{ancestor::group/@name}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@color}}</div>
-                            </div>
 
-                            <div  style="display: none" tpl:if="contains(/root/@link,'/metrics/')" id="local_links">
-                                <div  tpl:foreach="/root/group/status">/{{ancestor::root/@tenant}}/report-status/{{ancestor::root/@link}}/{{ancestor::group/@name}}/{{@timestamp}}</div>
-                            </div>
-                            <div  style="display: none" tpl:else="/root/@start_date and /root/@end_date" id="local_links">
-                                <div  tpl:foreach="/root/group/status">/{{ancestor::root/@tenant}}/report-status/{{ancestor::root/@link}}/{{ancestor::group/@name}}?start_date={{/root/@start_date}}&amp;end_date={{/root/@end_date}}</div>
-                            </div>
-                            <div  style="display: none" tpl:else="" id="local_links">
-                                <div  tpl:foreach="/root/group/status">/{{ancestor::root/@tenant}}/report-status/{{ancestor::root/@link}}/{{ancestor::group/@name}}</div>
-                            </div>
+                            <div class="row"
+                                 tpl:if="root/@tenant='egi' and root/@topology='SITES' and root/@entity1='_entity_'">
 
+                                <div class="m-2" tpl:if="root/@filter='_filter_'">
 
+                                    <select id="filter_select" tpl:foreach="root/filter">
+                                        <option>--Filter Status entries --</option>
+                                        <optgroup label="Scopes">
+                                            <option tpl:foreach="scope">{{text()}}</option>
+                                        </optgroup>
+                                        <optgroup label="NGIs">
+                                            <option tpl:foreach="ngi">{{text()}}</option>
+                                        </optgroup>
+                                    </select>
 
-                            <div class="card-body" tpl:if="count(/root/group)&gt;0">
-                                <div tpl:if="/root/@message" class="alert alert-primary" role="alert">{{/root/@message}}</div>
+                                </div>
+                                <div class="m-2" tpl:else="">
 
-
-                                <div class="row" tpl:if="root/@tenant='egi' and root/@topology='SITES' and root/@entity1='_entity_'">
-
-                                    <div class="m-2" tpl:if="root/@filter='_filter_'">
-
-                                        <select id="filter_select" tpl:foreach="root/filter">
-                                            <option>--Filter Status entries --</option>
-                                            <optgroup label="Scopes">
-                                                <option tpl:foreach="scope">{{text()}}</option>
-                                            </optgroup>
-                                            <optgroup label="NGIs">
-                                                <option tpl:foreach="ngi">{{text()}}</option>
-                                            </optgroup>
-                                        </select>
-
-                                    </div>
-                                    <div class="m-2" tpl:else="">
-
-                                       <em>Filter : </em><span class="badge badge-primary">{{root/@filter}}</span><a title="reset the filter"><span id="reset-filter" class="fa fa-trash m-2"></span></a>
-
-                                    </div>
-
+                                    <em>Filter : </em><span class="badge badge-primary">{{root/@filter}}</span><a
+                                        title="reset the filter"><span id="reset-filter" class="fa fa-trash m-2"></span></a>
 
                                 </div>
 
-                                <div class="row">
-                                    <div class="float-left col-11"><a href="?start_date={{/root/@start_date_0}}&amp;end_date={{/root/@end_date_0}}" title="Slide to one day in the past"><i class="fa-2x fa fa-caret-left " ></i></a> </div>
-                                    <div tpl:if="/root/@end_date_1" class="float-right col-1 text-right"><a href="?start_date={{/root/@start_date_1}}&amp;end_date={{/root/@end_date_1}}" title="Slide to one day in the future"><i class="fa-2x fa fa-caret-right "></i> </a></div>
 
+                            </div>
+
+                            <div class="row">
+                                <div class="float-left col-11"><a
+                                        href="?start_date={{/root/@start_date_0}}&amp;end_date={{/root/@end_date_0}}"
+                                        title="Slide to one day in the past"><i class="fa-2x fa fa-caret-left "></i></a>
                                 </div>
-
-
-
-                                <div tpl:foreach="/root" id="div_timeline"  style="height:{count(group)*12+180}px;max-height:680px"></div>
+                                <div tpl:if="/root/@end_date_1" class="float-right col-1 text-right"><a
+                                        href="?start_date={{/root/@start_date_1}}&amp;end_date={{/root/@end_date_1}}"
+                                        title="Slide to one day in the future"><i class="fa-2x fa fa-caret-right "></i>
+                                </a></div>
 
                             </div>
 
 
-
-                            <div class="card-body" tpl:else="">
-                                <div  class="alert alert-danger" role="alert">No results !!! Please check your parameters (dates, entities...)</div>
-                            </div>
+                            <div tpl:foreach="/root" id="div_timeline"
+                                 style="height:{count(group)*12+180}px;max-height:680px"></div>
 
                         </div>
-                        <!-- /.card -->
 
 
-                        <!-- /.card -->
+                        <div class="card-body" tpl:else="">
+                            <div class="alert alert-danger" role="alert">No results !!! Please check your parameters
+                                (dates, entities...)
+                            </div>
+                        </div>
+
                     </div>
+                    <!-- /.card -->
+
+
+                    <!-- /.card -->
+                </div>
 
 
                 <!-- /.row -->
@@ -142,12 +165,11 @@
     </div>
     <!-- /.content-wrapper -->
     <!-- Main Footer -->
-        <footer tpl:include="/resource/app/html/footer.html"></footer>
+    <footer tpl:include="/resource/app/html/footer.html"></footer>
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
-
 
 
 <!-- jQuery -->
@@ -166,8 +188,6 @@
 <script src="/resource/app/js/timeline2.js?v={$app.version}"></script>
 
 <script src="/resource/app/js/filter.js?v={$app.version}"></script>
-
-
 
 
 </body>

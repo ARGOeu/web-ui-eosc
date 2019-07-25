@@ -14,7 +14,7 @@
 
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
-        <variable name="url"  eval="concat(property('api.profiles.metric'),'/',$id)"/>
+        <variable name="url" eval="concat(property('api.profiles.metric'),'/',$id)"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>
@@ -23,7 +23,8 @@
                 <entry key="x-api-key" eval="$api-key"/>
                 <entry key="Accept">application/json</entry>
             </parameter>
-            <fallback eval="new_element('exception',new_attribute('exception',concat('exception with metric profile: ',$id)))">
+            <fallback
+                    eval="new_element('exception',new_attribute('exception',concat('exception with metric profile: ',$id)))">
                 <exception type="java.io.IOException"/>
             </fallback>
         </connector>
@@ -38,7 +39,7 @@
 
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
-        <variable name="url"  eval="concat(property('api.profiles.aggregation'),'/',$id)"/>
+        <variable name="url" eval="concat(property('api.profiles.aggregation'),'/',$id)"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>
@@ -47,7 +48,8 @@
                 <entry key="x-api-key" eval="$api-key"/>
                 <entry key="Accept">application/json</entry>
             </parameter>
-            <fallback eval="new_element('exception',new_attribute('exception',concat('exception with aggregation profile: ',$url)))">
+            <fallback
+                    eval="new_element('exception',new_attribute('exception',concat('exception with aggregation profile: ',$url)))">
                 <exception type="java.io.IOException"/>
             </fallback>
         </connector>

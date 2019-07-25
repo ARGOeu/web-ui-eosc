@@ -10,7 +10,7 @@
 
     <!-- Main Sidebar Container -->
     <aside tpl:include="/resource/app/html/sidebar.html"></aside>
-        <!-- /sidebar -->
+    <!-- /sidebar -->
 
 
     <!-- Content Wrapper. Contains page content -->
@@ -20,7 +20,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                            <img tpl:foreach="root" src="/resource/app/img/logo-{@tenant}.png"  />
+                        <img tpl:foreach="root" src="/resource/app/img/logo-{@tenant}.png"/>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -39,27 +39,29 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="card" tpl:foreach="/root/data/result">
-                            <div class="card-header"><h4 class="d-inline">{{info/name/text()}}  </h4> <h6 class="offset-md-1 card-subtitle d-inline mb-2 text-muted" >{{info/description/text()}}</h6></div>
+                            <div class="card-header"><h4 class="d-inline">{{info/name/text()}} </h4> <h6
+                                    class="offset-md-1 card-subtitle d-inline mb-2 text-muted">
+                                {{info/description/text()}}</h6></div>
 
                             <div class="card-body">
 
                                 <div class="row">
                                     <div class="col-sm">
-                                        <h4>A/R Reports  <i class="fa fa-calendar reportrange_ar"></i><br/></h4>
+                                        <h4>A/R Reports <i class="fa fa-calendar reportrange_ar"></i><br/></h4>
                                         <!--<ul class=" list-group">-->
-                                            <!--<li class="list-group-item"> <a class="card-link" href="/{ancestor::root/@tenant}/report/{info/name/text()}/{topology_schema/group/type/text()}?nbdays=7"> Last 7 days</a></li>-->
-                                            <!--<li class="list-group-item"> <a class="card-link" href="/{ancestor::root/@tenant}/report/{info/name/text()}/{topology_schema/group/type/text()}?nbdays=31"> Last month</a></li>-->
-                                            <!--<li class="list-group-item"><a class="card-link" href="/{ancestor::root/@tenant}/report/{info/name/text()}/{topology_schema/group/type/text()}?nbdays=92"> Last 3 months</a></li>-->
+                                        <!--<li class="list-group-item"> <a class="card-link" href="/{ancestor::root/@tenant}/report/{info/name/text()}/{topology_schema/group/type/text()}?nbdays=7"> Last 7 days</a></li>-->
+                                        <!--<li class="list-group-item"> <a class="card-link" href="/{ancestor::root/@tenant}/report/{info/name/text()}/{topology_schema/group/type/text()}?nbdays=31"> Last month</a></li>-->
+                                        <!--<li class="list-group-item"><a class="card-link" href="/{ancestor::root/@tenant}/report/{info/name/text()}/{topology_schema/group/type/text()}?nbdays=92"> Last 3 months</a></li>-->
                                         <!--</ul>-->
 
 
                                     </div>
                                     <div class="col-sm">
-                                        <h4>Status Reports <i class="fa fa-calendar reportrange_status" id=""></i> </h4>
-                                            <!--<ul class="list-group">-->
-                                                <!--<li class="list-group-item"><a class="card-link" href="/{ancestor::root/@tenant}/status/{info/name/text()}/{topology_schema/group/group/type/text()}?nbdays=3"> Last 3 days</a></li>-->
-                                                <!--<li class="list-group-item"><a class="card-link" href="/{ancestor::root/@tenant}/status/{info/name/text()}/{topology_schema/group/group/type/text()}?nbdays=10"> Last 10 days</a></li>-->
-                                                <!--<li class="list-group-item"><a class="card-link" href="/{ancestor::root/@tenant}/status/{info/name/text()}/{topology_schema/group/group/type/text()}?nbdays=30"> Last  month</a></li>-->
+                                        <h4>Status Reports <i class="fa fa-calendar reportrange_status" id=""></i></h4>
+                                        <!--<ul class="list-group">-->
+                                        <!--<li class="list-group-item"><a class="card-link" href="/{ancestor::root/@tenant}/status/{info/name/text()}/{topology_schema/group/group/type/text()}?nbdays=3"> Last 3 days</a></li>-->
+                                        <!--<li class="list-group-item"><a class="card-link" href="/{ancestor::root/@tenant}/status/{info/name/text()}/{topology_schema/group/group/type/text()}?nbdays=10"> Last 10 days</a></li>-->
+                                        <!--<li class="list-group-item"><a class="card-link" href="/{ancestor::root/@tenant}/status/{info/name/text()}/{topology_schema/group/group/type/text()}?nbdays=30"> Last  month</a></li>-->
                                         <br/>
                                     </div>
                                 </div>
@@ -81,7 +83,7 @@
     </div>
     <!-- /.content-wrapper -->
     <!-- Main Footer -->
-        <footer tpl:include="/resource/app/html/footer.html"></footer>
+    <footer tpl:include="/resource/app/html/footer.html"></footer>
 </div>
 <!-- ./wrapper -->
 
@@ -113,8 +115,8 @@
 
 
 
-    </style>
 
+</style>
 
 
 <!-- REQUIRED SCRIPTS -->
@@ -130,9 +132,12 @@
 
 <!-- Date Ranger Picker -->
 
-<link rel="stylesheet"  media="screen" type="text/css" href="/resource/app/html/adminlte/plugins/daterangepicker/daterangepicker-bs3.css?v={$app.version}"/>
-<script src="/resource/app/html/adminlte/plugins/daterangepicker/moment.min.js?v={$app.version}" type="text/javascript"></script>
-<script src="/resource/app/html/adminlte/plugins/daterangepicker/daterangepicker.js?v={$app.version}" type="text/javascript"></script>
+<link rel="stylesheet" media="screen" type="text/css"
+      href="/resource/app/html/adminlte/plugins/daterangepicker/daterangepicker-bs3.css?v={$app.version}"/>
+<script src="/resource/app/html/adminlte/plugins/daterangepicker/moment.min.js?v={$app.version}"
+        type="text/javascript"></script>
+<script src="/resource/app/html/adminlte/plugins/daterangepicker/daterangepicker.js?v={$app.version}"
+        type="text/javascript"></script>
 
 
 <script>
@@ -166,6 +171,7 @@
                         }
 
                 );
+
 </script>
 
 </body>

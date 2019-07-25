@@ -11,7 +11,7 @@
 
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
-        <variable name="url"  eval="property('api.reports')"/>
+        <variable name="url" eval="property('api.reports')"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>
@@ -20,7 +20,8 @@
                 <entry key="x-api-key" eval="$api-key"/>
                 <entry key="Accept">application/json</entry>
             </parameter>
-            <fallback eval="new_element('exception',new_attribute('exception',concat('exception with tenant: ',$tenant)))">
+            <fallback
+                    eval="new_element('exception',new_attribute('exception',concat('exception with tenant: ',$tenant)))">
                 <exception type="java.io.IOException"/>
             </fallback>
         </connector>
@@ -49,7 +50,6 @@
         <connector type="FileConnector">
             <parameter name="path">app/resources/tenants.xml</parameter>
         </connector>
-
 
 
         <cache type="FileCache">
@@ -110,12 +110,13 @@
                         <attribute-create out="topology3">'services'</attribute-create>
                         <attribute-create out="thresholdAv">../ancestor::tenant/thresholdAv/text()</attribute-create>
                         <attribute-create out="thresholdRe">../ancestor::tenant/thresholdRe/text()</attribute-create>
-                        <element-create >view('reportTopology',entry('tenant',../ancestor::tenant/id/text())|entry('report',../info/name/text()))/object/data/*</element-create>
+                        <element-create>
+                            view('reportTopology',entry('tenant',../ancestor::tenant/id/text())|entry('report',../info/name/text()))/object/data/*
+                        </element-create>
                         <element-ignore/>
                     </element>
                 </elements-ignore>
             </elements>
-
 
 
         </processors>
@@ -165,7 +166,9 @@
                         <attribute-create out="topology3">'services'</attribute-create>
                         <attribute-create out="thresholdAv">../ancestor::tenant/thresholdAv/text()</attribute-create>
                         <attribute-create out="thresholdRe">../ancestor::tenant/thresholdRe/text()</attribute-create>
-                        <element-create >view('reportTopology',entry('tenant',../ancestor::tenant/id/text())|entry('report',../info/name/text()))/object/data/*</element-create>
+                        <element-create>
+                            view('reportTopology',entry('tenant',../ancestor::tenant/id/text())|entry('report',../info/name/text()))/object/data/*
+                        </element-create>
                     </element>
                 </elements>
             </elements>
@@ -174,13 +177,17 @@
                 <elements-ignore path="tenant/object/data">
                     <element in="report">
                         <element in="profiles">
-                            <element in="object" out="aggregation"  if="type/text()='aggregation'">
-                                <element-create>view('aggregation_profiles',entry('tenant',../ancestor::report/@tenant)|entry('id',../id/text()))</element-create>
+                            <element in="object" out="aggregation" if="type/text()='aggregation'">
+                                <element-create>
+                                    view('aggregation_profiles',entry('tenant',../ancestor::report/@tenant)|entry('id',../id/text()))
+                                </element-create>
 
                             </element>
 
-                            <element in="object" out="metrics"  if="type/text()='metric'">
-                                <element-create>view('metric_profiles',entry('tenant',../ancestor::report/@tenant)|entry('id',../id/text()))</element-create>
+                            <element in="object" out="metrics" if="type/text()='metric'">
+                                <element-create>
+                                    view('metric_profiles',entry('tenant',../ancestor::report/@tenant)|entry('id',../id/text()))
+                                </element-create>
                             </element>
                         </element>
                     </element>
@@ -203,10 +210,7 @@
         </cache>
 
 
-
     </view>
-
-
 
 
 </views>

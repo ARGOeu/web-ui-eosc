@@ -1,24 +1,24 @@
 <tenants>
     <!--<tenant>-->
-        <!--<id>ARGOTEST</id>-->
-        <!--<name>ARGOTEST</name>-->
-        <!--<description>Playground tenant</description>-->
-        <!--<url>http://argo.eu</url>-->
-        <!--<contact>argo@mailman.egi.eu</contact>-->
-        <!--<topologyReference>goc</topologyReference>-->
-        <!--<topologyAR>NGI</topologyAR>-->
-        <!--<topologyStatus>SITES</topologyStatus>-->
-        <!--<topologyDetails>services</topologyDetails>-->
+    <!--<id>ARGOTEST</id>-->
+    <!--<name>ARGOTEST</name>-->
+    <!--<description>Playground tenant</description>-->
+    <!--<url>http://argo.eu</url>-->
+    <!--<contact>argo@mailman.egi.eu</contact>-->
+    <!--<topologyReference>goc</topologyReference>-->
+    <!--<topologyAR>NGI</topologyAR>-->
+    <!--<topologyStatus>SITES</topologyStatus>-->
+    <!--<topologyDetails>services</topologyDetails>-->
 
-        <!--<reports>-->
-            <!--<report>-->
-                <!--<tenant>ARGOTEST</tenant>-->
-                <!--<id>Critical</id>-->
-                <!--<thresholdAv>80</thresholdAv>-->
-                <!--<thresholdRe>85</thresholdRe>-->
-            <!--</report>-->
+    <!--<reports>-->
+    <!--<report>-->
+    <!--<tenant>ARGOTEST</tenant>-->
+    <!--<id>Critical</id>-->
+    <!--<thresholdAv>80</thresholdAv>-->
+    <!--<thresholdRe>85</thresholdRe>-->
+    <!--</report>-->
 
-        <!--</reports>-->
+    <!--</reports>-->
     <!--</tenant>-->
     <tenant>
         <id>egi</id>
@@ -39,16 +39,16 @@
                 <thresholdRe>85</thresholdRe>
             </report>
             <!--<report>-->
-                <!--<tenant>egi</tenant>-->
-                <!--<id>OPS-MONITOR-Critical</id>-->
-                <!--<thresholdAv>80</thresholdAv>-->
-                <!--<thresholdRe>85</thresholdRe>-->
+            <!--<tenant>egi</tenant>-->
+            <!--<id>OPS-MONITOR-Critical</id>-->
+            <!--<thresholdAv>80</thresholdAv>-->
+            <!--<thresholdRe>85</thresholdRe>-->
             <!--</report>-->
             <!--<report>-->
-                <!--<tenant>egi</tenant>-->
-                <!--<id>CriticalUncert</id>-->
-                <!--<thresholdAv>80</thresholdAv>-->
-                <!--<thresholdRe>85</thresholdRe>-->
+            <!--<tenant>egi</tenant>-->
+            <!--<id>CriticalUncert</id>-->
+            <!--<thresholdAv>80</thresholdAv>-->
+            <!--<thresholdRe>85</thresholdRe>-->
             <!--</report>-->
 
         </reports>
@@ -116,8 +116,5 @@
         </reports>
     </tenant>
 
-
-
-    
 
 </tenants>

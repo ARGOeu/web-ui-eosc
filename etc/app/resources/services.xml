@@ -39,7 +39,8 @@
             <title>System operations user</title>
         </field>
         <field name="remote_user" type="zope.schema.TextLine"><description>Comma separated list of remote user names to
-            be used.</description>/&gt; <required>False</required>
+            be used.</description>/&gt;
+            <required>False</required>
             <title>Remote user names</title>
         </field>
         <field name="path" type="zope.schema.TextLine">
@@ -68,7 +69,8 @@
             <title>Contacts</title>
         </field>
         <field name="text" type="plone.app.textfield.RichText"><description>Anything else to further describe this
-            endpoint</description>/&gt; <required>False</required>
+            endpoint</description>/&gt;
+            <required>False</required>
             <title>Text</title>
         </field>
     </schema>

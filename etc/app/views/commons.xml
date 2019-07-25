@@ -22,7 +22,7 @@
                 </element>
 
                 <element in="report">
-                    <element-ignore  if="../@tenant!=$tenant or ../@report!=$report"/>
+                    <element-ignore if="../@tenant!=$tenant or ../@report!=$report"/>
                 </element>
 
             </element>
@@ -30,7 +30,7 @@
 
         <renderers>
             <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/report_details.html</parameter>
+                <parameter name="template">app/html/report-ar/report_details.html</parameter>
             </renderer>
         </renderers>
 
@@ -42,7 +42,7 @@
         <argument name="report"/>
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
-        <variable name="url"  eval="concat(property('api.topology'),'/',$report)"/>
+        <variable name="url" eval="concat(property('api.topology'),'/',$report)"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>
@@ -98,9 +98,11 @@
 
 
             </element>
-            
+
             <element in="root">
-                <attribute-create out="topology">../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topology2</attribute-create>
+                <attribute-create out="topology">
+                    ../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topology2
+                </attribute-create>
 
                 <!--<element-create if="../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topologyReference='goc'">view('gocdb.downtimes.site', entry('site',$entity))</element-create>-->
                 <!--<element-create if="../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topologyReference='dpmt'">view('dpmt.downtimes.site',entry('site',$entity))</element-create>-->
@@ -138,8 +140,6 @@
     </view>
 
 
-
-
     <view name="dashboard">
 
         <argument name="report">Critical</argument>
@@ -155,7 +155,6 @@
         <processors>
 
 
-
             <element in="root">
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="tenant">$tenant</attribute-create>
@@ -163,9 +162,11 @@
 
                 <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
             </element>
-            
+
             <element in="root" if="$scope='_scope_'">
-                <attribute-create out="topology">../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topology2</attribute-create>
+                <attribute-create out="topology">
+                    ../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topology2
+                </attribute-create>
 
                 <element-create>view('downtimes',entry('tenant',$tenant)|entry('report',$report))</element-create>
 
@@ -190,8 +191,6 @@
 
 
         </processors>
-
-
 
 
         <renderers>

@@ -16,8 +16,8 @@
             <element in="root">
                 <element-create>entry('token',user('token'))</element-create>
                 <element-create>view('userInfo', entry('token',user('token')))</element-create>
-
             </element>
+
         </processors>
 
         <renderers>
@@ -37,7 +37,9 @@
         <processors>
             <element in="root">
                 <element-create>entry('token',user('token'))</element-create>
-                <element-create>view('userInfo', entry('token',user('token'))|entry('url',property('eudat.oidc.userInfo')))</element-create>
+                <element-create>view('userInfo',
+                    entry('token',user('token'))|entry('url',property('eudat.oidc.userInfo')))
+                </element-create>
 
             </element>
         </processors>
@@ -49,8 +51,6 @@
         </renderers>
 
     </view>
-
-
 
 
     <view name="userInfo">
@@ -60,17 +60,20 @@
             <parameter name="certificate" eval="property('certificate.path')"/>
             <parameter name="passphrase" eval="property('certificate.password')"/>
         </connector>
-        <serializer type="JSONStreamSerializer"/>
+                <serializer type="JSONStreamSerializer"/>
+
     </view>
 
+
     <view name="profile" authenticators="aai">
+
         <connector type="XMLConnector">
             <parameter name="content" eval="new_element('root')"/>
         </connector>
 
         <processors>
             <element in="root">
-                <element-create>new_element('user',user())</element-create>
+                <!--                <element-create>new_element('user',user())</element-create>-->
             </element>
         </processors>
 
@@ -80,8 +83,6 @@
             </renderer>
         </renderers>
     </view>
-
-
 
 
 </views>

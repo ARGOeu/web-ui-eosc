@@ -10,7 +10,7 @@
         </authenticator>
     </authenticators>
 
-    <authenticators name="aaaai">
+    <authenticators name="aai">
         <authenticator type="OAuth2Authenticator">
             <!-- required: The URL of the OAuth2 Authorization URL (String) -->
             <parameter name="authz_location">https://aai-dev.egi.eu/oidc/authorize</parameter>

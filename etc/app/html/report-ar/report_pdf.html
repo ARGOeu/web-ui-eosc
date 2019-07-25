@@ -3,7 +3,6 @@
       xmlns:date="http://exslt.org/dates-and-times">
 
 
-
 <style>
     body, html {
         border: 0px
@@ -140,6 +139,7 @@
     }
 
 
+
 </style>
 
 <body class="hold-transition sidebar-mini ">
@@ -160,9 +160,13 @@
         <table style="position: absolute;top:5px;">
             <thead>
             <tr>
-                <td class="noBorder"><img src="http://argo.egi.eu/resource/app/img/logo-{/root/@tenant}.png"  height="80px" width="80px"/></td>
-                <td class="noBorder" style="width: 68%"><p id="top" tpl:foreach="/root"    style="align:center;text-align: center"> Availability Reliability Report </p></td>
-                <td class="noBorder"><img src="http://argo.egi.eu/resource/app/img/logo-argo-prod.png"     height="46px" width="100px"/></td>
+                <td class="noBorder"><img src="http://argo.egi.eu/resource/app/img/logo-{/root/@tenant}.png"
+                                          height="80px" width="80px"/></td>
+                <td class="noBorder" style="width: 68%"><p id="top" tpl:foreach="/root"
+                                                           style="align:center;text-align: center"> Availability
+                    Reliability Report </p></td>
+                <td class="noBorder"><img src="http://argo.egi.eu/resource/app/img/logo-argo-prod.png" height="46px"
+                                          width="100px"/></td>
             </tr>
             </thead>
         </table>
@@ -172,16 +176,23 @@
         <table style="width:90%;align:left">
             <thead>
             <tr>
-                <td class="noBorder" style="width:4px;"><span style="font-style: italic;margin: 4px"> Month </span> > {{/root/@month3}} / {{/root/@month4}} / {{/root/@month5}}</td>
-                <td class="noBorder" ></td>
-                <td class="noBorder" ></td>
-                <td class="noBorder" > </td>
+                <td class="noBorder" style="width:4px;"><span style="font-style: italic;margin: 4px"> Month </span> >
+                    {{/root/@month3}} / {{/root/@month4}} / {{/root/@month5}}
+                </td>
+                <td class="noBorder"></td>
+                <td class="noBorder"></td>
+                <td class="noBorder"></td>
             </tr>
             <tr>
-                <td class="noBorder" style="width:4px;"><span style="font-style: italic;margin: 4px">Entity  </span><span style="margin: 4px"> > {{/root/@topology}} </span><span style="margin: 4px" tpl:if="/root/@filter!='_filter_'"> > {{/root/@filter}}</span><span tpl:if="/root/@group" style="margin: 4px"> > {{/root/@group}}</span><span tpl:if="/root/@group2" style="margin: 4px"> > {{/root/@group2}}</span></td>
-                <td class="noBorder" ></td>
-                <td class="noBorder" ></td>
-                <td class="noBorder" > </td>
+                <td class="noBorder" style="width:4px;"><span
+                        style="font-style: italic;margin: 4px">Entity  </span><span style="margin: 4px"> > {{/root/@topology}} </span><span
+                        style="margin: 4px" tpl:if="/root/@filter!='_filter_'"> > {{/root/@filter}}</span><span
+                        tpl:if="/root/@group" style="margin: 4px"> > {{/root/@group}}</span><span tpl:if="/root/@group2"
+                                                                                                  style="margin: 4px"> > {{/root/@group2}}</span>
+                </td>
+                <td class="noBorder"></td>
+                <td class="noBorder"></td>
+                <td class="noBorder"></td>
             </tr>
             </thead>
         </table>
@@ -258,12 +269,7 @@
 <script src="/resource/app/js/filter.js?v={$app.version}"></script>
 
 
-
-
-
 <script src="/resource/app/js/dashboard.js?v={$app.version}"></script>
-
-
 
 
 </body>

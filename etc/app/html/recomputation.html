@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:date="http://exslt.org/dates-and-times">
+
+<head tpl:include="/resource/app/html/header.html"></head>
+
+<body class="hold-transition sidebar-mini ">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav tpl:include="/resource/app/html/navbar.html"></nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside tpl:include="/resource/app/html/sidebar.html"></aside>
+    <!-- /sidebar -->
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-9">
+
+                    </div><!-- /.col -->
+                    <div class="col-sm-3">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active"> Recomputation Form</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row" tpl:foreach="/root[not(result)]">
+                    <div class="col-lg-12">
+
+                        <div class="card border border-primary">
+                            <div class="card-header ui-sortable-handle" style="cursor: move;">
+                                <h3 class="card-title">
+                                    <i class="ion ion-clipboard mr-1"></i>
+                                    Recomputation
+                                </h3>
+
+
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body" >
+                            <form action="/lavoisier/form_recomputation_results" method="post" >
+                            <div class="row form-group">
+                                <div class="col-6"  tpl:foreach="object/*">
+                                    <label for="{{name()}}">{{name()}} </label>
+                                    <input name="{{name()}}" class="form-control"  id="{{name()}}" value="{{text()}}"/>
+                                    <hr/>
+                                </div>
+
+                                <input id="recompId" name="recompId" class="d-none" />
+                                <input name="tenant" class="d-none"  value="{{/root/@tenant}}"/>
+                                <input name="report" class="d-none"  value="{{/root/@report}}"/>
+
+                            </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                    <label>Entity</label>
+                                    <select id="services"  name="entity" class="form-control">
+                                        <option  tpl:foreach="/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()"
+                                                value="{.}">{{.}}
+                                        </option>
+                                        <option name="entity"
+                                                value="IN2P3-CC">IN2P3-CC
+                                        </option>
+                                    </select>
+                                    <hr/>
+                                    </div>
+
+
+                                    <div class="col-6">
+                                        <label>Period</label>
+                                        <div id="reportrange"  style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                            <i class="fa fa-calendar m-1"></i>
+                                            <span name="range"></span> <i class="m-1 fa fa-caret-down"></i>
+                                        </div>
+                                        <hr/>
+                                    </div>
+
+                                    </div>
+
+                                <div class="row form-group">
+                                    <label for="reason">Reason of recomputation</label>
+                                    <textarea name="reason" class="form-control" id="reason" rows="4"></textarea>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12 float-right">
+                                        <input value="Submit Recomputation" type="submit"   class="btn btn-primary"/>
+                                    </div>
+                                </div>
+                            </form>
+                            </div>
+
+
+
+                            <!-- /.card-body -->
+
+                        </div>
+
+                        <!-- /.card -->
+
+
+                        <!-- /.card -->
+                    </div>
+
+                </div>
+                <div class="row" tpl:foreach="/root[result]">
+                    <div class="col-lg-12">
+
+                        <div class="card border border-primary">
+                            <div class="card-header ui-sortable-handle" style="cursor: move;">
+                                <h3 class="card-title">
+                                    Recomputation summary
+                                </h3>
+                                <div class="card-body">
+                                    <div class="alert alert-success" >Your recomputation has been properly submitted </div>
+                                </div>
+
+                                <div class="card-body" >
+                                    <div class="row">
+                                        <div tpl:foreach="result/e:entries/e:entry" class="col-4">
+                                            <hr/>
+                                            <label>{{@key}} </label>
+                                            <div>{{text()}}</div>
+                                        </div>
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Main Footer -->
+
+    <footer tpl:include="/resource/app/html/footer.html"></footer>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="/resource/app/html/adminlte/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- adminlte -->
+<script src="/resource/app/html/adminlte/dist/js/adminlte.js"></script>
+
+
+<!-- date range picker -->
+<link rel="stylesheet" href="/resource/app/html/adminlte/plugins/daterangepicker/daterangepicker-bs3.css"/>
+
+<script src="/resource/app/html/adminlte/plugins/daterangepicker/moment.min.js"></script>
+<script src="/resource/app/html/adminlte/plugins/daterangepicker/daterangepicker.js"></script>
+
+<script>
+
+    $(function() {
+
+    var RecompId=Date.now();
+    $('#recompId').val(RecompId);
+
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+
+    function cb(start, end) {
+        $('#reportrange span').html(start.format('YYYY-MM-DD') + ' / ' + end.format('YYYY-MM-DD'));
+    }
+
+    $('#reportrange').daterangepicker({
+        startDate: start,
+        endDate: end,
+
+    }, cb);
+
+    cb(start, end);
+
+});
+</script>
+</body>
+</html>
+

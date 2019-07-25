@@ -31,7 +31,9 @@
             <element in="results" out="root">
                 <element in="SERVICE_GROUP" out="results">
                     <element in="SERVICE_ENDPOINT" out="result">
-                        <element-create>view('report-status',entry('tenant',$tenant)|entry('report',$report)|entry('topology',$topology)|entry('entity1',../SITE/text())|entry('entity2',../SERVICE_TYPE/text()))</element-create>
+                        <element-create>
+                            view('report-status',entry('tenant',$tenant)|entry('report',$report)|entry('topology',$topology)|entry('entity1',../SITE/text())|entry('entity2',../SERVICE_TYPE/text()))
+                        </element-create>
                     </element>
                 </element>
             </element>

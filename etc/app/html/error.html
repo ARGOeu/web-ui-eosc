@@ -8,7 +8,6 @@
     <title>ARGO | Home</title>
 
 
-
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="/resource/app/html/adminlte/plugins/font-awesome/css/all.css"/>
     <!-- IonIcons -->
@@ -37,7 +36,6 @@
         </ul>
 
 
-
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
             <!-- Messages Dropdown Menu -->
@@ -50,7 +48,8 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="/" class="brand-link">
-            <img src="/resource/app/img/logo-argo.png" alt="ARGO Logo" class="brand-image img-circle elevation-3"                style="opacity: .8"/>
+            <img src="/resource/app/img/logo-argo.png" alt="ARGO Logo" class="brand-image img-circle elevation-3"
+                 style="opacity: .8"/>
             <span class="brand-text">ARGO</span>
         </a>
 
@@ -60,7 +59,8 @@
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
 
@@ -77,11 +77,11 @@
                     </li>
 
                     <li class="nav-item">
-                        <a tpl:if="$app.instance!='prod'"  href="http://{$eudat.instance.devel}" class="nav-link">
+                        <a tpl:if="$app.instance!='prod'" href="http://{$eudat.instance.devel}" class="nav-link">
                             <i class="nav-icon far fa-circle text-warning"></i>
                             <p>EUDAT ARGO</p>
                         </a>
-                        <a tpl:else=""  href="http://{$eudat.instance.prod}" class="nav-link">
+                        <a tpl:else="" href="http://{$eudat.instance.prod}" class="nav-link">
                             <i class="nav-icon far fa-circle text-warning"></i>
                             <p>EUDAT ARGO</p>
                         </a>
@@ -131,32 +131,36 @@
         </section>
 
 
-
         <!-- Main content -->
         <section class="content">
 
 
-
-                <div class="col-lg-9 col-9" tpl:foreach="error[not(contains(text(),'No results found for given query'))]">
-                    <!-- small card -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>ERROR #{{@code}}</h3>
-                            <code>This page isn't available.  </code><br/><br/>
-                            <code><small>{{text()}}</small></code>
-                            <code><small>{{message/text()}}</small></code>
-                            <code><small>{{details/text()}}</small></code>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-alert"></i>
-                        </div>
-                        <a href="/" class="small-box-footer">
-                            HomePage <i class="fa fa-arrow-circle-right"></i>
-                        </a>
+            <div class="col-lg-9 col-9" tpl:foreach="error[not(contains(text(),'No results found for given query'))]">
+                <!-- small card -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>ERROR #{{@code}}</h3>
+                        <code>This page isn't available. </code><br/><br/>
+                        <code>
+                            <small>{{text()}}</small>
+                        </code>
+                        <code>
+                            <small>{{message/text()}}</small>
+                        </code>
+                        <code>
+                            <small>{{details/text()}}</small>
+                        </code>
                     </div>
-
-
+                    <div class="icon">
+                        <i class="ion ion-alert"></i>
+                    </div>
+                    <a href="/" class="small-box-footer">
+                        HomePage <i class="fa fa-arrow-circle-right"></i>
+                    </a>
                 </div>
+
+
+            </div>
 
             <div class="col-lg-9 col-9" tpl:foreach="error[contains(text(),'No results found for given query')]">
                 <!-- small card -->
@@ -178,7 +182,6 @@
             </div>
 
 
-
             <!-- /.error-page -->
         </section>
         <!-- /.content -->
@@ -188,10 +191,11 @@
     <footer class="main-footer">
         <!-- To the right -->
         <div class="float-right  d-sm-block-down">
-            <strong>Copyright  2019 <a href="https://www.eosc-hub.eu/">EOSC-Hub</a>.</strong>
+            <strong>Copyright 2019 <a href="https://www.eosc-hub.eu/">EOSC-Hub</a>.</strong>
         </div>
         <!-- Default to the left -->
-         EOSC-hub receives funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 777536.
+        EOSC-hub receives funding from the European Union’s Horizon 2020 research and innovation programme under grant
+        agreement No 777536.
     </footer>
 </div>
 <!-- ./wrapper -->

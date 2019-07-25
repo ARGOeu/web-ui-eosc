@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd" >
+<html lang="en" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
 <head tpl:include="/resource/app/html/header.html"></head>
 
 <body class="hold-transition sidebar-mini ">
@@ -11,13 +11,13 @@
 
     <!-- Main Sidebar Container -->
     <aside tpl:include="/resource/app/html/sidebar.html"></aside>
-        <!-- /sidebar -->
+    <!-- /sidebar -->
 
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <div class="content-header" >
+        <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
@@ -27,9 +27,15 @@
                         <ol class="breadcrumb float-sm-right" tpl:foreach="/root">
                             <li class="breadcrumb-item"><a href="/">Home</a></li>
                             <li class="breadcrumb-item">Availabilities / Reliabilities</li>
-                            <li class="breadcrumb-item"><a href="/{@tenant}/report-ar-group/{@report}/{@month}/{@topology}/{@group}">{{@group}}</a></li>
-                            <li class="breadcrumb-item" tpl:if="@group2"><a href="/{@tenant}/report-ar-group/{@report}/{@month}/{@topology}/{@group}/{@topology2}/{@group2}/endpoints">{{@group2}}</a></li>
-                            <li class="breadcrumb-item" tpl:if="@group3"><a href="/{@tenant}/report-ar-group/{@report}/{@month}/{@topology}/{@group}/{@topology2}/{@group2}/endpoints/{@group3}">{{@group3}}</a></li>
+                            <li class="breadcrumb-item"><a
+                                    href="/{@tenant}/report-ar-group/{@report}/{@month}/{@topology}/{@group}">{{@group}}</a>
+                            </li>
+                            <li class="breadcrumb-item" tpl:if="@group2"><a
+                                    href="/{@tenant}/report-ar-group/{@report}/{@month}/{@topology}/{@group}/{@topology2}/{@group2}/endpoints">{{@group2}}</a>
+                            </li>
+                            <li class="breadcrumb-item" tpl:if="@group3"><a
+                                    href="/{@tenant}/report-ar-group/{@report}/{@month}/{@topology}/{@group}/{@topology2}/{@group2}/endpoints/{@group3}">{{@group3}}</a>
+                            </li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -44,16 +50,29 @@
 
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="table-tab" data-toggle="tab" href="#table" role="tab" aria-controls="table" aria-selected="true"><span class="fa fa-table "></span>  Availability/Reliability Table</a>
+                        <a class="nav-link active" id="table-tab" data-toggle="tab" href="#table" role="tab"
+                           aria-controls="table" aria-selected="true"><span class="fa fa-table "></span>
+                            Availability/Reliability Table</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="charts-tab" data-toggle="tab" href="#charts" role="tab" aria-controls="charts" aria-selected="false"><span class="fa fa-chart-bar"></span> Availability/Reliability Charts</a>
+                        <a class="nav-link" id="charts-tab" data-toggle="tab" href="#charts" role="tab"
+                           aria-controls="charts" aria-selected="false"><span class="fa fa-chart-bar"></span>
+                            Availability/Reliability Charts</a>
                     </li>
                     <li tpl:foreach="/root">
 
-                        <a class="nav-link" role="tab" aria-controls="table" aria-selected="true"  tpl:if="@topology='NGI'" href="/{@tenant}/report-status/{@report}/SITES?filter={@group}&amp;start_date={@start_date}&amp;end_date={@end_date}" title="status link" ><span class="fa fa-check "></span> STATUS</a>
-                        <a class="nav-link" role="tab" aria-controls="table" aria-selected="true"  tpl:else="@group and not(@group2)" href="/{@tenant}/report-status/{@report}/{@topology}/{@group}?start_date={@start_date}&amp;end_date={@end_date}" title="status link" ><span class="fa fa-check "></span> STATUS</a>
-                        <a class="nav-link" role="tab" aria-controls="table" aria-selected="true"  tpl:else="@group2 and not(@group3)" href="/{@tenant}/report-status/{@report}/{@topology}/{@group}/{@group2}?start_date={@start_date}&amp;end_date={@end_date}" title="status link" ><span class="fa fa-check"></span> STATUS</a>
+                        <a class="nav-link" role="tab" aria-controls="table" aria-selected="true"
+                           tpl:if="@topology='NGI'"
+                           href="/{@tenant}/report-status/{@report}/SITES?filter={@group}&amp;start_date={@start_date}&amp;end_date={@end_date}"
+                           title="status link"><span class="fa fa-check "></span> STATUS</a>
+                        <a class="nav-link" role="tab" aria-controls="table" aria-selected="true"
+                           tpl:else="@group and not(@group2)"
+                           href="/{@tenant}/report-status/{@report}/{@topology}/{@group}?start_date={@start_date}&amp;end_date={@end_date}"
+                           title="status link"><span class="fa fa-check "></span> STATUS</a>
+                        <a class="nav-link" role="tab" aria-controls="table" aria-selected="true"
+                           tpl:else="@group2 and not(@group3)"
+                           href="/{@tenant}/report-status/{@report}/{@topology}/{@group}/{@group2}?start_date={@start_date}&amp;end_date={@end_date}"
+                           title="status link"><span class="fa fa-check"></span> STATUS</a>
 
                     </li>
 
@@ -61,60 +80,75 @@
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="table" role="tabpanel" aria-labelledby="table-tab">
 
-                            <div class="card" tpl:foreach="/root">
-                             <input class="d-none" id="titlePDF" tpl:if="@month" value="AVAILABILITY/RELIABILITY MONTHLY REPORT : {{@month}}  "/>
-                                <input class="d-none" id="titlePDF" tpl:else="" value="AVAILABILITY/RELIABILITY CUSTOM REPORT"/>
-                                <input class="d-none" id="subtitlePDF" value="{{@tenant}} - {{@report}} Report"/>
-                                <input class="d-none" id="subtitlePDF2" tpl:if="@group" value="{{@group}}  {{@group2}}  {{@group3}} "/>
+                        <div class="card" tpl:foreach="/root">
+                            <input class="d-none" id="titlePDF" tpl:if="@month"
+                                   value="AVAILABILITY/RELIABILITY MONTHLY REPORT : {{@month}}  "/>
+                            <input class="d-none" id="titlePDF" tpl:else=""
+                                   value="AVAILABILITY/RELIABILITY CUSTOM REPORT"/>
+                            <input class="d-none" id="subtitlePDF" value="{{@tenant}} - {{@report}} Report"/>
+                            <input class="d-none" id="subtitlePDF2" tpl:if="@group"
+                                   value="{{@group}}  {{@group2}}  {{@group3}} "/>
 
-                                <div class="card-body" tpl:foreach="group" >
-                                    <h2 class="card-title"><span>{{@name}}</span> <a tpl:if="@type!='endpoint'" href="javascript:my_link('{@name}')"   title="Drilldown to details" class="text-white m-2 badge badge-primary">DETAILS</a> </h2>
-                                    <hr/>
-                                    <div class="table-responsive">
-                                        <table id="ar_{{@name}}" class="ar table m-0">
-                                            <thead>
-                                            <tr>
+                            <div class="card-body" tpl:foreach="group">
+                                <h2 class="card-title"><span>{{@name}}</span> <a tpl:if="@type!='endpoint'"
+                                                                                 href="javascript:my_link('{@name}')"
+                                                                                 title="Drilldown to details"
+                                                                                 class="text-white m-2 badge badge-primary">DETAILS</a>
+                                </h2>
+                                <hr/>
+                                <div class="table-responsive">
+                                    <table id="ar_{{@name}}" class="ar table m-0">
+                                        <thead>
+                                        <tr>
 
-                                                <th>Timestamp</th>
-                                                <th>Availability</th>
-                                                <th>Reliability</th>
-                                                <th tpl:if="results[1]/@unknown">Unknown</th>
-                                                <th tpl:if="results[1]/@downtime">Downtime</th>
+                                            <th>Timestamp</th>
+                                            <th>Availability</th>
+                                            <th>Reliability</th>
+                                            <th tpl:if="results[1]/@unknown">Unknown</th>
+                                            <th tpl:if="results[1]/@downtime">Downtime</th>
 
-                                            </tr>
-                                            </thead>
-                                            <tbody >
+                                        </tr>
+                                        </thead>
+                                        <tbody>
 
-                                            <tr tpl:foreach="results">
+                                        <tr tpl:foreach="results">
 
-                                                <td>{{@timestamp}}</td>
+                                            <td>{{@timestamp}}</td>
 
-                                                <td>
-                                                    <span tpl:if="not(@availability) or @availability=-1" class="m-1 badge badge-secondary">N/A</span>
-                                                    <span tpl:else="@availability &gt;= /root/@level1" class="m-1 badge badge-success">{{@availability}}</span>
-                                                    <span tpl:else="@availability &lt; /root/@level1" class="m-1 badge badge-danger">{{@availability}}</span>
-                                                </td>
-                                                <td>
-                                                    <span tpl:if="not(@reliability) or @reliability=-1" class="m-1 badge badge-secondary">N/A</span>
-                                                    <span tpl:else="@reliability &gt;= /root/@level2" class="m-1 badge badge-success">{{@reliability}}</span>
-                                                    <span tpl:else="@reliability &lt; /root/@level2" class="m-1 badge badge-danger">{{@reliability}}</span>
-                                                </td>
+                                            <td>
+                                                <span tpl:if="not(@availability) or @availability=-1"
+                                                      class="m-1 badge badge-secondary">N/A</span>
+                                                <span tpl:else="@availability &gt;= /root/@level1"
+                                                      class="m-1 badge badge-success">{{@availability}}</span>
+                                                <span tpl:else="@availability &lt; /root/@level1"
+                                                      class="m-1 badge badge-danger">{{@availability}}</span>
+                                            </td>
+                                            <td>
+                                                <span tpl:if="not(@reliability) or @reliability=-1"
+                                                      class="m-1 badge badge-secondary">N/A</span>
+                                                <span tpl:else="@reliability &gt;= /root/@level2"
+                                                      class="m-1 badge badge-success">{{@reliability}}</span>
+                                                <span tpl:else="@reliability &lt; /root/@level2"
+                                                      class="m-1 badge badge-danger">{{@reliability}}</span>
+                                            </td>
 
-                                                <td tpl:if="@unknown">
-                                                    <span tpl:if="@unknown * 100 &gt;= 10" class="m-1 badge badge-danger">{{@unknown * 100}}</span>
-                                                    <span tpl:else="" class="m-1 badge badge-success">{{@unknown * 100}}</span>
-                                                </td>
-                                                <td tpl:if="@downtime">
-                                                    <span tpl:if="@downtime * 100  &gt;= 10" class="m-1 badge badge-danger">{{@downtime *100}}</span>
-                                                    <span tpl:else="" class="m-1 badge badge-success">{{@downtime * 100}}</span>
-                                                </td>
+                                            <td tpl:if="@unknown">
+                                                <span tpl:if="@unknown * 100 &gt;= 10" class="m-1 badge badge-danger">{{@unknown * 100}}</span>
+                                                <span tpl:else=""
+                                                      class="m-1 badge badge-success">{{@unknown * 100}}</span>
+                                            </td>
+                                            <td tpl:if="@downtime">
+                                                <span tpl:if="@downtime * 100  &gt;= 10" class="m-1 badge badge-danger">{{@downtime *100}}</span>
+                                                <span tpl:else=""
+                                                      class="m-1 badge badge-success">{{@downtime * 100}}</span>
+                                            </td>
 
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
+                        </div>
 
                     </div>
                     <div class="tab-pane fade" id="charts" role="tabpanel" aria-labelledby="charts-tab">
@@ -123,11 +157,11 @@
                             <div class="row">
                                 <div class="col-11 card-body" tpl:foreach="/root/group">
 
-                                    <div  class="ARdata"  id="table_{@name}">
+                                    <div class="ARdata" id="table_{@name}">
                                         <div tpl:foreach="results">
-                                            <div  class="d-none dataAvailability" >{{@availability}}</div>
-                                            <div class="d-none dataReliability" >{{@reliability}}</div>
-                                            <div class="d-none dataTimestamp" >{{@timestamp}}</div>
+                                            <div class="d-none dataAvailability">{{@availability}}</div>
+                                            <div class="d-none dataReliability">{{@reliability}}</div>
+                                            <div class="d-none dataTimestamp">{{@timestamp}}</div>
 
 
                                         </div>
@@ -150,20 +184,18 @@
 
                     </div>
                 </div>
-            <!-- /.container-fluid -->
-        </div>
-        <!-- /.content -->
+                <!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
         </div>
     </div>
     <!-- /.content-wrapper -->
     <!-- Main Footer -->
-        <footer tpl:include="/resource/app/html/footer.html"></footer>
+    <footer tpl:include="/resource/app/html/footer.html"></footer>
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
-
-
 
 
 <!-- jQuery -->
@@ -174,8 +206,8 @@
 <script src="/resource/app/html/adminlte/dist/js/adminlte.js?v={$app.version}"></script>
 
 
-
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
@@ -193,10 +225,13 @@
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.6/css/select.dataTables.min.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css"/>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/colreorder/1.5.0/css/colReorder.bootstrap4.min.css"/>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/1.5.0/css/scroller.bootstrap4.min.css"/>
+<link rel="stylesheet" type="text/css"
+      href="https://cdn.datatables.net/colreorder/1.5.0/css/colReorder.bootstrap4.min.css"/>
+<link rel="stylesheet" type="text/css"
+      href="https://cdn.datatables.net/scroller/1.5.0/css/scroller.bootstrap4.min.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.6/css/select.bootstrap4.min.css"/>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css"/>
+<link rel="stylesheet" type="text/css"
+      href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css"/>
 
 
 <script src="/resource/app/js/ar_chart.js?v={$app.version}"></script>
@@ -214,6 +249,7 @@ float:right;
  .dataTables_length{
 float:right;
 }
+
 
 
 

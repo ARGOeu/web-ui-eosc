@@ -1,15 +1,17 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+<aside class="main-sidebar sidebar-dark-primary elevation-4"
+       xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
-        <img tpl:if="$app.instance='prod'" src="/resource/app/img/logo-argo-{$app.instance}.png" alt="ARGO Logo" class="brand-image img-circle"   style="opacity: .8"/>
-        <img tpl:else="" src="/resource/app/img/logo-argo-devel.png" alt="ARGO Logo" class="brand-image img-circle"  />
+        <img tpl:if="$app.instance='prod'" src="/resource/app/img/logo-argo-{$app.instance}.png" alt="ARGO Logo"
+             class="brand-image img-circle" style="opacity: .8"/>
+        <img tpl:else="" src="/resource/app/img/logo-argo-devel.png" alt="ARGO Logo" class="brand-image img-circle"/>
 
         <span tpl:if="$app.instance='prod'" class="brand-text">ARGO</span>
         <span tpl:else="" class="brand-text">ARGO {{$app.instance}}</span>
     </a>
 
     <!-- Sidebar -->
-    <div class="sidebar font-weight-light" >
+    <div class="sidebar font-weight-light">
 
 
         <!-- Sidebar Menu -->
@@ -20,24 +22,31 @@
                 <li class="nav-item has-treeview menu-open">
 
 
-                    <ul class="nav nav-treeview sidebar-collapse" style="list-style:none;padding:0;margin:0" tpl:if="root/@tenant and root/@report">
+                    <ul class="nav nav-treeview sidebar-collapse" style="list-style:none;padding:0;margin:0"
+                        tpl:if="root/@tenant and root/@report">
 
-                        <li  class="nav-item">
+                        <li class="nav-item">
                             <p>
                                 <select tpl:foreach="/root" id="profiles" class="custom-select">
-                                    <option value="/{{@tenant}}/{{@report}}" selected="true">{{@tenant}} - {{@report}}</option>
-                                    <option tpl:foreach="report[@tenant=/root/@tenant]" value="/{{@tenant}}/{{@report}}" >{{@tenant}} - {{@report}}</option>
+                                    <option value="/{{@tenant}}/{{@report}}" selected="true">{{@tenant}} - {{@report}}
+                                    </option>
+                                    <option tpl:foreach="report[@tenant=/root/@tenant]"
+                                            value="/{{@tenant}}/{{@report}}">{{@tenant}} - {{@report}}
+                                    </option>
                                 </select>
                             </p>
 
 
                         </li>
 
-                        <li  class="nav-item" tpl:if="count(/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text())>1">
+                        <li class="nav-item"
+                            tpl:if="count(/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text())>1">
                             <p>
                                 <select class="custom-select" id="servicesGroup">
-                                    <option selected="true" disabled="true">--Select your  group --</option>
-                                    <option tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()" value="/{/root/@tenant}/dashboard/{/root/@report}/{.}">{{.}}</option>
+                                    <option selected="true" disabled="true">--Select your group --</option>
+                                    <option tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()"
+                                            value="/{/root/@tenant}/dashboard/{/root/@report}/{.}">{{.}}
+                                    </option>
                                 </select>
 
 
@@ -47,10 +56,9 @@
                     </ul>
 
 
-
-
-                    <ul class="nav nav-treeview" tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]">
-                        <li  class="nav-item">
+                    <ul class="nav nav-treeview"
+                        tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]">
+                        <li class="nav-item">
                             <a href="/{{@tenant}}/{{@report}}" class="nav-link">
                                 <i class="fa fa-eye nav-icon"></i>
                                 <p>Dashboard</p>
@@ -58,47 +66,57 @@
                         </li>
 
                         <li tpl:if="@tenant='egi' and @report='Critical'" lass="nav-item">
-                            <a href="/{{@tenant}}/report-ar/{{@report}}/{{@topology1}}" title="Availability/Reliability - NGI Reports" class="nav-link">
+                            <a href="/{{@tenant}}/report-ar/{{@report}}/{{@topology1}}"
+                               title="Availability/Reliability - NGI Reports" class="nav-link">
                                 <i class="fa fa-globe nav-icon"></i>
                                 <p class="text-capitalize">NGIs Report</p>
                             </a>
                         </li>
                         <li tpl:if="@tenant='egi' and @report='Critical'" class="nav-item">
-                            <a href="/{{@tenant}}/report-ar/{{@report}}/SITES" title="Availability/Reliability - Sites reports" class="nav-link">
+                            <a href="/{{@tenant}}/report-ar/{{@report}}/SITES"
+                               title="Availability/Reliability - Sites reports" class="nav-link">
                                 <i class="fa fa-home nav-icon"></i>
                                 <p class="text-capitalize">Sites Report</p>
                             </a>
                         </li>
                         <li tpl:else="" class="nav-item">
-                            <a href="/{{@tenant}}/report-ar/{{@report}}/{{@topology1}}" title="Availability/Reliability of {{@topology1}}" class="nav-link">
+                            <a href="/{{@tenant}}/report-ar/{{@report}}/{{@topology1}}"
+                               title="Availability/Reliability of {{@topology1}}" class="nav-link">
                                 <i class="fa fa-tachometer-alt nav-icon"></i>
                                 <p class="text-capitalize">Availability/Reliability</p>
                             </a>
                         </li>
 
-                        <li  class="nav-item">
-                            <a href="/{{@tenant}}/report-status/{{@report}}/{{@topology2}}" title="Status of {{@topology2}}"  class="nav-link">
+                        <li class="nav-item">
+                            <a href="/{{@tenant}}/report-status/{{@report}}/{{@topology2}}"
+                               title="Status of {{@topology2}}" class="nav-link">
                                 <i class="fa fa-check-circle  nav-icon"></i>
                                 <p class="text-capitalize">Status</p>
                             </a>
                         </li>
 
-                        <li  class="nav-item">
+                        <li class="nav-item">
                             <a href="/{{@tenant}}/{{@report}}/custom" class="nav-link">
                                 <i class="fa fa fa-file nav-icon"></i>
                                 <p>Custom Report</p>
                             </a>
                         </li>
 
-                        <li  class="nav-item">
+                        <li class="nav-item">
                             <a href="/{{@tenant}}/reportDetails/{{@report}}" class="nav-link">
                                 <i class="fa fa fa-cog nav-icon"></i>
                                 <p>Profile Details</p>
                             </a>
                         </li>
 
-                    </ul>
+                        <li class="nav-item">
+                            <a href="/recomputation?tenant={{@tenant}}&amp;report={{@report}}" class="nav-link">
+                                <i class="fa fa fa-retweet nav-icon"></i>
+                                <p>Recomputation</p>
 
+                            </a>
+                        </li>
+                    </ul>
 
 
                 </li>
@@ -131,7 +149,6 @@
         </nav>
         <!-- /.sidebar-menu -->
     </div>
-
 
 
     <!-- /.sidebar -->

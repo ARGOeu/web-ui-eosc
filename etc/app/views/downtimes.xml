@@ -6,10 +6,12 @@
         Created by cyril on 2019/04/16 
     -->
 
-    <view name="eudat.downtimes" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:str="http://exslt.org/strings">
+    <view name="eudat.downtimes" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd"
+          xmlns:str="http://exslt.org/strings">
 
         <connector type="HTTPConnector">
-            <parameter name="url" eval="concat('https://',property('eudat-api-user'),':',property('eudat-api-pwd'),'@dp.eudat.eu/gocdbpi/get_downtime')"/>
+            <parameter name="url"
+                       eval="concat('https://',property('eudat-api-user'),':',property('eudat-api-pwd'),'@dp.eudat.eu/gocdbpi/get_downtime')"/>
             <parameter name="force-redirect">true</parameter>
         </connector>
 
@@ -21,9 +23,12 @@
             </element>
 
             <element in="downtimes">
-                <element-create-as-parent out="downtimes"  group-by="@ID" attributes="@*">
+                <element-create-as-parent out="downtimes" group-by="@ID" attributes="@*">
                     <element in="DOWNTIME">
-                        <element-create>new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'  ')))</element-create>
+                        <element-create>
+                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'
+                            ')))
+                        </element-create>
                         <element-ignore in="HOSTED_BY"/>
                     </element>
                 </element-create-as-parent>
@@ -31,10 +36,10 @@
             </element>
 
 
-
             <element in="downtimes">
                 <element in="downtimes">
-                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))</element-create>
+                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))
+                    </element-create>
                 </element>
             </element>
 
@@ -46,7 +51,6 @@
                     </element>
                 </element-ignore>
             </element>
-
 
 
         </processors>
@@ -68,7 +72,8 @@
 
     </view>
 
-    <view name="egi.downtimes"  xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:str="http://exslt.org/strings" >
+    <view name="egi.downtimes" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd"
+          xmlns:str="http://exslt.org/strings">
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="property('gocdb.get_downtime')"/>
@@ -84,18 +89,21 @@
             </element>
 
             <element in="downtimes">
-                <element-create-as-parent out="downtimes"  group-by="@PRIMARY_KEY" attributes="@*">
+                <element-create-as-parent out="downtimes" group-by="@PRIMARY_KEY" attributes="@*">
                     <element in="DOWNTIME">
-                        <element-create>new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'  ')))</element-create>
+                        <element-create>
+                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'
+                            ')))
+                        </element-create>
                     </element>
                 </element-create-as-parent>
             </element>
 
 
-
             <element in="downtimes">
                 <element in="downtimes">
-                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))</element-create>
+                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))
+                    </element-create>
                 </element>
             </element>
 
@@ -127,7 +135,8 @@
 
     </view>
 
-    <view name="sdc.downtimes"  xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:str="http://exslt.org/strings" >
+    <view name="sdc.downtimes" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd"
+          xmlns:str="http://exslt.org/strings">
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="property('gocdb.sdc.get_downtime')"/>
@@ -143,18 +152,21 @@
             </element>
 
             <element in="downtimes">
-                <element-create-as-parent out="downtimes"  group-by="@PRIMARY_KEY" attributes="@*">
+                <element-create-as-parent out="downtimes" group-by="@PRIMARY_KEY" attributes="@*">
                     <element in="DOWNTIME">
-                        <element-create>new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'  ')))</element-create>
+                        <element-create>
+                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'
+                            ')))
+                        </element-create>
                     </element>
                 </element-create-as-parent>
             </element>
 
 
-
             <element in="downtimes">
                 <element in="downtimes">
-                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))</element-create>
+                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))
+                    </element-create>
                 </element>
             </element>
 
@@ -187,25 +199,31 @@
     </view>
 
 
-
     <view name="downtimes">
         <argument name="tenant"/>
         <argument name="report"/>
 
-        <connector type="XMLConnector"  xmlns:l="http://software.in2p3.fr/lavoisier/application.xsd">
-            <parameter name="content" eval="view(choose(view('configuration')/l:views/l:view/@name=concat($tenant,'.downtimes'),concat($tenant,'.downtimes'),'egi.downtimes'))"/>
+        <connector type="XMLConnector" xmlns:l="http://software.in2p3.fr/lavoisier/application.xsd">
+            <parameter name="content"
+                       eval="view(choose(view('configuration')/l:views/l:view/@name=concat($tenant,'.downtimes'),concat($tenant,'.downtimes'),'egi.downtimes'))"/>
         </connector>
 
         <processors>
 
-            <element in="downtimes" if="view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/endpoint_group_type/text()='SITES'">
-                <set variable="site_list">view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/endpoint_group_list</set>
-                <element-ignore in="DOWNTIME" if="not(HOSTED_BY/text()=$site_list/item/text())" />
+            <element in="downtimes"
+                     if="view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/endpoint_group_type/text()='SITES'">
+                <set variable="site_list">
+                    view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/endpoint_group_list
+                </set>
+                <element-ignore in="DOWNTIME" if="not(HOSTED_BY/text()=$site_list/item/text())"/>
             </element>
 
-            <element in="downtimes" if="$tenant='egi' and view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/endpoint_group_type/text()='SERVICEGROUPS'">
-                <set variable="service_list">view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/service_list</set>
-                <element-ignore in="DOWNTIME" if="not(contains(service_endpoints,$service_list/item/text()))" />
+            <element in="downtimes"
+                     if="$tenant='egi' and view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/endpoint_group_type/text()='SERVICEGROUPS'">
+                <set variable="service_list">
+                    view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/service_list
+                </set>
+                <element-ignore in="DOWNTIME" if="not(contains(service_endpoints,$service_list/item/text()))"/>
             </element>
 
         </processors>

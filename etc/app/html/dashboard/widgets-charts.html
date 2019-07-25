@@ -1,39 +1,38 @@
-
 <div class="row">
 
 
-
-
     <div class="col-7">
-    <div class="card card-primary" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
-        <div class="card-header">
-            <h3 class="card-title">Availability/Reliability - Last 30 days</h3>
+        <div class="card card-primary" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+            <div class="card-header">
+                <h3 class="card-title">Availability/Reliability - Last 30 days</h3>
 
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-widget="remove"><i class="fa fa-times"></i>
-                </button>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-widget="remove"><i class="fa fa-times"></i>
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <div class="card-body">
-            <div class="d-none dataAvailability" tpl:foreach="/root/report-ar/group">{{@availability}}</div>
-            <div class="d-none dataReliability" tpl:foreach="/root/report-ar/group">{{@reliability}}</div>
-            <div class="d-none dataTimestamp" tpl:foreach="/root/report-ar/group">{{substring-after(@timestamp,'-')}}</div>
+            <div class="card-body">
+                <div class="d-none dataAvailability" tpl:foreach="/root/report-ar/group">{{@availability}}</div>
+                <div class="d-none dataReliability" tpl:foreach="/root/report-ar/group">{{@reliability}}</div>
+                <div class="d-none dataTimestamp" tpl:foreach="/root/report-ar/group">
+                    {{substring-after(@timestamp,'-')}}
+                </div>
 
-            <div class="chart-responsive">
-                        <canvas id="myChart2" width="100%"></canvas>
+                <div class="chart-responsive">
+                    <canvas id="myChart2" width="100%"></canvas>
 
+                </div>
             </div>
-        </div>
 
-    </div>
+        </div>
 
     </div>
 
     <div class="col-5">
-        <div class="card card-primary"  xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+        <div class="card card-primary" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
             <div class="card-header">
                 <h3 class="card-title">Last statuses</h3>
 
@@ -65,20 +64,20 @@
                 <div class="row">
 
                     <div class="clearfix">
-                            <br/>
-                            <div class="d-none dataStatuses" tpl:foreach="/root/status-last/@*">{{.}}</div>
-                            <div class="d-none labelStatuses" tpl:foreach="/root/status-last/@*">{{local-name(.)}}</div>
-                            <ul style="list-style:none">
-                                <li  tpl:foreach="/root/status-last/@*">
-                                    <i tpl:if="local-name(.)='Ok'" class="m-1 far fa-circle text-success"/>
-                                    <i tpl:else="local-name(.)='Warning'" class="m-1 far fa-circle text-warning"/>
-                                    <i tpl:else="local-name(.)='Critical'" class="m-1 far fa-circle text-danger"/>
-                                    <i tpl:else="local-name(.)='Missing'" class="m-1 far fa-circle text-info"/>
-                                    <i tpl:else="" class="m-1 far fa-circle text-muted"/>
-                                    {{local-name(.)}} : {{.}}
-                                </li>
+                        <br/>
+                        <div class="d-none dataStatuses" tpl:foreach="/root/status-last/@*">{{.}}</div>
+                        <div class="d-none labelStatuses" tpl:foreach="/root/status-last/@*">{{local-name(.)}}</div>
+                        <ul style="list-style:none">
+                            <li tpl:foreach="/root/status-last/@*">
+                                <i tpl:if="local-name(.)='Ok'" class="m-1 far fa-circle text-success"/>
+                                <i tpl:else="local-name(.)='Warning'" class="m-1 far fa-circle text-warning"/>
+                                <i tpl:else="local-name(.)='Critical'" class="m-1 far fa-circle text-danger"/>
+                                <i tpl:else="local-name(.)='Missing'" class="m-1 far fa-circle text-info"/>
+                                <i tpl:else="" class="m-1 far fa-circle text-muted"/>
+                                {{local-name(.)}} : {{.}}
+                            </li>
 
-                            </ul>
+                        </ul>
 
                     </div>
                     <!-- /.col -->

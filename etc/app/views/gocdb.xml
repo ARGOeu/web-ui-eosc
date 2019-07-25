@@ -21,7 +21,9 @@
             </element>
 
             <element in="results">
-                <set variable="endpoints" index="@PRIMARY_KEY">uniq(view('gocdb.endpoints')/e:entries/e:entries,'@PRIMARY_KEY')</set>
+                <set variable="endpoints" index="@PRIMARY_KEY">
+                    uniq(view('gocdb.endpoints')/e:entries/e:entries,'@PRIMARY_KEY')
+                </set>
                 <element in="SERVICE_GROUP">
                     <element in="SERVICE_ENDPOINT">
                         <element-create>find($endpoints,../@PRIMARY_KEY)/e:entry[@key='site']</element-create>
@@ -39,7 +41,10 @@
                         <element in="HOSTNAME"/>
                         <element in="SERVICE_TYPE"/>
                         <element-ignore/>
-                        <element-create>new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'  ')))</element-create>
+                        <element-create>
+                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'
+                            ')))
+                        </element-create>
                     </element>
 
                 </element>
@@ -122,7 +127,7 @@
     </view>
 
 
-    <view name="gocdb.endpoints"  xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" >
+    <view name="gocdb.endpoints" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="property('gocdb.get_service_endpoint')"/>
@@ -140,9 +145,12 @@
                     <element-create>entry('service',../SERVICE_TYPE/text())</element-create>
                     <element-create>entry('in_production',choose(../IN_PRODUCTION/text()='Y','1','0'))</element-create>
                     <element-create>entry('monitored',choose(../NODE_MONITORED/text()='Y','1','0'))</element-create>
-                    <element-create>entry('endpoint',concat(../HOSTNAME/text(),'__',../SERVICE_TYPE/text()))</element-create>
+                    <element-create>entry('endpoint',concat(../HOSTNAME/text(),'__',../SERVICE_TYPE/text()))
+                    </element-create>
                     <element-create>entry('link',join(../GOCDB_PORTAL_URL/text(),''))</element-create>
-                    <element-create>entry('filter',concat(',',join(../SCOPES/SCOPE/text(),','),',',../ROC_NAME/text(),',',../SITENAME/text(),','))</element-create>
+                    <element-create>
+                        entry('filter',concat(',',join(../SCOPES/SCOPE/text(),','),',',../ROC_NAME/text(),',',../SITENAME/text(),','))
+                    </element-create>
                     <element-create>entry('ngi',choose(../ROC_NAME/text(),../ROC_NAME/text(),'NA'))</element-create>
                     <element-create>entry('site',choose(../SITENAME/text(),../SITENAME/text(),'NA'))</element-create>
                     <element-ignore/>
@@ -168,9 +176,8 @@
     </view>
 
 
-
-
-    <view name="gocdb.sla.downtimes"  xmlns:date="http://exslt.org/dates-and-times" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:str="http://exslt.org/strings" >
+    <view name="gocdb.sla.downtimes" xmlns:date="http://exslt.org/dates-and-times"
+          xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:str="http://exslt.org/strings">
 
         <variable name="start_time" eval="substring(date:add(date:date-time(),concat('-P',200,'D')),0,11)"/>
 
@@ -188,27 +195,31 @@
             </element>
 
             <element in="downtimes">
-                <element-create-as-parent out="downtimes"  group-by="@PRIMARY_KEY" attributes="@*">
+                <element-create-as-parent out="downtimes" group-by="@PRIMARY_KEY" attributes="@*">
                     <element in="DOWNTIME">
-                        <element-create>new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'  ')))</element-create>
+                        <element-create>
+                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'
+                            ')))
+                        </element-create>
                     </element>
                 </element-create-as-parent>
             </element>
 
 
-
-
-
             <element in="downtimes">
-                <set variable="endpoints">view('gocdb.services.group',entry('name','EGI_D4SCIENCE_SLA'))/results/SERVICE_GROUP</set>
+                <set variable="endpoints">
+                    view('gocdb.services.group',entry('name','EGI_D4SCIENCE_SLA'))/results/SERVICE_GROUP
+                </set>
                 <element in="downtimes">
-                    <element-ignore in="DOWNTIME" if="not(service_endpoint/text()=$endpoints/SERVICE_ENDPOINT/service_endpoint/text())"/>
+                    <element-ignore in="DOWNTIME"
+                                    if="not(service_endpoint/text()=$endpoints/SERVICE_ENDPOINT/service_endpoint/text())"/>
                 </element>
             </element>
 
             <element in="downtimes">
                 <element in="downtimes">
-                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))</element-create>
+                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))
+                    </element-create>
                 </element>
             </element>
 
@@ -220,7 +231,6 @@
                     </element>
                 </element-ignore>
             </element>
-
 
 
         </processors>
@@ -243,7 +253,7 @@
     </view>
 
 
-    <view name="gocdb.site"  xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" >
+    <view name="gocdb.site" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="property('gocdb.get_site')"/>
@@ -260,7 +270,8 @@
 
             <element in="results">
                 <element in="SITE">
-                    <attribute-create out="filters">concat(',',join(../SCOPES/SCOPE/text(),','),',',../ROC/text(),',')</attribute-create>
+                    <attribute-create out="filters">concat(',',join(../SCOPES/SCOPE/text(),','),',',../ROC/text(),',')
+                    </attribute-create>
                     <element if="contains(name(),'COUNTRY')">
                         <text>lower-case(.)</text>
                     </element>
@@ -268,9 +279,7 @@
             </element>
 
 
-
         </processors>
-
 
 
         <cache type="FileCache">
@@ -290,7 +299,7 @@
 
     </view>
 
-    <view name="gocdb.sdc.site"  xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" >
+    <view name="gocdb.sdc.site" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="property('gocdb.sdc.get_site')"/>
@@ -317,7 +326,6 @@
         </processors>
 
 
-
         <cache type="FileCache">
             <trigger type="DeltaTimeTrigger">
                 <parameter name="minutes">26</parameter>
@@ -335,13 +343,15 @@
 
     </view>
 
-    <view name="gocdb.downtimes.site"  xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:str="http://exslt.org/strings" xmlns:date="http://exslt.org/dates-and-times">
+    <view name="gocdb.downtimes.site" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd"
+          xmlns:str="http://exslt.org/strings" xmlns:date="http://exslt.org/dates-and-times">
 
         <argument name="site"/>
         <variable name="start_time" eval="substring(date:add(date:date-time(),'-P365D'),0,20)"/>
 
         <connector type="HTTPConnector">
-            <parameter name="url" eval="concat(property('gocdb.get_downtime.site'),'&amp;topentity=',$site,'&amp;startdate=',$start_time) "/>
+            <parameter name="url"
+                       eval="concat(property('gocdb.get_downtime.site'),'&amp;topentity=',$site,'&amp;startdate=',$start_time) "/>
             <parameter name="certificate" eval="property('certificate.path')"/>
             <parameter name="passphrase" eval="property('certificate.password')"/>
         </connector>
@@ -354,18 +364,21 @@
             </element>
 
             <element in="downtimes">
-                <element-create-as-parent out="downtimes"  group-by="@PRIMARY_KEY" attributes="@*">
+                <element-create-as-parent out="downtimes" group-by="@PRIMARY_KEY" attributes="@*">
                     <element in="DOWNTIME">
-                        <element-create>new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'  ')))</element-create>
+                        <element-create>
+                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'
+                            ')))
+                        </element-create>
                     </element>
                 </element-create-as-parent>
             </element>
 
 
-
             <element in="downtimes">
                 <element in="downtimes">
-                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))</element-create>
+                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))
+                    </element-create>
                 </element>
             </element>
 
@@ -378,10 +391,7 @@
             </element>
 
 
-
-
         </processors>
-
 
 
         <renderers>
@@ -392,13 +402,15 @@
 
     </view>
 
-    <view name="gocdb.sdc.downtimes.site"  xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:str="http://exslt.org/strings" xmlns:date="http://exslt.org/dates-and-times">
+    <view name="gocdb.sdc.downtimes.site" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd"
+          xmlns:str="http://exslt.org/strings" xmlns:date="http://exslt.org/dates-and-times">
 
         <argument name="site"/>
         <variable name="start_time" eval="substring(date:add(date:date-time(),'-P365D'),0,20)"/>
 
         <connector type="HTTPConnector">
-            <parameter name="url" eval="concat(property('gocdb.sdc.get_downtime.site'),'&amp;topentity=',$site,'&amp;startdate=',$start_time) "/>
+            <parameter name="url"
+                       eval="concat(property('gocdb.sdc.get_downtime.site'),'&amp;topentity=',$site,'&amp;startdate=',$start_time) "/>
             <parameter name="certificate" eval="property('certificate.path')"/>
             <parameter name="passphrase" eval="property('certificate.password')"/>
         </connector>
@@ -411,18 +423,21 @@
             </element>
 
             <element in="downtimes">
-                <element-create-as-parent out="downtimes"  group-by="@PRIMARY_KEY" attributes="@*">
+                <element-create-as-parent out="downtimes" group-by="@PRIMARY_KEY" attributes="@*">
                     <element in="DOWNTIME">
-                        <element-create>new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'  ')))</element-create>
+                        <element-create>
+                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'
+                            ')))
+                        </element-create>
                     </element>
                 </element-create-as-parent>
             </element>
 
 
-
             <element in="downtimes">
                 <element in="downtimes">
-                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))</element-create>
+                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))
+                    </element-create>
                 </element>
             </element>
 
@@ -435,10 +450,7 @@
             </element>
 
 
-
-
         </processors>
-
 
 
         <renderers>
