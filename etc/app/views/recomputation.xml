@@ -141,7 +141,7 @@
         <connector type="ShellConnector">
             <parameter name="executable">/bin/sh</parameter>
             <parameter name="arguments">
-                <entry>/home/cyril/Projets/argo-eosc/etc/app/resources/sendEmail.sh</entry>
+                <entry>/opt/argo-eosc/etc/app/resources/sendEmail.sh</entry>
                 <entry eval="property('contact.email')"></entry>
                 <entry eval="$id"></entry>
                 <entry eval="$url"></entry>
