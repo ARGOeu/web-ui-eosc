@@ -8,7 +8,7 @@ EMAIL="$1,$4"
 
 if [ $# -eq 5 ]
   then
-     /usr/sbin/sendmail -r $5 -s "$SUBJECT" -S "From: $5"  "$EMAIL" << EOF
+     /usr/bin/mail -r $5 -s "$SUBJECT" -S "From: $5"  "$EMAIL" << EOF
 
 Dear User,
 
