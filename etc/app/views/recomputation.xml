@@ -119,24 +119,18 @@
 
 
         <argument name="key"></argument>
-        <argument name="mode">R</argument>
 
-
-        <connector type="RotatingCacheConnector">
-            <parameter name="content" eval="view('form_recomputation_results')"/>
-            <parameter name="key" eval="$key"/>
-            <parameter name="size">100</parameter>
-            <parameter name="mode" eval="$mode"></parameter>
+        <connector type="FileConnector">
+            <parameter name="path" eval="concat(property('lavoisier.cache.directory'),'form_recomputation_results/',$key)"></parameter>
         </connector>
 
-        <processors>
-            <element out="root">
-                <attribute-create out="tenant">post()/e:entry[@key='tenant']/text()</attribute-create>
-                <attribute-create out="report">post()/e:entry[@key='report']/text()</attribute-create>
-                <element-create>new_element('result',post())</element-create>
-
-            </element>
-        </processors>
+<!--        <processors>-->
+<!--            <element out="root">-->
+<!--                <attribute-create out="tenant">post()/e:entry[@key='tenant']/text()</attribute-create>-->
+<!--                <attribute-create out="report">post()/e:entry[@key='report']/text()</attribute-create>-->
+<!--                <element-create>new_element('result',post())</element-create>-->
+<!--            </element>-->
+<!--        </processors>-->
 
 
         <renderers>
