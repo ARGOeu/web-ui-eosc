@@ -222,7 +222,7 @@
     var end = moment();
 
     function cb(start, end) {
-        $('#reportrange span').html(start.format('YYYY-MM-DD') + ' / ' + end.format('YYYY-MM-DD'));
+        $('#reportrange input').html(start.format('YYYY-MM-DD') + ' / ' + end.format('YYYY-MM-DD'));
     }
 
     $('#reportrange').daterangepicker({

@@ -155,12 +155,18 @@
 
         <variable name="summary" eval="
         concat(
-        'Requestor: '  , /e:entries/e:entry[@key='name']/text(), '(', /e:entries/e:entry[@key='email']/text(),') \\n',
-        'Period: '  , /e:entries/e:entry[@key='period']/text(), '	\n',
-        'Tenant: '  , /e:entries/e:entry[@key='tenant']/text(), '%0D%0A',
-        'Report: '  , /e:entries/e:entry[@key='report']/text(), '%0D%0A',
-        'Entity: '  , /e:entries/e:entry[@key='entity']/text(), '%0D%0A',
-        'Reason: '  , /e:entries/e:entry[@key='reason']/text(), '%0D%0A'
+        'Requestor: '  , /e:entries/e:entry[@key='name']/text(), '(', /e:entries/e:entry[@key='email']/text(),')
+        ',
+        'Period: '  , /e:entries/e:entry[@key='period']/text(), '
+        ',
+        'Tenant: '  , /e:entries/e:entry[@key='tenant']/text(), '
+        ',
+        'Report: '  , /e:entries/e:entry[@key='report']/text(), '
+        ',
+        'Entity: '  , /e:entries/e:entry[@key='entity']/text(), '
+        ',
+        'Reason: '  , /e:entries/e:entry[@key='reason']/text(), '
+        '
         )"></variable>
 
 
@@ -175,7 +181,7 @@
             <element  if="not(EmailSent)">
                 <element-create>view('recomputation_SendEmail',
                     entry('id',../e:entry[@key='recompId']/text())
-                    |entry('url',concat(e:entry[@key='baseUrl'],'/recompBrowser/',../e:entry[@key='recompId']/text()))
+                    |entry('url',concat(../e:entry[@key='baseUrl'],'/recompBrowser/',../e:entry[@key='recompId']/text()))
                     |entry('cc',../e:entry[@key='email']/text())
                     |entry('summary',$summary))</element-create>
             </element>
