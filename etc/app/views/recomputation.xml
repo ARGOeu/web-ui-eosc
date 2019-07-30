@@ -153,14 +153,26 @@
 
     <view name="recomputation_RotatingCacheContent">
 
+        <variable name="summary" eval="
+        concat(
+        'Requestor: '  , e:entries/e:entry[@key='name']/text(), '(', e:entries/e:entry[@key='email']/text(),')\n\r',
+        'Period: '  , e:entries/e:entry[@key='period']/text(), '\n\r',
+        'Tenant: '  , e:entries/e:entry[@key='tenant']/text(), '\n\r',
+        'Report: '  , e:entries/e:entry[@key='report']/text(), '\n\r',
+        'Entity: '  , e:entries/e:entry[@key='entity']/text(), '\n\r',
+        'Reason: '  , e:entries/e:entry[@key='reason']/text(), '\n\r'
+        )">
+
+        </variable>
         <connector type="XMLConnector">
             <parameter name="content" eval="post()"></parameter>
         </connector>
 
+
         <processors>
 
             <element  if="not(EmailSent)">
-                <element-create>view('recomputation_SendEmail',entry('id',../e:entry[@key='recompId']/text())|entry('url',concat(e:entry[@key='baseUrl'],'/recompBrowser/',../e:entry[@key='recompId']/text()))|entry('cc',../e:entry[@key='email']/text()))</element-create>
+                <element-create>view('recomputation_SendEmail',entry('id',../e:entry[@key='recompId']/text())|entry('url',concat(e:entry[@key='baseUrl'],'/recompBrowser/',../e:entry[@key='recompId']/text()))|entry('cc',../e:entry[@key='email']/text()|entry('summary',$summary)))</element-create>
             </element>
 
         </processors>
@@ -172,6 +184,8 @@
         <argument name="id"></argument>
         <argument name="url"></argument>
         <argument name="cc"></argument>
+        <argument name="summary"></argument>
+
 
         <connector type="ShellConnector">
             <parameter name="executable">/bin/sh</parameter>
@@ -182,6 +196,7 @@
                 <entry eval="$url"></entry>
                 <entry eval="$cc"></entry>
                 <entry eval="property('contact.recomputation')"></entry>
+                <entry eval="$summary"></entry>
             </parameter>
 
         </connector>

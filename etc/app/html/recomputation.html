@@ -61,7 +61,7 @@
                                 <input id="recompId" name="recompId" class="d-none" />
                                 <input name="tenant" class="d-none"  value="{{/root/@tenant}}"/>
                                 <input name="report" class="d-none"  value="{{/root/@report}}"/>
-                                <input name="baseUrl" class="d-none"/>
+                                <input name="baseUrl" id="baseUrl" class="d-none"/>
 
                             </div>
 
@@ -82,10 +82,10 @@
 
                                     <div class="col-6">
                                         <label>Period</label>
-                                        <div id="reportrange"  style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                        <input id="reportrange" name="period"  style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
                                             <i class="fa fa-calendar m-1"></i>
-                                            <span name="range"></span> <i class="m-1 fa fa-caret-down"></i>
-                                        </div>
+                                            <span ></span> <i class="m-1 fa fa-caret-down"></i>
+                                        </input>
                                         <hr/>
                                     </div>
 
@@ -131,7 +131,7 @@
 
                                 <div class="card-body" >
                                     <div class="row">
-                                        <div tpl:foreach="result/e:entries/e:entry" class="col-4">
+                                        <div tpl:foreach="result/e:entries/e:entry[@key!='base_url']" class="col-4">
                                             <hr/>
                                             <label>{{@key}} </label>
                                             <div>{{text()}}</div>

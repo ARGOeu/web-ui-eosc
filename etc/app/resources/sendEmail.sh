@@ -4,9 +4,10 @@
 SUBJECT="[ARGO] Recomputation request #$2"
 URL=$3
 EMAIL="$1,$4"
+SUMMARY=$6
 
 
-if [ $# -eq 5 ]
+if [ $# -eq 6 ]
   then
      /usr/bin/mail -r $5 -s "$SUBJECT" -S "From: no-reply@argo.grnet.gr"  "$EMAIL" << EOF
 
@@ -15,6 +16,12 @@ Dear User,
 Your recomputation request has been registered :
 $URL
 
+Details
+-------
+$SUMMARY
+
+
+--
 ARGO Team
 
 -- Mail generated automatically by the ARGO application
