@@ -161,9 +161,9 @@
         'Report: '  , e:entries/e:entry[@key='report']/text(), '\n\r',
         'Entity: '  , e:entries/e:entry[@key='entity']/text(), '\n\r',
         'Reason: '  , e:entries/e:entry[@key='reason']/text(), '\n\r'
-        )">
+        )"></variable>
 
-        </variable>
+
         <connector type="XMLConnector">
             <parameter name="content" eval="post()"></parameter>
         </connector>
