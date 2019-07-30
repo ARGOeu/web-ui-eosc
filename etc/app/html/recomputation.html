@@ -61,6 +61,7 @@
                                 <input id="recompId" name="recompId" class="d-none" />
                                 <input name="tenant" class="d-none"  value="{{/root/@tenant}}"/>
                                 <input name="report" class="d-none"  value="{{/root/@report}}"/>
+                                <input name="baseUrl" class="d-none"/>
 
                             </div>
 
@@ -146,6 +147,34 @@
                     </div>
                 </div>
 
+                <div class="row" tpl:foreach="/e:entries">
+                    <div class="col-lg-12">
+
+                        <div class="card border border-primary">
+                            <div class="card-header ui-sortable-handle" style="cursor: move;">
+                                <h3 class="card-title">
+                                    Recomputation summary
+                                </h3>
+
+
+                                <div class="card-body" >
+                                    <div class="row">
+                                        <div tpl:foreach="e:entry" class="col-4">
+                                            <hr/>
+                                            <label>{{@key}} </label>
+                                            <div>{{text()}}</div>
+                                        </div>
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
@@ -182,6 +211,7 @@
 
     var RecompId=Date.now();
     $('#recompId').val(RecompId);
+    $('#baseUrl').val(window.location.origin);
 
     var start = moment().subtract(29, 'days');
     var end = moment();

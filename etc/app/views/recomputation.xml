@@ -81,9 +81,9 @@
 
     <view name="form_recomputation_results"  xmlns:date="http://exslt.org/dates-and-times">
 
-        <argument name="recompId" eval="post()/e:entry[@key='recompId']/text()"/>
-        <argument name="key" eval="post()/e:entry[@key='recompId']/text()"/>
-        <argument name="mode">RW</argument>
+        <argument name="recompId" eval="choose(post(false()),post(false()),post()/e:entry[@key='recompId']/text())"/>
+        <argument name="key" eval="choose(post(false()),post(false()),post()/e:entry[@key='recompId']/text())"/>
+        <argument name="mode">choose(post(false()),R,RW)</argument>
         <argument name="admin">_admin_</argument>
 
 
@@ -115,22 +115,29 @@
 
     </view>
 
+
+    <view name="form_properties">
+        <argument name="Id"></argument>
+        <connector type="FileConnector">
+            <parameter name="path" eval="concat(property('lavoisier.cache.directory'),'form_recomputation_results/_index.properties')"></parameter>
+        </connector>
+        <processors>
+            <element in="properties">
+                <element in="entry" if="@key=$Id"><text></text></element>
+                <element-ignore/>
+            </element>
+        </processors>
+    </view>
+
     <view name="recomputation_results"  xmlns:date="http://exslt.org/dates-and-times">
 
 
-        <argument name="key"></argument>
+        <argument name="Id"></argument>
+        <variable name="key" eval="view('form_properties',entry('Id',$Id))/properties/entry/text()"></variable>
 
         <connector type="FileConnector">
             <parameter name="path" eval="concat(property('lavoisier.cache.directory'),'form_recomputation_results/',$key)"></parameter>
         </connector>
-
-<!--        <processors>-->
-<!--            <element out="root">-->
-<!--                <attribute-create out="tenant">post()/e:entry[@key='tenant']/text()</attribute-create>-->
-<!--                <attribute-create out="report">post()/e:entry[@key='report']/text()</attribute-create>-->
-<!--                <element-create>new_element('result',post())</element-create>-->
-<!--            </element>-->
-<!--        </processors>-->
 
 
         <renderers>
@@ -152,9 +159,8 @@
 
         <processors>
 
-
             <element  if="not(EmailSent)">
-                <element-create>view('recomputation_SendEmail',entry('id',../e:entry[@key='recompId']/text())|entry('url',concat('http://egi.ui.argo.grnet.gr/recompBrowser/',../e:entry[@key='recompId']/text()))|entry('cc',../e:entry[@key='email']/text()))</element-create>
+                <element-create>view('recomputation_SendEmail',entry('id',../e:entry[@key='recompId']/text())|entry('url',concat(e:entry[@key='baseUrl'],'/recompBrowser/',../e:entry[@key='recompId']/text()))|entry('cc',../e:entry[@key='email']/text()))</element-create>
             </element>
 
         </processors>
