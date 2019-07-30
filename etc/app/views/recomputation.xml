@@ -155,13 +155,14 @@
 
         <variable name="summary" eval="
         concat(
-        'Requestor: '  , e:entries/e:entry[@key='name']/text(), '(', e:entries/e:entry[@key='email']/text(),')\n\r',
-        'Period: '  , e:entries/e:entry[@key='period']/text(), '\n\r',
-        'Tenant: '  , e:entries/e:entry[@key='tenant']/text(), '\n\r',
-        'Report: '  , e:entries/e:entry[@key='report']/text(), '\n\r',
-        'Entity: '  , e:entries/e:entry[@key='entity']/text(), '\n\r',
-        'Reason: '  , e:entries/e:entry[@key='reason']/text(), '\n\r'
+        'Requestor: '  , /e:entries/e:entry[@key='name']/text(), '(', /e:entries/e:entry[@key='email']/text(),')%0D%0A',
+        'Period: '  , /e:entries/e:entry[@key='period']/text(), '%0D%0A',
+        'Tenant: '  , /e:entries/e:entry[@key='tenant']/text(), '%0D%0A',
+        'Report: '  , /e:entries/e:entry[@key='report']/text(), '%0D%0A',
+        'Entity: '  , /e:entries/e:entry[@key='entity']/text(), '%0D%0A',
+        'Reason: '  , /e:entries/e:entry[@key='reason']/text(), '%0D%0A'
         )"></variable>
+
 
 
         <connector type="XMLConnector">
