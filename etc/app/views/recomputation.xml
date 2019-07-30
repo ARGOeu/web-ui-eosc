@@ -172,7 +172,11 @@
         <processors>
 
             <element  if="not(EmailSent)">
-                <element-create>view('recomputation_SendEmail',entry('id',../e:entry[@key='recompId']/text())|entry('url',concat(e:entry[@key='baseUrl'],'/recompBrowser/',../e:entry[@key='recompId']/text()))|entry('cc',../e:entry[@key='email']/text()|entry('summary',$summary)))</element-create>
+                <element-create>view('recomputation_SendEmail',
+                    entry('id',../e:entry[@key='recompId']/text())
+                    |entry('url',concat(e:entry[@key='baseUrl'],'/recompBrowser/',../e:entry[@key='recompId']/text()))
+                    |entry('cc',../e:entry[@key='email']/text())
+                    |entry('summary',$summary))</element-create>
             </element>
 
         </processors>
