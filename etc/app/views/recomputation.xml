@@ -83,7 +83,7 @@
 
         <argument name="recompId" eval="choose(post(false()),post(false()),post()/e:entry[@key='recompId']/text())"/>
         <argument name="key" eval="choose(post(false()),post(false()),post()/e:entry[@key='recompId']/text())"/>
-        <argument name="mode">choose(post(false()),R,RW)</argument>
+        <argument name="mode">RW</argument>
         <argument name="admin">_admin_</argument>
 
 
