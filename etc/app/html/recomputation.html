@@ -50,7 +50,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body" >
-                            <form action="/lavoisier/form_recomputation_results" method="post" >
+                            <form action="/form_recomputation_results" method="post" >
                             <div class="row form-group">
                                 <div class="col-6"  tpl:foreach="object/*">
                                     <label for="{{name()}}">{{name()}} </label>
@@ -62,6 +62,9 @@
                                 <input name="tenant" class="d-none"  value="{{/root/@tenant}}"/>
                                 <input name="report" class="d-none"  value="{{/root/@report}}"/>
                                 <input name="baseUrl" id="baseUrl" class="d-none"/>
+                                <input name="period" id="period" class="d-none"/>
+
+
 
                             </div>
 
@@ -82,16 +85,14 @@
 
 
 
-                                    <div class=" col-6">
+
+                                    <div class="col-6">
                                         <label>Period</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-calendar"></i></span>
-                                                <input id="reportrange" name="period" />
-                                            </div>
+                                        <div id="reportrange"  style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                            <i class="fa fa-calendar m-1"></i>
+                                            <span id="dates" ></span> <i class="m-1 fa fa-caret-down"></i>
                                         </div>
-
-
+                                        <hr/>
                                     </div>
 
 
@@ -218,11 +219,13 @@
     $('#recompId').val(RecompId);
     $('#baseUrl').val(window.location.origin);
 
+
+
     var start = moment().subtract(29, 'days');
     var end = moment();
 
     function cb(start, end) {
-        $('#reportrange input').html(start.format('YYYY-MM-DD') + ' / ' + end.format('YYYY-MM-DD'));
+        $('#reportrange span').html(start.format('YYYY-MM-DD') + ' / ' + end.format('YYYY-MM-DD'));
     }
 
     $('#reportrange').daterangepicker({
@@ -232,6 +235,9 @@
     }, cb);
 
     cb(start, end);
+
+    var period=$('#reportrange span').html();
+    $("#period").val(period);
 
 });
 </script>
