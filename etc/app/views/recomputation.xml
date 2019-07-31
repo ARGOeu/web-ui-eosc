@@ -139,6 +139,31 @@
             <parameter name="path" eval="concat(property('lavoisier.cache.directory'),'form_recomputation_results/',$key)"></parameter>
         </connector>
 
+        <processors>
+
+
+            <element-create-as-parent out="result">
+                <element in="entries"/>
+            </element-create-as-parent>
+
+            <element-create-as-parent out="root">
+                <element in="result"/>
+            </element-create-as-parent>
+
+            <element in="root">
+                <attribute-create out="tenant">../result/entries/entry[@key='tenant']</attribute-create>
+                <attribute-create out="report">../result/entries/entry[@key='report']</attribute-create>
+
+                <element in="result">
+
+                    <element in="entries" out="e:entries">
+                        <element in="entry" out="e:entry"/>
+                    </element>
+                </element>
+
+            </element>
+
+        </processors>
 
         <renderers>
             <renderer type="DefaultRenderer">

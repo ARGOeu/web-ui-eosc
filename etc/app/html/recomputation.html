@@ -62,7 +62,7 @@
                                 <input name="tenant" class="d-none"  value="{{/root/@tenant}}"/>
                                 <input name="report" class="d-none"  value="{{/root/@report}}"/>
                                 <input name="baseUrl" id="baseUrl" class="d-none"/>
-                                <input name="period" id="period" class="d-none"/>
+
 
 
 
@@ -90,7 +90,7 @@
                                         <label>Period</label>
                                         <div id="reportrange"  style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
                                             <i class="fa fa-calendar m-1"></i>
-                                            <span id="dates" ></span> <i class="m-1 fa fa-caret-down"></i>
+                                            <input id="period" name="period" style="border:0"></input> <i class="m-1 fa fa-caret-down"></i>
                                         </div>
                                         <hr/>
                                     </div>
@@ -133,7 +133,7 @@
                                     Recomputation summary
                                 </h3>
                                 <div class="card-body">
-                                    <div class="alert alert-success" >Your recomputation has been properly submitted </div>
+                                    <div class="alert alert-success" tpl:if="result/e:entries/EmailSent">Your recomputation has been properly submitted .</div>
                                 </div>
 
                                 <div class="card-body" >
@@ -153,33 +153,7 @@
                     </div>
                 </div>
 
-                <div class="row" tpl:foreach="/e:entries">
-                    <div class="col-lg-12">
 
-                        <div class="card border border-primary">
-                            <div class="card-header ui-sortable-handle" style="cursor: move;">
-                                <h3 class="card-title">
-                                    Recomputation summary
-                                </h3>
-
-
-                                <div class="card-body" >
-                                    <div class="row">
-                                        <div tpl:foreach="e:entry" class="col-4">
-                                            <hr/>
-                                            <label>{{@key}} </label>
-                                            <div>{{text()}}</div>
-                                        </div>
-
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- /.row -->
             </div>
@@ -225,7 +199,7 @@
     var end = moment();
 
     function cb(start, end) {
-        $('#reportrange span').html(start.format('YYYY-MM-DD') + ' / ' + end.format('YYYY-MM-DD'));
+        $('#reportrange input').val(start.format('YYYY-MM-DD') + ' / ' + end.format('YYYY-MM-DD'));
     }
 
     $('#reportrange').daterangepicker({
@@ -236,8 +210,7 @@
 
     cb(start, end);
 
-    var period=$('#reportrange span').html();
-    $("#period").val(period);
+
 
 });
 </script>

@@ -16,13 +16,14 @@ Dear User,
 Your recomputation request has been registered :
 $URL
 
+-----------------------------------------------
 Details
 -------
+
 $SUMMARY
 
-
+-----------------------------------------------
 ARGO TEAM
-
 
 -- Mail generated automatically by the ARGO application
 EOF
