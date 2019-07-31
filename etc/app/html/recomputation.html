@@ -50,11 +50,14 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body" >
-                            <form action="/form_recomputation_results" method="post" >
+                            <form action="/form_recomputation_results" method="post" class="needs-validation" novalidate="true">
                             <div class="row form-group">
                                 <div class="col-6"  tpl:foreach="object/*">
                                     <label for="{{name()}}">{{name()}} </label>
-                                    <input name="{{name()}}" class="form-control"  id="{{name()}}" value="{{text()}}"/>
+                                    <input name="{{name()}}" class="form-control"  id="{{name()}}" value="{{text()}}" required="true"/>
+                                    <div class="invalid-feedback">
+                                        Please provide your {{name()}}
+                                    </div>
                                     <hr/>
                                 </div>
 
@@ -70,8 +73,8 @@
 
                                 <div class="row">
                                     <div class="col-6">
-                                    <label>Entity</label>
-                                    <select id="services"  name="entity" class="form-control">
+                                    <label>Entity to be recomputed</label>
+                                    <select id="services"  name="entity" class="form-control" required="true">
                                         <option  tpl:foreach="/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()"
                                                 value="{.}">{{.}}
                                         </option>
@@ -79,6 +82,9 @@
                                                 value="IN2P3-CC">IN2P3-CC
                                         </option>
                                     </select>
+                                        <div class="invalid-feedback">
+                                            Please select the site or the service group which is concerned by the recomputation
+                                        </div>
                                     <hr/>
                                     </div>
 
@@ -90,7 +96,10 @@
                                         <label>Period</label>
                                         <div id="reportrange"  style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
                                             <i class="fa fa-calendar m-1"></i>
-                                            <input id="period" name="period" style="border:0"></input> <i class="m-1 fa fa-caret-down"></i>
+                                            <input id="period" name="period" style="border:0" required="true"></input> <i class="m-1 fa fa-caret-down"></i>
+                                            <div class="invalid-feedback">
+                                                Please provide the period on which you want to apply recomputation
+                                            </div>
                                         </div>
                                         <hr/>
                                     </div>
@@ -100,13 +109,17 @@
 
                                 <div class="row form-group">
                                     <label for="reason">Reason of recomputation</label>
-                                    <textarea name="reason" class="form-control" id="reason" rows="4"></textarea>
+                                    <textarea name="reason" class="form-control" id="reason" rows="4" required="true"></textarea>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid reason to trigger a recomputation
+                                    </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-12 float-right">
                                         <input value="Submit Recomputation" type="submit"   class="btn btn-primary"/>
                                     </div>
+
                                 </div>
                             </form>
                             </div>
@@ -133,7 +146,7 @@
                                     Recomputation summary
                                 </h3>
                                 <div class="card-body">
-                                    <div class="alert alert-success" tpl:if="result/e:entries/EmailSent">Your recomputation has been properly submitted .</div>
+                                    <div class="alert alert-success" tpl:if="not(result/e:entries/EmailSent)">Your recomputation has been properly submitted .</div>
                                 </div>
 
                                 <div class="card-body" >
@@ -213,6 +226,24 @@
 
 
 });
+
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
 </script>
 </body>
 </html>
