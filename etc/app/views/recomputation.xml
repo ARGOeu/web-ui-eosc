@@ -156,11 +156,10 @@
         <variable name="summary" eval="
         concat(
         'Requestor: '  , /e:entries/e:entry[@key='name']/text(), '(', /e:entries/e:entry[@key='email']/text(),')
+
         ',
-        'Period: '  , /e:entries/e:entry[@key='period']/text(), '
-        ',
-        'Tenant: '  , /e:entries/e:entry[@key='tenant']/text(), '
-        ',
+        'Period: '  , /e:entries/e:entry[@key='period']/text(), '\n\l',
+        'Tenant: '  , /e:entries/e:entry[@key='tenant']/text(), '\',
         'Report: '  , /e:entries/e:entry[@key='report']/text(), '
         ',
         'Entity: '  , /e:entries/e:entry[@key='entity']/text(), '

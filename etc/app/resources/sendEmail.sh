@@ -21,8 +21,8 @@ Details
 $SUMMARY
 
 
---
-ARGO Team
+ARGO TEAM
+
 
 -- Mail generated automatically by the ARGO application
 EOF
