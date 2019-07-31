@@ -75,12 +75,10 @@
                                     <div class="col-6">
                                     <label>Entity to be recomputed</label>
                                     <select id="services"  name="entity" class="form-control" required="true">
-                                        <option  tpl:foreach="/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()"
+                                        <option  tpl:foreach="report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()"
                                                 value="{.}">{{.}}
                                         </option>
-                                        <option name="entity"
-                                                value="IN2P3-CC">IN2P3-CC
-                                        </option>
+
                                     </select>
                                         <div class="invalid-feedback">
                                             Please select the site or the service group which is concerned by the recomputation
