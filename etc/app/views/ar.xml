@@ -256,6 +256,15 @@
                 </element>
             </element>
 
+            <element in="root" if="@report='SLA'" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+                <set variable="endpoints" index="e:entry[@key='hostname']"> uniq(view('gocdb.endpoints')/e:entries/e:entries,"e:entry[@key='hostname']")</set>
+
+                <element in="group" if="@type='endpoint'">
+                    <attribute-create out="site">find($endpoints,../@name)/e:entry[@key='site']</attribute-create>
+
+                </element>
+            </element>
+
         </processors>
 
         <pre-renderers>
@@ -600,6 +609,8 @@
                 </element>
             </element>
 
+
+
         </processors>
 
 
@@ -737,6 +748,15 @@
                 </element>
             </element>
 
+            <!-- add site for sla report -->
+            <element in="root" if="@report='SLA'" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+                <set variable="endpoints" index="e:entry[@key='hostname']"> uniq(view('gocdb.endpoints')/e:entries/e:entries,"e:entry[@key='hostname']")</set>
+
+                <element in="group" if="@type='endpoint'">
+                    <attribute-create out="site">find($endpoints,../@name)/e:entry[@key='site']</attribute-create>
+
+                </element>
+            </element>
         </processors>
 
 

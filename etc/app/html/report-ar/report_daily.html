@@ -90,7 +90,7 @@
                                    value="{{@group}}  {{@group2}}  {{@group3}} "/>
 
                             <div class="card-body" tpl:foreach="group">
-                                <h2 class="card-title"><span>{{@name}}</span> <a tpl:if="@type!='endpoint'"
+                                <h2 class="card-title"><span>{{@name}} </span> <span class="m-1" tpl:if="@site"> - {{@site}}</span> <a tpl:if="@type!='endpoint'"
                                                                                  href="javascript:my_link('{@name}')"
                                                                                  title="Drilldown to details"
                                                                                  class="text-white m-2 badge badge-primary">DETAILS</a>
@@ -133,14 +133,14 @@
                                             </td>
 
                                             <td tpl:if="@unknown">
-                                                <span tpl:if="@unknown * 100 &gt;= 10" class="m-1 badge badge-danger">{{@unknown * 100}}</span>
+                                                <span tpl:if="@unknown * 100 &gt;= 10" class="m-1 badge badge-danger">{{round(@unknown * 100)}}</span>
                                                 <span tpl:else=""
-                                                      class="m-1 badge badge-success">{{@unknown * 100}}</span>
+                                                      class="m-1 badge badge-success">{{round(@unknown * 100)}}</span>
                                             </td>
                                             <td tpl:if="@downtime">
-                                                <span tpl:if="@downtime * 100  &gt;= 10" class="m-1 badge badge-danger">{{@downtime *100}}</span>
+                                                <span tpl:if="@downtime * 100  &gt;= 10" class="m-1 badge badge-danger">{{round(@downtime *100)}}</span>
                                                 <span tpl:else=""
-                                                      class="m-1 badge badge-success">{{@downtime * 100}}</span>
+                                                      class="m-1 badge badge-success">{{round(@downtime * 100)}}</span>
                                             </td>
 
                                         </tr>

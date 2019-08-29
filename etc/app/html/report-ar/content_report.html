@@ -67,6 +67,7 @@
                             <tr class="d-print-none">
                                 <th tpl:if="$pdf!= 'pdf'">Month</th>
                                 <th tpl:else=""></th>
+                                <th tpl:if="/root/@report='SLA' and /root/@group2"></th>
                                 <th colspan="2" tpl:if="$pdf!= 'pdf'" class="text-center">{{@month1}}</th>
                                 <th colspan="2" tpl:if="$pdf!= 'pdf'" class="text-center">{{@month2}}</th>
                                 <th colspan="2" class="text-center">{{@month3}}</th>
@@ -78,6 +79,7 @@
 
 
                                 <th></th>
+                                <th tpl:if="/root/@report='SLA' and /root/@group2"></th>
 
                                 <th tpl:if="$pdf!= 'pdf'" class="text-right">Av</th>
                                 <th tpl:if="$pdf!= 'pdf'" class="text-left">Re</th>
@@ -494,6 +496,7 @@
                             <tbody tpl:if="/root/@group2">
                             <tr tpl:foreach="group">
                                 <td>{{@name}}</td>
+                                <td tpl:if="/root/@report='SLA'">{{@site}}</td>
                                 <td tpl:if="$pdf!= 'pdf'" class="text-right">
 
                                     <a href="/{/root/@tenant}/report-ar-group/{/root/@report}/{/root/@month1}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{/root/@group2}/endpoints/{@name}"
@@ -680,6 +683,7 @@
                             <tfoot>
                             <tr class="d-print-none">
                                 <th></th>
+                                <th tpl:if="/root/@report='SLA' and /root/@group2"></th>
 
                                 <th tpl:if="$pdf!= 'pdf'" class="text-right">Av</th>
                                 <th tpl:if="$pdf!= 'pdf'" class="text-left">Re</th>
