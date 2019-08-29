@@ -110,10 +110,14 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="/recomputation?tenant={{@tenant}}&amp;report={{@report}}" class="nav-link">
+                            <a tpl:if="$app.instance='prod'" href="https://ui.argo.grnet.gr/recomputation?tenant={{@tenant}}&amp;report={{@report}}" class="nav-link">
                                 <i class="fa fa fa-retweet nav-icon"></i>
                                 <p>Recomputation</p>
 
+                            </a>
+                            <a tpl:else="" href="/recomputation?tenant={{@tenant}}&amp;report={{@report}}" class="nav-link">
+                                <i class="fa fa fa-retweet nav-icon"></i>
+                                <p>Recomputation</p>
                             </a>
                         </li>
                     </ul>
