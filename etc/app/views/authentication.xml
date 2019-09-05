@@ -56,7 +56,7 @@
     <view name="userInfo">
         <argument name="token"/>
         <connector type="HTTPConnector">
-            <parameter name="url" eval="concat('https://aai-dev.egi.eu/oidc/userinfo?access_token=',$token)"/>
+            <parameter name="url" eval="concat(property('egi.oidc.userInfo'),$token)"/>
             <parameter name="certificate" eval="property('certificate.path')"/>
             <parameter name="passphrase" eval="property('certificate.password')"/>
         </connector>
