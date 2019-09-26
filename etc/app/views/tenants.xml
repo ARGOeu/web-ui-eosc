@@ -5,7 +5,7 @@
         File    : tenants.xml
         Created by cyril on 2019/04/16 
     -->
-    <view name="reports_tenant">
+    <view name="reports_tenant" authenticators="admin">
 
         <argument name="tenant"/>
 
@@ -29,6 +29,57 @@
         <serializer type="JSONStreamSerializer"/>
     </view>
 
+    <view name="tenants" authenticators="admin">
+
+        <variable name="api-key" eval="property('admin.api.key')"/>
+        <variable name="url" eval="property('api.tenants')"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+            <fallback
+                    eval="new_element('exception',new_attribute('exception',concat('exception with tenant: ',$tenant)))">
+                <exception type="java.io.IOException"/>
+            </fallback>
+        </connector>
+
+        <serializer type="JSONStreamSerializer"/>
+
+        <processors>
+            <element in="object" out="tenants">
+                <element-ignore>
+                    <!-- @TODO to be removed for prod -->
+                    <element in="object" out="tenant" if="lower-case(info/name/text())='egi' or lower-case(info/name/text())='eudat' ">
+                        <element in="id" out="uid"/>
+                        <element-ignore in="info">
+                            <element in="email" out="contact"/>
+                            <element in="website" out="url"/>
+
+
+                            <element-create>new_element('id',lower-case(../name/text()))</element-create>
+                            <element-create if="not(description)">new_element('description',../name/text())</element-create>
+                            <element-create if="not(thresholdAv)">new_element('thresholdAv',85)</element-create>
+                            <element-create if="not(thresholdRe)">new_element('thresholdRe',90)</element-create>
+                            <element/>
+                        </element-ignore>
+                    </element>
+                </element-ignore>
+
+            </element>
+        </processors>
+
+        <cache type="FileCache">
+            <trigger type="ViewNotifiedTrigger"/>
+            <trigger type="DeltaTimeTrigger">
+                <parameter name="minutes">36</parameter>
+            </trigger>
+        </cache>
+    </view>
+
 
     <view name="services">
         <connector type="FileConnector">
@@ -44,7 +95,7 @@
 
     </view>
 
-
+<!--
     <view name="tenantsListRaw" authenticators="admin">
 
         <connector type="FileConnector">
@@ -81,18 +132,22 @@
         </processors>
 
     </view>
+-->
+    <view name="tenants.reports" authenticators="admin">
 
-    <view name="tenants.reports">
-
-
+<!--
         <connector type="FileConnector">
             <parameter name="path">app/resources/tenants_reports.xml</parameter>
+        </connector>
+-->
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('tenants')"/>
         </connector>
 
         <processors>
             <element in="tenants">
-                <element in="tenant" if="contains(@env,property('app.instance'))">
-                    <element-create as="last-child">view('reports_tenant',entry('tenant',../id/text()))</element-create>
+                <element in="tenant" >
+                    <element-create as="last-child">view('reports_tenant',entry('tenant',lower-case(../name/text())))</element-create>
                 </element>
 
             </element>
@@ -141,7 +196,7 @@
     </view>
 
 
-    <view name="reportDetailsRaw">
+    <view name="reportDetailsRaw" authenticators="admin">
 
 
         <connector type="FileConnector">

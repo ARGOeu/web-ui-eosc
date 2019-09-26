@@ -6,6 +6,77 @@
         Created by cyril on 2019/07/19 
     -->
 
+    <view name="recomputationListAPI">
+
+        <argument name="tenant">egi</argument>
+
+
+        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+        <variable name="url" eval="property('api.recomputation.list')"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+            <fallback
+                    eval="new_element('exception',new_attribute('exception',concat('exception with tenant: ',$tenant)))">
+                <exception type="java.io.IOException"/>
+            </fallback>
+        </connector>
+
+        <serializer type="JSONStreamSerializer"/>
+    </view>
+
+
+    <view name="recomputationList" authenticators="aai">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="new_element('root')"/>
+        </connector>
+
+        <processors>
+            <element in="root">
+                <element-create>entry('token',user('token'))</element-create>
+                <element-create>view('userInfo', entry('token',user('token')))</element-create>
+            </element>
+
+            <element in="root" if="object/eduperson_entitlement/item='urn:mace:egi.eu:goc.egi.eu:126G0:GRIDOPS-SAM:Site+Administrator@egi.eu'">
+                <element-create>view('tenants')</element-create>
+            </element>
+
+            <element in="root">
+                <element-ignore in="tenants">
+                    <element in="tenant">
+                        <attribute-create out="name">../id/text()</attribute-create>
+                        <element-create>view('recomputationListAPI',entry('tenant',../id/text()))</element-create>
+                        <element-ignore/>
+                    </element>
+
+                </element-ignore>
+
+            </element>
+
+            <elements path="root/tenant">
+                <elements-ignore path="object/data">
+                    <element in="object" out="recomputation"/>
+                </elements-ignore>
+            </elements>
+        </processors>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="template">app/html/recomputationList.html</parameter>
+            </renderer>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/recomputationList.html</parameter>
+            </renderer>
+        </renderers>
+
+
+    </view>
+
     <view name="recomputation" authenticators="aai">
 
         <argument name="tenant">egi</argument>
