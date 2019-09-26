@@ -50,6 +50,7 @@
                 <element-ignore in="tenants">
                     <element in="tenant">
                         <attribute-create out="name">../id/text()</attribute-create>
+
                         <element-create>view('recomputationListAPI',entry('tenant',../id/text()))</element-create>
                         <element-ignore/>
                     </element>
@@ -60,7 +61,9 @@
 
             <elements path="root/tenant">
                 <elements-ignore path="object/data">
-                    <element in="object" out="recomputation"/>
+                    <element in="object" out="recomputation">
+                        <element-create>new_element('uid',concat(ancestor::tenant/@name,count(../preceding-sibling::object)))</element-create>
+                    </element>
                 </elements-ignore>
             </elements>
         </processors>

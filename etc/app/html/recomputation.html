@@ -96,7 +96,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                     <label>Sites to be excluded</label>
-                                    <select id="services"  name="entity" multiple="true" class="form-control" required="true">
+                                    <select id="services"   multiple="true" class="form-control" required="true">
                                         <option  tpl:foreach="report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()"
                                                 value="{.}">{{.}}
                                         </option>
@@ -105,6 +105,7 @@
                                         <div class="invalid-feedback">
                                             Please select the site or the service group which you should be excluded during the recomputation
                                         </div>
+                                        <input class="hidden" id="entity" name="entity"/>
                                     <hr/>
                                     </div>
 
@@ -255,6 +256,16 @@
     // Loop over them and prevent submission
     var validation = Array.prototype.filter.call(forms, function(form) {
       form.addEventListener('submit', function(event) {
+
+            var sites='';
+            $('#services :selected').each(function(){
+            if (sites=='')
+             sites=$(this).text();
+             else
+             sites=sites+','+$(this).text();
+            });
+            $("#entity").val(sites);
+
         if (form.checkValidity() === false) {
           event.preventDefault();
           event.stopPropagation();
