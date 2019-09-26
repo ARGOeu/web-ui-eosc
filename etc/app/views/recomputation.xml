@@ -258,7 +258,7 @@
         'Period: '  , /e:entries/e:entry[@key='period']/text(), '&#10;',
         'Tenant: '  , /e:entries/e:entry[@key='tenant']/text(), '&#10;',
         'Report: '  , /e:entries/e:entry[@key='report']/text(), '&#10;',
-        'Entity: '  , /e:entries/e:entry[@key='entity']/text(), '&#10;',
+        'Sites/ServiceGroups: '  , /e:entries/e:entry[@key='entity']/text(), '&#10;',
         'Reason: '  , /e:entries/e:entry[@key='reason']/text(), '&#10;'
         )"></variable>
 
