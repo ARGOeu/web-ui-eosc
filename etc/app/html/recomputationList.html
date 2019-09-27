@@ -149,13 +149,13 @@
                                         <td tpl:else="" class="col-1"><span class="badge badge-primary">{{status}}</span></td>
 
 
-                                        <td class="col-1"><span class="small">{{timestamp}}</span></td>
+                                        <td class="col-2"><span class="small">{{timestamp}}</span></td>
 
 
 
                                     </tr>
 
-                                    <tr>
+                                    <tr tpl:foreach="object/data">
                                         <th>Reason</th>
                                         <td colspan="5"> <span>{{reason}}</span></td>
                                     </tr>
