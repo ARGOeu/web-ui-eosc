@@ -9,10 +9,11 @@
     <view name="recomputationListAPI">
 
         <argument name="tenant">egi</argument>
+        <argument name="id">_id_</argument>
 
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
-        <variable name="url" eval="property('api.recomputation.list')"/>
+        <variable name="url" eval="choose($id!='_id_',concat(property('api.recomputation.list'),'/',$id),property('api.recomputation.list'))"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>
@@ -28,10 +29,20 @@
         </connector>
 
         <serializer type="JSONStreamSerializer"/>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="template">app/html/recomputationList.html</parameter>
+            </renderer>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/recomputationList.html</parameter>
+            </renderer>
+        </renderers>
     </view>
 
 
     <view name="recomputationList" authenticators="aai">
+
         <connector type="XMLConnector">
             <parameter name="content" eval="new_element('root')"/>
         </connector>
@@ -85,7 +96,6 @@
         <argument name="tenant">egi</argument>
         <argument name="report">Critical</argument>
         <argument name="id">_id_</argument>
-        <variable name="api-key" eval="choose($id!='_id_',concat(property(concat($tenant,'.api.key')),'/',$id),property(concat($tenant,'.api.key'))) "/>
 
         <connector type="XMLConnector">
             <parameter name="content" eval="new_element('root')"/>
@@ -213,7 +223,7 @@
         <processors>
 
             <element in="object">
-                    <element-create>view('recomputation_email',entry('summary',$summary)|entry('cc',$email)|entry('id',../data/id/text())|entry('url',concat($baseUrl,'/recomputation/',$tenant,'/',$report,'/',../data/id/text() )))</element-create>
+                    <element-create>view('recomputation_email',entry('summary',$summary)|entry('cc',$email)|entry('id',../data/id/text())|entry('url',concat($baseUrl,'/recomputation/',$tenant,'/',../data/id/text() )))</element-create>
             </element>
         </processors>
 
