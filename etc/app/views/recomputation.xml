@@ -30,6 +30,10 @@
 
         <serializer type="JSONStreamSerializer"/>
 
+        <processors>
+            <element in="object"></element>
+        </processors>
+
         <renderers>
             <renderer type="DefaultRenderer">
                 <parameter name="template">app/html/recomputationList.html</parameter>

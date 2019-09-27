@@ -121,6 +121,49 @@
                                 </div>
                             </div>
                             <!-- /.card-body -->
+                            <div class="card-body" tpl:else="object/status/message='Success'">
+
+                                <table class="table">
+                                    <thead>
+                                    <tr class="row">
+
+                                        <th class="col-2">Requestor</th>
+                                        <th class="col-1">Start Time</th>
+                                        <th class="col-1">End Time</th>
+                                        <th class="col-5">Excluded Sites</th>
+                                        <th class="col-1">Status</th>
+                                        <th class="col-1">Last Update</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class='row' tpl:foreach="recomputation[id/text()!='']">
+
+                                        <td class="col-2">{{requester_name}}<br/><span class="mute small">{{requester_email}}</span> </td>
+                                        <td class="col-1"><span class="small">{{start_time}}</span> </td>
+                                        <td class="col-1"><span class="small">{{end_time}}</span></td>
+                                        <td class="col-5"><span class="small badge badge-light border border-1 " tpl:foreach="exclude/item">{{text()}}</span> </td>
+                                        <td tpl:if="status/text()='done'" class="col-1"><span class="badge badge-success">{{status}}</span></td>
+                                        <td tpl:else="status/text()='pending'" class="col-1"><span class="badge badge-warning">{{status}}</span></td>
+                                        <td tpl:else="status/text()='rejected'" class="col-1"><span class="badge badge-danger">{{status}}</span></td>
+                                        <td tpl:else="" class="col-1"><span class="badge badge-primary">{{status}}</span></td>
+
+
+                                        <td class="col-1"><span class="small">{{timestamp}}</span></td>
+
+
+
+                                    </tr>
+
+                                    <tr>
+                                        <th>Reason</th>
+                                        <td colspan="5"> <span>{{reason}}</span></td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
                             <div class="card-body" tpl:else="">
 
                                 <h2> <span class="fa fa-2x fa-exclamation-triangle  text-danger"></span> You are not administrator of this site . Sorry, You Are Not Allowed to Access This Page .</h2>
