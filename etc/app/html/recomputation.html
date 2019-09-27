@@ -121,8 +121,11 @@
                                             <div class="invalid-feedback">
                                                 Please provide the period on which you want to apply recomputation
                                             </div>
+
                                         </div>
                                         <hr/>
+                                        <input class="d-none" name="start_time" id="start_time"/>
+                                        <input class="d-none" name="end_time" id="end_time"/>
                                     </div>
 
 
@@ -265,6 +268,12 @@
              sites=sites+','+$(this).text();
             });
             $("#entity").val(sites);
+
+
+            var period=$('#reportrange input').val().split('/')
+            $('#start_time').val(period[0]);
+            $('#end_time').val(period[1]);
+
 
         if (form.checkValidity() === false) {
           event.preventDefault();
