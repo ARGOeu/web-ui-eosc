@@ -60,24 +60,42 @@
                                     <table class="table" id="dataTableRecomputation">
                                         <thead>
                                         <tr class="row">
-
-                                            <th class="col-2">Requestor</th>
+                                            <th style="width:90px"> </th>
+                                            <th class="col-1">Requestor</th>
                                             <th class="col-1">Start Time</th>
                                             <th class="col-1">End Time</th>
-                                            <th class="col-5">Excluded Sites</th>
+                                            <th class="col-3">Excluded Sites</th>
                                             <th class="col-1">Status</th>
                                             <th class="col-1">Last Update</th>
-                                            <th class="col-1">Reason</th>
+                                            <th style="width:30px"></th>
+
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr class='row' tpl:foreach="recomputation[id/text()!='']">
+                                            <td  style="width:90px" tpl:if="status!='done'">
+
+                                                <span class="fa fa-edit m-1" title="Edit recomputation"></span>
+                                                <a href="/recomputationStatus?tenant={ancestor::tenant/@name}&amp;id={id/text()}&amp;status=approved&amp;start_time={start_time}&amp;end_time={end_time}&amp;exclude={entity/text()}&amp;requester_email={requester_email}&amp;requester_name={requester_name}" >
+                                                    <span title="Accept recomputation" class="fa fa-check-circle m-1 text-success"></span>
+                                                </a>
+                                                <span title="Reject recomputation" class="fa fa-times m-1 text-danger"></span>
+
+                                                <a href="/recomputationStatus?tenant={ancestor::tenant/@name}&amp;id={id/text()}&amp;status=delete" >
+                                                    <span title="Delete recomputation" class="fa  fa-trash m-1 text-danger"></span>
+                                                </a>
+
+                                            </td>
+                                            <td  style="width:60px" tpl:else="">
+                                                <a href="/recomputationStatus?tenant={ancestor::tenant/@name}&amp;id={id/text()}&amp;status=delete" ><span title="Delete recomputation" class="fa  fa-trash m-1 text-danger"></span></a>
+                                            </td>
 
                                                 <td class="col-2">{{requester_name}}<br/><span class="mute small">{{requester_email}}</span> </td>
                                                 <td class="col-1"><span class="small">{{start_time}}</span> </td>
                                                 <td class="col-1"><span class="small">{{end_time}}</span></td>
-                                                <td class="col-5"><span class="small badge badge-light border border-1 " tpl:foreach="exclude/item">{{text()}}</span> </td>
+                                                <td class="col-3"><span class="small badge badge-light border border-1 " tpl:foreach="exclude/item">{{text()}}</span> </td>
                                             <td tpl:if="status/text()='done'" class="col-1"><span class="badge badge-success">{{status}}</span></td>
+                                            <td tpl:else="status/text()='accepted'" class="col-1"><span class="badge badge-info">{{status}}</span></td>
                                             <td tpl:else="status/text()='pending'" class="col-1"><span class="badge badge-warning">{{status}}</span></td>
                                             <td tpl:else="status/text()='rejected'" class="col-1"><span class="badge badge-danger">{{status}}</span></td>
                                             <td tpl:else="" class="col-1"><span class="badge badge-primary">{{status}}</span></td>
@@ -86,7 +104,7 @@
                                                 <td class="col-1"><span class="small">{{timestamp}}</span></td>
 
 
-                                                <td class="col-1">
+                                                <td  style="width:30px">
                                                     <!-- Button trigger modal -->
                                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{uid}}">
                                                         <span class="fa fa-search-plus"/>
@@ -114,6 +132,7 @@
                                                     </div>
 
                                                 </td>
+
                                             </tr>
 
                                         </tbody>
@@ -121,7 +140,7 @@
                                 </div>
                             </div>
                             <!-- /.card-body -->
-                            <div class="card-body" tpl:else="object/status/message='Success'">
+                            <div class="card-body" tpl:else="/root/status/message='Success'">
 
                                 <table class="table">
                                     <thead>
@@ -137,7 +156,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class='row' tpl:foreach="object/data">
+                                    <tr class='row' tpl:foreach="/root/data">
 
                                         <td class="col-2">{{requester_name}}<br/><span class="mute small">{{requester_email}}</span> </td>
                                         <td class="col-1"><span class="small">{{start_time}}</span> </td>
@@ -147,17 +166,15 @@
                                         <td tpl:else="status/text()='pending'" class="col-1"><span class="badge badge-warning">{{status}}</span></td>
                                         <td tpl:else="status/text()='rejected'" class="col-1"><span class="badge badge-danger">{{status}}</span></td>
                                         <td tpl:else="" class="col-1"><span class="badge badge-primary">{{status}}</span></td>
-
-
                                         <td class="col-2"><span class="small">{{timestamp}}</span></td>
 
 
 
                                     </tr>
 
-                                    <tr tpl:foreach="object/data">
-                                        <th>Reason</th>
-                                        <td colspan="5"> <span>{{reason}}</span></td>
+                                    <tr tpl:foreach="/root/data" class="row">
+                                        <th class="col-1">Reason</th>
+                                        <td class="col-10" colspan="5" > {{reason}}</td>
                                     </tr>
 
                                     </tbody>
@@ -212,6 +229,10 @@
 
 <script src="/resource/app/js/dataTable.js?v={$app.version}"></script>
 
+<link rel="stylesheet"
+      href="/resource/app/html/adminlte/plugins/datatables/dataTables.bootstrap4.css?v={$app.version}"/>
+<link rel="stylesheet"
+      href="/resource/app/html/adminlte/plugins/datatables/jquery.dataTables.min.css?v={$app.version}"/>
 
 
 <style>
@@ -222,12 +243,18 @@ float:right;
  #dataTableRecomputation_wrapper .dataTables_length{
 float:left;
 }
-
+table.dataTable thead th, table.dataTable thead td {
+margin: 7px -10px 7px -10px;
+padding: 7px -10px 7px -10px;
+text-align:right;
+}
 </style>
 
 <script>
 $(function () {
- $("#dataTableRecomputation").DataTable();
+ $("#dataTableRecomputation").DataTable( {
+    "order": [[ 6, "desc" ]]
+ } );
   $('[data-toggle="popover"]').popover()
 })
 

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:date="http://exslt.org/dates-and-times">
+
+<head tpl:include="/resource/app/html/header.html"></head>
+
+<body class="hold-transition sidebar-mini ">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav tpl:include="/resource/app/html/navbar.html"></nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside tpl:include="/resource/app/html/sidebar.html"></aside>
+    <!-- /sidebar -->
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-9">
+
+                    </div><!-- /.col -->
+                    <div class="col-sm-3">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active"> Recomputation Update</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="card border border-primary">
+                            <div class="card-header ui-sortable-handle" style="cursor: move;">
+                                <h3 class="card-title">
+                                    <i class="ion ion-backspace mr-1"></i>
+                                    Recomputation Update
+                                </h3>
+
+
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body" tpl:foreach="/root/status">
+                                 <h2 tpl:if="code/text()='200'" ><span class="fa fa-2x fa-check text-success"> </span>{{message}}</h2>
+                                <h2 tpl:if="code/text()!='200'"><span  class="fa fa-2x fa-times-circle text-danger"> </span>{{message}}</h2>
+                                <hr/>
+                                <br/>
+
+
+
+
+
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+
+
+                        <!-- /.card -->
+
+
+                        <!-- /.card -->
+                    </div>
+
+                </div>
+
+
+
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Main Footer -->
+
+    <footer tpl:include="/resource/app/html/footer.html"></footer>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="/resource/app/html/adminlte/plugins/jquery/jquery.min.js?v={$app.version}"></script>
+<!-- Bootstrap -->
+<script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js?v={$app.version}"></script>
+
+<script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+
+<!-- adminlte -->
+<script src="/resource/app/html/adminlte/dist/js/adminlte.js?v={$app.version}"></script>
+
+<script src="/resource/app/js/dataTable.js?v={$app.version}"></script>
+
+
+
+<style>
+
+ #dataTableRecomputation_wrapper .dataTables_filter{
+float:right;
+}
+ #dataTableRecomputation_wrapper .dataTables_length{
+float:left;
+}
+
+</style>
+
+<script>
+$(function () {
+ $("#dataTableRecomputation").DataTable();
+  $('[data-toggle="popover"]').popover()
+})
+
+
+
+
+</script>
+
+
+</body>
+</html>
+

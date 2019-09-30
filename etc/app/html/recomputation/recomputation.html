@@ -83,7 +83,7 @@
                                     <hr/>
                                 </div>
 
-                                <input id="recompId" name="recompId" class="d-none" />
+
                                 <input name="tenant" class="d-none"  value="{{/root/@tenant}}"/>
                                 <input name="report" class="d-none"  value="{{/root/@report}}"/>
                                 <input name="baseUrl" id="baseUrl" class="d-none"/>
@@ -170,7 +170,7 @@
                                     Recomputation summary
                                 </h3>
                                 <div class="card-body">
-                                    <div class="alert alert-success" tpl:if="not(result/e:entries/EmailSent)">Your recomputation has been properly submitted .</div>
+                                    <div class="alert alert-success" tpl:if="not(result/e:entries/EmailSent)">Your recomputation has been properly submitted . <br/>You will receive an email soon with a link to follow the recomputation progress</div>
                                 </div>
 
                                 <div class="card-body" >
@@ -226,11 +226,7 @@
 
     $(function() {
 
-    var RecompId=Date.now();
-    $('#recompId').val(RecompId);
     $('#baseUrl').val(window.location.origin);
-
-
 
     var start = moment().subtract(29, 'days');
     var end = moment();

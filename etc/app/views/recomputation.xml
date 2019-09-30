@@ -6,6 +6,64 @@
         Created by cyril on 2019/07/19 
     -->
 
+    <view name="recomputationStatus" authenticators="aai">
+
+        <argument name="tenant">egi</argument>
+        <argument name="id"></argument>
+        <argument name="status"></argument>
+        <argument name="requester_name">r_n</argument>
+        <argument name="requester_email">r_e</argument>
+        <argument name="reason">rs</argument>
+        <argument name="report">Critical</argument>
+        <argument name="start_time">s_t</argument>
+        <argument name="end_time">e_t</argument>
+        <argument name="exclude">ex</argument>
+
+
+        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+
+        <variable name="url" eval="concat(property('api.recomputation.list'),'/',$id)"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+            <parameter name="method" eval="choose($status='delete','DELETE','PUT')"/>
+            <parameter name="post" eval="choose($status='delete','{}',concat('{',quot('report'),': ',quot($report),',',quot('requester_name'),': ',quot($requester_name),',',quot('requester_email'),': ',quot($requester_email),',',quot('exclude'),': [',quot($exclude), '],', quot('reason'),': ',quot($reason),',',quot('start_time'),': ',quot($start_time),',',quot('end_time'),': ',quot($end_time),'}'))"/>
+
+            <fallback
+                    eval="new_element('exception',new_attribute('exception',concat('exception with tenant: ',$tenant)))">
+                <exception type="java.io.IOException"/>
+            </fallback>
+        </connector>
+
+        <serializer type="JSONStreamSerializer"/>
+
+        <processors>
+            <element in="object" out="root">
+
+                <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="report">'Critical'</attribute-create>
+                <element-create>entry('token',user('token'))</element-create>
+                <element-create>view('userInfo', entry('token',user('token')))</element-create>
+
+            </element>
+        </processors>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="template">app/html/recomputation/recomputationChange.html</parameter>
+            </renderer>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/recomputation/recomputationChange.html</parameter>
+            </renderer>
+        </renderers>
+    </view>
+
+
     <view name="recomputationListAPI">
 
         <argument name="tenant">egi</argument>
@@ -31,15 +89,18 @@
         <serializer type="JSONStreamSerializer"/>
 
         <processors>
-            <element in="object"></element>
+            <element in="object" out="root">
+                <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="report">'Critical'</attribute-create>
+            </element>
         </processors>
 
         <renderers>
             <renderer type="DefaultRenderer">
-                <parameter name="template">app/html/recomputationList.html</parameter>
+                <parameter name="template">app/html/recomputation/recomputationList.html</parameter>
             </renderer>
             <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/recomputationList.html</parameter>
+                <parameter name="template">app/html/recomputation/recomputationList.html</parameter>
             </renderer>
         </renderers>
     </view>
@@ -75,9 +136,10 @@
             </element>
 
             <elements path="root/tenant">
-                <elements-ignore path="object/data">
+                <elements-ignore path="root/data">
                     <element in="object" out="recomputation">
                         <element-create>new_element('uid',concat(ancestor::tenant/@name,count(../preceding-sibling::object)))</element-create>
+                        <element-create>new_element('entity',join(../exclude/item,','))</element-create>
                     </element>
                 </elements-ignore>
             </elements>
@@ -85,10 +147,10 @@
 
         <renderers>
             <renderer type="DefaultRenderer">
-                <parameter name="template">app/html/recomputationList.html</parameter>
+                <parameter name="template">app/html/recomputation/recomputationList.html</parameter>
             </renderer>
             <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/recomputationList.html</parameter>
+                <parameter name="template">app/html/recomputation/recomputationList.html</parameter>
             </renderer>
         </renderers>
 
@@ -126,10 +188,10 @@
 
         <renderers>
             <renderer type="DefaultRenderer">
-                <parameter name="template">app/html/recomputation.html</parameter>
+                <parameter name="template">app/html/recomputation/recomputation.html</parameter>
             </renderer>
             <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/recomputation.html</parameter>
+                <parameter name="template">app/html/recomputation/recomputation.html</parameter>
             </renderer>
         </renderers>
 
@@ -163,10 +225,10 @@
 
         <renderers>
             <renderer type="DefaultRenderer">
-                <parameter name="template">app/html/recomputation.html</parameter>
+                <parameter name="template">app/html/recomputation/recomputation.html</parameter>
             </renderer>
             <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/recomputation.html</parameter>
+                <parameter name="template">app/html/recomputation/recomputation.html</parameter>
             </renderer>
         </renderers>
 
@@ -339,10 +401,10 @@
 
 <!--        <renderers>-->
 <!--            <renderer type="DefaultRenderer">-->
-<!--                <parameter name="template">app/html/recomputation.html</parameter>-->
+<!--                <parameter name="template">app/html/recomputation/recomputation.html</parameter>-->
 <!--            </renderer>-->
 <!--            <renderer type="HTMLRenderer">-->
-<!--                <parameter name="template">app/html/recomputation.html</parameter>-->
+<!--                <parameter name="template">app/html/recomputation/recomputation.html</parameter>-->
 <!--            </renderer>-->
 <!--        </renderers>-->
 
