@@ -53,7 +53,7 @@
             <element in="object" out="tenants">
                 <element-ignore>
                     <!-- @TODO to be removed for prod -->
-                    <element in="object" out="tenant" if="lower-case(info/name/text())='egi' or lower-case(info/name/text())='eudat' ">
+                    <element in="object" out="tenant" if="(lower-case(info/name/text())='egi' or lower-case(info/name/text())='eudat') or lower-case(info/name/text())='sdc' ">
                         <element in="id" out="uid"/>
                         <element-ignore in="info">
                             <element in="email" out="contact"/>

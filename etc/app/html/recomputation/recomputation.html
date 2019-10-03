@@ -85,7 +85,7 @@
 
 
                                 <input name="tenant" class="d-none"  value="{{/root/@tenant}}"/>
-                                <input name="report" class="d-none"  value="{{/root/@report}}"/>
+
                                 <input name="baseUrl" id="baseUrl" class="d-none"/>
 
 
@@ -94,21 +94,20 @@
                             </div>
 
                                 <div class="row">
+
+
+
                                     <div class="col-6">
-                                    <label>Sites to be excluded</label>
-                                    <select id="services"   multiple="true" class="form-control" required="true">
-                                        <option  tpl:foreach="report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()"
-                                                value="{.}">{{.}}
-                                        </option>
+                                        <label>Report</label>
+                                        <div id="report"  style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
 
-                                    </select>
-                                        <div class="invalid-feedback">
-                                            Please select the site or the service group which you should be excluded during the recomputation
+                                            <input name="report" style="border:0"  readonly="true" value="{{/root/@report}}"/>
+
                                         </div>
-                                        <input class="d-none" id="entity" name="entity"/>
-                                    <hr/>
-                                    </div>
+                                        <hr/>
 
+
+                                    </div>
 
 
 
@@ -124,6 +123,7 @@
 
                                         </div>
                                         <hr/>
+
                                         <input class="d-none" name="start_time" id="start_time"/>
                                         <input class="d-none" name="end_time" id="end_time"/>
                                     </div>
@@ -132,10 +132,27 @@
                                     </div>
 
                                 <div class="row form-group">
-                                    <label for="reason">Reason of recomputation</label>
-                                    <textarea name="reason" class="form-control" id="reason" rows="4" required="true"></textarea>
-                                    <div class="invalid-feedback">
-                                        Please provide a valid reason to trigger a recomputation
+
+                                    <div class="col-4">
+                                        <label>Sites to be excluded</label>
+                                        <select id="services"   multiple="true" class="form-control" required="true">
+                                            <option  tpl:foreach="report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()"
+                                                     value="{.}">{{.}}
+                                            </option>
+
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Please select the site or the service group which you should be excluded during the recomputation
+                                        </div>
+                                        <input class="d-none" id="entity" name="entity"/>
+                                        <hr/>
+                                    </div>
+                                    <div class="col-8">
+                                        <label for="reason">Reason of recomputation</label>
+                                        <textarea name="reason" class="form-control" id="reason" rows="4" required="true"></textarea>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid reason to trigger a recomputation
+                                        </div>
                                     </div>
                                 </div>
 
@@ -221,6 +238,7 @@
 
 <script src="/resource/app/html/adminlte/plugins/daterangepicker/moment.min.js"></script>
 <script src="/resource/app/html/adminlte/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="/resource/app/js/dashboard.js?v={$app.version}"></script>
 
 <script>
 

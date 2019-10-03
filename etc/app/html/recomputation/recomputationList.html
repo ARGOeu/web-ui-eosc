@@ -57,23 +57,23 @@
                                     <h2>Recomputation(s) for tenant {{@name}}</h2>
 
                                     
-                                    <table class="table" id="dataTableRecomputation">
+                                    <table  class="table table-condensed dataTableRecomputation">
                                         <thead>
                                         <tr class="row">
-                                            <th style="width:90px"> </th>
+                                            <th style="width:90px;min-width:88px"> </th>
                                             <th class="col-1">Requestor</th>
                                             <th class="col-1">Start Time</th>
                                             <th class="col-1">End Time</th>
                                             <th class="col-3">Excluded Sites</th>
                                             <th class="col-1">Status</th>
                                             <th class="col-1">Last Update</th>
-                                            <th style="width:30px"></th>
+                                            <th style="width:30px"> </th>
 
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr class='row' tpl:foreach="recomputation[id/text()!='']">
-                                            <td  style="width:90px" tpl:if="status!='done'">
+                                            <td  style="width:90px;min-width:88px" tpl:if="status!='done'">
 
                                                 <span class="fa fa-edit m-1" title="Edit recomputation"></span>
                                                 <a href="/recomputationStatus?tenant={ancestor::tenant/@name}&amp;id={id/text()}&amp;status=approved&amp;start_time={start_time}&amp;end_time={end_time}&amp;exclude={entity/text()}&amp;requester_email={requester_email}&amp;requester_name={requester_name}" >
@@ -86,7 +86,7 @@
                                                 </a>
 
                                             </td>
-                                            <td  style="width:60px" tpl:else="">
+                                            <td  style="width:90px;min-width:88px" tpl:else="">
                                                 <a href="/recomputationStatus?tenant={ancestor::tenant/@name}&amp;id={id/text()}&amp;status=delete" ><span title="Delete recomputation" class="fa  fa-trash m-1 text-danger"></span></a>
                                             </td>
 
@@ -237,12 +237,7 @@
 
 <style>
 
- #dataTableRecomputation_wrapper .dataTables_filter{
-float:right;
-}
- #dataTableRecomputation_wrapper .dataTables_length{
-float:left;
-}
+
 table.dataTable thead th, table.dataTable thead td {
 margin: 7px -10px 7px -10px;
 padding: 7px -10px 7px -10px;
@@ -252,7 +247,7 @@ text-align:right;
 
 <script>
 $(function () {
- $("#dataTableRecomputation").DataTable( {
+ $(".dataTableRecomputation").DataTable( {
     "order": [[ 6, "desc" ]]
  } );
   $('[data-toggle="popover"]').popover()
