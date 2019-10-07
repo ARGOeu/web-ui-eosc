@@ -50,9 +50,9 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body" tpl:if="/root/object/eduperson_entitlement/item='urn:mace:egi.eu:goc.egi.eu:126G0:GRIDOPS-SAM:Site+Administrator@egi.eu'">
-                                <h2 tpl:if="/root/status/code/text()='200'" ><span class="fa fa-2x fa-check text-success"> </span>{{/root/status/message}}</h2>
-                                <h2 tpl:else="/root/status/code/text()!='200'"><span  class="fa fa-2x fa-times-circle text-danger"> </span>{{/root/status/message}}</h2>
-                                <h2 tpl:else=""><span class="fa fa-2x fa-check text-success"> </span> Welcome on board, dear administrator !</h2>
+                                <h4 tpl:if="/root/status/code/text()='200'" ><span class="fa fa-check text-success"> </span>{{/root/status/message}}</h4>
+                                <h4 tpl:else="/root/status/code/text()!='200'"><span  class="fa  fa-times-circle text-danger"> </span>{{/root/status/message}}</h4>
+                                <h3 tpl:else=""><span class="fa fa-2x fa-check text-success"> </span> Welcome on board, dear administrator !</h3>
                                 <hr/>
                                 <br/>
                                 <div class="card-body" tpl:foreach="/root/tenant[recomputation]">
@@ -94,15 +94,20 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <span>{{reason}}</span>
+
+                                                            </div>
+                                                            <div class="modal-body" tpl:if="history/object">
                                                                 <hr/>
+                                                                <h3>History</h3>
                                                             </div>
                                                             <div class="modal-body" tpl:foreach="history/object">
-                                                                <span tpl:if="status/text()='done'" class="badge badge-success">{{status}}</span><span>{{timestamp}}</span>
-                                                                <span tpl:else="status/text()='approved'" class="badge badge-info">{{status}}</span><span>{{timestamp}}</span>
-                                                                <span tpl:else="status/text()='pending'" class="badge badge-warning">{{status}}</span><span>{{timestamp}}</span>
-                                                                <span tpl:else="status/text()='rejected'" class="badge badge-danger">{{status}}</span><span>{{timestamp}}</span>
-                                                                <span tpl:else="status/text()='running'" class="badge badge-primary">{{status}}</span><span>{{timestamp}}</span>
-                                                                <span tpl:else="" class="badge badge-danger">{{status}}</span><span>{{timestamp}}</span>
+                                                                <span tpl:if="status/text()='done'" class="col-2 badge badge-success">{{status}}</span>
+                                                                <span tpl:else="status/text()='approved'" class="col-2  badge badge-info">{{status}}</span>
+                                                                <span tpl:else="status/text()='pending'" class="col-2  badge badge-warning">{{status}}</span>
+                                                                <span tpl:else="status/text()='rejected'" class="col-2  badge badge-danger">{{status}}</span>
+                                                                <span tpl:else="status/text()='running'" class="col-2  badge badge-primary">{{status}}</span>
+                                                                <span tpl:else="" class="col-2  badge badge-danger">{{status}}</span>
+                                                                <span class="col-4 ml-2 badge badge-light border border-dark">{{timestamp}}</span>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -120,6 +125,8 @@
                                                 <td class="col-1"><span class="small">{{start_time}}</span> </td>
                                                 <td class="col-1"><span class="small">{{end_time}}</span></td>
                                                 <td class="col-3"><span class="small badge badge-light border border-1 " tpl:foreach="exclude/item">{{text()}}</span> </td>
+
+
                                             <td tpl:if="status/text()='done'" class="col-1"><span class="badge badge-success">{{status}}</span></td>
                                             <td tpl:else="status/text()='approved'" class="col-1"><span class="badge badge-info">{{status}}</span></td>
                                             <td tpl:else="status/text()='pending'" class="col-1"><span class="badge badge-warning">{{status}}</span></td>
