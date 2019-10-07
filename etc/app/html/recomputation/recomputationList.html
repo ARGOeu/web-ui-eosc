@@ -49,7 +49,7 @@
 
                             </div>
                             <!-- /.card-header -->
-                            <div class="card-body" tpl:if="/root/object/eduperson_entitlement/item='urn:mace:egi.eu:goc.egi.eu:126G0:GRIDOPS-SAM:Site+Administrator@egi.eu'">
+                            <div class="card-body" tpl:if="/root/object/eduperson_entitlement/item='urn:mace:egi.eu:group:argo#sso.egi.eu'">
                                 <h4 tpl:if="/root/status/code/text()='200'" ><span class="fa fa-check text-success"> </span>{{/root/status/message}}</h4>
                                 <h4 tpl:else="/root/status/code/text()!='200'"><span  class="fa  fa-times-circle text-danger"> </span>{{/root/status/message}}</h4>
                                 <h3 tpl:else=""><span class="fa fa-2x fa-check text-success"> </span> Welcome on board, dear administrator !</h3>
