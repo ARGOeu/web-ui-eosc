@@ -46,7 +46,7 @@
                 <element-create>view('recomputationListAPI',entry('tenant',$tenant))/root/*</element-create>
             </element>
 
-            <element  in="root" if="object/eduperson_entitlement/item='urn:mace:egi.eu:goc.egi.eu:126G0:GRIDOPS-SAM:Site+Administrator@egi.eu'">
+            <element  in="root" if="object/eduperson_entitlement/item='urn:mace:egi.eu:goc.egi.eu:126G0:GRIDOPS-SAM:Site+Administrator@egi.eu' or object/eduperson_entitlement/item='urn:mace:egi.eu:goc.egi.eu:126G0:GRIDOPS-SAM:Site+Operations+Manager@egi.eu'">
                 <element-create>view('tenants')</element-create>
             </element>
 
@@ -146,7 +146,7 @@
                 <element-create>view('userInfo', entry('token',user('token')))</element-create>
             </element>
 
-            <element in="root" if="object/eduperson_entitlement/item='urn:mace:egi.eu:goc.egi.eu:126G0:GRIDOPS-SAM:Site+Administrator@egi.eu'">
+            <element  in="root" if="object/eduperson_entitlement/item='urn:mace:egi.eu:goc.egi.eu:126G0:GRIDOPS-SAM:Site+Administrator@egi.eu' or object/eduperson_entitlement/item='urn:mace:egi.eu:goc.egi.eu:126G0:GRIDOPS-SAM:Site+Operations+Manager@egi.eu'">
                 <element-create>view('tenants')</element-create>
             </element>
 
