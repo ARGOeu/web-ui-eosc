@@ -46,7 +46,7 @@
                 <element-create>view('recomputationListAPI',entry('tenant',$tenant))/root/*</element-create>
             </element>
 
-            <element  in="root" if="object/eduperson_entitlement/item='urn:mace:egi.eu:goc.egi.eu:126G0:GRIDOPS-SAM:Site+Administrator@egi.eu' or object/eduperson_entitlement/item='urn:mace:egi.eu:goc.egi.eu:126G0:GRIDOPS-SAM:Site+Operations+Manager@egi.eu'">
+            <element  in="root" if="object/eduperson_entitlement/item='urn:mace:egi.eu:group:argo#sso.egi.eu'">
                 <element-create>view('tenants')</element-create>
             </element>
 
@@ -146,7 +146,7 @@
                 <element-create>view('userInfo', entry('token',user('token')))</element-create>
             </element>
 
-            <element  in="root" if="object/eduperson_entitlement/item='urn:mace:egi.eu:goc.egi.eu:126G0:GRIDOPS-SAM:Site+Administrator@egi.eu' or object/eduperson_entitlement/item='urn:mace:egi.eu:goc.egi.eu:126G0:GRIDOPS-SAM:Site+Operations+Manager@egi.eu'">
+            <element in="root" if="object/eduperson_entitlement/item='urn:mace:egi.eu:group:argo#sso.egi.eu'">
                 <element-create>view('tenants')</element-create>
             </element>
 
@@ -307,7 +307,7 @@
                 <entry key="Accept">application/json</entry>
             </parameter>
             <parameter name="method">POST</parameter>
-            <parameter name="post" eval="concat('{',quot('report'),': ',quot($report),',',quot('requester_name'),': ',quot($name),',',quot('requester_email'),': ',quot($email),',',quot('exclude'),': [',$entity, '],', quot('reason'),': ',quot($reason),',',quot('start_time'),': ',quot($start_time),',',quot('end_time'),': ',quot($end_time),'}')"/>
+            <parameter name="post" eval="concat('{',quot('report'),': ',quot($report),',',quot('requester_name'),': ',quot($name),',',quot('requester_email'),': ',quot($email),',',quot('exclude'),': [',$entity , '],', quot('reason'),': ',quot($reason),',',quot('start_time'),': ',quot($start_time),',',quot('end_time'),': ',quot($end_time),'}')"/>
 
             <fallback
                     eval="new_element('exception',new_attribute('exception',concat('exception with creation of the recomputation for tenant ',$tenant)))">
