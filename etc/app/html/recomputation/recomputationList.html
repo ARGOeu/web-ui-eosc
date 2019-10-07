@@ -50,7 +50,9 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body" tpl:if="/root/object/eduperson_entitlement/item='urn:mace:egi.eu:goc.egi.eu:126G0:GRIDOPS-SAM:Site+Administrator@egi.eu'">
-                                 <h2><span class="fa fa-2x fa-check text-success"> </span> Welcome on board, dear administrator !</h2>
+                                <h2 tpl:if="/root/status/code/text()='200'" ><span class="fa fa-2x fa-check text-success"> </span>{{/root/status/message}}</h2>
+                                <h2 tpl:else="/root/status/code/text()!='200'"><span  class="fa fa-2x fa-times-circle text-danger"> </span>{{/root/status/message}}</h2>
+                                <h2 tpl:else=""><span class="fa fa-2x fa-check text-success"> </span> Welcome on board, dear administrator !</h2>
                                 <hr/>
                                 <br/>
                                 <div class="card-body" tpl:foreach="/root/tenant[recomputation]">
@@ -60,76 +62,92 @@
                                     <table  class="table table-condensed dataTableRecomputation">
                                         <thead>
                                         <tr class="row">
-                                            <th style="width:90px;min-width:88px"> </th>
+                                            <th style="width:80px"> </th>
                                             <th class="col-1">Requestor</th>
                                             <th class="col-1">Start Time</th>
                                             <th class="col-1">End Time</th>
                                             <th class="col-3">Excluded Sites</th>
                                             <th class="col-1">Status</th>
                                             <th class="col-1">Last Update</th>
-                                            <th style="width:30px"> </th>
+                                            <th style="width:50px"> </th>
 
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr class='row' tpl:foreach="recomputation[id/text()!='']">
-                                            <td  style="width:90px;min-width:88px" tpl:if="status!='done'">
+                                            <td  style="width:80px;" >
 
-                                                <span class="fa fa-edit m-1" title="Edit recomputation"></span>
-                                                <a href="/recomputationStatus?tenant={ancestor::tenant/@name}&amp;id={id/text()}&amp;status=approved&amp;start_time={start_time}&amp;end_time={end_time}&amp;exclude={entity/text()}&amp;requester_email={requester_email}&amp;requester_name={requester_name}" >
-                                                    <span title="Accept recomputation" class="fa fa-check-circle m-1 text-success"></span>
-                                                </a>
-                                                <span title="Reject recomputation" class="fa fa-times m-1 text-danger"></span>
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{uid}}">
+                                                    <span class="fa fa-search-plus"/>
+                                                </button>
 
-                                                <a href="/recomputationStatus?tenant={ancestor::tenant/@name}&amp;id={id/text()}&amp;status=delete" >
-                                                    <span title="Delete recomputation" class="fa  fa-trash m-1 text-danger"></span>
-                                                </a>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="{{uid}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Reason of recomputation</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">x</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <span>{{reason}}</span>
+                                                                <hr/>
+                                                            </div>
+                                                            <div class="modal-body" tpl:foreach="history/object">
+                                                                <span tpl:if="status/text()='done'" class="badge badge-success">{{status}}</span><span>{{timestamp}}</span>
+                                                                <span tpl:else="status/text()='approved'" class="badge badge-info">{{status}}</span><span>{{timestamp}}</span>
+                                                                <span tpl:else="status/text()='pending'" class="badge badge-warning">{{status}}</span><span>{{timestamp}}</span>
+                                                                <span tpl:else="status/text()='rejected'" class="badge badge-danger">{{status}}</span><span>{{timestamp}}</span>
+                                                                <span tpl:else="status/text()='running'" class="badge badge-primary">{{status}}</span><span>{{timestamp}}</span>
+                                                                <span tpl:else="" class="badge badge-danger">{{status}}</span><span>{{timestamp}}</span>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
 
                                             </td>
-                                            <td  style="width:90px;min-width:88px" tpl:else="">
-                                                <a href="/recomputationStatus?tenant={ancestor::tenant/@name}&amp;id={id/text()}&amp;status=delete" ><span title="Delete recomputation" class="fa  fa-trash m-1 text-danger"></span></a>
-                                            </td>
+
 
                                                 <td class="col-2">{{requester_name}}<br/><span class="mute small">{{requester_email}}</span> </td>
                                                 <td class="col-1"><span class="small">{{start_time}}</span> </td>
                                                 <td class="col-1"><span class="small">{{end_time}}</span></td>
                                                 <td class="col-3"><span class="small badge badge-light border border-1 " tpl:foreach="exclude/item">{{text()}}</span> </td>
                                             <td tpl:if="status/text()='done'" class="col-1"><span class="badge badge-success">{{status}}</span></td>
-                                            <td tpl:else="status/text()='accepted'" class="col-1"><span class="badge badge-info">{{status}}</span></td>
+                                            <td tpl:else="status/text()='approved'" class="col-1"><span class="badge badge-info">{{status}}</span></td>
                                             <td tpl:else="status/text()='pending'" class="col-1"><span class="badge badge-warning">{{status}}</span></td>
                                             <td tpl:else="status/text()='rejected'" class="col-1"><span class="badge badge-danger">{{status}}</span></td>
+                                            <td tpl:else="status/text()='running'" class="col-1"><span class="badge badge-primary">{{status}}</span></td>
                                             <td tpl:else="" class="col-1"><span class="badge badge-primary">{{status}}</span></td>
-
 
                                                 <td class="col-1"><span class="small">{{timestamp}}</span></td>
 
 
-                                                <td  style="width:30px">
-                                                    <!-- Button trigger modal -->
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{uid}}">
-                                                        <span class="fa fa-search-plus"/>
-                                                    </button>
+                                                <td  style="width:50px">
 
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="{{uid}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">Reason of recomputation</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">x</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <span>{{reason}}</span>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Action
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a href="/recomputationStatus?tenant={ancestor::tenant/@name}&amp;id={id/text()}&amp;status=approved" class="dropdown-item" ><span title="Accept recomputation" class="fa fa-check-circle m-1 text-success"></span>Accept Recomputation</a>
+                                                            <a href="/recomputationStatus?tenant={ancestor::tenant/@name}&amp;id={id/text()}&amp;status=rejected" class="dropdown-item"><span title="Reject recomputation" class="fa fa-times m-1 text-danger"></span>Reject Recomputation</a>
+                                                            <a href="/recomputationStatus?tenant={ancestor::tenant/@name}&amp;id={id/text()}&amp;status=running" class="dropdown-item"><span title="On-going recomputation" class="fa fa-spinner m-1 text-primary"></span>On-going Recomputation</a>
+                                                            <a href="/recomputationStatus?tenant={ancestor::tenant/@name}&amp;id={id/text()}&amp;status=done" class="dropdown-item"><span title="Recomputation done" class="fa fa-check-double m-1 text-primary"></span>Recomputation Achieved</a>
 
-                                                                </div>
-                                                            </div>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item" href="/recomputationStatus?tenant={ancestor::tenant/@name}&amp;id={id/text()}&amp;status=delete"><span title="Delete recomputation" class="fa  fa-trash m-1 text-danger"></span>Delete Recomputation</a>
                                                         </div>
                                                     </div>
+
+
 
                                                 </td>
 

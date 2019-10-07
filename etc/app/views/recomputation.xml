@@ -22,7 +22,7 @@
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
 
-        <variable name="url" eval="concat(property('api.recomputation.list'),'/',$id)"/>
+        <variable name="url" eval="choose($status='delete',concat(property('api.recomputation.list'),'/',$id),concat(property('api.recomputation.list'),'/',$id,'/status'))"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>
@@ -31,8 +31,8 @@
                 <entry key="x-api-key" eval="$api-key"/>
                 <entry key="Accept">application/json</entry>
             </parameter>
-            <parameter name="method" eval="choose($status='delete','DELETE','PUT')"/>
-            <parameter name="post" eval="choose($status='delete','{}',concat('{',quot('report'),': ',quot($report),',',quot('requester_name'),': ',quot($requester_name),',',quot('requester_email'),': ',quot($requester_email),',',quot('exclude'),': [',quot($exclude), '],', quot('reason'),': ',quot($reason),',',quot('start_time'),': ',quot($start_time),',',quot('end_time'),': ',quot($end_time),'}'))"/>
+            <parameter name="method" eval="choose($status='delete','DELETE','POST')"/>
+            <parameter name="post" eval="choose($status='delete','{}',concat('{',quot('status'),': ',quot($status),'}'))"/>
 
             <fallback
                     eval="new_element('exception',new_attribute('exception',concat('exception with tenant: ',$tenant)))">
@@ -45,20 +45,53 @@
         <processors>
             <element in="object" out="root">
 
-                <attribute-create out="tenant">$tenant</attribute-create>
-                <attribute-create out="report">'Critical'</attribute-create>
+<!--                <attribute-create out="tenant">$tenant</attribute-create>-->
+<!--                <attribute-create out="report">'Critical'</attribute-create>-->
                 <element-create>entry('token',user('token'))</element-create>
                 <element-create>view('userInfo', entry('token',user('token')))</element-create>
+                <element-create>view('recomputationListAPI',entry('tenant',$tenant))/root/*</element-create>
+            </element>
+
+            <element  in="root" if="object/eduperson_entitlement/item='urn:mace:egi.eu:goc.egi.eu:126G0:GRIDOPS-SAM:Site+Administrator@egi.eu'">
+                <element-create>view('tenants')</element-create>
+            </element>
+
+            <element in="root">
+
+                <element-ignore in="tenants">
+                    <element in="tenant">
+                        <attribute-create out="name">../id/text()</attribute-create>
+
+                        <element-create>view('recomputationListAPI',entry('tenant',../id/text()))</element-create>
+                        <element-ignore/>
+                    </element>
+
+                </element-ignore>
 
             </element>
+
+            <elements path="root/tenant">
+                <elements-ignore path="root/data">
+                    <element in="object" out="recomputation">
+                        <element-create>new_element('uid',concat(ancestor::tenant/@name,count(../preceding-sibling::object)))</element-create>
+                        <element-create>new_element('entity',join(../exclude/item,','))</element-create>
+                    </element>
+                </elements-ignore>
+            </elements>
+
+            <elements path="root/tenant">
+                <element-ignore in="message"/>
+            </elements>
+
+
         </processors>
 
         <renderers>
             <renderer type="DefaultRenderer">
-                <parameter name="template">app/html/recomputation/recomputationChange.html</parameter>
+                <parameter name="template">app/html/recomputation/recomputationList.html</parameter>
             </renderer>
             <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/recomputation/recomputationChange.html</parameter>
+                <parameter name="template">app/html/recomputation/recomputationList.html</parameter>
             </renderer>
         </renderers>
     </view>
@@ -92,6 +125,7 @@
             <element in="object" out="root">
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">'Critical'</attribute-create>
+                <element-ignore in="message"/>
             </element>
         </processors>
 
@@ -123,6 +157,7 @@
             </element>
 
             <element in="root">
+
                 <element-ignore in="tenants">
                     <element in="tenant">
                         <attribute-create out="name">../id/text()</attribute-create>
@@ -142,6 +177,10 @@
                         <element-create>new_element('entity',join(../exclude/item,','))</element-create>
                     </element>
                 </elements-ignore>
+            </elements>
+
+            <elements path="root/tenant">
+                <element-ignore in="message"/>
             </elements>
         </processors>
 
