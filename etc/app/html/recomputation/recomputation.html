@@ -277,13 +277,13 @@
             var sites='';
             $('#services :selected').each(function(){
             if (sites=='')
-             sites=$(this).text();
+             sites='\"'+$(this).text()+'\"';
              else
-             sites=sites+','+$(this).text();
+             sites=sites+','+'\"'+$(this).text()+'\"';
             });
             $("#entity").val(sites);
 
-
+            console.log(sites);
             var period=$('#reportrange input').val().split('/')
             $('#start_time').val(period[0]);
             $('#end_time').val(period[1]);

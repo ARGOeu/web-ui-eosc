@@ -11,13 +11,7 @@
         <argument name="tenant">egi</argument>
         <argument name="id"></argument>
         <argument name="status"></argument>
-        <argument name="requester_name">r_n</argument>
-        <argument name="requester_email">r_e</argument>
-        <argument name="reason">rs</argument>
-        <argument name="report">Critical</argument>
-        <argument name="start_time">s_t</argument>
-        <argument name="end_time">e_t</argument>
-        <argument name="exclude">ex</argument>
+
 
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
@@ -313,7 +307,7 @@
                 <entry key="Accept">application/json</entry>
             </parameter>
             <parameter name="method">POST</parameter>
-            <parameter name="post" eval="concat('{',quot('report'),': ',quot($report),',',quot('requester_name'),': ',quot($name),',',quot('requester_email'),': ',quot($email),',',quot('exclude'),': [',quot($entity), '],', quot('reason'),': ',quot($reason),',',quot('start_time'),': ',quot($start_time),',',quot('end_time'),': ',quot($end_time),'}')"/>
+            <parameter name="post" eval="concat('{',quot('report'),': ',quot($report),',',quot('requester_name'),': ',quot($name),',',quot('requester_email'),': ',quot($email),',',quot('exclude'),': [',$entity, '],', quot('reason'),': ',quot($reason),',',quot('start_time'),': ',quot($start_time),',',quot('end_time'),': ',quot($end_time),'}')"/>
 
             <fallback
                     eval="new_element('exception',new_attribute('exception',concat('exception with creation of the recomputation for tenant ',$tenant)))">
@@ -388,65 +382,5 @@
     </view>
 
 
-
-<!--    <view name="form_properties">-->
-<!--        <argument name="Id"></argument>-->
-<!--        <connector type="FileConnector">-->
-<!--            <parameter name="path" eval="concat(property('lavoisier.cache.directory'),'form_recomputation_results/_index.properties')"></parameter>-->
-<!--        </connector>-->
-<!--        <processors>-->
-<!--            <element in="properties">-->
-<!--                <element in="entry" if="@key=$Id"><text></text></element>-->
-<!--                <element-ignore/>-->
-<!--            </element>-->
-<!--        </processors>-->
-<!--    </view>-->
-
-<!--    <view name="recomputation_results"  xmlns:date="http://exslt.org/dates-and-times">-->
-
-
-<!--        <argument name="Id"></argument>-->
-<!--        <variable name="key" eval="view('form_properties',entry('Id',$Id))/properties/entry/text()"></variable>-->
-
-<!--        <connector type="FileConnector">-->
-<!--            <parameter name="path" eval="concat(property('lavoisier.cache.directory'),'form_recomputation_results/',$key)"></parameter>-->
-<!--        </connector>-->
-
-<!--        <processors>-->
-
-
-<!--            <element-create-as-parent out="result">-->
-<!--                <element in="entries"/>-->
-<!--            </element-create-as-parent>-->
-
-<!--            <element-create-as-parent out="root">-->
-<!--                <element in="result"/>-->
-<!--            </element-create-as-parent>-->
-
-<!--            <element in="root">-->
-<!--                <attribute-create out="tenant">../result/entries/entry[@key='tenant']</attribute-create>-->
-<!--                <attribute-create out="report">../result/entries/entry[@key='report']</attribute-create>-->
-
-<!--                <element in="result">-->
-
-<!--                    <element in="entries" out="e:entries">-->
-<!--                        <element in="entry" out="e:entry"/>-->
-<!--                    </element>-->
-<!--                </element>-->
-
-<!--            </element>-->
-
-<!--        </processors>-->
-
-<!--        <renderers>-->
-<!--            <renderer type="DefaultRenderer">-->
-<!--                <parameter name="template">app/html/recomputation/recomputation.html</parameter>-->
-<!--            </renderer>-->
-<!--            <renderer type="HTMLRenderer">-->
-<!--                <parameter name="template">app/html/recomputation/recomputation.html</parameter>-->
-<!--            </renderer>-->
-<!--        </renderers>-->
-
-<!--    </view>-->
 
 </views>
