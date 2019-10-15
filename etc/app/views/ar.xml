@@ -853,9 +853,9 @@
 
 
             <element in="root">
-                <attribute-create out="availability">sum(../group/@availability) div (count(../group/@availability))
+                <attribute-create out="availability">sum(../group[@availability!='-1']/@availability) div (count(../group[@availability!='-1']/@availability))
                 </attribute-create>
-                <attribute-create out="reliability">sum(../group/@reliability) div (count(../group/@reliability))
+                <attribute-create out="reliability">sum(../group[@reliability!='-1']/@reliability) div (count(../group[@reliability!='-1']/@reliability))
                 </attribute-create>
             </element>
 

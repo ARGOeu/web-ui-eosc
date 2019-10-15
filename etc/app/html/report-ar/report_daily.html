@@ -66,6 +66,10 @@
                            href="/{@tenant}/report-status/{@report}/SITES?filter={@group}&amp;start_date={@start_date}&amp;end_date={@end_date}"
                            title="status link"><span class="fa fa-check "></span> STATUS</a>
                         <a class="nav-link" role="tab" aria-controls="table" aria-selected="true"
+                           tpl:if="@topology='PROJECT'"
+                           href="/{@tenant}/report-status/{@report}/SERVICEGROUPS?start_date={@start_date}&amp;end_date={@end_date}"
+                           title="status link"><span class="fa fa-check "></span> STATUS</a>
+                        <a class="nav-link" role="tab" aria-controls="table" aria-selected="true"
                            tpl:else="@group and not(@group2)"
                            href="/{@tenant}/report-status/{@report}/{@topology}/{@group}?start_date={@start_date}&amp;end_date={@end_date}"
                            title="status link"><span class="fa fa-check "></span> STATUS</a>
@@ -90,11 +94,7 @@
                                    value="{{@group}}  {{@group2}}  {{@group3}} "/>
 
                             <div class="card-body" tpl:foreach="group">
-                                <h2 class="card-title"><span>{{@name}} </span> <span class="m-1" tpl:if="@site"> - {{@site}}</span> <a tpl:if="@type!='endpoint'"
-                                                                                 href="javascript:my_link('{@name}')"
-                                                                                 title="Drilldown to details"
-                                                                                 class="text-white m-2 badge badge-primary">DETAILS</a>
-                                </h2>
+                                <h2 class="card-title"><span>{{@name}} </span> <span class="m-1" tpl:if="@site"> - {{@site}}</span>   </h2>
                                 <hr/>
                                 <div class="table-responsive">
                                     <table id="ar_{{@name}}" class="ar table m-0">
