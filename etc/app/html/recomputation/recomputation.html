@@ -41,16 +41,20 @@
 
                         <div class="card border border-primary">
                             <div class="card-header ui-sortable-handle" style="cursor: move;">
-                                <h3 class="card-title">
+                                <h3 class="card-title" tpl:if="not(/root/@update)">
                                     <i class="ion ion-clipboard mr-1"></i>
                                     Recomputation
+                                </h3>
+                                <h3 class="card-title" tpl:else="">
+                                    <i class="ion ion-clipboard mr-1"></i>
+                                    Update Recomputation #{{/root/@update}}
                                 </h3>
 
 
 
                             </div>
                             <!-- /.card-header -->
-                            <div class="card-body">
+                            <div class="card-body" tpl:if="not(/root/@update)">
                                 <div class="row label label-info m-2">
                                     <div class="col-1">
                                         <br/>
@@ -58,7 +62,7 @@
                                         <br/>
                                     </div>
 
-                                    <div class="col-10">
+                                    <div class="col-10" >
                                     <ul> A recomputation is done in several steps
                                         <li>We study the request if the reason is valid we proceed to the recomputation</li>
                                         <li>First we will exclude services/metrics results (unknown status) concerned by the issue from reports  </li>
@@ -73,19 +77,31 @@
                             </div>
                             <div class="card-body" >
                             <form action="/form_recomputation_results" method="post" class="needs-validation" novalidate="true">
-                            <div class="row form-group">
-                                <div class="col-6"  tpl:foreach="object/*">
-                                    <label for="{{name()}}">{{name()}} </label>
-                                    <input name="{{name()}}" class="form-control"  id="{{name()}}" value="{{text()}}" required="true"/>
+
+                                <input tpl:if="/root/@update" class="d-none" name="update"  value="{/root/@update}"/>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="name">name</label>
+                                    <input name="name" tpl:if="not(/root/@update)" class="form-control"  id="name" value="{{/root/object/name/text()}}" required="true"/>
+                                    <input name="name" tpl:else="" class="form-control"  id="name" value="{{/root/root/data/requester_name/text()}}" required="true"/>
                                     <div class="invalid-feedback">
-                                        Please provide your {{name()}}
+                                        Please provide your name
+                                    </div>
+                                    <hr/>
+                                </div>
+                                <div class="col-6">
+                                    <label for="email">email</label>
+                                    <input name="email" tpl:if="not(/root/@update)" class="form-control"  id="email" value="{{/root/object/email/text()}}" required="true"/>
+                                    <input name="email" tpl:else="" class="form-control"  id="email" value="{{/root/root/data/requester_email/text()}}" required="true"/>
+                                    <div class="invalid-feedback">
+                                        Please provide your email
                                     </div>
                                     <hr/>
                                 </div>
 
 
                                 <input name="tenant" class="d-none"  value="{{/root/@tenant}}"/>
-
                                 <input name="baseUrl" id="baseUrl" class="d-none"/>
 
 
@@ -112,11 +128,11 @@
 
 
 
-                                    <div class="col-6">
+                                    <div   class="col-6">
                                         <label>Period</label>
-                                        <div id="reportrange"  style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                        <div id="reportrange"  style="background: #fff; cursor: pointer; padding: 5px 6px; border: 1px solid #ccc; width: 100%">
                                             <i class="fa fa-calendar m-1"></i>
-                                            <input id="period" name="period" style="border:0" required="true"></input> <i class="m-1 fa fa-caret-down"></i>
+                                            <input id="period" name="period" style="border:0" required="true" class="col-6"></input> <i class="m-1 fa fa-caret-down"></i>
                                             <div class="invalid-feedback">
                                                 Please provide the period on which you want to apply recomputation
                                             </div>
@@ -124,8 +140,11 @@
                                         </div>
                                         <hr/>
 
-                                        <input class="d-none" name="start_time" id="start_time"/>
-                                        <input class="d-none" name="end_time" id="end_time"/>
+                                        <input tpl:if="not(/root/@update)" class="d-none" name="start_time" id="start_time" value="0"/>
+                                        <input tpl:else="" class="d-none" name="start_time" id="start_time" value="{{/root/root/data/start_time}}"/>
+
+                                        <input tpl:if="not(/root/@update)" class="d-none" name="end_time" id="end_time" value="0"/>
+                                        <input tpl:else="" class="d-none" name="end_time" id="end_time" value="{{/root/root/data/end_time}}"/>
                                     </div>
 
 
@@ -135,12 +154,21 @@
 
                                     <div class="col-4">
                                         <label>Sites to be excluded</label>
-                                        <select id="services"   multiple="true" class="form-control" required="true">
+                                        <select tpl:if="not(/root/@update)" id="services"   multiple="true" class="form-control" required="true">
                                             <option  tpl:foreach="report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()"
                                                      value="{.}">{{.}}
                                             </option>
 
                                         </select>
+
+                                        <select tpl:else="" id="services"   multiple="true" class="form-control" required="true">
+                                            <option tpl:foreach="/root/root/data/exclude/item" value="{.}" selected="true">{{.}}</option>
+                                            <option  tpl:foreach="report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()"
+                                                     value="{.}">{{.}}
+                                            </option>
+
+                                        </select>
+
                                         <div class="invalid-feedback">
                                             Please select the site or the service group which you should be excluded during the recomputation
                                         </div>
@@ -149,7 +177,9 @@
                                     </div>
                                     <div class="col-8">
                                         <label for="reason">Reason of recomputation</label>
-                                        <textarea name="reason" class="form-control" id="reason" rows="4" required="true"></textarea>
+                                        <textarea tpl:if="not(/root/@update)" name="reason" class="form-control" id="reason" rows="4" required="true"></textarea>
+                                        <textarea tpl:else="" name="reason" class="form-control" id="reason" rows="4" required="true">{{/root/root/data/reason}}</textarea>
+
                                         <div class="invalid-feedback">
                                             Please provide a valid reason to trigger a recomputation
                                         </div>
@@ -186,8 +216,11 @@
                                 <h3 class="card-title">
                                     Recomputation summary
                                 </h3>
-                                <div class="card-body">
-                                    <div class="alert alert-success" tpl:if="not(result/e:entries/EmailSent)">Your recomputation has been properly submitted . <br/>You will receive an email soon with a link to follow the recomputation progress</div>
+                                <div class="card-body" tpl:if="/root/result/e:entries/e:entry[@key='update']">
+                                    <div class="alert alert-success">Your recomputation has been properly updated.</div>
+                                </div>
+                                <div class="card-body" tpl:else="">
+                                    <div class="alert alert-success">Your recomputation has been properly submitted . <br/>You will receive an email soon with a link to follow the recomputation progress</div>
                                 </div>
 
                                 <div class="card-body" >
@@ -246,16 +279,29 @@
 
     $('#baseUrl').val(window.location.origin);
 
-    var start = moment().subtract(29, 'days');
-    var end = moment();
+
+
+    if ($('#start_time').val()!=0)
+        var start = moment($('#start_time').val());
+    else
+        var start = moment().subtract(29, 'days').startOf('hour');
+
+    if ($('#end_time').val()!=0)
+        var end = moment($('#end_time').val());
+    else
+     var end =  moment().startOf('hour');
 
     function cb(start, end) {
-        $('#reportrange input').val(start.format('YYYY-MM-DD') + ' / ' + end.format('YYYY-MM-DD'));
+        $('#reportrange input').val(start.format('YYYY-MM-DD hh:mm') + ' / ' + end.format('YYYY-MM-DD hh:mm'));
     }
 
     $('#reportrange').daterangepicker({
+      timePicker: true,
         startDate: start,
         endDate: end,
+        locale: {
+        format: 'YYYY-MM-DD hh:mm'
+    }
 
     }, cb);
 
@@ -283,7 +329,7 @@
             });
             $("#entity").val(sites);
 
-            console.log(sites);
+
             var period=$('#reportrange input').val().split('/')
             $('#start_time').val(period[0]);
             $('#end_time').val(period[1]);

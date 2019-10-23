@@ -209,12 +209,14 @@
             <element in="root">
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="update" if="$id!='_id_'">$id</attribute-create>
                 <element in="object">
                     <element in="name"/>
                     <element in="email"/>
                     <element-ignore/>
                 </element>
                 <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
+                <element-create if="$id!='_id_'">view('recomputationListAPI',entry('tenant',$tenant)|entry('id',$id))</element-create>
                 <element-ignore/>
             </element>
         </processors>
@@ -281,6 +283,7 @@
         <argument name="email"/>
         <argument name="entity"/>
         <argument name="baseUrl"/>
+        <argument name="update">_update_</argument>
 
 
         <variable name="summary" eval="
@@ -297,7 +300,7 @@
 
 
         <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
-        <variable name="url" eval="property('api.recomputation.list')"/>
+        <variable name="url" eval="choose($update!='_update_',concat(property('api.recomputation.list'),'/',$update),property('api.recomputation.list'))"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>
@@ -306,11 +309,11 @@
                 <entry key="x-api-key" eval="$api-key"/>
                 <entry key="Accept">application/json</entry>
             </parameter>
-            <parameter name="method">POST</parameter>
+            <parameter name="method" eval="choose($update!='_update_','PUT','POST')"/>
             <parameter name="post" eval="concat('{',quot('report'),': ',quot($report),',',quot('requester_name'),': ',quot($name),',',quot('requester_email'),': ',quot($email),',',quot('exclude'),': [',$entity , '],', quot('reason'),': ',quot($reason),',',quot('start_time'),': ',quot($start_time),',',quot('end_time'),': ',quot($end_time),'}')"/>
 
             <fallback
-                    eval="new_element('exception',new_attribute('exception',concat('exception with creation of the recomputation for tenant ',$tenant)))">
+                    eval="new_element('exception',new_attribute('exception',concat('exception with creation/update of the recomputation for tenant ',$tenant ,' and the url ', $url)))">
                 <exception type="java.io.IOException"/>
             </fallback>
         </connector>
@@ -322,7 +325,7 @@
         <processors>
 
             <element in="object">
-                    <element-create>view('recomputation_email',entry('summary',$summary)|entry('cc',$email)|entry('id',../data/id/text())|entry('url',concat($baseUrl,'/recomputation/',$tenant,'/',../data/id/text() )))</element-create>
+                    <element-create if="$update='_update_'">view('recomputation_email',entry('summary',$summary)|entry('cc',$email)|entry('id',../data/id/text())|entry('url',concat($baseUrl,'/recomputation/',$tenant,'/',../data/id/text() )))</element-create>
             </element>
         </processors>
 
