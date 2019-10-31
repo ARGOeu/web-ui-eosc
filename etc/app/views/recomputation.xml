@@ -14,7 +14,7 @@
 
 
 
-        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
 
         <variable name="url" eval="choose($status='delete',concat(property('api.recomputation.list'),'/',$id),concat(property('api.recomputation.list'),'/',$id,'/status'))"/>
 
@@ -97,7 +97,7 @@
         <argument name="id">_id_</argument>
 
 
-        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
         <variable name="url" eval="choose($id!='_id_',concat(property('api.recomputation.list'),'/',$id),property('api.recomputation.list'))"/>
 
         <connector type="HTTPConnector">
@@ -215,7 +215,7 @@
                     <element in="email"/>
                     <element-ignore/>
                 </element>
-                <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
+                <element-create>view('tenants.reports')/tenants/tenant[@id=$tenant]/report</element-create>
                 <element-create if="$id!='_id_'">view('recomputationListAPI',entry('tenant',$tenant)|entry('id',$id))</element-create>
                 <element-ignore/>
             </element>
@@ -299,7 +299,7 @@
 
 
 
-        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
         <variable name="url" eval="choose($update!='_update_',concat(property('api.recomputation.list'),'/',$update),property('api.recomputation.list'))"/>
 
         <connector type="HTTPConnector">

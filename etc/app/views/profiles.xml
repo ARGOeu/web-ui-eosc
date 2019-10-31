@@ -13,7 +13,7 @@
         <argument name="tenant"/>
 
 
-        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
         <variable name="url" eval="concat(property('api.profiles.metric'),'/',$id)"/>
 
         <connector type="HTTPConnector">
@@ -38,7 +38,7 @@
         <argument name="tenant"/>
 
 
-        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
         <variable name="url" eval="concat(property('api.profiles.aggregation'),'/',$id)"/>
 
         <connector type="HTTPConnector">

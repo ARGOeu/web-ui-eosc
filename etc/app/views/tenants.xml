@@ -9,8 +9,7 @@
 
         <argument name="tenant"/>
 
-
-        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
         <variable name="url" eval="property('api.reports')"/>
 
         <connector type="HTTPConnector">
@@ -21,16 +20,23 @@
                 <entry key="Accept">application/json</entry>
             </parameter>
             <fallback
-                    eval="new_element('exception',new_attribute('exception',concat('exception with tenant: ',$tenant)))">
+                    eval="new_element('exception',new_attribute('exception',concat('exception with tenant: ',$tenant  )))">
                 <exception type="java.io.IOException"/>
             </fallback>
         </connector>
 
         <serializer type="JSONStreamSerializer"/>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
     </view>
 
-    <view name="tenants" authenticators="admin">
 
+
+    <view name="tenants" authenticators="admin">
         <variable name="api-key" eval="property('admin.api.key')"/>
         <variable name="url" eval="property('api.tenants')"/>
 
@@ -42,42 +48,49 @@
                 <entry key="Accept">application/json</entry>
             </parameter>
             <fallback
-                    eval="new_element('exception',new_attribute('exception',concat('exception with tenant: ',$tenant)))">
+                    eval="new_element('exception',new_attribute('exception',' : exception with admin tenant view '))">
                 <exception type="java.io.IOException"/>
             </fallback>
         </connector>
-
         <serializer type="JSONStreamSerializer"/>
-
         <processors>
             <element in="object" out="tenants">
                 <element-ignore>
                     <!-- @TODO to be removed for prod -->
-                    <element in="object" out="tenant" if="(lower-case(info/name/text())='egi' or lower-case(info/name/text())='eudat') or lower-case(info/name/text())='sdc' ">
+                    <element in="object" out="tenant">
                         <element in="id" out="uid"/>
                         <element-ignore in="info">
                             <element in="email" out="contact"/>
                             <element in="website" out="url"/>
 
-
                             <element-create>new_element('id',lower-case(../name/text()))</element-create>
-                            <element-create if="not(description)">new_element('description',../name/text())</element-create>
-                            <element-create if="not(thresholdAv)">new_element('thresholdAv',85)</element-create>
-                            <element-create if="not(thresholdRe)">new_element('thresholdRe',90)</element-create>
+
                             <element/>
+                        </element-ignore>
+                        <element-ignore in="users">
+                            <element-ignore in="object">
+                                <element in="api_key"/>
+                            </element-ignore>
                         </element-ignore>
                     </element>
                 </element-ignore>
 
             </element>
         </processors>
-
         <cache type="FileCache">
             <trigger type="ViewNotifiedTrigger"/>
             <trigger type="DeltaTimeTrigger">
                 <parameter name="minutes">36</parameter>
             </trigger>
+            <trigger type="ViewCreatedTrigger"/>
         </cache>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
     </view>
 
 
@@ -91,55 +104,13 @@
                 <parameter name="template">app/resources/services.html</parameter>
             </renderer>
         </renderers>
-
-
     </view>
 
-<!--
-    <view name="tenantsListRaw" authenticators="admin">
 
-        <connector type="FileConnector">
-            <parameter name="path">app/resources/tenants.xml</parameter>
-        </connector>
+    <view name="tenants.reports.raw" authenticators="admin">
 
+        <argument name="details">_details_</argument>
 
-        <cache type="FileCache">
-
-            <trigger type="DeltaTimeTrigger">
-                <parameter name="hours">3</parameter>
-            </trigger>
-
-            <trigger type="ViewCreatedTrigger"/>
-
-            <trigger type="ViewNotifiedTrigger"/>
-        </cache>
-    </view>
-
-    <view name="tenantsList" authenticators="admin">
-
-        <connector type="XMLConnector">
-            <parameter name="content" eval="view('tenantsListRaw')"/>
-        </connector>
-
-
-        <processors>
-            <elements path="tenants/tenant">
-                <element-ignore in="api_key"/>
-                <element in="name">
-                    <text>lower-case(.)</text>
-                </element>
-            </elements>
-        </processors>
-
-    </view>
--->
-    <view name="tenants.reports" authenticators="admin">
-
-<!--
-        <connector type="FileConnector">
-            <parameter name="path">app/resources/tenants_reports.xml</parameter>
-        </connector>
--->
         <connector type="XMLConnector">
             <parameter name="content" eval="view('tenants')"/>
         </connector>
@@ -147,89 +118,39 @@
         <processors>
             <element in="tenants">
                 <element in="tenant" >
-                    <element-create as="last-child">view('reports_tenant',entry('tenant',lower-case(../name/text())))</element-create>
+                    <element-create as="last-child">view('reports_tenant',entry('tenant',../name/text()))</element-create>
                 </element>
-
             </element>
 
             <elements path="/tenants/tenant">
 
-
                 <elements-ignore path="object/data">
                     <element in="object" out="report" attributes="info/*">
+
                         <attribute-create out="tenant">../ancestor::tenant/id/text()</attribute-create>
+                        <attribute-create out="tenant_description">../ancestor::tenant/description/text()</attribute-create>
+                        <attribute-create out="tenant_url">../ancestor::tenant/url/text()</attribute-create>
+                        <attribute-create out="tenant_logo">../ancestor::tenant/image/text()</attribute-create>
                         <attribute-create out="contact">../ancestor::tenant/contact/text()</attribute-create>
                         <attribute-create out="report">../info/name/text()</attribute-create>
                         <attribute-create out="topology1">../topology_schema/group/type/text()</attribute-create>
                         <attribute-create out="topology2">../topology_schema/group/group/type/text()</attribute-create>
                         <attribute-create out="topology3">'services'</attribute-create>
-                        <attribute-create out="thresholdAv">../ancestor::tenant/thresholdAv/text()</attribute-create>
-                        <attribute-create out="thresholdRe">../ancestor::tenant/thresholdRe/text()</attribute-create>
+                        <attribute-create out="thresholdAv">../thresholds/availability/text()</attribute-create>
+                        <attribute-create out="thresholdRe">../thresholds/reliability/text()</attribute-create>
+                        <attribute-create out="thresholdUn">../thresholds/unknown/text()</attribute-create>
+                        <attribute-create out="thresholdDw">../thresholds/downtime/text()</attribute-create>
+
                         <element-create>
                             view('reportTopology',entry('tenant',../ancestor::tenant/id/text())|entry('report',../info/name/text()))/object/data/*
                         </element-create>
-                        <element-ignore/>
+                        <element-ignore if="$details='_details_'"/>
                     </element>
                 </elements-ignore>
             </elements>
 
-
-        </processors>
-
-
-        <cache type="FileCache">
-
-
-            <trigger type="DeltaTimeTrigger">
-                <parameter name="hours">2</parameter>
-            </trigger>
-
-            <trigger type="ViewCreatedTrigger"/>
-
-            <trigger type="ViewNotifiedTrigger"/>
-        </cache>
-        <renderers>
-            <renderer type="DefaultRenderer">
-                <parameter name="contentType">text/xml</parameter>
-            </renderer>
-        </renderers>
-    </view>
-
-
-    <view name="reportDetailsRaw" authenticators="admin">
-
-
-        <connector type="FileConnector">
-            <parameter name="path">app/resources/tenants_reports.xml</parameter>
-        </connector>
-
-        <processors>
-            <element in="tenants">
-                <element in="tenant" if="contains(@env,property('app.instance'))">
-                    <element-create as="last-child">view('reports_tenant',entry('tenant',../id/text()))</element-create>
-                </element>
-
-            </element>
-            <elements path="/tenants/tenant">
-                <elements path="object/data">
-                    <element in="object" out="report" attributes="info/*">
-                        <attribute-create out="tenant">../ancestor::tenant/id/text()</attribute-create>
-                        <attribute-create out="contact">../ancestor::tenant/contact/text()</attribute-create>
-                        <attribute-create out="report">../info/name/text()</attribute-create>
-                        <attribute-create out="topology1">../topology_schema/group/type/text()</attribute-create>
-                        <attribute-create out="topology2">../topology_schema/group/group/type/text()</attribute-create>
-                        <attribute-create out="topology3">'services'</attribute-create>
-                        <attribute-create out="thresholdAv">../ancestor::tenant/thresholdAv/text()</attribute-create>
-                        <attribute-create out="thresholdRe">../ancestor::tenant/thresholdRe/text()</attribute-create>
-                        <element-create>
-                            view('reportTopology',entry('tenant',../ancestor::tenant/id/text())|entry('report',../info/name/text()))/object/data/*
-                        </element-create>
-                    </element>
-                </elements>
-            </elements>
-
-            <element in="tenants" out="root">
-                <elements-ignore path="tenant/object/data">
+            <element in="tenants" out="root" if="$details!='_details_'">
+                <elements-ignore path="tenant">
                     <element in="report">
                         <element in="profiles">
                             <element in="object" out="aggregation" if="type/text()='aggregation'">
@@ -250,21 +171,83 @@
             </element>
 
 
+
+        </processors>
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
+
+    </view>
+
+    <view name="tenants.reports" authenticators="admin">
+
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('tenants.reports.raw')"/>
+        </connector>
+
+        <processors>
+            <element in="tenants">
+                <element in="tenant">
+                    <attribute-create out="id">../id</attribute-create>
+                    <attribute-create out="name">../name</attribute-create>
+                    <attribute-create out="contact">../contact</attribute-create>
+                    <attribute-create out="description">../description</attribute-create>
+                    <attribute-create out="logo">../image</attribute-create>
+                    <attribute-create out="url">../url</attribute-create>
+                    <element-ignore if="name()!='report'"/>
+                </element>
+            </element>
         </processors>
 
+        <cache type="FileCache">
+            <trigger type="DeltaTimeTrigger">
+                <parameter name="minutes">26</parameter>
+            </trigger>
+            <trigger type="DependencyRefreshedTrigger">
+                <parameter name="views">
+                    <entry>tenants</entry>
+                </parameter>
+            </trigger>
+            <trigger type="ViewNotifiedTrigger"/>
+        </cache>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+    </view>
+
+
+    <view name="reportDetailsRaw" authenticators="admin">
+
+
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('tenants.reports.raw',entry('details',true()))"/>
+        </connector>
 
         <cache type="FileCache">
 
             <trigger type="DeltaTimeTrigger">
-                <parameter name="hours">2</parameter>
+                <parameter name="minutes">15</parameter>
             </trigger>
 
-            <trigger type="ViewCreatedTrigger"/>
+         <trigger type="DependencyRefreshedTrigger">
+             <parameter name="views">
+                 <entry>tenants</entry>
+             </parameter>
+         </trigger>
 
             <trigger type="ViewNotifiedTrigger"/>
         </cache>
-
-
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
     </view>
 
 

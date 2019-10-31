@@ -41,7 +41,7 @@
         <argument name="tenant"/>
         <argument name="report"/>
 
-        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
         <variable name="url" eval="concat(property('api.topology'),'/',$report)"/>
 
         <connector type="HTTPConnector">
@@ -54,15 +54,7 @@
         </connector>
         <serializer type="JSONStreamSerializer"/>
 
-        <processors>
-            <element in="object">
-                <element in="data" if="$tenant='egi'">
 
-
-                </element>
-            </element>
-
-        </processors>
 
         <renderers>
             <renderer type="DefaultRenderer">
@@ -94,7 +86,7 @@
                 <attribute-create out="group">$entity</attribute-create>
 
 
-                <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
+                <element-create>view('tenants.reports')/tenants/tenant[@id=$tenant]/report</element-create>
 
 
             </element>
@@ -104,12 +96,6 @@
                     ../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topology2
                 </attribute-create>
 
-                <!--<element-create if="../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topologyReference='goc'">view('gocdb.downtimes.site', entry('site',$entity))</element-create>-->
-                <!--<element-create if="../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topologyReference='dpmt'">view('dpmt.downtimes.site',entry('site',$entity))</element-create>-->
-                <!--<element-create if="../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topologyReference='goc-sdc'">view('gocdb.sdc.downtimes.site',entry('site',$entity))</element-create>-->
-                <!--<element-create if="../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topologyReference='goc'">view('gocdb.site')/results/SITE[@NAME=$entity]</element-create>-->
-                <!--<element-create if="../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topologyReference='dpmt'">view('dpmt.siteProjects')/results/SERVICE_GROUP[NAME/text()=$entity]</element-create>-->
-                <!--<element-create if="../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topologyReference='goc-sdc'">view('gocdb.sdc.site')/results/SITE[@NAME=$entity]</element-create>-->
 
                 <element-create>
                     view('api-status-last',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topology2)|entry('entity',$entity)|entry('status',$status))
@@ -160,7 +146,7 @@
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="details">'level0'</attribute-create>
 
-                <element-create>view('tenants.reports')/tenants/tenant[id/text()=$tenant]/report</element-create>
+                <element-create>view('tenants.reports')/tenants/tenant[@id=$tenant]/report</element-create>
             </element>
 
             <element in="root" if="$scope='_scope_'">
@@ -178,7 +164,6 @@
                 <element-create>
                     view('report-ar',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topology1))
                 </element-create>
-
 
             </element>
 
@@ -232,7 +217,7 @@
     <view name="reports">
 
         <argument name="tenant"/>
-        <variable name="api-key" eval="property(concat($tenant,'.api.key'))"/>
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="property('api.reports')"/>
@@ -375,56 +360,8 @@
 
     </view>
 
-    <view name="dpmt_push"  xmlns:java="http://software.in2p3.fr/lavoisier/java">
-        <argument name="so"/>
-        <variable name="message" eval="java:encodeToString(java:java.util.Base64.getEncoder(), java:getBytes($so))"/>
 
 
-    <connector type="HTTPConnector">
-
-            <parameter name="url"
-                       eval="concat('https://messaging-devel.argo.grnet.gr/v1/projects/ARGOTEST/topics/dpmt_test:publish?key=',property('my.api.key'))"/>
-            <parameter name="force-redirect">true</parameter>
-            <parameter name="method">POST</parameter>
-            <parameter name="header">
-                <entry key="Content-Type">application/json</entry>
-            </parameter>
-
-            <parameter name="post">
-                {
-                "messages": [
-                {
-                "attributes": {
-                "key1":"test10",
-                "key2":"test20"
-                }
-                ,
-                "data":"d2hvIGlzIHJlYWRpbmcgdGhpcyA/IHRoaXMgaXMgYSB0ZXN0IA=="
-
-                }
-                ]
-                }
-            </parameter>
-
-        </connector>
-        <serializer type="JSONStreamSerializer"></serializer>
-    </view>
-
-
-    <view name="dpmt_pull">
-        <connector type="HTTPConnector">
-            <parameter name="url"
-                       eval="concat('https://messaging-devel.argo.grnet.gr/v1/projects/ARGOTEST/subscriptions/dpmt_test_sub:pull?key=',property('my.api.key'))"/>
-            <parameter name="force-redirect">true</parameter>
-            <parameter name="method">POST</parameter>
-            <parameter name="header">
-                <entry key="Content-Type">application/json</entry>
-            </parameter>
-            <parameter name="post">{ "maxMessages": "10" }</parameter>
-
-        </connector>
-        <serializer type="JSONStreamSerializer"></serializer>
-    </view>
 
 
 
