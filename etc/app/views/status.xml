@@ -29,7 +29,7 @@
 
         <connector type="HTTPConnector">
             <parameter name="url"
-                       eval="choose($entity='_entity_',concat(property('api.status.last'),'/',$report,'/',$topology,'?limit=',$last,'&amp;filter=',$filter),concat(property('api.status.last'),'/',$report,'/',$topology,'/',$entity,'?limit=',$last,'&amp;filter=',$filter))"/>
+                       eval="choose($entity='_entity_',concat(property('api.status.last'),'/',$report,'/',$topology,'?strict=true&amp;limit=',$last,'&amp;filter=',$filter),concat(property('api.status.last'),'/',$report,'/',$topology,'/',$entity,'?strict=true&amp;limit=',$last,'&amp;filter=',$filter))"/>
 
             <parameter name="force-redirect">true</parameter>
             <parameter name="header">
