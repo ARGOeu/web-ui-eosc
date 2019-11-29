@@ -7,7 +7,13 @@ var messageB = 'Report Generated on ' + jsDate.toString() +  '- Copyright ARGO '
 function my_link(service){
 var baseUrl=urlI.split('?');
  if (urlI.indexOf('services')!=-1) {
-window.location=baseUrl[0]+ '/' + service +'/endpoints?'+baseUrl[1];
+    if (urlI.indexOf(service)!=-1)
+    {
+       window.location=baseUrl[0]+ '/endpoints?'+baseUrl[1];
+
+    }
+     else
+       window.location=baseUrl[0]+ '/' + service +'/endpoints?'+baseUrl[1];
 }
 else
 window.location=baseUrl[0]+ '/services?'+baseUrl[1];

@@ -410,9 +410,13 @@
         <argument name="entity">_entity_</argument>
         <argument name="month"/>
         <argument name="group"/>
+        <argument name="group2">_group2_</argument>
         <argument name="details">_details_</argument>
+
         <argument name="uri">_uri_</argument>
 
+        <variable name="options"
+                  eval="choose($details='_details_',concat('/services/',$details,'/endpoints'),'/services')"/>
 
         <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
 
@@ -422,10 +426,12 @@
 
         <variable name="url" eval="choose($details='_details_',
         concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=daily'),
-        choose($topology='SERVICEGROUPS',
-        concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'/services/',$details,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=daily'),
-        concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'/services','?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=daily')
+        concat(property('api.report'),'/',$report,'/',$topology,'/',$group,$options,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=daily'
+
         ))"/>
+
+
+
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>
@@ -446,12 +452,18 @@
             </element>
 
 
+
+
             <element in="root">
                 <element-create>view('tenants.reports')/tenants/tenant[@id=$tenant]/report</element-create>
                 <element-ignore in="group" if="group">
                     <element-ignore in="group" if="@name!=$group and ancestor::group/@name!=$group"/>
                     <element/>
                 </element-ignore>
+            </element>
+
+            <element in="root" if="$group2!='_group2_'">
+                <element-ignore in="group" if="@name!=$group2"/>
             </element>
 
 
