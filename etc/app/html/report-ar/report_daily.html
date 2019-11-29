@@ -94,7 +94,16 @@
                                    value="{{@group}}  {{@group2}}  {{@group3}} "/>
 
                             <div class="card-body" tpl:foreach="group">
-                                <h2 class="card-title"><span>{{@name}} </span> <span class="m-1" tpl:if="@site"> - {{@site}}</span>   </h2>
+
+
+                                <h2 class="card-title" tpl:if="/root/@topology!='PROJECT' and /root/@topology!='NGI'"><span>{{@name}}</span> <a tpl:if="@type!='endpoint'"
+                                                                                 href="javascript:my_link('{@name}')"
+                                                                                 title="Drilldown to details"
+                                                                                 class="text-white m-2 badge badge-primary">DETAILS</a>
+                                </h2>
+                                <h2 class="card-title" tpl:else=""><span>{{@name}} </span> <span class="m-1" tpl:if="@site"> - {{@site}}</span>   </h2>
+
+
                                 <hr/>
                                 <div class="table-responsive">
                                     <table id="ar_{{@name}}" class="ar table m-0">

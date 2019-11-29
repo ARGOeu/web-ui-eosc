@@ -406,10 +406,10 @@
 
         <argument name="report">Critical</argument>
         <argument name="tenant">egi</argument>
-        <argument name="topology">NGI</argument>
+        <argument name="topology"/>
         <argument name="entity">_entity_</argument>
-        <argument name="month">2018-06</argument>
-        <argument name="group">NGI_FRANCE</argument>
+        <argument name="month"/>
+        <argument name="group"/>
         <argument name="details">_details_</argument>
         <argument name="uri">_uri_</argument>
 
@@ -422,7 +422,10 @@
 
         <variable name="url" eval="choose($details='_details_',
         concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=daily'),
-        concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'/services/',$details,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=daily'))"/>
+        choose($topology='SERVICEGROUPS',
+        concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'/services/',$details,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=daily'),
+        concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'/services','?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=daily')
+        ))"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>
