@@ -242,6 +242,15 @@
 
         </processors>
 
+        <pre-renderers>
+            <row foreach="/root/group/status">
+                <column label="name">ancestor::group/@name</column>
+                <column label="timestamp">@timestamp</column>
+                <column label="status">@value</column>
+                <column label="end_time">@end_time</column>
+            </row>
+        </pre-renderers>
+
         <renderers>
 
             <renderer type="HTMLRenderer">
