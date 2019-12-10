@@ -252,7 +252,7 @@
                 <attribute-create out="start_date">$start_date</attribute-create>
                 <attribute-create out="end_date">$end_date</attribute-create>
                 <attribute-create out="uri">$uri</attribute-create>
-                <attribute-create out="filter" if="$filters!='_filter_'">$filter</attribute-create>
+                <attribute-create out="filter" if="$filter!='_filter_'">$filter</attribute-create>
             </element>
 
 
