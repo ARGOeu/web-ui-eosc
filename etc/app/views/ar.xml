@@ -184,6 +184,7 @@
         <argument name="tenant"></argument>
         <argument name="topology">NGI</argument>
         <argument name="entity">_entity_</argument>
+        <argument name="filter">_filter_</argument>
 
         <argument name="group">_group_</argument>
         <argument name="group2">_group2_</argument>
@@ -201,9 +202,14 @@
         <variable name="start_time" eval="concat($start_date,'T00:00:00Z')"/>
         <variable name="end_time" eval="concat($end_date,'T23:59:59Z')"/>
 
-        <variable name="url" eval="choose($level='_level_',
-        concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=',$granularity),
-        concat(property('api.report'),'/',$report,'/',$topology,'/',$group,$options,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=',$granularity))
+        <variable name="url" eval="
+        choose($level='_level_',
+            concat(property('api.report'),'/',$report,'/',$topology,'/',$group,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=',$granularity),
+                choose($level=0,
+                    concat(property('api.report'),'/',$report,'/',$topology,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=',$granularity),
+                    concat(property('api.report'),'/',$report,'/',$topology,'/',$group,$options,'?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=',$granularity)
+        ))
+
         "/>
 
         <connector type="HTTPConnector">
@@ -216,6 +222,8 @@
         </connector>
 
         <processors>
+
+
 
             <element in="root">
                 <element-create>view('tenants.reports')/tenants/tenant[@id=$tenant]/report</element-create>
@@ -264,6 +272,21 @@
 
                 </element>
             </element>
+
+            <element in="root" if="$tenant='egi'">
+                <set variable="listSites">view('gocdb.site')</set>
+                <element in="group" if="@type='SITES' and $filter!='_filter_'">
+                    <attribute-create out="filters">
+                        choose($listSites/results/SITE[@NAME=current()/../@name]/@filters,$listSites/results/SITE[@NAME=current()/../@name]/@filters,'NA')
+                    </attribute-create>
+                </element>
+
+            </element>
+
+            <element in="root" if="$tenant='egi' and $filter!='_filter_'">
+                <element-ignore in="group" if="not(contains(@filters,concat(',',$filter,',')))"/>
+            </element>
+
 
         </processors>
 
