@@ -36,7 +36,7 @@
                 <div tpl:if="$pdf!= 'pdf'" class="card-body">
                     <div class="row" tpl:if="@tenant='egi' and group[1]/@type='SITES'">
 
-                        <div class="m-2" tpl:if="@filter='_filter_'">
+                        <div class="m-2" tpl:if="@filter='_filter_' or not(@filter)">
 
                             <select id="filter_select" tpl:foreach="filter">
                                 <option>--Filter entries --</option>
