@@ -76,7 +76,7 @@
         <processors>
 
             <element in="root">
-                <attribute-create out="filter">$filter</attribute-create>
+                <attribute-create out="filter" if="$filter!='_filter_'">$filter</attribute-create>
                 <element-create if="$tenant='egi' and $topology='SITES'" as="first-child">view('gocdb.filter')
                 </element-create>
                 <element-create>view('tenants.reports')/tenants/tenant[@id=$tenant]/report</element-create>
@@ -252,7 +252,7 @@
                 <attribute-create out="start_date">$start_date</attribute-create>
                 <attribute-create out="end_date">$end_date</attribute-create>
                 <attribute-create out="uri">$uri</attribute-create>
-                <attribute-create out="filter">$filter</attribute-create>
+                <attribute-create out="filter" if="$filters!='_filter_'">$filter</attribute-create>
             </element>
 
 

@@ -59,7 +59,7 @@
                            aria-controls="charts" aria-selected="false"><span class="fa fa-chart-bar"></span>
                             Availability/Reliability Charts</a>
                     </li>
-                    <li tpl:foreach="/root">
+                    <li tpl:foreach="/root[not(@filter)]">
 
                         <a class="nav-link" role="tab" aria-controls="table" aria-selected="true"
                            tpl:if="@topology='NGI'"
@@ -96,7 +96,7 @@
                             <div class="card-body" tpl:foreach="group">
 
 
-                                <h2 class="card-title" tpl:if="/root/@topology!='PROJECT' and /root/@topology!='NGI'"><span>{{@name}}</span> <a tpl:if="@type!='endpoint'"
+                                <h2 class="card-title" tpl:if="/root/@topology!='PROJECT' and /root/@topology!='NGI' and (not(/root/@filter))"><span>{{@name}}</span> <a tpl:if="@type!='endpoint'"
                                                                                  href="javascript:my_link('{@name}')"
                                                                                  title="Drilldown to details"
                                                                                  class="text-white m-2 badge badge-primary">DETAILS</a>
