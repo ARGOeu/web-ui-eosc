@@ -225,7 +225,7 @@
 
 
 
-            <element in="root">
+            <element in="root" if="$level!=0">
                 <element-create>view('tenants.reports')/tenants/tenant[@id=$tenant]/report</element-create>
                 <element-ignore in="group" if="group">
                     <element-ignore in="group"
@@ -234,6 +234,11 @@
                     </element-ignore>
                     <element/>
                 </element-ignore>
+            </element>
+
+            <element in="root" if="$level=0">
+                <element-create>view('tenants.reports')/tenants/tenant[@id=$tenant]/report</element-create>
+                <element-ignore in="group" if="group"><element/></element-ignore>
             </element>
 
 
@@ -247,6 +252,7 @@
                 <attribute-create out="start_date">$start_date</attribute-create>
                 <attribute-create out="end_date">$end_date</attribute-create>
                 <attribute-create out="uri">$uri</attribute-create>
+                <attribute-create out="filter">$filter</attribute-create>
             </element>
 
 
