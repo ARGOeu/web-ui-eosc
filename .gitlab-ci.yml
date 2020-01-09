@@ -1,14 +1,13 @@
-
 stages:
   - tests
   - deploy
 
 job_tests:
-  image: ubuntu:latest
+  image: alpine:latest
   stage: tests
   script:
     - cd /opt
-    - apt update && apt install git
+    - apk update && apk upgrade && apk add --no-cache bash git
     - git clone git  https://gitlab.in2p3.fr/cc-in2p3-dev/argo-eosc 
     - echo "${devel_app_hidden_properties}" > /opt/argo-eosc/etc
 
