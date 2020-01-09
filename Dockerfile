@@ -14,5 +14,4 @@ RUN git clone https://gitlab.in2p3.fr/cc-in2p3-dev/argo-eosc.git
 RUN cp -R argo-eosc/etc/* etc
 WORKDIR /opt/argo-eosc
 EXPOSE 8080/tcp
-
 CMD mvn exec:java
