@@ -8,8 +8,15 @@ job_tests:
   script:
     - cd /opt
     - apk update && apk upgrade && apk add --no-cache bash git
-    - git clone https://gitlab.in2p3.fr/cc-in2p3-dev/argo-eosc 
-    - echo "${devel_app_hidden_properties}" > /opt/argo-eosc/etc
+    - git clone https://gitlab.in2p3.fr/cc-in2p3-dev/argo-eosc
+    - MAVEN_VERSION=3.5.4
+    - MAVEN_HOME=/usr/lib/mvn
+    - PATH=$MAVEN_HOME/bin:$PATH
+    - wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz && \
+  tar -zxvf apache-maven-$MAVEN_VERSION-bin.tar.gz && \
+  rm apache-maven-$MAVEN_VERSION-bin.tar.gz && \
+  mv apache-maven-$MAVEN_VERSION /usr/lib/mvn
+    - echo "${devel_app_hidden_properties}" > /opt/argo-eosc/etc/app/app-hidden.properties
 
     
 job_deploy:
