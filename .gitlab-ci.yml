@@ -8,7 +8,7 @@ job_tests:
   script:
     - cd /opt
     - apk update && apk upgrade && apk add --no-cache bash git
-    - git clone git  https://gitlab.in2p3.fr/cc-in2p3-dev/argo-eosc 
+    - git clone https://gitlab.in2p3.fr/cc-in2p3-dev/argo-eosc 
     - echo "${devel_app_hidden_properties}" > /opt/argo-eosc/etc
 
     
