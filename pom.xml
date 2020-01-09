@@ -13,9 +13,9 @@
     <dependencies>
 
         <dependency>
-                <groupId>com.sun.mail</groupId>
-                <artifactId>javax.mail</artifactId>
-                <version>1.6.2</version>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
         </dependency>
         <dependency>
             <groupId>com.sun.mail</groupId>
@@ -32,21 +32,23 @@
         </repository>
     </repositories>
     <build>
+        <plugins>
             <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>1.6.0</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
                 <configuration>
-                <mainClass>fr.in2p3.lavoisier.command.StandaloneExec</mainClass>
-                <additionalClasspathElements>
-                    <additionalClasspathElement>etc/</additionalClasspathElement>
-                </additionalClasspathElements>
-                <arguments>
+                    <mainClass>fr.in2p3.lavoisier.command.StandaloneExec</mainClass>
+                    <additionalClasspathElements>
+                        <additionalClasspathElement>etc/</additionalClasspathElement>
+                    </additionalClasspathElements>
+                    <arguments>
                         <argument>status</argument>
-                </arguments>
+                    </arguments>
                 </configuration>
             </plugin>
-        
+        </plugins>
     </build>
 
 </project>
+
