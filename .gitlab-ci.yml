@@ -3,7 +3,7 @@ stages:
   - deploy
 
 job_tests:
-  image: alpine:latest
+  image: alpine-jdk:latest
   stage: tests
   script:
     - cd /opt
