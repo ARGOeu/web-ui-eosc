@@ -5,8 +5,6 @@ stages:
 
 job_tests:
   stage: tests
-  tags:
-    - docker
   script:
     - cd /opt
     - git clone git  https://gitlab.in2p3.fr/cc-in2p3-dev/argo-eosc 
