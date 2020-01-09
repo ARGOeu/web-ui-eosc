@@ -16,7 +16,14 @@ RUN apk update && apk upgrade && apk add --no-cache bash git
 RUN git clone https://gitlab.in2p3.fr/cc-in2p3-dev/argo-eosc.git
 RUN cp -R argo-eosc/etc/* etc
 WORKDIR /opt/argo-eosc
-USER argo
+
+
+RUN chgrp -R 0 /opt/argo-eosc && chmod -R g=u /opt/argo-eosc
+
+RUN chmod g=u /etc/passwd
+ENTRYPOINT [ "uidentrypoint" ]
+USER 1001
+    
 
 EXPOSE 8080/tcp
 CMD mvn exec:java -DargLine="-Duser.home=/tmp"
