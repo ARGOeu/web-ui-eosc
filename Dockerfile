@@ -5,7 +5,7 @@ ENV MAVEN_HOME /usr/lib/mvn
 ENV PATH $MAVEN_HOME/bin:$PATH
 USER argo
 
-RUN groupadd -r argo -g 1000 && useradd -u 1000 -r -g argo -m -d /opt/argo -s /sbin/nologin -c "argo user" argo &&  chmod 755 /opt/argo
+RUN groupadd -r argo -g 901 && useradd -u 901 -r -g argo 
 
 RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz && \
   tar -zxvf apache-maven-$MAVEN_VERSION-bin.tar.gz && \
