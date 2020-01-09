@@ -1,17 +1,20 @@
-image: docker:latest
+
 stages:
   - tests
   - deploy
 
 job_tests:
+  image: ubuntu:latest
   stage: tests
   script:
     - cd /opt
+    - apt update && apt install git
     - git clone git  https://gitlab.in2p3.fr/cc-in2p3-dev/argo-eosc 
     - echo "${devel_app_hidden_properties}" > /opt/argo-eosc/etc
 
     
 job_deploy:
+  image: docker:latest
   stage: deploy
   services:
     - docker:dind
