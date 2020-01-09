@@ -3,7 +3,7 @@ FROM java:8-alpine
 ENV MAVEN_VERSION 3.5.4
 ENV MAVEN_HOME /usr/lib/mvn
 ENV PATH $MAVEN_HOME/bin:$PATH
-USER argo
+
 
 RUN groupadd -r argo -g 901 && useradd -u 901 -r -g argo 
 
@@ -16,6 +16,7 @@ RUN apk update && apk upgrade && apk add --no-cache bash git
 RUN git clone https://gitlab.in2p3.fr/cc-in2p3-dev/argo-eosc.git
 RUN cp -R argo-eosc/etc/* etc
 WORKDIR /opt/argo-eosc
+USER argo
 
 EXPOSE 8080/tcp
 CMD mvn exec:java 
