@@ -1,0 +1,27 @@
+image: docker:latest
+stages:
+  - tests
+  - deploy
+
+job_tests:
+  stage: tests
+  tags:
+    - docker
+  script:
+    - cd /opt
+    - git clone git  https://gitlab.in2p3.fr/cc-in2p3-dev/argo-eosc 
+    - echo "${devel_app_hidden_properties}" > /opt/argo-eosc/etc
+
+    
+job_deploy:
+  stage: deploy
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
+    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
+    
+
+
