@@ -9,6 +9,7 @@
     <artifactId>argo-eosc</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+
     <dependencies>
 
         <dependency>
@@ -30,5 +31,22 @@
             <url>http://maven.in2p3.fr</url>
         </repository>
     </repositories>
+    <build>
+            <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.6.0</version>
+                <configuration>
+                <mainClass>fr.in2p3.lavoisier.command.StandaloneExec</mainClass>
+                <additionalClasspathElements>
+                    <additionalClasspathElement>etc/</additionalClasspathElement>
+                </additionalClasspathElements>
+                <arguments>
+                        <argument>status</argument>
+                </arguments>
+                </configuration>
+            </plugin>
+        
+    </build>
 
 </project>
