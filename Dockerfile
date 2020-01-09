@@ -26,4 +26,4 @@ USER 1001
     
 
 EXPOSE 8080/tcp
-CMD mvn exec:java -DargLine="-Duser.home=/tmp"
+CMD mvn exec:java
