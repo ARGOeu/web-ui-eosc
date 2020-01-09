@@ -3,7 +3,8 @@ FROM java:8-alpine
 ENV MAVEN_VERSION 3.5.4
 ENV MAVEN_HOME /usr/lib/mvn
 ENV PATH $MAVEN_HOME/bin:$PATH
-ENV user.home /tmp
+USER argo
+
 
 RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz && \
   tar -zxvf apache-maven-$MAVEN_VERSION-bin.tar.gz && \
@@ -13,7 +14,7 @@ RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/ap
 RUN apk update && apk upgrade && apk add --no-cache bash git 
 RUN git clone https://gitlab.in2p3.fr/cc-in2p3-dev/argo-eosc.git
 RUN cp -R argo-eosc/etc/* etc
-RUN chown user ~/.m2
+WORKDIR /opt/argo-eosc
 
 EXPOSE 8080/tcp
-CMD mvn exec:java -f /opt/argo-eosc/pom.xml
+CMD mvn exec:java 
