@@ -21,7 +21,7 @@ WORKDIR /opt/argo-eosc
 RUN chgrp -R 0 /opt/argo-eosc && chmod -R g=u /opt/argo-eosc
 
 RUN chmod g=u /etc/passwd
-ENTRYPOINT [ "uidentrypoint" ]
+ENTRYPOINT [ "opt/argo-eosc/uidentrypoint" ]
 USER 1001
     
 
