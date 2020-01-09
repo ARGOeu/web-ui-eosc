@@ -13,6 +13,7 @@ RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/ap
 RUN apk update && apk upgrade && apk add --no-cache bash git 
 RUN git clone https://gitlab.in2p3.fr/cc-in2p3-dev/argo-eosc.git
 RUN cp -R argo-eosc/etc/* etc
+RUN chown user ~/.m2
 
 EXPOSE 8080/tcp
 CMD mvn exec:java -f /opt/argo-eosc/pom.xml
