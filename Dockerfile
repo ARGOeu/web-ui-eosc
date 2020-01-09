@@ -19,4 +19,4 @@ WORKDIR /opt/argo-eosc
 USER argo
 
 EXPOSE 8080/tcp
-CMD mvn exec:java 
+CMD mvn exec:java -DargLine="-Duser.home=/tmp"
