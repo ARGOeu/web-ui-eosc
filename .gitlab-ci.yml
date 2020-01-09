@@ -17,7 +17,6 @@ job_tests:
     - cd /opt/argo-eosc
     - echo "${pom_test}" > pom.xml
     - mvn exec:java
-
     
 job_deploy:
   image: docker:latest
