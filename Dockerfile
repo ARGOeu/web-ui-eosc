@@ -20,7 +20,7 @@ RUN git clone https://gitlab.in2p3.fr/cc-in2p3-dev/argo-eosc.git
 ### Setup user for build execution and application runtime
 ENV APP_ROOT=/opt/argo-eosc
 ENV PATH=${APP_ROOT}/bin:${PATH} HOME=${APP_ROOT}
-COPY bin/ ${APP_ROOT}/bin/
+
 RUN chmod -R u+x ${APP_ROOT}/bin && \
     chgrp -R 0 ${APP_ROOT} && \
     chmod -R g=u ${APP_ROOT} /etc/passwd
