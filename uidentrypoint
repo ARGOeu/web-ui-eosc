@@ -1,6 +1,6 @@
-#!/bin/bash
-if ! whoami &> /dev/null; then
-  if [ -w /etc/passwd ]; then
-    echo "${USER_NAME:-default}:x:$(id -u):0:${USER_NAME:-default} user:${HOME}:/sbin/nologin" >> /etc/passwd
-  fi
+#!/bin/sh
+USER_ID=$(id -u)
+if [ ${USER_UID} != ${USER_ID} ]; then
+    sed "s@${USER_NAME}:x:\${USER_ID}:@${USER_NAME}:x:${USER_ID}:@g" /etc/passwd.template > /etc/passwd
 fi
+exec "$@"
