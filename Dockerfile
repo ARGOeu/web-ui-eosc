@@ -13,7 +13,7 @@ RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/ap
   mv apache-maven-$MAVEN_VERSION /usr/lib/mvn
 
 RUN apk update && apk upgrade && apk add --no-cache bash git 
-RUN git clone https://gitlab.in2p3.fr/cc-in2p3-dev/argo-eosc.git /opt
+RUN git clone https://gitlab.in2p3.fr/cc-in2p3-dev/argo-eosc.git /opt/argo-eosc
 
 
 ### Setup user for build execution and application runtime
