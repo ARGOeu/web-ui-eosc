@@ -17,7 +17,7 @@ RUN apk update && apk upgrade && apk add --no-cache bash git
 WORKDIR /opt
 RUN git clone https://gitlab.in2p3.fr/cc-in2p3-dev/argo-eosc.git argo-eosc
 
-
+RUN cp /tmp/properties/app-hidden.properties /opt/argo-eosc/etc/app-hidden.properties
 
 ### Setup user for build execution and application runtime
 ENV APP_ROOT=/opt/argo-eosc
