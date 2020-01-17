@@ -1,0 +1,104 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  labels:
+    app: argo-2
+  name: argo-2
+  namespace: argo
+  selfLink: /apis/apps.openshift.io/v1/namespaces/argo/deploymentconfigs/argo-2
+  uid: 6f72738b-393c-11ea-8163-d09466764c08
+spec:
+  replicas: 1
+  selector:
+    app: argo-2
+    deploymentconfig: argo-2
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftWebConsole
+      creationTimestamp: null
+      labels:
+        app: argo-2
+        deploymentconfig: argo-2
+    spec:
+      containers:
+        - image: >-
+            gitlab-registry.in2p3.fr/cc-in2p3-dev/argo-eosc@sha256:877b1205b907b22b0afb67d9f10f8875d75591de6f9b989b299e5a5262233561
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 20
+          name: argo-2
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 20
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /opt/argo-eosc/etc/app/app-hidden.properties
+              name: app-hidden-new-2-x4ima
+              readOnly: true
+              subPath: app-hidden.properties
+            - mountPath: /opt/certificates/argo.p12
+              name: certargo-5ucxt
+              readOnly: true
+              subPath: argo.p12
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - name: app-hidden-new-2-x4ima
+          secret:
+            defaultMode: 420
+            secretName: app-hidden-new-2
+        - name: certargo-5ucxt
+          secret:
+            defaultMode: 420
+            secretName: certargo
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - argo-2
+        from:
+          kind: ImageStreamTag
+          name: 'argo:master'
+          namespace: argo
+        lastTriggeredImage: >-
+          gitlab-registry.in2p3.fr/cc-in2p3-dev/argo-eosc@sha256:877b1205b907b22b0afb67d9f10f8875d75591de6f9b989b299e5a5262233561
+      type: ImageChange
+
