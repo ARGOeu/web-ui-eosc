@@ -67,11 +67,11 @@
 
                     <li class="nav-item">
                         <a tpl:if="$app.instance!='prod'" href="http://{$egi.instance.devel}" class="nav-link">
-                            <i class="nav-icon far fa-circle text-blue"></i>
+                            <i class="nav-icon far fa-circle text-danger"></i>
                             <p>EGI ARGO</p>
                         </a>
                         <a tpl:else="" href="http://{$egi.instance.prod}" class="nav-link">
-                            <i class="nav-icon far fa-circle text-blue"></i>
+                            <i class="nav-icon far fa-circle text-danger"></i>
                             <p>EGI ARGO</p>
                         </a>
                     </li>
@@ -84,6 +84,17 @@
                         <a tpl:else="" href="http://{$eudat.instance.prod}" class="nav-link">
                             <i class="nav-icon far fa-circle text-warning"></i>
                             <p>EUDAT ARGO</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a tpl:if="$app.instance!='prod'" href="http://{$eosc.instance.devel}" class="nav-link">
+                            <i class="nav-icon far fa-circle text-white"></i>
+                            <p>EOSC ARGO</p>
+                        </a>
+                        <a tpl:else="" href="http://{$eosc.instance.prod}" class="nav-link">
+                            <i class="nav-icon far fa-circle text-white"></i>
+                            <p>EOSC ARGO</p>
                         </a>
                     </li>
 

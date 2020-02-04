@@ -1,12 +1,9 @@
 <authenticators-list xmlns="http://software.in2p3.fr/lavoisier/application.xsd">
     <!-- used by library "gui-admin" -->
+
     <authenticators name="admin">
-        <authenticator type="IPAddressAuthenticator">
-            <parameter name="addresses">
-                <entry>127.0.0.1</entry>
-                <entry>0:0:0:0:0:0:0:1</entry>
-                <entry>134.158.231.28</entry>
-            </parameter>
+        <authenticator type="WhiteListHTTPBasicAuthenticator">
+            <parameter name="passwords"><entry key="admin">F1C35504536383D98C613F6F0B790005</entry></parameter>
         </authenticator>
     </authenticators>
 
@@ -23,15 +20,6 @@
             <!-- required: The Client secret (or App secret) (String) -->
             <parameter name="client_secret" eval="property('egi.client_secret')"/>
         </authenticator>
-
-        <authenticator type="IPAddressAuthenticator">
-            <parameter name="addresses">
-                <entry>127.0.0.1</entry>
-                <entry>0:0:0:0:0:0:0:1</entry>
-                <entry>134.158.231.28</entry>
-            </parameter>
-        </authenticator>
-
     </authenticators>
 
     <!--<authenticators name="b2safe">-->
