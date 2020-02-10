@@ -126,8 +126,7 @@
                 <attribute-create out="entity3">$entity3</attribute-create>
                 <attribute-create out="end_time">$end_time</attribute-create>
                 <attribute-create out="filter">$filter</attribute-create>
-                <attribute-create out="message" if="$diff &gt; 432000">'Your query generates too much data. We have
-                    limited the results to the end date day. Please limit the period to 5 days'
+                <attribute-create out="message" if="$diff &gt; 432000">'Your query generates too much data. We have limited the results to the end date day (when available). Please limit the period to 5 days'
                 </attribute-create>
                 <attribute-create out="start_date" if="$start_date!='_start_'">$start_date</attribute-create>
                 <attribute-create out="end_date" if="$end_date!='_end_'">$end_date</attribute-create>

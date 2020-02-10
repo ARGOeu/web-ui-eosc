@@ -94,12 +94,10 @@
 
 
                         <div class="card-body" tpl:if="count(/root/group)&gt;0">
-                            <div tpl:if="/root/@message" class="alert alert-primary" role="alert">{{/root/@message}}
-                            </div>
+                            <div tpl:if="/root/@message" class="alert alert-primary" role="alert">{{/root/@message}} </div>
 
 
-                            <div class="row"
-                                 tpl:if="root/@tenant='egi' and root/@topology='SITES' and root/@entity1='_entity_'">
+                            <div class="row"      tpl:if="root/@tenant='egi' and root/@topology='SITES' and root/@entity1='_entity_'">
 
                                 <div class="m-2" tpl:if="root/@filter='_filter_'">
 
@@ -144,8 +142,8 @@
 
 
                         <div class="card-body" tpl:else="">
-                            <div class="alert alert-danger" role="alert">No results !!! Please check your parameters
-                                (dates, entities...)
+                            <div tpl:if="/root/@message" class="alert alert-primary" role="alert">{{/root/@message}} </div>
+                            <div tpl:else="" class="alert alert-danger" role="alert">No results !!! Please check your parameters  (dates, entities...)
                             </div>
                         </div>
 
