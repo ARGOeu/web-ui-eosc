@@ -78,11 +78,10 @@
             <element in="object" out="root" if="results/object/results">
                 <element-ignore in="results">
                     <element in="object" out="group">
-                        <attribute from-element="true"/>
+                        <attribute from-element="true" if="name()!='results'"/>
                         <element-ignore in="results">
                             <element in="object" out="results">
-                                    <attribute from-element="true"/>
-                                <element-ignore/>
+                                <attribute from-element="true"/>
                             </element>
                         </element-ignore>
                         <element-ignore/>
@@ -90,26 +89,71 @@
                 </element-ignore>
             </element>
 
-            <element in="object" out="root" if="results/object/endpoints">
+            <element in="object" out="root" if="results/object/endpoints/object/results">
                 <element-ignore in="results">
                     <element in="object" out="group">
-                        <attribute from-element="true"/>
-                        <element-ignore/>
+                        <attribute from-element="true" if="name()!='endpoints'" />
+
                         <element-ignore in="endpoints">
                             <element in="object" out="group">
-                                <attribute from-element="true"/>
-                             <element-ignore in="results">
-                                 <element in="object" out="results">
-                                     <attribute from-element="true"/>
-                                     <element-ignore/>
-                                 </element>
-                             </element-ignore>
+                                <attribute from-element="true" if="name()!='results'"/>
+                                <element-ignore in="results">
+                                    <element in="object" out="results">
+                                        <attribute from-element="true" />
+                                    </element>
+                                </element-ignore>
                             </element>
                         </element-ignore>
                         <element-ignore/>
                     </element>
                 </element-ignore>
             </element>
+
+            <element in="object" out="root" if="results/object/serviceflavors/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true" if="name()!='serviceflavors'" />
+
+                        <element-ignore in="serviceflavors">
+                            <element in="object" out="group">
+                                <attribute from-element="true" if="name()!='results'"/>
+                                <element-ignore in="results">
+                                    <element in="object" out="results">
+                                        <attribute from-element="true" />
+                                    </element>
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="object" out="root" if="results/object/serviceflavors/object/endpoints/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true" if="name()!='serviceflavors'" />
+
+                        <element-ignore in="serviceflavors">
+                            <element in="object" out="group">
+                                <element-ignore in="endpoints">
+                                    <element in="object" out="group">
+                                        <attribute from-element="true" if="name()!='results'"/>
+                                        <element-ignore in="results">
+                                            <element in="object" out="results">
+                                                <attribute from-element="true" />
+                                            </element>
+                                        </element-ignore>
+                                    </element>
+
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
 
 
             <element in="root">
@@ -214,16 +258,15 @@
             </parameter>
 
         </connector>
-        <serializer type="JSONStreamSerializer"></serializer>
+        <serializer type="JSONStreamSerializer"/>
         <processors>
             <element in="object" out="root" if="results/object/results">
                 <element-ignore in="results">
                     <element in="object" out="group">
-                        <attribute from-element="true"/>
+                        <attribute from-element="true" if="name()!='results'"/>
                         <element-ignore in="results">
                             <element in="object" out="results">
                                 <attribute from-element="true"/>
-                                <element-ignore/>
                             </element>
                         </element-ignore>
                         <element-ignore/>
@@ -231,18 +274,17 @@
                 </element-ignore>
             </element>
 
-            <element in="object" out="root" if="results/object/endpoints">
+            <element in="object" out="root" if="results/object/endpoints/object/results">
                 <element-ignore in="results">
                     <element in="object" out="group">
-                        <attribute from-element="true"/>
-                        <element-ignore/>
+                        <attribute from-element="true" if="name()!='endpoints'" />
+
                         <element-ignore in="endpoints">
                             <element in="object" out="group">
-                                <attribute from-element="true"/>
+                                <attribute from-element="true" if="name()!='results'"/>
                                 <element-ignore in="results">
                                     <element in="object" out="results">
-                                        <attribute from-element="true"/>
-                                        <element-ignore/>
+                                        <attribute from-element="true" />
                                     </element>
                                 </element-ignore>
                             </element>
@@ -251,6 +293,53 @@
                     </element>
                 </element-ignore>
             </element>
+
+            <element in="object" out="root" if="results/object/serviceflavors/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true" if="name()!='serviceflavors'" />
+
+                        <element-ignore in="serviceflavors">
+                            <element in="object" out="group">
+                                <attribute from-element="true" if="name()!='results'"/>
+                                <element-ignore in="results">
+                                    <element in="object" out="results">
+                                        <attribute from-element="true" />
+                                    </element>
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="object" out="root" if="results/object/serviceflavors/object/endpoints/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true" if="name()!='serviceflavors'" />
+
+                        <element-ignore in="serviceflavors">
+                            <element in="object" out="group">
+                                <element-ignore in="endpoints">
+                                    <element in="object" out="group">
+                                        <attribute from-element="true" if="name()!='results'"/>
+                                        <element-ignore in="results">
+                                            <element in="object" out="results">
+                                                <attribute from-element="true" />
+                                            </element>
+                                        </element-ignore>
+                                    </element>
+
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
+
         </processors>
     </view>
 
@@ -304,11 +393,10 @@
             <element in="object" out="root" if="results/object/results">
                 <element-ignore in="results">
                     <element in="object" out="group">
-                        <attribute from-element="true"/>
+                        <attribute from-element="true" if="name()!='results'"/>
                         <element-ignore in="results">
                             <element in="object" out="results">
                                 <attribute from-element="true"/>
-                                <element-ignore/>
                             </element>
                         </element-ignore>
                         <element-ignore/>
@@ -316,18 +404,17 @@
                 </element-ignore>
             </element>
 
-            <element in="object" out="root" if="results/object/endpoints">
+            <element in="object" out="root" if="results/object/endpoints/object/results">
                 <element-ignore in="results">
                     <element in="object" out="group">
-                        <attribute from-element="true"/>
-                        <element-ignore/>
+                        <attribute from-element="true" if="name()!='endpoints'" />
+
                         <element-ignore in="endpoints">
                             <element in="object" out="group">
-                                <attribute from-element="true"/>
+                                <attribute from-element="true" if="name()!='results'"/>
                                 <element-ignore in="results">
                                     <element in="object" out="results">
-                                        <attribute from-element="true"/>
-                                        <element-ignore/>
+                                        <attribute from-element="true" />
                                     </element>
                                 </element-ignore>
                             </element>
@@ -336,6 +423,52 @@
                     </element>
                 </element-ignore>
             </element>
+
+            <element in="object" out="root" if="results/object/serviceflavors/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true" if="name()!='serviceflavors'" />
+
+                        <element-ignore in="serviceflavors">
+                            <element in="object" out="group">
+                                <attribute from-element="true" if="name()!='results'"/>
+                                <element-ignore in="results">
+                                    <element in="object" out="results">
+                                        <attribute from-element="true" />
+                                    </element>
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="object" out="root" if="results/object/serviceflavors/object/endpoints/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true" if="name()!='serviceflavors'" />
+
+                        <element-ignore in="serviceflavors">
+                            <element in="object" out="group">
+                                <element-ignore in="endpoints">
+                                    <element in="object" out="group">
+                                        <attribute from-element="true" if="name()!='results'"/>
+                                        <element-ignore in="results">
+                                            <element in="object" out="results">
+                                                <attribute from-element="true" />
+                                            </element>
+                                        </element-ignore>
+                                    </element>
+
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
 
             <element in="root" if="$level!=0">
                 <element-create>view('tenants.reports')/tenants/tenant[@id=$tenant]/report</element-create>
@@ -480,11 +613,10 @@
             <element in="object" out="root" if="results/object/results">
                 <element-ignore in="results">
                     <element in="object" out="group">
-                        <attribute from-element="true"/>
+                        <attribute from-element="true" if="name()!='results'"/>
                         <element-ignore in="results">
                             <element in="object" out="results">
                                 <attribute from-element="true"/>
-                                <element-ignore/>
                             </element>
                         </element-ignore>
                         <element-ignore/>
@@ -492,19 +624,63 @@
                 </element-ignore>
             </element>
 
-            <element in="object" out="root" if="results/object/endpoints">
+            <element in="object" out="root" if="results/object/endpoints/object/results">
                 <element-ignore in="results">
                     <element in="object" out="group">
-                        <attribute from-element="true"/>
-                        <element-ignore/>
+                        <attribute from-element="true" if="name()!='endpoints'" />
+
                         <element-ignore in="endpoints">
                             <element in="object" out="group">
-                                <attribute from-element="true"/>
+                                <attribute from-element="true" if="name()!='results'"/>
                                 <element-ignore in="results">
                                     <element in="object" out="results">
-                                        <attribute from-element="true"/>
-                                        <element-ignore/>
+                                        <attribute from-element="true" />
                                     </element>
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="object" out="root" if="results/object/serviceflavors/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true" if="name()!='serviceflavors'" />
+
+                        <element-ignore in="serviceflavors">
+                            <element in="object" out="group">
+                                <attribute from-element="true" if="name()!='results'"/>
+                                <element-ignore in="results">
+                                    <element in="object" out="results">
+                                        <attribute from-element="true" />
+                                    </element>
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="object" out="root" if="results/object/serviceflavors/object/endpoints/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true" if="name()!='serviceflavors'" />
+
+                        <element-ignore in="serviceflavors">
+                            <element in="object" out="group">
+                                <element-ignore in="endpoints">
+                                    <element in="object" out="group">
+                                        <attribute from-element="true" if="name()!='results'"/>
+                                        <element-ignore in="results">
+                                            <element in="object" out="results">
+                                                <attribute from-element="true" />
+                                            </element>
+                                        </element-ignore>
+                                    </element>
+
                                 </element-ignore>
                             </element>
                         </element-ignore>
@@ -626,11 +802,10 @@
             <element in="object" out="root" if="results/object/results">
                 <element-ignore in="results">
                     <element in="object" out="group">
-                        <attribute from-element="true"/>
+                        <attribute from-element="true" if="name()!='results'"/>
                         <element-ignore in="results">
                             <element in="object" out="results">
                                 <attribute from-element="true"/>
-                                <element-ignore/>
                             </element>
                         </element-ignore>
                         <element-ignore/>
@@ -638,18 +813,17 @@
                 </element-ignore>
             </element>
 
-            <element in="object" out="root" if="results/object/endpoints">
+            <element in="object" out="root" if="results/object/endpoints/object/results">
                 <element-ignore in="results">
                     <element in="object" out="group">
-                        <attribute from-element="true"/>
-                        <element-ignore/>
+                        <attribute from-element="true" if="name()!='endpoints'" />
+
                         <element-ignore in="endpoints">
                             <element in="object" out="group">
-                                <attribute from-element="true"/>
+                                <attribute from-element="true" if="name()!='results'"/>
                                 <element-ignore in="results">
                                     <element in="object" out="results">
-                                        <attribute from-element="true"/>
-                                        <element-ignore/>
+                                        <attribute from-element="true" />
                                     </element>
                                 </element-ignore>
                             </element>
@@ -658,6 +832,52 @@
                     </element>
                 </element-ignore>
             </element>
+
+            <element in="object" out="root" if="results/object/serviceflavors/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true" if="name()!='serviceflavors'" />
+
+                        <element-ignore in="serviceflavors">
+                            <element in="object" out="group">
+                                <attribute from-element="true" if="name()!='results'"/>
+                                <element-ignore in="results">
+                                    <element in="object" out="results">
+                                        <attribute from-element="true" />
+                                    </element>
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="object" out="root" if="results/object/serviceflavors/object/endpoints/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true" if="name()!='serviceflavors'" />
+
+                        <element-ignore in="serviceflavors">
+                            <element in="object" out="group">
+                                <element-ignore in="endpoints">
+                                    <element in="object" out="group">
+                                        <attribute from-element="true" if="name()!='results'"/>
+                                        <element-ignore in="results">
+                                            <element in="object" out="results">
+                                                <attribute from-element="true" />
+                                            </element>
+                                        </element-ignore>
+                                    </element>
+
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
 
             <element in="root">
                 <element-ignore in="group" if="@type!=$topology">
@@ -785,17 +1005,16 @@
             </parameter>
         </connector>
 
-        <serializer type="JSONStreamSerializer"></serializer>
+        <serializer type="JSONStreamSerializer"/>
         <processors>
 
             <element in="object" out="root" if="results/object/results">
                 <element-ignore in="results">
                     <element in="object" out="group">
-                        <attribute from-element="true"/>
+                        <attribute from-element="true" if="name()!='results'"/>
                         <element-ignore in="results">
                             <element in="object" out="results">
                                 <attribute from-element="true"/>
-                                <element-ignore/>
                             </element>
                         </element-ignore>
                         <element-ignore/>
@@ -803,18 +1022,17 @@
                 </element-ignore>
             </element>
 
-            <element in="object" out="root" if="results/object/endpoints">
+            <element in="object" out="root" if="results/object/endpoints/object/results">
                 <element-ignore in="results">
                     <element in="object" out="group">
-                        <attribute from-element="true"/>
-                        <element-ignore/>
+                        <attribute from-element="true" if="name()!='endpoints'" />
+
                         <element-ignore in="endpoints">
                             <element in="object" out="group">
-                                <attribute from-element="true"/>
+                                <attribute from-element="true" if="name()!='results'"/>
                                 <element-ignore in="results">
                                     <element in="object" out="results">
-                                        <attribute from-element="true"/>
-                                        <element-ignore/>
+                                        <attribute from-element="true" />
                                     </element>
                                 </element-ignore>
                             </element>
@@ -823,6 +1041,52 @@
                     </element>
                 </element-ignore>
             </element>
+
+            <element in="object" out="root" if="results/object/serviceflavors/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true" if="name()!='serviceflavors'" />
+
+                        <element-ignore in="serviceflavors">
+                            <element in="object" out="group">
+                                <attribute from-element="true" if="name()!='results'"/>
+                                <element-ignore in="results">
+                                    <element in="object" out="results">
+                                        <attribute from-element="true" />
+                                    </element>
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="object" out="root" if="results/object/serviceflavors/object/endpoints/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true" if="name()!='serviceflavors'" />
+
+                        <element-ignore in="serviceflavors">
+                            <element in="object" out="group">
+                               <element-ignore in="endpoints">
+                                   <element in="object" out="group">
+                                       <attribute from-element="true" if="name()!='results'"/>
+                                       <element-ignore in="results">
+                                           <element in="object" out="results">
+                                               <attribute from-element="true" />
+                                           </element>
+                                       </element-ignore>
+                                   </element>
+
+                               </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
 
             <element in="root">
                 <attribute-create out="details" if="topology3='_topo3_'">1</attribute-create>
@@ -955,18 +1219,18 @@
                 <entry key="Accept">application/json</entry>
             </parameter>
         </connector>
-        <serializer type="JSONStreamSerializer"></serializer>
+        <serializer type="JSONStreamSerializer"/>
 
 
         <processors>
+
             <element in="object" out="root" if="results/object/results">
                 <element-ignore in="results">
                     <element in="object" out="group">
-                        <attribute from-element="true"/>
+                        <attribute from-element="true" if="name()!='results'"/>
                         <element-ignore in="results">
                             <element in="object" out="results">
                                 <attribute from-element="true"/>
-                                <element-ignore/>
                             </element>
                         </element-ignore>
                         <element-ignore/>
@@ -974,18 +1238,17 @@
                 </element-ignore>
             </element>
 
-            <element in="object" out="root" if="results/object/endpoints">
+            <element in="object" out="root" if="results/object/endpoints/object/results">
                 <element-ignore in="results">
                     <element in="object" out="group">
-                        <attribute from-element="true"/>
-                        <element-ignore/>
+                        <attribute from-element="true" if="name()!='endpoints'" />
+
                         <element-ignore in="endpoints">
                             <element in="object" out="group">
-                                <attribute from-element="true"/>
+                                <attribute from-element="true" if="name()!='results'"/>
                                 <element-ignore in="results">
                                     <element in="object" out="results">
-                                        <attribute from-element="true"/>
-                                        <element-ignore/>
+                                        <attribute from-element="true" />
                                     </element>
                                 </element-ignore>
                             </element>
@@ -994,6 +1257,52 @@
                     </element>
                 </element-ignore>
             </element>
+
+            <element in="object" out="root" if="results/object/serviceflavors/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true" if="name()!='serviceflavors'" />
+
+                        <element-ignore in="serviceflavors">
+                            <element in="object" out="group">
+                                <attribute from-element="true" if="name()!='results'"/>
+                                <element-ignore in="results">
+                                    <element in="object" out="results">
+                                        <attribute from-element="true" />
+                                    </element>
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="object" out="root" if="results/object/serviceflavors/object/endpoints/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true" if="name()!='serviceflavors'" />
+
+                        <element-ignore in="serviceflavors">
+                            <element in="object" out="group">
+                                <element-ignore in="endpoints">
+                                    <element in="object" out="group">
+                                        <attribute from-element="true" if="name()!='results'"/>
+                                        <element-ignore in="results">
+                                            <element in="object" out="results">
+                                                <attribute from-element="true" />
+                                            </element>
+                                        </element-ignore>
+                                    </element>
+
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
 
             <element in="root">
                 <attribute-create out="details" if="topology3='_topo3_'">1</attribute-create>
@@ -1104,17 +1413,16 @@
                 <entry key="Accept">application/json</entry>
             </parameter>
         </connector>
-        <serializer type="JSONStreamSerializer"></serializer>
+        <serializer type="JSONStreamSerializer"/>
 
         <processors>
             <element in="object" out="root" if="results/object/results">
                 <element-ignore in="results">
                     <element in="object" out="group">
-                        <attribute from-element="true"/>
+                        <attribute from-element="true" if="name()!='results'"/>
                         <element-ignore in="results">
                             <element in="object" out="results">
                                 <attribute from-element="true"/>
-                                <element-ignore/>
                             </element>
                         </element-ignore>
                         <element-ignore/>
@@ -1122,18 +1430,17 @@
                 </element-ignore>
             </element>
 
-            <element in="object" out="root" if="results/object/endpoints">
+            <element in="object" out="root" if="results/object/endpoints/object/results">
                 <element-ignore in="results">
                     <element in="object" out="group">
-                        <attribute from-element="true"/>
-                        <element-ignore/>
+                        <attribute from-element="true" if="name()!='endpoints'" />
+
                         <element-ignore in="endpoints">
                             <element in="object" out="group">
-                                <attribute from-element="true"/>
+                                <attribute from-element="true" if="name()!='results'"/>
                                 <element-ignore in="results">
                                     <element in="object" out="results">
-                                        <attribute from-element="true"/>
-                                        <element-ignore/>
+                                        <attribute from-element="true" />
                                     </element>
                                 </element-ignore>
                             </element>
@@ -1142,6 +1449,53 @@
                     </element>
                 </element-ignore>
             </element>
+
+            <element in="object" out="root" if="results/object/serviceflavors/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true" if="name()!='serviceflavors'" />
+
+                        <element-ignore in="serviceflavors">
+                            <element in="object" out="group">
+                                <attribute from-element="true" if="name()!='results'"/>
+                                <element-ignore in="results">
+                                    <element in="object" out="results">
+                                        <attribute from-element="true" />
+                                    </element>
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="object" out="root" if="results/object/serviceflavors/object/endpoints/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true" if="name()!='serviceflavors'" />
+
+                        <element-ignore in="serviceflavors">
+                            <element in="object" out="group">
+                                <element-ignore in="endpoints">
+                                    <element in="object" out="group">
+                                        <attribute from-element="true" if="name()!='results'"/>
+                                        <element-ignore in="results">
+                                            <element in="object" out="results">
+                                                <attribute from-element="true" />
+                                            </element>
+                                        </element-ignore>
+                                    </element>
+
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
+
 
             <element out="root">
 
