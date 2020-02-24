@@ -69,11 +69,48 @@
             <parameter name="force-redirect">true</parameter>
             <parameter name="header">
                 <entry key="x-api-key" eval="$api-key"/>
-                <entry key="Accept">application/xml</entry>
+                <entry key="Accept">application/json</entry>
             </parameter>
         </connector>
-
+        <serializer type="JSONStreamSerializer"/>
         <processors>
+
+            <element in="object" out="root" if="results/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true"/>
+                        <element-ignore in="results">
+                            <element in="object" out="results">
+                                    <attribute from-element="true"/>
+                                <element-ignore/>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="object" out="root" if="results/object/endpoints">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true"/>
+                        <element-ignore/>
+                        <element-ignore in="endpoints">
+                            <element in="object" out="group">
+                                <attribute from-element="true"/>
+                             <element-ignore in="results">
+                                 <element in="object" out="results">
+                                     <attribute from-element="true"/>
+                                     <element-ignore/>
+                                 </element>
+                             </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
 
             <element in="root">
                 <attribute-create out="filter" if="$filter!='_filter_'">$filter</attribute-create>
@@ -173,9 +210,48 @@
             <parameter name="force-redirect">true</parameter>
             <parameter name="header">
                 <entry key="x-api-key" eval="$api-key"/>
-                <entry key="Accept">application/xml</entry>
+                <entry key="Accept">application/json</entry>
             </parameter>
+
         </connector>
+        <serializer type="JSONStreamSerializer"></serializer>
+        <processors>
+            <element in="object" out="root" if="results/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true"/>
+                        <element-ignore in="results">
+                            <element in="object" out="results">
+                                <attribute from-element="true"/>
+                                <element-ignore/>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="object" out="root" if="results/object/endpoints">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true"/>
+                        <element-ignore/>
+                        <element-ignore in="endpoints">
+                            <element in="object" out="group">
+                                <attribute from-element="true"/>
+                                <element-ignore in="results">
+                                    <element in="object" out="results">
+                                        <attribute from-element="true"/>
+                                        <element-ignore/>
+                                    </element>
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+        </processors>
     </view>
 
     <view name="report-ar-dates" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
@@ -217,13 +293,49 @@
             <parameter name="force-redirect">true</parameter>
             <parameter name="header">
                 <entry key="x-api-key" eval="$api-key"/>
-                <entry key="Accept">application/xml</entry>
+                <entry key="Accept">application/json</entry>
             </parameter>
         </connector>
 
+        <serializer type="JSONStreamSerializer"></serializer>
+
         <processors>
 
+            <element in="object" out="root" if="results/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true"/>
+                        <element-ignore in="results">
+                            <element in="object" out="results">
+                                <attribute from-element="true"/>
+                                <element-ignore/>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
 
+            <element in="object" out="root" if="results/object/endpoints">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true"/>
+                        <element-ignore/>
+                        <element-ignore in="endpoints">
+                            <element in="object" out="group">
+                                <attribute from-element="true"/>
+                                <element-ignore in="results">
+                                    <element in="object" out="results">
+                                        <attribute from-element="true"/>
+                                        <element-ignore/>
+                                    </element>
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
 
             <element in="root" if="$level!=0">
                 <element-create>view('tenants.reports')/tenants/tenant[@id=$tenant]/report</element-create>
@@ -355,15 +467,51 @@
             <parameter name="force-redirect">true</parameter>
             <parameter name="header">
                 <entry key="x-api-key" eval="$api-key"/>
-                <entry key="Accept">application/xml</entry>
+                <entry key="Accept">application/json</entry>
             </parameter>
         </connector>
+        <serializer type="JSONStreamSerializer"></serializer>
 
         <!--<connector type="StringConnector">-->
         <!--<parameter name="content" eval="$url"></parameter>-->
         <!--</connector>-->
         <!--<serializer type="EncapsulateSerializer"/>-->
         <processors>
+            <element in="object" out="root" if="results/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true"/>
+                        <element-ignore in="results">
+                            <element in="object" out="results">
+                                <attribute from-element="true"/>
+                                <element-ignore/>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="object" out="root" if="results/object/endpoints">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true"/>
+                        <element-ignore/>
+                        <element-ignore in="endpoints">
+                            <element in="object" out="group">
+                                <attribute from-element="true"/>
+                                <element-ignore in="results">
+                                    <element in="object" out="results">
+                                        <attribute from-element="true"/>
+                                        <element-ignore/>
+                                    </element>
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
 
             <element in="root">
                 <attribute-create out="details">3</attribute-create>
@@ -467,12 +615,49 @@
             <parameter name="force-redirect">true</parameter>
             <parameter name="header">
                 <entry key="x-api-key" eval="$api-key"/>
-                <entry key="Accept">application/xml</entry>
+                <entry key="Accept">application/json</entry>
             </parameter>
         </connector>
+        <serializer type="JSONStreamSerializer"></serializer>
 
 
         <processors>
+
+            <element in="object" out="root" if="results/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true"/>
+                        <element-ignore in="results">
+                            <element in="object" out="results">
+                                <attribute from-element="true"/>
+                                <element-ignore/>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="object" out="root" if="results/object/endpoints">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true"/>
+                        <element-ignore/>
+                        <element-ignore in="endpoints">
+                            <element in="object" out="group">
+                                <attribute from-element="true"/>
+                                <element-ignore in="results">
+                                    <element in="object" out="results">
+                                        <attribute from-element="true"/>
+                                        <element-ignore/>
+                                    </element>
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
 
             <element in="root">
                 <element-ignore in="group" if="@type!=$topology">
@@ -596,11 +781,48 @@
             <parameter name="force-redirect">true</parameter>
             <parameter name="header">
                 <entry key="x-api-key" eval="$api-key"/>
-                <entry key="Accept">application/xml</entry>
+                <entry key="Accept">application/json</entry>
             </parameter>
         </connector>
 
+        <serializer type="JSONStreamSerializer"></serializer>
         <processors>
+
+            <element in="object" out="root" if="results/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true"/>
+                        <element-ignore in="results">
+                            <element in="object" out="results">
+                                <attribute from-element="true"/>
+                                <element-ignore/>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="object" out="root" if="results/object/endpoints">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true"/>
+                        <element-ignore/>
+                        <element-ignore in="endpoints">
+                            <element in="object" out="group">
+                                <attribute from-element="true"/>
+                                <element-ignore in="results">
+                                    <element in="object" out="results">
+                                        <attribute from-element="true"/>
+                                        <element-ignore/>
+                                    </element>
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
 
             <element in="root">
                 <attribute-create out="details" if="topology3='_topo3_'">1</attribute-create>
@@ -730,12 +952,48 @@
             <parameter name="force-redirect">true</parameter>
             <parameter name="header">
                 <entry key="x-api-key" eval="$api-key"/>
-                <entry key="Accept">application/xml</entry>
+                <entry key="Accept">application/json</entry>
             </parameter>
         </connector>
+        <serializer type="JSONStreamSerializer"></serializer>
 
 
         <processors>
+            <element in="object" out="root" if="results/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true"/>
+                        <element-ignore in="results">
+                            <element in="object" out="results">
+                                <attribute from-element="true"/>
+                                <element-ignore/>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="object" out="root" if="results/object/endpoints">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true"/>
+                        <element-ignore/>
+                        <element-ignore in="endpoints">
+                            <element in="object" out="group">
+                                <attribute from-element="true"/>
+                                <element-ignore in="results">
+                                    <element in="object" out="results">
+                                        <attribute from-element="true"/>
+                                        <element-ignore/>
+                                    </element>
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
 
             <element in="root">
                 <attribute-create out="details" if="topology3='_topo3_'">1</attribute-create>
@@ -843,13 +1101,47 @@
             <parameter name="force-redirect">true</parameter>
             <parameter name="header">
                 <entry key="x-api-key" eval="$api-key"/>
-                <entry key="Accept">application/xml</entry>
+                <entry key="Accept">application/json</entry>
             </parameter>
         </connector>
-
+        <serializer type="JSONStreamSerializer"></serializer>
 
         <processors>
+            <element in="object" out="root" if="results/object/results">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true"/>
+                        <element-ignore in="results">
+                            <element in="object" out="results">
+                                <attribute from-element="true"/>
+                                <element-ignore/>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
 
+            <element in="object" out="root" if="results/object/endpoints">
+                <element-ignore in="results">
+                    <element in="object" out="group">
+                        <attribute from-element="true"/>
+                        <element-ignore/>
+                        <element-ignore in="endpoints">
+                            <element in="object" out="group">
+                                <attribute from-element="true"/>
+                                <element-ignore in="results">
+                                    <element in="object" out="results">
+                                        <attribute from-element="true"/>
+                                        <element-ignore/>
+                                    </element>
+                                </element-ignore>
+                            </element>
+                        </element-ignore>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+            </element>
 
             <element out="root">
 

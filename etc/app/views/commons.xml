@@ -224,13 +224,29 @@
             <parameter name="force-redirect">true</parameter>
             <parameter name="header">
                 <entry key="x-api-key" eval="$api-key"/>
-                <entry key="Accept">application/xml</entry>
+                <entry key="Accept">application/json</entry>
             </parameter>
 
         </connector>
+        <serializer type="JSONStreamSerializer"/>
 
 
         <processors>
+
+            <element in="object" out="root">
+                <element in="data">
+                    <element in="object" out="result">
+                    <element-ignore in="profiles">
+                        <element in="object" out="profile">
+                            <attribute from-element="true"/>
+                            <element-ignore/>
+                        </element>
+                    </element-ignore>
+                    </element>
+                </element>
+
+            </element>
+
             <element in="root">
                 <attribute-create out="tenant">lower-case($tenant)</attribute-create>
                 <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
@@ -244,86 +260,7 @@
         </renderers>
     </view>
 
-    <view name="reportAR" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 
-        <argument name="report"/>
-        <argument name="tenant"/>
-        <argument name="topology"/>
-
-        <argument name="site">_site_</argument>
-
-        <argument name="nbdays">10</argument>
-        <variable name="api-key"
-                  eval="view('tenantsListRaw')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
-        <variable name="start_time"
-                  eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z')"/>
-        <variable name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"/>
-
-
-        <connector type="HTTPConnector">
-            <parameter name="url"
-                       eval="concat(property('api.report'),'/',$report,'/',$topology,'?start_time=',$start_time,'&amp;end_time=',$end_time)"/>
-            <parameter name="force-redirect">true</parameter>
-            <parameter name="header">
-                <entry key="x-api-key" eval="$api-key"/>
-                <entry key="Accept">application/xml</entry>
-            </parameter>
-        </connector>
-
-
-        <processors>
-
-            <element out="root" if="$site!='_site_'">
-                <element-ignore in="group">
-                    <element in="group" if="@name=$site"/>
-                </element-ignore>
-            </element>
-
-            <element out="root">
-                <attribute-create out="tenant">$tenant</attribute-create>
-                <attribute-create out="report">$report</attribute-create>
-                <element-create>view('tenants.reports')/reports/report</element-create>
-                <element in="group">
-                    <element in="results">
-                        <attribute-create out="avF" if="../following-sibling::results">
-                            concat(round(../@availability*100) div 100,',')
-                        </attribute-create>
-                        <attribute-create out="avF" if="not(../following-sibling::results)">round(../@availability*100)
-                            div 100
-                        </attribute-create>
-                        <attribute-create out="reF" if="../following-sibling::results">concat(round(../@reliability*100)
-                            div 100,',')
-                        </attribute-create>
-                        <attribute-create out="reF" if="not(../following-sibling::results)">round(../@reliability * 100)
-                            div 100
-                        </attribute-create>
-                    </element>
-                </element>
-            </element>
-
-
-            <element out="root">
-
-
-                <element in="group">
-                    <attribute-create out="spark-av">str:concat(../results/@avF)</attribute-create>
-                    <attribute-create out="spark-re">str:concat(../results/@reF)</attribute-create>
-                    <element in="results">
-                        <attribute-ignore in="avF"/>
-                        <attribute-ignore in="reF"/>
-                    </element>
-                </element>
-            </element>
-
-
-        </processors>
-
-        <renderers>
-            <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/report-ar/report.html</parameter>
-            </renderer>
-        </renderers>
-    </view>
 
 
     <view name="StateColor">
