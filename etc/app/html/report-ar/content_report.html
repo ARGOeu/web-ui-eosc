@@ -495,7 +495,7 @@
 
                             <tbody tpl:if="/root/@group2">
                             <tr tpl:foreach="group">
-                                <td><span tpl:if="not(@url)">{{@name}}</span><span tpl:if="@url">{{@url}} <a href="{{@url}}"><i class="fas fa-link m-1"></i> </a></span></td>
+                                <td><span tpl:if="not(@url)">{{@name}}</span><span tpl:if="@url">{{@url}} <a href="{{@url}}"><i class="fas fa-link m-1"></i> </a><br/><small>{{@name}}</small></span></td>
                                 <td tpl:if="/root/@report='SLA'">{{@site}}</td>
                                 <td tpl:if="$pdf!= 'pdf'" class="text-right">
 

@@ -98,7 +98,7 @@
 
                                 <h2 class="card-title" tpl:if="/root/@topology!='PROJECT' and /root/@topology!='NGI' and (not(/root/@filter))">
                                     <span tpl:if="not(@url)">{{@name}}</span>
-                                    <span class="m-1" tpl:if="@url"> {{@url}} <a href="{{@url}}"><i class="fas fa-link m-1"></i></a></span>
+                                    <span class="m-1" tpl:if="@url"> {{@url}} <a href="{{@url}}"><i class="fas fa-link m-1"></i></a><br/><small>{{@name}}</small></span>
                                     <a tpl:if="@type!='endpoint'"   href="javascript:my_link('{@name}')"     title="Drilldown to details"   class="text-white m-2 badge badge-primary">DETAILS</a>
                                 </h2>
                                 <h2 class="card-title" tpl:else=""><span tpl:if="not(@url)">{{@name}} </span>  <span class="m-1" tpl:if="@url"> {{@url}} <a href="{{@url}}"><i class="m-1 fas fa-link"></i></a> </span> <span class="m-1" tpl:if="@site"> - {{@site}}</span>   </h2>
