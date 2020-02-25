@@ -139,6 +139,7 @@
                                 <element-ignore in="endpoints">
                                     <element in="object" out="group">
                                         <attribute from-element="true" if="name()!='results'"/>
+                                        <attribute-create out="url" if="../info/URL">../info/URL/text()</attribute-create>
                                         <element-ignore in="results">
                                             <element in="object" out="results">
                                                 <attribute from-element="true" />
@@ -324,6 +325,8 @@
                                 <element-ignore in="endpoints">
                                     <element in="object" out="group">
                                         <attribute from-element="true" if="name()!='results'"/>
+                                        <attribute-create out="url" if="../info/URL">../info/URL/text()</attribute-create>
+
                                         <element-ignore in="results">
                                             <element in="object" out="results">
                                                 <attribute from-element="true" />
@@ -454,6 +457,8 @@
                                 <element-ignore in="endpoints">
                                     <element in="object" out="group">
                                         <attribute from-element="true" if="name()!='results'"/>
+                                        <attribute-create out="url" if="../info/URL">../info/URL/text()</attribute-create>
+
                                         <element-ignore in="results">
                                             <element in="object" out="results">
                                                 <attribute from-element="true" />
@@ -674,6 +679,8 @@
                                 <element-ignore in="endpoints">
                                     <element in="object" out="group">
                                         <attribute from-element="true" if="name()!='results'"/>
+                                        <attribute-create out="url" if="../info/URL">../info/URL/text()</attribute-create>
+
                                         <element-ignore in="results">
                                             <element in="object" out="results">
                                                 <attribute from-element="true" />
@@ -863,6 +870,8 @@
                                 <element-ignore in="endpoints">
                                     <element in="object" out="group">
                                         <attribute from-element="true" if="name()!='results'"/>
+                                        <attribute-create out="url" if="../info/URL">../info/URL/text()</attribute-create>
+
                                         <element-ignore in="results">
                                             <element in="object" out="results">
                                                 <attribute from-element="true" />
@@ -1072,6 +1081,8 @@
                                <element-ignore in="endpoints">
                                    <element in="object" out="group">
                                        <attribute from-element="true" if="name()!='results'"/>
+                                       <attribute-create out="url" if="../info/URL">../info/URL/text()</attribute-create>
+
                                        <element-ignore in="results">
                                            <element in="object" out="results">
                                                <attribute from-element="true" />
@@ -1288,6 +1299,8 @@
                                 <element-ignore in="endpoints">
                                     <element in="object" out="group">
                                         <attribute from-element="true" if="name()!='results'"/>
+                                        <attribute-create out="url" if="../info/URL">../info/URL/text()</attribute-create>
+
                                         <element-ignore in="results">
                                             <element in="object" out="results">
                                                 <attribute from-element="true" />
@@ -1480,6 +1493,8 @@
                                 <element-ignore in="endpoints">
                                     <element in="object" out="group">
                                         <attribute from-element="true" if="name()!='results'"/>
+                                        <attribute-create out="url" if="../info/URL">../info/URL/text()</attribute-create>
+
                                         <element-ignore in="results">
                                             <element in="object" out="results">
                                                 <attribute from-element="true" />
