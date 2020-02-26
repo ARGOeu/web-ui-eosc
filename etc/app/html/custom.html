@@ -27,7 +27,7 @@
                     <div class="col-sm-3">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboards</li>
+                            <li class="breadcrumb-item active">Custom report</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -179,7 +179,7 @@ $(function() {
         var report = $("input#report").val() ;
 
         var view = $("input[name=type]:checked").val() ;
-        var entity = $("#services option:selected").text();
+        var entity = $("#services option:selected").text().replace("+", "%252B");
         var range = 'start_date=' + $('#reportrange span').text().replace(' / ','&end_date=');
 
 
