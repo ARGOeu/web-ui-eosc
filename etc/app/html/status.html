@@ -28,21 +28,21 @@
                             <li class="breadcrumb-item"><a href="/">Home</a></li>
                             <li class="breadcrumb-item">Status</li>
                             <li tpl:if="root/@entity1!='_entity_'" class="breadcrumb-item active">
-                                <a tpl:if="/root/@start_date and /root/@end_date"
+                                <a class="urlenc" tpl:if="/root/@start_date and /root/@end_date"
                                    href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}?start_date={{/root/@start_date}}&amp;end_date={{/root/@end_date}}">{{/root/@entity1}}</a>
-                                <a tpl:else=""
+                                <a class="urlenc" tpl:else=""
                                    href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}">{{/root/@entity1}}</a>
                             </li>
                             <li tpl:if="root/@entity2!='_entity_'" class="breadcrumb-item active">
-                                <a tpl:if="/root/@start_date and /root/@end_date"
+                                <a class="urlenc" tpl:if="/root/@start_date and /root/@end_date"
                                    href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}/{{/root/@entity2}}?start_date={{/root/@start_date}}&amp;end_date={{/root/@end_date}}">{{/root/@entity2}}</a>
-                                <a tpl:else=""
+                                <a class="urlenc" tpl:else=""
                                    href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}/{{/root/@entity2}}">{{/root/@entity2}}</a>
                             </li>
                             <li tpl:if="root/@entity3!='_entity_'" class="breadcrumb-item active">
-                                <a tpl:if="/root/@start_date and /root/@end_date"
+                                <a class="urlenc" tpl:if="/root/@start_date and /root/@end_date"
                                    href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}/{{/root/@entity2}}/{{/root/@entity3}}?start_date={{/root/@start_date}}&amp;end_date={{/root/@end_date}}">{{/root/@entity3}}</a>
-                                <a tpl:else=""
+                                <a class="urlenc" tpl:else=""
                                    href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/{{/root/@entity1}}/{{/root/@entity2}}/{{/root/@entity3}}">{{/root/@entity3}}</a>
                             </li>
 
@@ -64,14 +64,14 @@
                         <div class="card-header">Status for {{root/@tenant}} tenant - {{root/@report}} Report</div>
 
 
-                        <div style="display: none" id="local_groups">
-                            <div tpl:foreach="/root/group/status">
-                                {{ancestor::group/@name}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@color}}
+                        <div style="display: none" tpl:if="/root/group/@url" id="local_groups">
+                            <div tpl:foreach="/root/group/status" class="url">
+                                {{ancestor::group/@url}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@color}}
                             </div>
                         </div>
 
                         <div style="display: none" tpl:else="" id="local_groups">
-                            <div tpl:foreach="/root/group/status">
+                            <div tpl:foreach="/root/group/status" class="names">
                                 {{ancestor::group/@name}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@color}}
                             </div>
                         </div>
@@ -186,6 +186,7 @@
 <script src="/resource/app/js/timeline2.js?v={$app.version}"></script>
 
 <script src="/resource/app/js/filter.js?v={$app.version}"></script>
+
 
 
 </body>

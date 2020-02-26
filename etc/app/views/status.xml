@@ -163,6 +163,8 @@
 
                                     <element in="object" out="endpoint">
                                         <attribute from-element="true" if="name()!='statuses'"/>
+                                        <attribute-create out="url" if="../info/URL">../info/URL/text()</attribute-create>
+
                                         <element-ignore in="statuses">
                                             <element in="object" out="status">
                                                 <attribute from-element="true"/>
@@ -226,11 +228,13 @@
                 <attribute-create out="topology">$topology</attribute-create>
                 <attribute-create out="url">$url</attribute-create>
                 <attribute-create out="link">
-                    function:buildStatusLink($report,$topology,$entity1,$entity2,$entity3,$entity4,$start_time,$end_time)
+                    function:buildStatusLink($report,$topology,str:replace($entity1,'+','%252B'),str:replace($entity2,'+','%252B'),str:replace($entity3,'+','%252B'),$entity4,$start_time,$end_time)
                 </attribute-create>
-                <attribute-create out="entity1">$entity1</attribute-create>
-                <attribute-create out="entity2">$entity2</attribute-create>
-                <attribute-create out="entity3">$entity3</attribute-create>
+
+
+                <attribute-create out="entity1">str:replace($entity1,'+','%252B')</attribute-create>
+                <attribute-create out="entity2">str:replace($entity2,'+','%252B')</attribute-create>
+                <attribute-create out="entity3">str:replace($entity3,'+','%252B')</attribute-create>
                 <attribute-create out="end_time">$end_time</attribute-create>
                 <attribute-create out="filter">$filter</attribute-create>
                 <attribute-create out="message" if="$diff &gt; 432000">'Your query generates too much data. We have limited the results to the end date day (when available). Please limit the period to 5 days'
@@ -315,6 +319,8 @@
                 <set variable="StateColor">view('StateColor')</set>
 
                 <element in="group">
+                    <attribute in="name">str:replace(.,'+','%252B')</attribute>
+
                     <element in="status">
 
                         <attribute-create out="color">$StateColor/e:entries/e:entry[@key=current()/../@value]/text()

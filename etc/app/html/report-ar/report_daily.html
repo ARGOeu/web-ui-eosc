@@ -28,13 +28,13 @@
                             <li class="breadcrumb-item"><a href="/">Home</a></li>
                             <li class="breadcrumb-item">Availabilities / Reliabilities</li>
                             <li class="breadcrumb-item"><a
-                                    href="/{@tenant}/report-ar-group/{@report}/{@month}/{@topology}/{@group}">{{@group}}</a>
+                                    href="/{@tenant}/report-ar-group/{@report}/{@month}/{@topology}/{@group}" class="urlenc">{{@group}}</a>
                             </li>
                             <li class="breadcrumb-item" tpl:if="@group2"><a
-                                    href="/{@tenant}/report-ar-group/{@report}/{@month}/{@topology}/{@group}/{@topology2}/{@group2}/endpoints">{{@group2}}</a>
+                                    href="/{@tenant}/report-ar-group/{@report}/{@month}/{@topology}/{@group}/{@topology2}/{@group2}/endpoints" class="urlenc">{{@group2}}</a>
                             </li>
                             <li class="breadcrumb-item" tpl:if="@group3"><a
-                                    href="/{@tenant}/report-ar-group/{@report}/{@month}/{@topology}/{@group}/{@topology2}/{@group2}/endpoints/{@group3}">{{@group3}}</a>
+                                    href="/{@tenant}/report-ar-group/{@report}/{@month}/{@topology}/{@group}/{@topology2}/{@group2}/endpoints/{@group3}" class="urlenc">{{@group3}}</a>
                             </li>
                         </ol>
                     </div><!-- /.col -->
@@ -97,11 +97,11 @@
 
 
                                 <h2 class="card-title" tpl:if="/root/@topology!='PROJECT' and /root/@topology!='NGI' and (not(/root/@filter))">
-                                    <span tpl:if="not(@url)">{{@name}}</span>
-                                    <span class="m-1" tpl:if="@url"> {{@url}} <a href="{{@url}}"><i class="fas fa-link m-1"></i></a><br/><small>{{@name}}</small></span>
+                                    <span tpl:if="not(@url)" class="urlenc">{{@name}}</span>
+                                    <span tpl:if="@url">  <a href="{{@url}}" class="urlenc">{{@url}}</a><br/><small style="line-height:0" class="urlenc">{{@name}}</small></span>
                                     <a tpl:if="@type!='endpoint'"   href="javascript:my_link('{@name}')"     title="Drilldown to details"   class="text-white m-2 badge badge-primary">DETAILS</a>
                                 </h2>
-                                <h2 class="card-title" tpl:else=""><span tpl:if="not(@url)">{{@name}} </span>  <span class="m-1" tpl:if="@url"> {{@url}} <a href="{{@url}}"><i class="m-1 fas fa-link"></i></a> </span> <span class="m-1" tpl:if="@site"> - {{@site}}</span>   </h2>
+                                <h2 class="card-title" tpl:else=""><span tpl:if="not(@url)" class="urlenc">{{@name}} </span>  <span class="m-1 urlenc" tpl:if="@url"> {{@url}} <a href="{{@url}}"><i class="m-1 fas fa-link"></i></a> </span> <span class="m-1" tpl:if="@site"> - {{@site}}</span>   </h2>
 
 
                                 <hr/>

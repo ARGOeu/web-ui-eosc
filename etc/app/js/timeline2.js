@@ -1,6 +1,12 @@
 
 
 
+            $( ".urlenc" ).each(function( index ) {
+            var urlsN=decodeURIComponent(unescape($(this).text()));
+            $(this).text(urlsN);
+            });
+
+
             var newgroup = [];
             var colorsgroup = [];
             var links = [];
@@ -17,6 +23,8 @@
                 var tempArray = local_groups[j].textContent.split(",");
                 var color = tempArray.pop();
                 var bg;
+
+                tempArray[0] = decodeURIComponent(unescape(tempArray[0])) ;
 
                 bg=tempArray[1].split("_")[0];
 

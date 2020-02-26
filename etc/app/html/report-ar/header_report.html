@@ -9,10 +9,10 @@
 
                     <li class="breadcrumb-item" tpl:foreach="root">Availabilities / Reliabilities</li>
                     <li class="breadcrumb-item" tpl:if="/root/@group"><a
-                            href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}">{{/root/@group}}</a>
+                            href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}" class="urlenc">{{/root/@group}}</a>
                     </li>
                     <li class="breadcrumb-item" tpl:if="/root/@group2"><a
-                            href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{/root/@group2}/endpoints">{{/root/@group2}}</a>
+                            href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{/root/@group2}/endpoints" class="urlenc">{{/root/@group2}}</a>
                     </li>
                 </ol>
             </div><!-- /.col -->

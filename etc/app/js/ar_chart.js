@@ -1,5 +1,10 @@
 $(function () {
 
+   $( ".urlenc" ).each(function( index ) {
+            var urlsN=decodeURIComponent(unescape($(this).text()));
+            $(this).text(urlsN);
+            });
+
 $( ".ARdata" ).each(function( index ) {
 
     var id =$(this).attr('id');

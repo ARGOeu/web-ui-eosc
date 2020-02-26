@@ -101,20 +101,20 @@
                             <tbody tpl:if="group[1]/@type!='endpoint' and group[1]/@type!='service'">
                             <tr tpl:foreach="group">
                                 <td tpl:if="@type='PROJECT'"><a
-                                        href="/{/root/@tenant}/report-ar/{/root/@report}/SERVICEGROUPS">{{@name}}</a>
+                                        href="/{/root/@tenant}/report-ar/{/root/@report}/SERVICEGROUPS" class="urlenc">{{@name}}</a>
                                 </td>
                                 <td tpl:else="@type='NGI'"><a
-                                        href="/{/root/@tenant}/report-ar/{/root/@report}/SITES?filter={@name}">{{@name}}</a>
+                                        href="/{/root/@tenant}/report-ar/{/root/@report}/SITES?filter={@name}" class="urlenc">{{@name}}</a>
                                 </td>
                                 <td tpl:else="@type='SITES'"><a
-                                        href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{@type}/{@name}/details">{{@name}}</a>
+                                        href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{@type}/{@name}/details" class="urlenc">{{@name}}</a>
                                 </td>
                                 <td tpl:else="@type='SERVICEGROUPS'"><a
-                                        href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{@type}/{@name}/details">{{@name}}</a>
+                                        href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{@type}/{@name}/details" class="urlenc">{{@name}}</a>
                                 </td>
 
                                 <td tpl:else="@type='service'"><a
-                                        href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}/{@name}/endpoints">{{@name}}</a>
+                                        href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}/{@name}/endpoints" class="urlenc">{{@name}}</a>
                                 </td>
 
                                 <td tpl:if="$pdf!= 'pdf'" class="text-right">
@@ -305,7 +305,7 @@
                             <tr tpl:foreach="group">
 
                                 <td>
-                                    <a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints">{{@name}}</a>
+                                    <a href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}/{/root/@topology2}/{@name}/endpoints" class="urlenc">{{@name}}</a>
                                 </td>
 
 
@@ -495,7 +495,13 @@
 
                             <tbody tpl:if="/root/@group2">
                             <tr tpl:foreach="group">
-                                <td><span tpl:if="not(@url)">{{@name}}</span><span tpl:if="@url">{{@url}} <a href="{{@url}}"><i class="fas fa-link m-1"></i> </a><br/><small>{{@name}}</small></span></td>
+                                <td>
+                                    <span tpl:if="not(@url)" class="urlenc">{{@name}}</span>
+                                    <span tpl:if="@url">  <a href="{{@url}}">{{@url}}</a><br/><small class="urlenc" style="line-height:0">{{@name}}</small></span>
+
+                                </td>
+
+
                                 <td tpl:if="/root/@report='SLA'">{{@site}}</td>
                                 <td tpl:if="$pdf!= 'pdf'" class="text-right">
 

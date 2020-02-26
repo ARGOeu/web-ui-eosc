@@ -47,33 +47,29 @@ enabled=1
 
 ```
     ### EUDAT DPMT
-    eudat-api-user =
-    eudat-api-pwd =
+    eudat-api-user=
+    eudat-api-pwd=
 
     ### APIKEYS
-    ???.api.key=
-
+    admin.api.key=
 
     ### CERTIFICATES
-    certificate.password =
-    certificate.path =
+    certificate.password=
+    certificate.path=
+
+    ### OAUTH
+    egi.client_id=
+    egi.client_secret=
+    egi.oidc.userInfo=
+    egi.oidc.authorize=
+    egi.oidc.token=
+
+    eudat.client_id=
+    eudat.client_secret=
+    eudat.oidc.userInfo=
 ```
-* manage the app version and instance into etc/engine/html.properties
-* manage the ports into etc/service/service.properties
 
 
-
-## Add a new tenant $tenant
-
-* add the tenant properties into etc/app/resources/tenants.xml
-* copy the file etc/app/html/adminlte/dist/css/adminlte.min.css in the same directory under name adminlte-$tenant.css
-
-
-## Customize a new tenant $tenant
-
-* add the route for the alias into /etc/service/route.properties, your_alias/ = dashboard?tenant=$tenant
-* add a logo for the tenant etc/app/img : logo-$tenant.png
-* modify the adminlte-$tenant.css to adapt it
 
 
 
