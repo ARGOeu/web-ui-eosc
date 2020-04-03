@@ -3,6 +3,7 @@
             $('#loadertable').css( 'display', processing ? 'block' : 'none' );
         } ).dataTable({
             "order": [[0, "asc"]],
+              "lengthMenu": [[50, 25, 10, -1], [50, 25, 10, "All"]],
             initComplete: function () {
                 var cpt=0;
                 this.api().columns([0,1,2]).every(function () {
@@ -10,7 +11,7 @@
                     cpt++;
 
                         var select = $("<select><option value=''></option></select>")
-                            .appendTo($(column.footer()).empty())
+                            .appendTo($(column.header()).empty())
                             .on('change', function () {
                                 var val = $.fn.dataTable.util.escapeRegex(
                                     $(this).val()
