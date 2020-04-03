@@ -56,9 +56,9 @@
                                 </thead>
                                 <tbody>
                                 <tr tpl:foreach="/root/results">
-                                    <td>{{@supergroup}}</td>
-                                    <td>{{@service}}</td>
-                                    <td>{{@name}}</td>
+                                    <td><small>{{@supergroup}}</small></td>
+                                    <td><small>{{@service}}</small></td>
+                                    <td><small>{{@name}}</small></td>
                                     <!-- day1-->
                                         <!-- av -->
                                         <td tpl:if="result[@timestamp=/root/@day1]/@availability &gt; /root/@level1">

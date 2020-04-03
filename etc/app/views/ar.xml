@@ -1624,14 +1624,15 @@
         <argument name="report"/>
         <argument name="tenant"/>
         <argument name="nbdays">2</argument>
+        <argument name="granularity">daily</argument>
 
         <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
         <variable name="start_time"
-                  eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z')"/>
+                  eval="choose($granularity='daily',concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z'),concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'M')),0,20),' ','T'),'Z'))"/>
         <variable name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"/>
 
         <variable name="url"
-                  eval="concat(property('api.report'),'/',$report,'/endpoints?start_time=',$start_time,'&amp;end_time=',$end_time)"/>
+                  eval="concat(property('api.report'),'/',$report,'/endpoints?start_time=',$start_time,'&amp;end_time=',$end_time,'&amp;granularity=',$granularity)"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>
