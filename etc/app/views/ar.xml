@@ -1617,5 +1617,84 @@
         </renderers>
     </view>
 
+    
+    <view name="report-all-endpoints" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
+
+        <!-- /results/{report_name}/endpoints?[start_time]&[end_time]&[granularity]&[pageSize]&[nextPageToken] -->
+        <argument name="report"/>
+        <argument name="tenant"/>
+        <argument name="nbdays">2</argument>
+
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="start_time"
+                  eval="concat(str:replace(substring(date:add(date:date-time(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z')"/>
+        <variable name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"/>
+
+        <variable name="url"
+                  eval="concat(property('api.report'),'/',$report,'/endpoints?start_time=',$start_time,'&amp;end_time=',$end_time)"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+        </connector>
+        <serializer type="JSONStreamSerializer"/>
+
+        <processors>
+
+            <element in="object" out="root">
+
+                <element-ignore in="results">
+                    <element in="object" out="results">
+                        <attribute from-element="true" if="name()!='results'"/>
+
+                        <element-ignore>
+                            <element in="object" out="result">
+                                <attribute from-element="true"/>
+                                <element-ignore/>
+                            </element>
+                        </element-ignore>
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="root">
+                <set variable="reportDetails">view('tenants.reports')/tenants/tenant[@id=$tenant]/report[@name=$report]</set>
+
+
+                <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="day1">../results[1][count(result)=3]/result[1]/@timestamp</attribute-create>
+                <attribute-create out="day2">../results[1][count(result)=3]/result[2]/@timestamp</attribute-create>
+                <attribute-create out="day3">../results[1][count(result)=3]/result[3]/@timestamp</attribute-create>
+                <attribute-create out="level1">$reportDetails/@thresholdAv</attribute-create>
+                <attribute-create out="level2">$reportDetails/@thresholdRe</attribute-create>
+                <element-create>view('tenants.reports')/tenants/tenant[@id=$tenant]/report</element-create>
+                <element in="results">
+                    <element in="result">
+                        <attribute if="name()!='timestamp'">round(. * 100 ) div 100</attribute>
+                    </element>
+                </element>
+            </element>
+
+        </processors>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/report-ar/report_endpoints.html</parameter>
+            </renderer>
+
+
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
+
 
 </views>
