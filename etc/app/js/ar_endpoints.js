@@ -2,7 +2,7 @@
         $('#arEndpoints').on( 'processing.dt', function ( e, settings, processing ) {
             $('#loadertable').css( 'display', processing ? 'block' : 'none' );
         } ).dataTable({
-            "order": [[1, "desc"]],
+            "order": [[0, "asc"]],
             initComplete: function () {
                 var cpt=0;
                 this.api().columns([0,1,2]).every(function () {
