@@ -106,6 +106,49 @@
         </renderers>
     </view>
 
+    <view name="listProbes">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('metrics_profile')"></parameter>
+        </connector>
+    </view>
+
+
+    <view name="metrics_profile" authenticators="admin" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('tenants.reports.raw',entry('details',true()))"/>
+        </connector>
+
+        <processors>
+            <element in="root" out="e:entries">
+                <elements-ignore path="report/profiles/metrics/object/data/object/services/object/metrics">
+                    <element in="item" out="e:entry">
+                        <attribute-create out="name">../text()</attribute-create>
+                        <attribute-create out="service_flavour">../../../service/text()</attribute-create>
+                        <attribute-create out="profile">../../../../../name/text()</attribute-create>
+                        <text-ignore/>
+                    </element>
+                </elements-ignore>
+            </element>
+        </processors>
+
+        <cache type="FileCache">
+            <trigger type="DeltaTimeTrigger">
+                <parameter name="minutes">56</parameter>
+            </trigger>
+            <trigger type="DependencyRefreshedTrigger">
+                <parameter name="views">
+                    <entry>tenants</entry>
+                </parameter>
+            </trigger>
+            <trigger type="ViewNotifiedTrigger"/>
+        </cache>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+    </view>
 
     <view name="tenants.reports.raw" authenticators="admin">
 
