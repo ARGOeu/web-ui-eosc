@@ -97,14 +97,14 @@
 
                         <li class="nav-item">
                             <a href="/{{@tenant}}/{{@report}}/custom" class="nav-link">
-                                <i class="fa fa fa-file nav-icon"></i>
+                                <i class="fa  fa-file nav-icon"></i>
                                 <p>Custom Report</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="/{{@tenant}}/reportDetails/{{@report}}" class="nav-link">
-                                <i class="fa fa fa-cog nav-icon"></i>
+                                <i class="fa fa-cog nav-icon"></i>
                                 <p>Profile Details</p>
                             </a>
                         </li>
@@ -112,7 +112,7 @@
                         <li class="nav-item"  tpl:if="@tenant='egi'">
 
                             <a href="/recomputation?tenant={{@tenant}}&amp;report={{@report}}" class="nav-link">
-                                <i class="fa fa fa-retweet nav-icon"></i>
+                                <i class="fa  fa-retweet nav-icon"></i>
                                 <p>Recomputation</p>
                             </a>
                         </li>
@@ -131,9 +131,15 @@
 
                 <li class="nav-header"><h5>ABOUT ARGO</h5></li>
                 <li class="nav-item">
+                    <a href="/{{/root/@tenant}}/documentation" class="nav-link">
+                        <i class="nav-icon fa fa-book"> </i>
+                        <p>UI Documentation</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="http://argoeu.github.io/overview" class="nav-link">
                         <i class="nav-icon fa fa-book"> </i>
-                        <p> Documentation</p>
+                        <p>ARGO Documentation</p>
                     </a>
                 </li>
 

@@ -1,0 +1,118 @@
+<div class="card" >
+
+
+<div class="card-body">
+
+    <ul><li><a href="#main">Main feature</a></li>
+                <li><a href="#set">Set a downtime period</a></li>
+                <li><a href="#update">Update a downtime </a></li>
+                <li><a href="#delete">Delete a downtime </a></li>
+                <li><a href="#view">View downtime  Calendar</a></li>
+            </ul>
+            <hr/>
+    <h2><a name="main">Main feature</a></h2>
+    <div>One of the most important features of the registry is the Downtime Calendar, through which users can inform others that a service will stop being active for a certain period of time.
+   A downtime is a period of time for which a service is declared to be inoperable. Downtimes may be scheduled (e.g. for software/hardware upgrades), or unscheduled (e.g. power outages).</div>
+
+    <hr/>
+            <h2><a name="set">Set a downtime period</a></h2>
+            Adding a downtime period is very easy and simple, just going to the corresponding page and fill in the form fields.
+
+            GOCDB stores the following information about downtimes (non exhaustive list):
+            <ul>
+                <li>The downtime classification (Scheduled or unscheduled)</li>
+                <li>The severity of the downtime</li>
+                <li>The date at which the downtime was added </li>
+                <li>The start and end of the downtime period</li>
+                <li>A description of the downtime</li>
+                <li>The entities affected by the downtime</li>
+            </ul>
+
+            <strong>Scheduled or unscheduled ?</strong>
+            Depending on the planning of the intervention, downtimes can be:
+
+            <ul>
+                <li><strong>Scheduled:</strong> planned and agreed in advance</li>
+                <li><strong>Unscheduled</strong>: planned or unplanned, usually triggered by an unexpected failure or at a short term notice
+                </li>
+            </ul>
+                Please note:
+                <ul>
+                    <li>All dates have to be entered in UTC.</li>
+                    <li>A downtime can be retrospectively added if its start-date is less than 48h in the past                      (giving a 2 day window to add).</li>
+                    <li>downtime classification (scheduled/unscheduled) is determined automatically </li>
+                </ul>
+                The first thing you have to do is to select the "Add Downtime" on the menu on the left. (see image below)
+                <figure>
+                    <img class="m-2" src="/resource/app/img/add-downtime.png" width="60%"/>
+                    <figcaption>Image 1: Main page - Add downtime</figcaption>
+                </figure>
+
+                Adding a downtime period is very easy and simple, just going to the corresponding page and fill in the form fields.
+                <figure>
+                    <img class="m-2" src="/resource/app/img/set-downtime.png" width="60%"/>
+                    <figcaption>Image 2: Add downtime - Fill the fields</figcaption>
+                </figure>
+
+                <ul>
+                    <li>
+                        <strong>Severity</strong>: When declaring a downtime, you will be presented the choice of a "severity", which can be either WARNING or OUTAGE. Please consider the following definitions:
+                        <ul>
+                            <li> <strong>Outage </strong>: means the resource is considered as unavailable. Such downtimes will be considered as "IN MAINTENANCE" by monitoring and availability calculation tools.</li>
+                            <li> <strong>Warning </strong>: means the resource is considered available, but the quality of service might be degraded. Such downtimes generate notifications, but are not taken into account by monitoring and availability calculation tools.</li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <strong>Description</strong>: A description about the downtime.<br/>
+                    </li>
+                    <li>
+                        <strong>Starts on</strong>
+                        <ul>
+                            <li> <strong>Day</strong>: The day it starts.</li>
+                            <li> <strong>Time</strong>: The exact start time please add a correct timezone</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Ends on</strong>
+                        <ul>
+                            <li> <strong>Day</strong>: The day it ends.</li>
+                            <li> <strong>Time</strong>: The exact end time please add a correct timezone</li>
+                        </ul>
+                    </li>
+                    <li><strong>Select Affected Site</strong>:  Select the site that is going to be affected.
+                    </li>
+                    <li><strong>Select Affected Services + Endpoints</strong>:  Which services will be affected.
+                    </li>
+                </ul>
+    <hr/>
+                <h2><a name="update">Update a downtime</a></h2>
+
+                <div>To edit a downtime, simply click the "edit" link on top of the downtime's details page.
+                    A downtime can be retrospectively updated if its start-date is less than 48h in the past (giving a 2 day window to modify)
+                </div>
+                <hr/>
+                <h2><a name="delete">Delete a downtime </a></h2>
+
+                <div> To delete a downtime, simply click the delete link on top of the downtime's details page. For integrity reasons, it is only possible to remove downtimes that have not started.
+    </div>
+
+
+    <hr/>
+                <h2><a name="view">View downtime Calendar</a></h2>
+                You can also view the scheduled downtimes from the corresponding page.
+
+                <figure>
+                    <img class="m-2" src="/resource/app/img/calendar-select.png" width="60%"/>
+                    <figcaption>Image 3: Main  page – View Downtime Calendar</figcaption>
+                </figure>
+
+                <figure>
+                    <img class="m-2" src="/resource/app/img/calendar-view.png" width="60%" />
+                    <figcaption>Image 4: Downtimes Calendar page – Month view</figcaption>
+                </figure>
+
+
+</div>
+
+</div>

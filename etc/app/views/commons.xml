@@ -298,6 +298,24 @@
     </view>
 
 
+    <view name="documentation">
+        <argument name="tenant"/>
+        <connector type="XMLConnector">
+            <parameter name="content" eval="new_element('root',new_attribute('tenant',$tenant))"/>
+        </connector>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="template">app/html/documentation/documentation.html</parameter>
+            </renderer>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/documentation/documentation.html</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
+
 
 
 

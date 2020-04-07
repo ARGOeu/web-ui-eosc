@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+
+<head tpl:include="/resource/app/html/header.html"></head>
+
+<body class="hold-transition sidebar-mini ">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav tpl:include="/resource/app/html/navbar.html"></nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside tpl:include="/resource/app/html/sidebar.html"></aside>
+    <!-- /sidebar -->
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-9">
+
+                    </div><!-- /.col -->
+                    <div class="col-sm-3">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active">Web UI Documentation</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+
+
+                    <div class="col-lg-12">
+
+
+
+                        <nav class="nav nav-tabs">
+                            <a class="nav-item nav-link active" href="#help1" data-toggle="tab"><h4><i class="ion ion-clipboard mr-1"></i>Downtimes</h4></a>
+                            <a class="nav-item nav-link" href="#help2" data-toggle="tab"><h4><i class="fa fa-tachometer-alt mr-1"></i>Availabilities/Reliabilities</h4></a>
+                           <a class="nav-item nav-link" href="#help3" data-toggle="tab"><h4><i class="fas fa-check-circle mr-1"></i> Status</h4></a>
+                            <a class="nav-item nav-link" href="#help4" data-toggle="tab"><h4><i class="fa fa-cog mr-1"/>Profiles</h4></a>
+                        </nav>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="help1">
+                                <div tpl:include="/resource/app/html/documentation/downtimes.html"></div>
+                            </div>
+                            <div class="tab-pane" id="help2">
+                                <div  tpl:include="/resource/app/html/documentation/avre.html"></div>
+                            </div>
+                            <div class="tab-pane" id="help3"><div tpl:include="/resource/app/html/documentation/status.html"></div></div>
+                            <div class="tab-pane" id="help4"><div tpl:include="/resource/app/html/documentation/profiles.html"></div></div>
+                        </div>
+
+
+                    </div>
+
+
+                <!-- /.row -->
+            </div>
+
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Main Footer -->
+        </div>
+    </div>
+    <footer tpl:include="/resource/app/html/footer.html"></footer>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="/resource/app/html/adminlte/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- adminlte -->
+<script src="/resource/app/html/adminlte/dist/js/adminlte.js"></script>
+
+
+
+</body>
+</html>
+
