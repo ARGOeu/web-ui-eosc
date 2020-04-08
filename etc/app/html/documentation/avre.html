@@ -1,8 +1,72 @@
 <div class="card">
-
+    <div class="card-header">
+        <div class="card-title"><h2><i class="fa fa-tachometer-alt mr-2"></i>Availabilities/Reliabilities</h2></div>
+    </div>
         <div class="card-body">
-            <h2><i class="fas fa-paint-roller fa-2x m-1" ></i> Work in Progress</h2>
-        </div>
+                <ul>
+                    <li><a href="https://ui.argo.grnet.gr/egi/documentation#main">Availability/Reliability</a></li>
+                    <li><a href="https://ui.argo.grnet.gr/egi/documentation#table">Availability/Reliability Table</a></li>
+                    <li><a href="https://ui.argo.grnet.gr/egi/documentation#daily">Daily Availability/Reliability Table </a></li>
+                    <li><a href="https://ui.argo.grnet.gr/egi/documentation#charts">Availability/Reliability Charts </a></li>
+                    <li><a href="https://ui.argo.grnet.gr/egi/documentation#other">Other Functionalities</a></li>
+                </ul>
+                <hr/>
+
+                <h2><a name="main">Availability/Reliability</a></h2>
+
+                <div>
+                    <p><strong>Availability</strong>: Service Availability is the fraction of time a service was in the UP Period during the known interval in a given period.</p>
+
+                    <p><strong>Reliability</strong>: Service Reliability is the ratio of the time interval a service was UP over the time interval it was supposed (scheduled) to be UP in the given period.</p>
+
+                    <p>From this page you can see the latest values for monthly repoorts for A/R for your infrastructure. A report is actually a configuration file that is used to describe the services you want to check, the metrics you want to use for each service and the grouping of the services. </p>
 
 
+                     <p> The report may contain A/R values based on the group you chose in the Configuration Management Database :</p>
+                    <ul>
+                        <li> <strong>Sites </strong>: List of services that participate in the site </li>
+                        <li> <strong>Project</strong>: A list of services that are used in a project. </li>
+                    </ul>
+
+
+                </div>
+
+                <hr/>
+
+                <h2><a name="table">Availability/Reliability Table</a></h2>
+                <p>This is table with the main information. The Availability and Reliability values for the last 4 months. </p>
+
+                <p>If you want o learn more about the daily availability or Reliability values of a specific month the only think you can do is to click on a value of Availability or Reliability (like option 1 or 2 in image 1 ).</p>
+
+            <p>If you want to learn more about the services or the endpoints of the services you can clink on the name of the group you want (like option 3 in image 1 )  and drill down to other options. </p>
+
+                <figure><img class="m-2" src="/resource/app/img/documentation/table-{{/root/@tenant}}.png" width="60%"/><figcaption>Image 1: Availability/Reliability Table </figcaption></figure>
+
+
+                <h2><a name="daily">Daily Availability/Reliability Table</a></h2>
+
+            <p>The Daily Availability/Reliability Table display information about:</p>
+                    <ul>
+                        <li><strong>Availability</strong></li>
+                        <li><strong>Reliability</strong></li>
+                        <li><strong>Unknown</strong>: the period (start_time --> end_time) in which a specific service / service endpoint was in an unknown Status. In this table we provide the percentage it was unknown during this day.  </li>
+                        <li><strong>Downtime</strong>: the period (start_time --> end_time) in which a specific service / service endpoint was in scheduled downtime. In this table we provide the percentage it was in scheduled downtime during this day. </li>
+
+                    </ul>
+                        <figure><img class="m-2" src="/resource/app/img/documentation/table-daily.png" width="60%"/><figcaption>Image 1-a: Daily Availability/Reliability Table </figcaption></figure>
+
+<hr/>
+                        <h2><a name="charts"> Availability/Reliability Charts</a></h2>
+            <p> A graphical representation of data, and in which the data is represented by bars in a bar chart. This chart compares Availability and Reliability values for the last 4 months for each item.</p>
+                    <figure><img class="m-2" src="/resource/app/img/documentation/charts-{{/root/@tenant}}.png" width="60%" /><figcaption>Image 2: Availability/Reliability Charts </figcaption></figure>
+            <h2><a name="other">Other Functionalities</a></h2>
+
+                <p>All the pages under this section offer the functionality of searching in the results of the existing page.</p>
+                <figure><img class="m-2" src="/resource/app/img/documentation/search.png" width="20%"/><figcaption>Image 3: Search
+                </figcaption></figure>
+
+                <p>All the pages under this section offer the functionality of copying the data to clipboard or even exporting them to different formats like excel, csv,  pdf. </p>
+                <figure><img class="m-1" src="/resource/app/img/documentation/export.png" width="20%"/><figcaption>Image 4: Export
+                </figcaption></figure>
+            </div>
 </div>
