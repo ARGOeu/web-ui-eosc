@@ -297,6 +297,7 @@
 
     $('#reportrange').daterangepicker({
       timePicker: true,
+      timePicker24Hour: true,
         startDate: start,
         endDate: end,
         locale: {
@@ -330,7 +331,7 @@
             $("#entity").val(sites);
 
 
-            var period=$('#reportrange input').val().split('/')
+            var period=$('#reportrange input').val().split(' / ')
             $('#start_time').val(period[0]);
             $('#end_time').val(period[1]);
 
