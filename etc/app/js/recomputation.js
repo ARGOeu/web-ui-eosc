@@ -17,8 +17,9 @@
     }
 
     $('#reportrange').daterangepicker({
-
+      timePicker: true,
       timePicker24Hour: true,
+      timePickerIncrement: 10,
         startDate: start,
         endDate: end,
         locale: {
