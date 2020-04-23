@@ -1,8 +1,70 @@
-<div class="card">
+<div class="card" >
+    <div class="card-header">
 
-        <div class="card-body">
-            <h2 class="text text-secondary"><i class="fas fa-paint-roller fa-2x m-1" ></i> Work in Progress</h2>
-        </div>
+        <div class="card-title"><h2><i class="fas fa-check-circle mr-2"></i> Status</h2></div>
+    </div>
+
+    <div class="card-body">
+
+        <ul><li><a href="#introStatus">Introduction</a></li>
+            <li><a href="#landing">Status Page : landing page</a></li>
+            <li><a href="#statuscomputation">How is the status computed ?</a></li>
+        </ul>
+        <hr/>
+        <h3><a name="introStatus">Introduction</a></h3>
+        This is the page where you may see the status for the whole infrastructure while at the same time you can drill down to services and service endpoints.<br/>
+
+        <ul>Before we start some definitions about the services, service types and service endpoints.
+
+            <li>From the ARGO monitoring service perspective, a monitored infrastructure is composed of <strong>service instances</strong> of specific <strong>Service Types</strong> running on specific <strong>endpoints</strong>, which are called <strong>Service Endpoints</strong>.</li>
+
+            <li>A Service Type is a group of metrics that are checking a specific service from the monitoring perspective. So Each Service Type can have a defined set of metrics, which are explicit tests that we check in order to assess the status of a Service Endpoint.
+
+        For example a Service Type of web server listening on port 443 on the host www.example.com, is a Service Endpoint. So a Service Endpoint is defined as the combination of an FQDN and Service Type.</li>
+
+        <li>    Finally,  Each Service Type can have a defined set of metrics, which are explicit tests that we check in order to assess the status of a Service Endpoint.</li></ul>
 
 
+        <hr/>
+        <h3><a name="landing">Status Page : landing page</a></h3>
+        Τhe first information you can see is about the groups you have (ex Services) . This page is automatically updated and it displays near real time information about the status of the groups.
+        <figure>
+            <img class="m-2" src="/resource/app/img/documentation/status1.png" />
+            <figcaption>Image 1: Landing page</figcaption>
+        </figure>
+
+        You may drill down to the services page and get more information about the services endpoints and finally about the metrics
+        <figure>
+            <img class="m-2" src="/resource/app/img/documentation/status2.png" />
+            <figcaption>Image 2: Metric details</figcaption>
+        </figure>
+        <hr/>
+        <h3><a name="statuscomputation">How is the status computed?</a></h3>
+
+        The ARGO Analytics Engine expects to receive a stream of metric results produced by a monitoring engine.<br/>
+        A metric result is the output of a specific test that was run at a specific time against a specific service endpoint.<br/>
+        A metric result includes at least:
+        <ul>
+            <li>a timestamp showing when the given monitoring probe was executed</li>
+            <li>the name of the service type (e.g. HTTPS Web Server)</li>
+            <li>the name of the hostname on which the service is running (e.g. www.example.com)</li>
+            <li>the name of the metric that was tested (e.g. TCP_CHECK)</li>
+            <li>the status result that was produced by the monitoring probe (e.g. OK)</li>
+
+
+        </ul>
+
+        An example metric result in is shown below:<br/>
+<pre class="text-danger border border-light col-4">
+ {
+    "timestamp": "2019-05-02T10:53:38Z",
+    "metric": "org.web.check-tcp",
+    "service_type": "HTTPS Web Server",
+    "hostname": "www.example.com",
+    "status": "OK"
+}
+</pre>
+
+
+    </div>
 </div>
