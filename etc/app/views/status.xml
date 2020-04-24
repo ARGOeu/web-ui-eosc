@@ -115,6 +115,7 @@
         <processors>
 
             <element in="object" out="root" if="groups/object/statuses">
+                <attribute-create out="urlApi">$url</attribute-create>
                 <element-ignore in="groups">
                     <element in="object" out="group">
                         <attribute from-element="true" if="name()!='statuses'"/>
@@ -314,7 +315,11 @@
                 <element-create>sort_by_string(../status,'@timestamp')</element-create>
             </elements>
 
-
+            <element in="root">
+                <element in="group" if="count(status)&gt;50">
+                    <element-ignore in="status" if="@value=preceding-sibling::status/@value"/>
+                </element>
+            </element>
 
 
             <element in="root">

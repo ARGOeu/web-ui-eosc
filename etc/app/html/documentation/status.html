@@ -12,18 +12,17 @@
         </ul>
         <hr/>
         <h3><a name="introStatus">Introduction</a></h3>
-        This is the page where you may see the status for the whole infrastructure while at the same time you can drill down to services and service endpoints.<br/>
+        This is the page where you may see the status for the whole infrastructure while at the same time you can drill down to services, service endpoints and metrics. <br/>
 
         <ul>Before we start some definitions about the services, service types and service endpoints.
 
-            <li>From the ARGO monitoring service perspective, a monitored infrastructure is composed of <strong>service instances</strong> of specific <strong>Service Types</strong> running on specific <strong>endpoints</strong>, which are called <strong>Service Endpoints</strong>.</li>
+            <li>From the ARGO monitoring service perspective, a monitored infrastructure is composed of a group of services.</li>
 
-            <li>A Service Type is a group of metrics that are checking a specific service from the monitoring perspective. So Each Service Type can have a defined set of metrics, which are explicit tests that we check in order to assess the status of a Service Endpoint.
+            <li>Services are composed of <strong>service instances</strong> of a specific <strong>Service Type</strong>, which are called <strong>Service Endpoints.</strong></li>
+            <li>  A Service Type is a group of metrics that are checking a specific service from the monitoring perspective.</li>
+            <li>Each Service Type can have a defined set of metrics, which are explicit tests that we run in order to assess the status of a Service Endpoint. </li></ul>
 
-        For example a Service Type of web server listening on port 443 on the host www.example.com, is a Service Endpoint. So a Service Endpoint is defined as the combination of an FQDN and Service Type.</li>
-
-        <li>    Finally,  Each Service Type can have a defined set of metrics, which are explicit tests that we check in order to assess the status of a Service Endpoint.</li></ul>
-
+        <p class="text-muted"></p>
 
         <hr/>
         <h3><a name="landing">Status Page : landing page</a></h3>
@@ -32,8 +31,12 @@
             <img class="m-2" src="/resource/app/img/documentation/status1.png" />
             <figcaption>Image 1: Landing page</figcaption>
         </figure>
+<ul >
+    <li>Above the timelines there is an arrow that can help you navigate through the days (divvious or next when available).</li>
 
-        You may drill down to the services page and get more information about the services endpoints and finally about the metrics
+    <li>You may drill down to the services page and get more information about the services endpoints and finally about the metrics </li>
+</ul>
+
         <figure>
             <img class="m-2" src="/resource/app/img/documentation/status2.png" />
             <figcaption>Image 2: Metric details</figcaption>
@@ -41,9 +44,11 @@
         <hr/>
         <h3><a name="statuscomputation">How is the status computed?</a></h3>
 
-        The ARGO Analytics Engine expects to receive a stream of metric results produced by a monitoring engine.<br/>
-        A metric result is the output of a specific test that was run at a specific time against a specific service endpoint.<br/>
-        A metric result includes at least:
+        <ul style="list-style:none">
+            <li>The ARGO Analytics Engine expects to receive a stream of metric results produced by a monitoring engine.</li>
+            <li>A metric result is the output of a specific test that was run at a specific time against a specific service endpoint.</li>
+            <li>A metric result includes at least:</li>
+        </ul>
         <ul>
             <li>a timestamp showing when the given monitoring probe was executed</li>
             <li>the name of the service type (e.g. HTTPS Web Server)</li>
@@ -55,7 +60,7 @@
         </ul>
 
         An example metric result in is shown below:<br/>
-<pre class="text-danger border border-light col-4">
+<div class="text-danger border border-light col-4">
  {
     "timestamp": "2019-05-02T10:53:38Z",
     "metric": "org.web.check-tcp",
@@ -63,8 +68,37 @@
     "hostname": "www.example.com",
     "status": "OK"
 }
-</pre>
-
-
-    </div>
 </div>
+
+
+            <div>The ARGO Analytics Engine receives a stream of metric results and creates a set of status timelines for each service endpoint and metric tuple.
+             The engine computes the status of the Service Endpoints based on the results from each defined metric for the Service Type of the Service Endpoints,
+                which have been checked within a time frame that matches the frequency with which the probe is executed. </div><br/>
+
+
+    The main statuses you may see in the timeline are :
+    <ul>
+       <li>A <span class="badge badge-success">OK</span>  state that means that the operation of the service endpoint / service / service group  is normal</li>
+        <li>    A <span class="badge badge-warning">WARNING</span> state is used for situations when service is still functional, but it is in a non-optimal state. This state is most often used in combination with thresholds,  e.g. if response time is more than X or certificate lifetime expires in less than X days.  This state changes the state of the / service / service group based on the profiles defined.
+        </li>
+        <li>    A <span class="badge badge-danger">CRITICAL</span> state  is used for situations when service is not functioning properly or at all. This means that the service is not responding correctly to the checks metrics that are executed. This state changes the state of the / service / service group based on the profiles defined.
+        </li>
+        <li>    A <span class="badge badge-info">DOWNTIME </span> state, that means that the service endpoint / service / service group has declared downtime for a period.
+        </li>
+    </ul>
+    Special States:
+    <ul>
+        <li>A <span class="badge badge-dark">MISSING </span> state, which is used in order to fill the timelines when a metric isn’t divsent in the consumer data for a period of time</li>
+        <li>An <span class="badge badge-default border border-dark">UNKNOWN</span> state, which is used in order fill the timelines when a re-computation exclusion is applied</li>
+    </ul>
+
+
+        
+        <div>So for example, let’s assume that the service we are interested in is the website https://www.example.com
+            and that there are two metrics defined for a secure website, the <code>TCP_CHECK</code> and <code>CHECK_CERTIFICATE_VALIDITY</code>.
+            In order for the website to be considered as OK, the results for both the tcp check and the check for the certificate validity must be OK.
+    How the individual results of each metric for a Service Type are combined in order to compute the status of the Service Endpoint, is defined in what we call truth tables.
+            The truth tables can be updated for each infrastructure
+        </div>
+    </div>
+    </div>
