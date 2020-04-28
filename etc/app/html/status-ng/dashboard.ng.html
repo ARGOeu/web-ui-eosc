@@ -39,66 +39,67 @@
                 <div class="row">
 
 
-                        <div class="info-box m-2">
-                            <span class="info-box-icon bg-info"><i class="far fa-id-card"></i></span>
-                            <div class="info-box-content">
-                                <span class="info-box-text">{{/root/@report}} Report</span>
-                                <span class="info-box-number">{{count(/root/groups/group)}} groups</span>
-                            </div>
-                            <!-- /.info-box-content -->
+                    <div class="info-box m-2">
+                        <span class="info-box-icon bg-info"><i class="far fa-id-card"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">{{/root/@report}} Report</span>
+                            <span class="info-box-number">{{count(/root/groups/group)}} groups</span>
                         </div>
+                        <!-- /.info-box-content -->
+                    </div>
 
 
-                        <div class="info-box m-2" tpl:if="count(/root/groups/group[@status='OK'])&gt;0">
-                            <span class="info-box-icon bg-OK"><i class="far fa-thumbs-up"></i></span>
-                            <div class="info-box-content">
-                                <span class="info-box-text">OK</span>
-                                <span class="info-box-number">{{count(/root/groups/group[@status='OK'])}}</span>
-                            </div>
-                            <!-- /.info-box-content -->
+                    <div class="info-box m-2" tpl:if="count(/root/groups/group[@status='OK'])&gt;0">
+                        <span class="info-box-icon bg-OK"><i class="far fa-thumbs-up"></i></span>
+                        <div class="info-box-content">
+                            <a class="filter-status" id="status_OK" href="#OK"><span class="info-box-text">OK</span></a>
+                            <span class="info-box-number">{{count(/root/groups/group[@status='OK'])}}</span>
                         </div>
+                        <!-- /.info-box-content -->
+                    </div>
 
-                        <div class="info-box m-2"  tpl:if="count(/root/groups/group[@status='CRITICAL'])&gt;0">
-                            <span class="info-box-icon bg-CRITICAL"><i class="fas fa-times-circle"></i></span>
-                            <div class="info-box-content">
-                                <span class="info-box-text">CRITICAL</span>
-                                <span class="info-box-number">{{count(/root/groups/group[@status='CRITICAL'])}}</span>
-                            </div>
-                            <!-- /.info-box-content -->
+                    <div class="info-box m-2" tpl:if="count(/root/groups/group[@status='CRITICAL'])&gt;0">
+                        <span class="info-box-icon bg-CRITICAL"><i class="fas fa-times-circle"></i></span>
+                        <div class="info-box-content">
+                            <a class="filter-status" id="status_CRITICAL" href="#CRITICAL"><span class="info-box-text">CRITICAL</span></a>
+                            <span class="info-box-number">{{count(/root/groups/group[@status='CRITICAL'])}}</span>
                         </div>
+                        <!-- /.info-box-content -->
+                    </div>
 
-                    <div class="info-box m-2"  tpl:if="count(/root/groups/group[@status='WARNING'])&gt;0">
+                    <div class="info-box m-2" tpl:if="count(/root/groups/group[@status='WARNING'])&gt;0">
                         <span class="info-box-icon bg-WARNING"><i class="fas fa-exclamation-triangle"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text">WARNING</span>
+                            <a class="filter-status" id="status_WARNING" href="#WARNING"><span class="info-box-text">WARNING</span></a>
                             <span class="info-box-number">{{count(/root/groups/group[@status='WARNING'])}}</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
 
-                    <div class="info-box m-2"  tpl:if="count(/root/groups/group[@status='DOWNTIME'])&gt;0">
+                    <div class="info-box m-2" tpl:if="count(/root/groups/group[@status='DOWNTIME'])&gt;0">
                         <span class="info-box-icon bg-DOWNTIME"><i class="far fa-calendar-times"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text">DOWNTIME</span>
+                            <a class="filter-status" id="status_DOWNTIME" href="#DOWNTIME"><span class="info-box-text">DOWNTIME</span></a>
+
                             <span class="info-box-number">{{count(/root/groups/group[@status='DOWNTIME'])}}</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
 
-                    <div class="info-box m-2"  tpl:if="count(/root/groups/group[@status='UNKNOWN'])&gt;0">
+                    <div class="info-box m-2" tpl:if="count(/root/groups/group[@status='UNKNOWN'])&gt;0">
                         <span class="info-box-icon bg-UNKNOWN"><i class="fas fa-question-circle text-dark"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text">UNKNOWN</span>
+                            <a class="filter-status" id="status_UNKNOWN" href="#UNKNOWN"><span class="info-box-text">UNKNOWN</span></a>
                             <span class="info-box-number">{{count(/root/groups/group[@status='UNKNOWN'])}}</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
 
-                    <div class="info-box m-2"  tpl:if="count(/root/groups/group[@status='MISSING'])&gt;0">
+                    <div class="info-box m-2" tpl:if="count(/root/groups/group[@status='MISSING'])&gt;0">
 
-                    <span class="info-box-icon bg-MISSING"><i class="fas fa-unlink"></i></span>
+                        <span class="info-box-icon bg-MISSING"><i class="fas fa-unlink"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text">MISSING</span>
+                            <a class="filter-status" id="status_MISSING" href="#MISSING"><span class="info-box-text">MISSING</span></a>
                             <span class="info-box-number">{{count(/root/groups/group[@status='MISSING'])}}</span>
                         </div>
                         <!-- /.info-box-content -->
@@ -116,83 +117,147 @@
                     <div class="ml-4">
                         <div class="input-group m-1">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-filter2"><i class="m-1 fas fa-filter"></i></span>
+                                <span class="input-group-text" id="status-filter"><i class="m-1 fas fa-filter"></i></span>
                             </div>
-                            <input type="text" id="filter2" class="form-control" placeholder="filter by status" aria-label="filter" aria-describedby="basic-filter2" onkeyup="filter2(this)" />
+                            <input type="text" id="input-status-filter" class="form-control" placeholder="filter by status" aria-label="filter" aria-describedby="basic-filter2" onkeyup="filterStatus(this)" />
                         </div>
                     </div>
 
-                    <div class="float-right ml-auto m-2"><a class="mr-2 link"  id="refreshPage" ><i class="fas fa-sync-alt"></i> </a> <small >Last Refresh : {{/root/@lastRefresh}} </small></div>
+
+
+                    <div class="float-right ml-auto m-2"><a class="mr-2 link" id="refreshPage"><i
+                            class="fas fa-sync-alt"></i> </a>
+                        <small>Last Refresh : {{/root/@lastRefresh}}</small>
+                    </div>
                 </div>
 
 
                 <div tpl:foreach="/root/groups/group" class="row">
                     <div class="col-lg-12" id="group-status">
 
-                        <div  class="card">
-                        <div class="card-header">
-                            <h3 class="card-title" rel="popover" id="h3_{@name}" title="{@name}" content="{{status[not(following-sibling::status)]/@timestamp}}">
-                                <span class="group">{{@name}}</span>
-                                <span class="status m-4 badge badge-{{status[not(following-sibling::status)]/@value}}" >{{status[not(following-sibling::status)]/@value}}</span>
-                            </h3>
+                        <div class="card">
+                            <div class="card-header row">
+                                <h4 class="card-title  col-3" rel="popover" id="h3_{@name}" title="{@name}">
+                                    <div class="group">{{@name}}</div>
+                                </h4>
+                                    <div class="col-1 text-center">
+                                        <span class="d-block status m-1 badge badge-{{status[not(following-sibling::status)]/@value}}">{{status[not(following-sibling::status)]/@value}}</span>
+                                    </div>
+                                    <div class="col-3 row">
+                                        <div class="m-1" tpl:foreach="ar[last()]">
+                                            <span tpl:if="@availability&gt;/root/@thresholdAv"
+                                                  class="badge badge-success text-white text-bold">
+                                               {{@availability}}
+                                            </span>
+                                                <span tpl:else="@availability&gt;=0"
+                                                      class="badge badge-critical text-white text-bold">
+                                               {{@availability}}
+                                            </span>
+                                                <span tpl:else="" class="badge badge-UNKNOWN">
+                                              N.A
+                                            </span>
 
-                        </div>
+                                        </div>
+                                        <div class="m-1" tpl:foreach="ar[last()]">
+                                            <span tpl:if="@reliability&gt;/root/@thresholdRe"
+                                                  class="badge badge-success text-white text-bold">
+                                               {{@reliability}}
+                                            </span>
+                                                <span tpl:else="@reliability&gt;=0"
+                                                      class="badge badge-critical text-white text-bold">
+                                               {{@reliability}}
+                                            </span>
+                                                <span tpl:else="" class="badge badge-UNKNOWN">
+                                              N.A
+                                            </span>
 
-                        <div class="card-body">
+                                        </div>
 
-                            <div class="row" >
-                                <div class="col-2">Status</div>
-                                <svg id="svg-status" width="600px" height="60px">
-                                    <g>
-                                     <rect stroke-opacity="0.9" fill-opacity="0.6" stroke="{{@stroke}}" rel="tooltip" tpl:foreach="status[@duration]" width="{{@duration}}" height="20" x="{{@position}}" y="0" fill="{{@color}}"
-                                           title="{{@value}} status         From {{@timestamp}}     To {{following-sibling::status/@timestamp}}"/>
-                                        <text x="0" y="35" font-family="Roboto"  font-size="10" fill="black">{{status[@duration][1]/@timestamp}}</text>
-                                        <text x="480" y="35" font-family="Roboto"  font-size="10" fill="black">{{status[@duration][last()]/@timestamp}}</text>
 
-                                    </g>
-                                </svg>
+                                    </div>
+
+                                    <div class="ml-auto">
+                                        <a  class="toggle-body" id="toggle_{{@name}}"> <i class="fas fa-angle-double-down text-primary"></i></a>
+                                    </div>
+
                             </div>
-                            <div class="row" >
-                                <div class="col-2 mt-4">Availability</div>
-                                <svg tpl:foreach="ar" width="80px" height="70px">
-                                    <g tpl:if="@availability&gt;/root/@thresholdAv">
-                                        <circle  cx="40" cy="32" r="24"   style="fill:green;stroke:green;stroke-width:2;fill-opacity:0.3;stroke-opacity:0.9" />
-                                        <text x="50%" y="50%" text-anchor="middle" stroke="black" stroke-width="1px" dy=".2em">{{@availability}}</text>
-                                        <text x="0" y="0"  font-family="Roboto" font-size="10" fill="black" >{{substring(@timestamp,0,12)}}</text>
-                                    </g>
-                                    <g tpl:else="@availability&gt;=0">
-                                        <circle  cx="40" cy="32" r="24"   style="fill:red;stroke:red;stroke-width:2;fill-opacity:0.3;stroke-opacity:0.9" />
-                                        <text x="50%" y="50%" text-anchor="middle" stroke="black" stroke-width="1px" dy=".2em">{{@availability}}</text>
-                                        <text x="10" y="70"  font-family="Roboto" font-size="10" fill="black" >{{substring(@timestamp,0,12)}}</text>
-                                    </g>
-                                    <g tpl:else="">
-                                        <circle  cx="40" cy="32" r="24"   style="fill:gray;stroke:black;stroke-width:2;fill-opacity:0.3;stroke-opacity:0.9" />
-                                        <text x="50%" y="50%" text-anchor="middle" stroke="black" stroke-width="1px" dy=".2em">N/A</text>
-                                        <text x="10" y="70"  font-family="Roboto" font-size="10" fill="black" >{{substring(@timestamp,0,12)}}</text>
-                                    </g>
-                                </svg>
-                            </div>
-                            <div class="row" >
-                                <div class="col-2 mt-4">Reliability</div>
-                                <svg tpl:foreach="ar" width="80px" height="70px">
-                                    <g tpl:if="@reliability&gt;/root/@thresholdRe">
-                                        <circle  cx="40" cy="32" r="24"   style="fill:green;stroke:green;stroke-width:2;fill-opacity:0.3;stroke-opacity:0.9" />
-                                        <text x="50%" y="50%" text-anchor="middle" stroke="black" stroke-width="1px" dy=".2em">{{@reliability}}</text>
-                                        <text x="10" y="70"  font-family="Roboto" font-size="10" fill="black" >{{substring(@timestamp,0,12)}}</text>
-                                    </g>
-                                    <g tpl:else="@reliability&gt;=0">
-                                        <circle  cx="40" cy="32" r="24"   style="fill:red;stroke:red;stroke-width:2;fill-opacity:0.3;stroke-opacity:0.9" />
-                                        <text x="50%" y="50%" text-anchor="middle" stroke="black" stroke-width="1px" dy=".2em">{{@reliability}}</text>
-                                        <text x="10" y="70"  font-family="Roboto" font-size="10" fill="black" >{{substring(@timestamp,0,12)}}</text>
-                                    </g>
-                                    <g tpl:else="">
-                                        <circle  cx="40" cy="32" r="24"   style="fill:gray;stroke:black;stroke-width:2;fill-opacity:0.3;stroke-opacity:0.9" />
-                                        <text x="50%" y="50%" text-anchor="middle" stroke="black" stroke-width="1px" dy=".2em">N/A</text>
-                                        <text x="10" y="70"  font-family="Roboto" font-size="10" fill="black" >{{substring(@timestamp,0,12)}}</text>
-                                    </g>
-                                </svg>
-                            </div>
-                        </div>
+
+                            <div class="card-body d-none" id="body-{{@name}}" >
+
+                                <div class="row">
+                                    <div class="col-1 small">Status</div>
+                                    <svg id="svg-status" width="800px" height="40px">
+                                        <g>
+                                            <rect stroke-opacity="0.9" fill-opacity="0.6" stroke="{{@stroke}}"
+                                                  rel="tooltip" tpl:foreach="status[@duration]" width="{{@duration}}"
+                                                  height="20" x="{{@position}}" y="0" fill="{{@color}}"
+                                                  title="{{@value}} status         From {{@timestamp}}     To {{following-sibling::status/@timestamp}}"/>
+                                            <text x="0" y="35" font-family="Roboto" font-size="10" fill="black">
+                                                {{status[@duration][1]/@timestamp}}
+                                            </text>
+                                            <text x="700" y="35" font-family="Roboto" font-size="10" fill="black">
+                                                {{status[@duration][last()]/@timestamp}}
+                                            </text>
+
+                                        </g>
+                                    </svg>
+
+                                    <div class="ml-auto">
+                                        <a  class="untoggle-body" id="untoggle_{{@name}}"> <i class="fas fa-angle-double-up text-primary"></i></a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-1 small">Availability</div>
+                                    <div tpl:foreach="ar" class="col-1">
+                                        <div class="text-center">
+                                            <span tpl:if="@availability&gt;/root/@thresholdAv"
+                                                  class="badge badge-success text-white text-bold">
+                                               {{@availability}}
+                                            </span>
+                                            <span tpl:else="@availability&gt;=0"
+                                                  class="badge badge-critical text-white text-bold">
+                                               {{@availability}}
+                                            </span>
+                                            <span tpl:else="" class="border border-dark badge badge-UNKNOWN">
+                                              N.A
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-1 small"> </div>
+                                    <div tpl:foreach="ar" class="col-1">
+                                        <div class="text-center">
+                                            <span class="small  text-muted">
+                                               {{@timestamp}}
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-1 small">Reliability</div>
+                                    <div tpl:foreach="ar" class="col-1">
+                                        <div class="text-center">
+                                            <span tpl:if="@reliability&gt;/root/@thresholdRe"
+                                                  class="badge badge-success text-white text-bold">
+                                               {{@reliability}}
+                                            </span>
+                                            <span tpl:else="@reliability&gt;=0"
+                                                  class="badge badge-critical text-white text-bold">
+                                               {{@reliability}}
+                                            </span>
+                                            <span tpl:else="" class="badge badge-UNKNOWN">
+                                              N.A
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                </div>
+
 
                         </div>
                         <!-- /.card -->
@@ -226,10 +291,8 @@
 <script src="/resource/app/html/adminlte/dist/js/adminlte.js?v={$app.version}"></script>
 
 
-
 <!-- LOCAL SCRIPTS -->
 <script src="/resource/app/js/status-ng.js?v={$app.version}"></script>
-
 
 
 </body>

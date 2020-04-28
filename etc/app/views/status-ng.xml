@@ -139,7 +139,7 @@
                 <elements path="root/groups/group">
                     <attribute-create out="status">../status[not(following-sibling::status)]/@value</attribute-create>
                     <element in="status">
-                        <attribute in="duration">round(500 * number(.) div current()/../../status/@last)</attribute>
+                        <attribute in="duration">round(800 * number(.) div current()/../../status/@last)</attribute>
                         <attribute-create out="color" if="../@value='OK'">'#28a745'</attribute-create>
                         <attribute-create out="color" if="../@value='CRITICAL'">'#dc3545'</attribute-create>
                         <attribute-create out="color" if="../@value='WARNING'">'#ffc107'</attribute-create>

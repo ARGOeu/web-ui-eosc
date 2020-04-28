@@ -112,12 +112,14 @@ button.label-CRITICAL:focus {
 .badge-UNKNOWN {
   color: #1F2D3D;
   background-color: #f8f9fa;
+   border:1 px solid black;
 }
 
 .badge-UNKNOWN[href]:hover, .badge-UNKNOWN[href]:focus {
   color: #1F2D3D;
   text-decoration: none;
   background-color: #dae0e5;
+  border:1 px solid #ccc;
 }
 
 .bg-UNKNOWN {
