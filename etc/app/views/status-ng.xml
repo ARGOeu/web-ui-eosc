@@ -1,0 +1,316 @@
+<views xmlns="http://software.in2p3.fr/lavoisier/application.xsd">
+    <!-- 
+        Project : argo-eosc 
+        File    : status.xml.xml
+        Created by cyril on 2018/06/13 
+    -->
+
+    <view name="status-egi" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd" xmlns:date="http://exslt.org/dates-and-times">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('status-ng',entry('report','Critical')|entry('tenant','egi')|entry('nbdays','5'))"/>
+        </connector>
+
+        <processors>
+            <element in="root">
+                <attribute-create out="lastRefresh">function:date-UTC()</attribute-create>
+                <attribute-create out="view">status-egi</attribute-create>
+            </element>
+        </processors>
+        <cache type="FileCache">
+            <trigger type="ViewCreatedTrigger"/>
+            <trigger type="ViewNotifiedTrigger"/>
+            <trigger type="DeltaTimeTrigger">
+                <parameter name="minutes">5</parameter>
+            </trigger>
+        </cache>
+
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/status-ng/dashboard.ng.html</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
+    <view name="status-egiCore" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd" xmlns:date="http://exslt.org/dates-and-times">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('status-ng',entry('report','OPS-MONITOR-Critical')|entry('tenant','egi')|entry('nbdays','5'))"/>
+        </connector>
+
+        <processors>
+            <element in="root">
+                <attribute-create out="lastRefresh">function:date-UTC()</attribute-create>
+                <attribute-create out="view">status-egiCore</attribute-create>
+            </element>
+        </processors>
+        <cache type="FileCache">
+            <trigger type="ViewCreatedTrigger"/>
+            <trigger type="ViewNotifiedTrigger"/>
+            <trigger type="DeltaTimeTrigger">
+                <parameter name="minutes">3</parameter>
+            </trigger>
+        </cache>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/status-ng/dashboard.ng.html</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
+    <view name="status-ng" xmlns:date="http://exslt.org/dates-and-times"  xmlns:m="http://exslt.org/math"  xmlns:str="http://exslt.org/strings"   xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd">
+        <argument name="report"></argument>
+        <argument name="tenant"></argument>
+        <argument name="nbdays"></argument>
+
+
+        <connector type="XMLConnector">
+            <parameter name="content" eval="new_element('root')"/>
+        </connector>
+
+        <processors>
+
+
+            <element in="root">
+                <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="nbdays">$nbdays</attribute-create>
+
+                <element-create>view('tenants.reports')/tenants/tenant[@id=$tenant]/report[@name=$report]</element-create>
+            </element>
+
+            <element in="root">
+                <set variable="statuses">view('status.api',entry('report',$report)|entry('tenant',$tenant)|entry('topology',report/@topology2)|entry('nbdays',$nbdays))</set>
+                <set variable="ars">view('ar.api',entry('report',$report)|entry('tenant',$tenant)|entry('topology',report/@topology2)|entry('nbdays',$nbdays))</set>
+                <set variable="laststatuses">view('status-last.api',entry('report',$report)|entry('tenant',$tenant)|entry('topology',report/@topology2))</set>
+
+                <elements path="/report/endpoint_group_list">
+                    <element in="item" out="group">
+                        <attribute-create out="name">../text()</attribute-create>
+                        <text-ignore/>
+
+
+                        <element-create>
+                            $statuses/statuses/status[@group=current()/../text()]
+                        </element-create>
+
+
+                        <element-create>
+                            $laststatuses/last-statuses/last-status[@group=current()/../text()]
+                        </element-create>
+
+                        <element-create>
+                            $ars/ars/ar[@group=current()/../text()]
+                        </element-create>
+
+                    </element>
+                </elements>
+            </element>
+
+
+            
+            <elements path="root">
+                <attribute-create out="topology1">../report/@topology1</attribute-create>
+                <attribute-create out="topology2">../report/@topology2</attribute-create>
+                <attribute-create out="thresholdAv">../report/@thresholdAv</attribute-create>
+                <attribute-create out="thresholdRe">../report/@thresholdRe</attribute-create>
+                <element-ignore in="report">
+                    <element in="endpoint_group_list" out="groups"/>
+                    <element-ignore/>
+                </element-ignore>
+            </elements>
+
+                <elements path="root/groups/group">
+                    <element in="status">
+                        <attribute-create out="duration">
+                            date:seconds(current()/../following-sibling::status/@timestamp)-date:seconds(current()/../@timestamp)
+                        </attribute-create>
+                        <attribute-create out="duration" if="not(current()/../following-sibling::status)">
+                            m:abs(date:seconds(function:date-UTC())-date:seconds(current()/../@timestamp))
+                        </attribute-create>
+                        <attribute-create out="last" if="not(current()/../following-sibling::status/@group)">
+                            date:seconds(current()/../@timestamp)-date:seconds(current()/../../status[@group=current()/../@group][1]/@timestamp) +1
+                        </attribute-create>
+                    </element>
+                </elements>
+
+                <elements path="root/groups/group">
+                    <attribute-create out="status">../status[not(following-sibling::status)]/@value</attribute-create>
+                    <element in="status">
+                        <attribute in="duration">round(500 * number(.) div current()/../../status/@last)</attribute>
+                        <attribute-create out="color" if="../@value='OK'">'#28a745'</attribute-create>
+                        <attribute-create out="color" if="../@value='CRITICAL'">'#dc3545'</attribute-create>
+                        <attribute-create out="color" if="../@value='WARNING'">'#ffc107'</attribute-create>
+                        <attribute-create out="color" if="../@value='MISSING'">'#343a40'</attribute-create>
+                        <attribute-create out="color" if="../@value='DOWNTIME'">'#17a2b8'</attribute-create>
+                        <attribute-create out="color" if="../@value='UNKNOWN'">'#f8f9fa'</attribute-create>
+
+                        <attribute-create out="stroke" if="../@value='OK'">'#28a745'</attribute-create>
+                        <attribute-create out="stroke" if="../@value='CRITICAL'">'#dc3545'</attribute-create>
+                        <attribute-create out="stroke" if="../@value='WARNING'">'#ffc107'</attribute-create>
+                        <attribute-create out="stroke" if="../@value='MISSING'">'#343a40'</attribute-create>
+                        <attribute-create out="stroke" if="../@value='DOWNTIME'">'#17a2b8'</attribute-create>
+                        <attribute-create out="stroke" if="../@value='UNKNOWN'">'black'</attribute-create>
+
+                    </element>
+                </elements>
+
+                <elements path="root/groups/group">
+                    <element in="status">
+                        <attribute-create out="position">sum(current()/../preceding-sibling::status/@duration)</attribute-create>
+                    </element>
+                </elements>
+
+
+
+        </processors>
+
+
+
+    </view>
+
+    <view name="status.api"  xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd"  xmlns:date="http://exslt.org/dates-and-times" xmlns:m="http://exslt.org/math" xmlns:str="http://exslt.org/strings">
+        <argument name="report"/>
+        <argument name="tenant"/>
+        <argument name="topology"/>
+
+        <argument name="nbdays">5</argument>
+
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="start_time"
+                  eval="concat(str:replace(substring(date:add(function:date-UTC(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z')"/>
+        <variable name="end_time"
+                  eval="concat(str:replace(substring(function:date-UTC(),0,20),' ','T'),'Z')"/>
+
+        <variable name="url" eval="concat(property('api.status'),'/',$report,'/',$topology,'?start_time=',$start_time,'&amp;end_time=',$end_time)"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+        </connector>
+        <serializer type="JSONStreamSerializer"/>
+        <processors>
+            <element in="object" out="statuses">
+                <elements-ignore path="groups/object/statuses">
+                        <element in="object" out="status">
+                            <attribute-create out="group">../../../name/text()</attribute-create>
+                            <attribute-create out="key">concat(../../../name/text(),../timestamp/text())</attribute-create>
+                            <attribute from-element="true"/>
+                            <element-ignore/>
+                        </element>
+                    <element-ignore/>
+                </elements-ignore>
+            </element>
+            <element in="statuses">
+                <element-ignore in="status"/>
+                <element-create>sort_by_string(../status,'@key')</element-create>
+            </element>
+
+
+        </processors>
+    </view>
+
+    <view name="status-last.api" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
+
+        <argument name="report"/>
+        <argument name="tenant"/>
+        <argument name="topology"/>
+        <argument name="entity"/>
+
+
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="url" eval="concat(property('api.status.last'),'/',$report,'/',$topology,'?strict=true&amp;limit=2000')"/>
+
+
+
+    <connector type="HTTPConnector">
+        <parameter name="url" eval="$url"/>
+
+        <parameter name="force-redirect">true</parameter>
+        <parameter name="header">
+            <entry key="x-api-key" eval="$api-key"/>
+            <entry key="Accept">application/json</entry>
+        </parameter>
+
+    </connector>
+
+    <serializer type="JSONStreamSerializer"/>
+
+        <processors>
+            <element in="object" out="last-statuses">
+                <elements-ignore path="data/metric_data">
+                    <element in="object" out="last-status">
+                        <attribute from-element="true"/>
+                        <element-ignore/>
+                    </element>
+                    <element-ignore/>
+                </elements-ignore>
+                <element-ignore/>
+            </element>
+
+                <element in="last-statuses">
+
+                    <element>
+                        <attribute in="endpoint_group" out="group"/>
+                    </element>
+                </element>
+        </processors>
+    </view>
+
+    <view name="ar.api" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd">
+
+        <argument name="report"/>
+        <argument name="tenant"/>
+        <argument name="topology"/>
+        <argument name="entity"/>
+        <argument name="nbdays">5</argument>
+
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="start_time"
+                  eval="concat(str:replace(substring(date:add(function:date-UTC(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z')"/>
+        <variable name="end_time"
+                  eval="concat(str:replace(substring(function:date-UTC(),0,20),' ','T'),'Z')"/>
+
+    <variable name="url"
+              eval="concat(property('api.report'),'/',$report,'/',$topology,'?start_time=',$start_time,'&amp;end_time=',$end_time)"/>
+
+    <connector type="HTTPConnector">
+        <parameter name="url" eval="$url"/>
+        <parameter name="force-redirect">true</parameter>
+        <parameter name="header">
+            <entry key="x-api-key" eval="$api-key"/>
+            <entry key="Accept">application/json</entry>
+        </parameter>
+    </connector>
+    <serializer type="JSONStreamSerializer"/>
+        <processors>
+
+            <element in="object" out="ars">
+                <elements-ignore path="results/object/endpoints/object/results">
+                    <element in="object" out="ar">
+                        <attribute-create out="group">../../../name/text()</attribute-create>
+                        <attribute from-element="true"/>
+                        <element-ignore/>
+                    </element>
+                </elements-ignore>
+            </element>
+
+            <element in="ars">
+                <element in="ar">
+                    <attribute if="name()='availability' or name()='reliability'">round(. * 10) div 10</attribute>
+                    <attribute if="name()='unknown' or name()='uptime' or name()='downtime'">round(. * 1000) div 10</attribute>
+
+                </element>
+
+            </element>
+        </processors>
+
+
+    </view>
+</views>

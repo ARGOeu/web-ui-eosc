@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+
+<head tpl:include="/resource/app/html/header.html"></head>
+
+<body class="hold-transition sidebar-mini ">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav tpl:include="/resource/app/html/navbar.html"></nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside tpl:include="/resource/app/html/sidebar.html"></aside>
+    <!-- /sidebar -->
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-9">
+
+                    </div><!-- /.col -->
+                    <div class="col-sm-3">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+
+
+                        <div class="info-box m-2">
+                            <span class="info-box-icon bg-info"><i class="far fa-id-card"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">{{/root/@report}} Report</span>
+                                <span class="info-box-number">{{count(/root/groups/group)}} groups</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+
+
+                        <div class="info-box m-2" tpl:if="count(/root/groups/group[@status='OK'])&gt;0">
+                            <span class="info-box-icon bg-OK"><i class="far fa-thumbs-up"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">OK</span>
+                                <span class="info-box-number">{{count(/root/groups/group[@status='OK'])}}</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+
+                        <div class="info-box m-2"  tpl:if="count(/root/groups/group[@status='CRITICAL'])&gt;0">
+                            <span class="info-box-icon bg-CRITICAL"><i class="fas fa-times-circle"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">CRITICAL</span>
+                                <span class="info-box-number">{{count(/root/groups/group[@status='CRITICAL'])}}</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+
+                    <div class="info-box m-2"  tpl:if="count(/root/groups/group[@status='WARNING'])&gt;0">
+                        <span class="info-box-icon bg-WARNING"><i class="fas fa-exclamation-triangle"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">WARNING</span>
+                            <span class="info-box-number">{{count(/root/groups/group[@status='WARNING'])}}</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+
+                    <div class="info-box m-2"  tpl:if="count(/root/groups/group[@status='DOWNTIME'])&gt;0">
+                        <span class="info-box-icon bg-DOWNTIME"><i class="far fa-calendar-times"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">DOWNTIME</span>
+                            <span class="info-box-number">{{count(/root/groups/group[@status='DOWNTIME'])}}</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+
+                    <div class="info-box m-2"  tpl:if="count(/root/groups/group[@status='UNKNOWN'])&gt;0">
+                        <span class="info-box-icon bg-UNKNOWN"><i class="fas fa-question-circle text-dark"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">UNKNOWN</span>
+                            <span class="info-box-number">{{count(/root/groups/group[@status='UNKNOWN'])}}</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+
+                    <div class="info-box m-2"  tpl:if="count(/root/groups/group[@status='MISSING'])&gt;0">
+
+                    <span class="info-box-icon bg-MISSING"><i class="fas fa-unlink"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">MISSING</span>
+                            <span class="info-box-number">{{count(/root/groups/group[@status='MISSING'])}}</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="float-left">
+                        <div class="input-group m-1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-filter"><i class="m-1 fas fa-filter"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="filter by site name" aria-label="filter" aria-describedby="basic-filter" onkeyup="filter(this)" />
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <div class="input-group m-1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-filter2"><i class="m-1 fas fa-filter"></i></span>
+                            </div>
+                            <input type="text" id="filter2" class="form-control" placeholder="filter by status" aria-label="filter" aria-describedby="basic-filter2" onkeyup="filter2(this)" />
+                        </div>
+                    </div>
+
+                    <div class="float-right ml-auto m-2"><a class="mr-2 link"  id="refreshPage" ><i class="fas fa-sync-alt"></i> </a> <small >Last Refresh : {{/root/@lastRefresh}} </small></div>
+                </div>
+
+
+                <div tpl:foreach="/root/groups/group" class="row">
+                    <div class="col-lg-12" id="group-status">
+
+                        <div  class="card">
+                        <div class="card-header">
+                            <h3 class="card-title" rel="popover" id="h3_{@name}" title="{@name}" content="{{status[not(following-sibling::status)]/@timestamp}}">
+                                <span class="group">{{@name}}</span>
+                                <span class="status m-4 badge badge-{{status[not(following-sibling::status)]/@value}}" >{{status[not(following-sibling::status)]/@value}}</span>
+                            </h3>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="row" >
+                                <div class="col-2">Status</div>
+                                <svg id="svg-status" width="600px" height="60px">
+                                    <g>
+                                     <rect stroke-opacity="0.9" fill-opacity="0.6" stroke="{{@stroke}}" rel="tooltip" tpl:foreach="status[@duration]" width="{{@duration}}" height="20" x="{{@position}}" y="0" fill="{{@color}}"
+                                           title="{{@value}} status         From {{@timestamp}}     To {{following-sibling::status/@timestamp}}"/>
+                                        <text x="0" y="35" font-family="Roboto"  font-size="10" fill="black">{{status[@duration][1]/@timestamp}}</text>
+                                        <text x="480" y="35" font-family="Roboto"  font-size="10" fill="black">{{status[@duration][last()]/@timestamp}}</text>
+
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="row" >
+                                <div class="col-2 mt-4">Availability</div>
+                                <svg tpl:foreach="ar" width="80px" height="70px">
+                                    <g tpl:if="@availability&gt;/root/@thresholdAv">
+                                        <circle  cx="40" cy="32" r="24"   style="fill:green;stroke:green;stroke-width:2;fill-opacity:0.3;stroke-opacity:0.9" />
+                                        <text x="50%" y="50%" text-anchor="middle" stroke="black" stroke-width="1px" dy=".2em">{{@availability}}</text>
+                                        <text x="0" y="0"  font-family="Roboto" font-size="10" fill="black" >{{substring(@timestamp,0,12)}}</text>
+                                    </g>
+                                    <g tpl:else="@availability&gt;=0">
+                                        <circle  cx="40" cy="32" r="24"   style="fill:red;stroke:red;stroke-width:2;fill-opacity:0.3;stroke-opacity:0.9" />
+                                        <text x="50%" y="50%" text-anchor="middle" stroke="black" stroke-width="1px" dy=".2em">{{@availability}}</text>
+                                        <text x="10" y="70"  font-family="Roboto" font-size="10" fill="black" >{{substring(@timestamp,0,12)}}</text>
+                                    </g>
+                                    <g tpl:else="">
+                                        <circle  cx="40" cy="32" r="24"   style="fill:gray;stroke:black;stroke-width:2;fill-opacity:0.3;stroke-opacity:0.9" />
+                                        <text x="50%" y="50%" text-anchor="middle" stroke="black" stroke-width="1px" dy=".2em">N/A</text>
+                                        <text x="10" y="70"  font-family="Roboto" font-size="10" fill="black" >{{substring(@timestamp,0,12)}}</text>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="row" >
+                                <div class="col-2 mt-4">Reliability</div>
+                                <svg tpl:foreach="ar" width="80px" height="70px">
+                                    <g tpl:if="@reliability&gt;/root/@thresholdRe">
+                                        <circle  cx="40" cy="32" r="24"   style="fill:green;stroke:green;stroke-width:2;fill-opacity:0.3;stroke-opacity:0.9" />
+                                        <text x="50%" y="50%" text-anchor="middle" stroke="black" stroke-width="1px" dy=".2em">{{@reliability}}</text>
+                                        <text x="10" y="70"  font-family="Roboto" font-size="10" fill="black" >{{substring(@timestamp,0,12)}}</text>
+                                    </g>
+                                    <g tpl:else="@reliability&gt;=0">
+                                        <circle  cx="40" cy="32" r="24"   style="fill:red;stroke:red;stroke-width:2;fill-opacity:0.3;stroke-opacity:0.9" />
+                                        <text x="50%" y="50%" text-anchor="middle" stroke="black" stroke-width="1px" dy=".2em">{{@reliability}}</text>
+                                        <text x="10" y="70"  font-family="Roboto" font-size="10" fill="black" >{{substring(@timestamp,0,12)}}</text>
+                                    </g>
+                                    <g tpl:else="">
+                                        <circle  cx="40" cy="32" r="24"   style="fill:gray;stroke:black;stroke-width:2;fill-opacity:0.3;stroke-opacity:0.9" />
+                                        <text x="50%" y="50%" text-anchor="middle" stroke="black" stroke-width="1px" dy=".2em">N/A</text>
+                                        <text x="10" y="70"  font-family="Roboto" font-size="10" fill="black" >{{substring(@timestamp,0,12)}}</text>
+                                    </g>
+                                </svg>
+                            </div>
+                        </div>
+
+                        </div>
+                        <!-- /.card -->
+
+
+                        <!-- /.card -->
+                    </div>
+
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Main Footer -->
+
+    <footer tpl:include="/resource/app/html/footer.html"></footer>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="/resource/app/html/adminlte/plugins/jquery/jquery.min.js?v={$app.version}"></script>
+<!-- Bootstrap -->
+<script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js?v={$app.version}"></script>
+<!-- adminlte -->
+<script src="/resource/app/html/adminlte/dist/js/adminlte.js?v={$app.version}"></script>
+
+
+
+<!-- LOCAL SCRIPTS -->
+<script src="/resource/app/js/status-ng.js?v={$app.version}"></script>
+
+
+
+</body>
+</html>
+

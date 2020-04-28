@@ -47,16 +47,23 @@
 
                             <a class="nav-item nav-link  active" href="#help1" data-toggle="tab"><h4><i class="fa fa-tachometer-alt mr-1"></i>Availabilities/Reliabilities</h4></a>
                            <a class="nav-item nav-link" href="#help2" data-toggle="tab"><h4><i class="fas fa-check-circle mr-1"></i> Status</h4></a>
-                            <a class="nav-item nav-link" href="#help3" data-toggle="tab"><h4><i class="fa fa-cog mr-1"></i>Profiles</h4></a>
+                         <!--   <a class="nav-item nav-link" href="#help3" data-toggle="tab"><h4><i class="fa fa-cog mr-1"></i>Profiles</h4></a>-->
+
                             <a class="nav-item nav-link" tpl:if="/root/@tenant='sdc'" href="#help4" data-toggle="tab"><h4><i class="fas fa-power-off mr-1"></i>Downtimes</h4></a>
+                            <a class="nav-item nav-link" href="#help5" data-toggle="tab"><h4><i class="fa fa-eye mr-1"></i>Dashboard</h4></a>
+                            <a class="nav-item nav-link" href="#help6" data-toggle="tab"><h4><i class="fa fa-file mr-1"></i>Custom report</h4></a>
+
                         </nav>
 
                         <div class="tab-content">
 
                             <div class="tab-pane active" id="help1"><div  tpl:include="/resource/app/html/documentation/avre.html"></div></div>
                             <div class="tab-pane" id="help2"><div tpl:include="/resource/app/html/documentation/status.html"></div></div>
-                            <div class="tab-pane" id="help3"><div tpl:include="/resource/app/html/documentation/profiles.html"></div></div>
+                 <!--           <div class="tab-pane" id="help3"><div tpl:include="/resource/app/html/documentation/profiles.html"></div></div>-->
                             <div class="tab-pane" tpl:if="/root/@tenant='sdc'" id="help4"><div tpl:include="/resource/app/html/documentation/downtimes.html"></div></div>
+                            <div class="tab-pane" id="help5"><div tpl:include="/resource/app/html/documentation/dashboard.html"></div></div>
+                            <div class="tab-pane" id="help6"><div tpl:include="/resource/app/html/documentation/custom.html"></div></div>
+
                         </div>
 
 

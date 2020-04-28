@@ -1,0 +1,155 @@
+.badge-OK {
+  color: #ffffff;
+  background-color: #28a745;
+}
+
+.badge-OK[href]:hover, .badge-OK[href]:focus {
+  color: #ffffff;
+  text-decoration: none;
+  background-color: #1e7e34;
+}
+
+.bg-OK, .alert-OK, .label-OK {
+  background-color: #28a745 !important;
+  color:white;
+}
+
+a.bg-OK:hover, a.alert-OK:hover, a.label-OK:hover, a.bg-OK:focus, a.alert-OK:focus, a.label-OK:focus,
+button.bg-OK:hover,
+button.alert-OK:hover,
+button.label-OK:hover,
+button.bg-OK:focus,
+button.alert-OK:focus,
+button.label-OK:focus {
+  background-color: #1e7e34 !important;
+}
+
+.badge-DOWNTIME {
+  color: #ffffff;
+  background-color: #17a2b8;
+}
+
+.badge-DOWNTIME[href]:hover, .badge-DOWNTIME[href]:focus {
+  color: #ffffff;
+  text-decoration: none;
+  background-color: #117a8b;
+}
+
+.bg-DOWNTIME, .alert-DOWNTIME, .label-DOWNTIME {
+  background-color: #17a2b8 !important;
+   color:white;
+}
+
+a.bg-DOWNTIME:hover, a.alert-DOWNTIME:hover, a.label-DOWNTIME:hover, a.bg-DOWNTIME:focus, a.alert-DOWNTIME:focus, a.label-DOWNTIME:focus,
+button.bg-DOWNTIME:hover,
+button.alert-DOWNTIME:hover,
+button.label-DOWNTIME:hover,
+button.bg-DOWNTIME:focus,
+button.alert-DOWNTIME:focus,
+button.label-DOWNTIME:focus {
+  background-color: #117a8b !important;
+}
+
+
+.badge-WARNING {
+  color: #1F2D3D;
+  background-color: #ffc107;
+   color:white;
+}
+
+.badge-WARNING[href]:hover, .badge-WARNING[href]:focus {
+  color: #1F2D3D;
+  text-decoration: none;
+  background-color: #d39e00;
+}
+
+.bg-WARNING, .alert-WARNING, .label-WARNING {
+  background-color: #ffc107 !important;
+}
+
+a.bg-WARNING:hover, a.alert-WARNING:hover, a.label-WARNING:hover, a.bg-WARNING:focus, a.alert-WARNING:focus, a.label-WARNING:focus,
+button.bg-WARNING:hover,
+button.alert-WARNING:hover,
+button.label-WARNING:hover,
+button.bg-WARNING:focus,
+button.alert-WARNING:focus,
+button.label-WARNING:focus {
+  background-color: #d39e00 !important;
+}
+
+.badge-CRITICAL{
+  color: #ffffff;
+  background-color: #dc3545;
+  
+}
+
+.badge-CRITICAL[href]:hover, .badge-CRITICAL[href]:focus {
+  color: #ffffff;
+  text-decoration: none;
+  background-color: #bd2130;
+}
+
+.bg-CRITICAL, .alert-CRITICAL,
+.alert-error, .label-CRITICAL {
+  background-color: #dc3545 !important;
+   color:white;
+}
+
+a.bg-CRITICAL:hover, a.alert-CRITICAL:hover,
+a.alert-error:hover, a.label-CRITICAL:hover, a.bg-CRITICAL:focus, a.alert-CRITICAL:focus,
+a.alert-error:focus, a.label-CRITICAL:focus,
+button.bg-CRITICAL:hover,
+button.alert-CRITICAL:hover,
+button.alert-error:hover,
+button.label-CRITICAL:hover,
+button.bg-CRITICAL:focus,
+button.alert-CRITICAL:focus,
+button.alert-error:focus,
+button.label-CRITICAL:focus {
+  background-color: #bd2130 !important;
+}
+
+.badge-UNKNOWN {
+  color: #1F2D3D;
+  background-color: #f8f9fa;
+}
+
+.badge-UNKNOWN[href]:hover, .badge-UNKNOWN[href]:focus {
+  color: #1F2D3D;
+  text-decoration: none;
+  background-color: #dae0e5;
+}
+
+.bg-UNKNOWN {
+  background-color: #f8f9fa !important;
+   color:black;
+}
+
+a.bg-UNKNOWN:hover, a.bg-UNKNOWN:focus,
+button.bg-UNKNOWN:hover,
+button.bg-UNKNOWN:focus {
+  background-color: #dae0e5 !important;
+}
+
+
+.badge-MISSING{
+  color: #ffffff;
+  background-color: #343a40;
+}
+
+.badge-MISSING[href]:hover, .badge-MISSING[href]:focus {
+  color: #ffffff;
+  text-decoration: none;
+  background-color: #1d2124;
+}
+
+.bg-MISSING{
+  background-color: #343a40 !important;
+   color:white;
+}
+
+a.bg-MISSING:hover, a.bg-MISSING:focus,
+button.bg-MISSING:hover,
+button.bg-MISSING:focus {
+  background-color: #1d2124 !important;
+}
