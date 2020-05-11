@@ -4,22 +4,22 @@
         <strong>Copyright 2020 - ARGO</strong>
     </div>
     <!-- Default to the left -->
+
     <div tpl:if="/root/@tenant='egi'">ARGO is a service jointly developed and maintained by <a
             href="http://www.cnrs.fr/en" title="cnrs website">CNRS</a>, <a href="https://grnet.gr/en/"
                                                                            title="Grnet web site">GRNET</a> and <a
             href="https://www.srce.unizg.hr/en/" title="SRCE web site">SRCE</a> co-funded by <a
-            href="https://www.eosc-hub.eu/">EOSC-Hub</a> and <a href="http://egi.eu" title="egi web site">EGI
-        Foundation</a><img class="m-2" src="/resource/app/img/cee.png" width="50px"/></div>
-    <div tpl:if="/root/@tenant='eudat'">ARGO is a service jointly developed and maintained by <a
+            href="https://www.eosc-hub.eu/">EOSC-Hub (Horizon 2020) under Grant number 777536 </a> and <a href="http://egi.eu" title="egi web site">EGI
+        Foundation</a><img class="m-2" src="/resource/app/img/logo-eosc-hub.png" width="130px"/><img class="m-2" src="/resource/app/img/cee.png" width="50px"/></div>
+
+
+    <div tpl:else="">ARGO is a service jointly developed and maintained by <a
             href="http://www.cnrs.fr/en" title="cnrs website">CNRS</a>, <a href="https://grnet.gr/en/"
                                                                            title="Grnet web site">GRNET</a> and <a
             href="https://www.srce.unizg.hr/en/" title="SRCE web site">SRCE</a> co-funded by <a
-            href="https://www.eosc-hub.eu/">EOSC-Hub</a> <img class="m-2" src="/resource/app/img/cee.png" width="50px"/>
+            href="https://www.eosc-hub.eu/">EOSC-Hub</a> (Horizon 2020) under Grant number 777536.<img class="m-2" src="/resource/app/img/logo-eosc-hub.png" width="130px"/><img class="m-2" src="/resource/app/img/cee.png" width="50px"/>
     </div>
-    <div tpl:if="/root/@tenant='sdc'">ARGO is a service jointly developed and maintained by <a
-            href="http://www.cnrs.fr/en" title="cnrs website">CNRS</a>, <a href="https://grnet.gr/en/"
-                                                                           title="Grnet web site">GRNET</a> and <a
-            href="https://www.srce.unizg.hr/en/" title="SRCE web site">SRCE</a></div>
+
 
 
     <!-- Global site tag (gtag.js) - Google Analytics for EGI-->
@@ -45,5 +45,27 @@
   gtag('config', 'UA-65947937-3');
 
     </script>
+
+    <script tpl:if="/root/@tenant='sdc'" async src="https://www.googletagmanager.com/gtag/js?id=UA-65947937-4"></script>
+
+    <script tpl:if="/root/@tenant='sdc'">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-65947937-4');
+</script>
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script tpl:if="/root/@tenant='ni4os'" async src="https://www.googletagmanager.com/gtag/js?id=UA-65947937-5"></script>
+    <script tpl:if="/root/@tenant='ni4os'">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-65947937-5');
+</script>
+
 
 </footer>

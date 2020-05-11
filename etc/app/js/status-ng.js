@@ -28,6 +28,17 @@ $("#toggle_"+pid).removeClass('d-none');
 });
 
 
+$(".erase").click(function() {
+var eraseid=$(this).attr('id').split('erase-')[1];
+$("#"+eraseid).val('');
+
+var elementStatus='<input value="'+$("#input-status-filter")+'"/>';
+filterStatus(elementStatus);
+
+var elementSite='<input value="'+$("#input-site-filter")+'"/>';
+filter(elementSite);
+});
+
 $(".filter-status").click(function() {
 
 var status=$(this).attr('id').split('status_')[1];

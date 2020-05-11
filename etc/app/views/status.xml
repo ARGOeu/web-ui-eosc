@@ -317,7 +317,18 @@
 
             <element in="root">
                 <element in="group" if="count(status)&gt;50">
-                    <element-ignore in="status" if="@value=preceding-sibling::status/@value"/>
+                    <element-create-as-parent out="status" attributes="@value" group-by="@value">
+                        <element in="status"/>
+                    </element-create-as-parent>
+                </element>
+            </element>
+
+            <element in="root">
+                <element in="group" >
+                    <element in="status" if="status">
+                        <attribute-create out="timestamp">../status[1]/@timestamp</attribute-create>
+                        <element-ignore in="status"/>
+                    </element>
                 </element>
             </element>
 

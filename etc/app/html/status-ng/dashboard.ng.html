@@ -105,13 +105,15 @@
                         <!-- /.info-box-content -->
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mb-2">
                     <div class="float-left">
                         <div class="input-group m-1">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-filter"><i class="m-1 fas fa-filter"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="filter by site name" aria-label="filter" aria-describedby="basic-filter" onkeyup="filter(this)" />
+                            <input type="text" class="form-control" id="input-site-filter" placeholder="filter by site name" aria-label="filter" aria-describedby="basic-filter" onkeyup="filter(this)" />
+                            <a class="erase" id="erase-input-site-filter"> <i class="fas fa-trash-alt m-1" /></a>
+
                         </div>
                     </div>
                     <div class="ml-4">
@@ -120,6 +122,7 @@
                                 <span class="input-group-text" id="status-filter"><i class="m-1 fas fa-filter"></i></span>
                             </div>
                             <input type="text" id="input-status-filter" class="form-control" placeholder="filter by status" aria-label="filter" aria-describedby="basic-filter2" onkeyup="filterStatus(this)" />
+                            <a class="erase" id="erase-input-status-filter"> <i class="fas fa-trash-alt m-1" /></a>
                         </div>
                     </div>
 
@@ -132,16 +135,18 @@
                 </div>
 
 
-                <div tpl:foreach="/root/groups/group" class="row">
-                    <div class="col-lg-12" id="group-status">
+                <div class="row">
 
-                        <div class="card">
+
+                        <div tpl:foreach="/root/groups/group"  class="col-11 card">
                             <div class="card-header row">
-                                <h4 class="card-title  col-3" rel="popover" id="h3_{@name}" title="{@name}">
-                                    <div class="group">{{@name}}</div>
+                                <h4 class="col-3" >
+                                    <div class="group small">{{@name}}</div>
                                 </h4>
-                                    <div class="col-1 text-center">
-                                        <span class="d-block status m-1 badge badge-{{status[not(following-sibling::status)]/@value}}">{{status[not(following-sibling::status)]/@value}}</span>
+                                    <div class="col-2 text-center">
+                                        <span tpl:if="status[not(following-sibling::status)]/@value!='UNKNOWN'" class="d-block status m-1 badge badge-{{status[not(following-sibling::status)]/@value}}">{{status[not(following-sibling::status)]/@value}}</span>
+                                        <span tpl:else="" class="d-block status m-1 border border-dark badge badge-{{status[not(following-sibling::status)]/@value}}">{{status[not(following-sibling::status)]/@value}}</span>
+
                                     </div>
                                     <div class="col-3 row">
                                         <div class="m-1" tpl:foreach="ar[last()]">
@@ -153,7 +158,7 @@
                                                       class="badge badge-critical text-white text-bold">
                                                {{@availability}}
                                             </span>
-                                                <span tpl:else="" class="badge badge-UNKNOWN">
+                                                <span tpl:else="" class="border border-dark  badge badge-UNKNOWN">
                                               N.A
                                             </span>
 
@@ -167,7 +172,7 @@
                                                       class="badge badge-critical text-white text-bold">
                                                {{@reliability}}
                                             </span>
-                                                <span tpl:else="" class="badge badge-UNKNOWN">
+                                                <span tpl:else="" class="border border-dark  badge badge-UNKNOWN">
                                               N.A
                                             </span>
 
@@ -249,7 +254,7 @@
                                                   class="badge badge-critical text-white text-bold">
                                                {{@reliability}}
                                             </span>
-                                            <span tpl:else="" class="badge badge-UNKNOWN">
+                                            <span tpl:else="" class="border border-dark  badge badge-UNKNOWN">
                                               N.A
                                             </span>
                                         </div>
@@ -264,7 +269,7 @@
 
 
                         <!-- /.card -->
-                    </div>
+
 
                 </div>
                 <!-- /.row -->
