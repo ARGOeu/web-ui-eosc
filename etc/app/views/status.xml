@@ -132,6 +132,8 @@
 
 
 
+
+
             <element in="object" out="root" if="groups/object/services/object/statuses">
                 <element-ignore in="groups">
                     <element in="object" out="group">
@@ -219,7 +221,6 @@
                     </element>
                 </element-ignore>
             </element>
-
 
 
 

@@ -156,6 +156,9 @@
             </element>
 
 
+            <element in="root" if="$filter!='_filter_'">
+                <element-ignore in="group" if="@name!=$filter"/>
+            </element>
 
             <element in="root">
                 <attribute-create out="filter" if="$filter!='_filter_'">$filter</attribute-create>
