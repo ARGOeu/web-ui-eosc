@@ -41,7 +41,7 @@
             <div class="container-fluid">
                 <div class="row">
 
-                    <div class="col-lg-12 col-md-8">
+                    <div class="col-lg-12 col-md-8" tpl:if="not(root/missing)">
 
 
                         <div class="small-box bg-white border border-success"
@@ -141,6 +141,31 @@
 
                     </div>
 
+
+                    <div class="col-lg-12 col-md-8" tpl:else="">
+
+
+
+                        <div class="small-box bg-white border border-info">
+
+
+                            <div class="inner">
+
+
+                                <h3>Status
+                                    <span class="badge bg-info">MISSING</span>
+
+                                </h3><br/>
+
+                                <code>This metric is not existing </code>
+                            </div>
+
+                        </div>
+
+
+
+
+                    </div>
 
                     <!-- /.row -->
                 </div>
