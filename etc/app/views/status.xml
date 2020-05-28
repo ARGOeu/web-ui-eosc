@@ -110,9 +110,12 @@
                 <entry key="Accept">application/json</entry>
             </parameter>
         </connector>
-        <serializer type="JSONStreamSerializer"/>
+
+       <serializer type="JSONStreamSerializer"/>
 
         <processors>
+
+
 
             <element in="object" out="root" if="groups/object/statuses">
                 <attribute-create out="urlApi">$url</attribute-create>
