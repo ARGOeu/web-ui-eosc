@@ -1,0 +1,142 @@
+<views xmlns="http://software.in2p3.fr/lavoisier/application.xsd">
+    <!-- 
+        Project : argo-eosc 
+        File    : metrics.xml
+        Created by cyril on 2018/06/13 
+    -->
+
+
+
+
+    <view name="metrics" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd"
+          xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" >
+
+        <argument name="report">OPS-MONITOR-Critical</argument>
+        <argument name="tenant">egi</argument>
+        <argument name="metric_name">_metrics_</argument>
+
+        <variable name="start_time"
+                  eval="concat(str:replace(substring(date:add(function:date-UTC(),'-PT6H'),0,20),' ','T'),'Z')"/>
+        <!--
+            <variable name="end_time"
+                      eval="choose($end_date='_end_',concat(str:replace(substring(function:date-UTC(),0,20),' ','T'),'Z'),concat($end_date,'T23:59:59Z'))"/>-->
+        <variable name="end_time"
+                  eval="concat(str:replace(substring(function:date-UTC(),0,20),' ','T'),'Z')"/>
+
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+
+        <variable name="url" eval="concat(property('api.status'),'/',$report,'/metrics/',$metric_name,'?start_time=',$start_time,'&amp;end_time=',$end_time)"></variable>
+
+        <connector type="HTTPConnector">
+            <parameter name="url"
+                       eval="choose($metric_name='_metrics_',concat('http://localhost:8080/lavoisier/metrics_list?accept=json&amp;tenant=',$tenant,'&amp;report=',$report),$url)"/>
+
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+        </connector>
+
+        <serializer type="JSONStreamSerializer"/>
+
+        <processors>
+
+            <element in="object" out="root">
+                <attribute-create out="url">$url</attribute-create>
+                <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="metrics" if="$metric_name!='_metrics_'">$metric_name</attribute-create>
+            </element>
+
+            <element in="root" if="$metric_name='_metrics_'">
+                <element-create>view('metrics_profile')/e:entries/e:entry[@profile=$report][@tenant=$tenant]</element-create>
+            </element>
+
+            <element in="root" if="$metric_name='_metrics_'">
+                <element in="entries" out="e:entries">
+                    <element-ignore in="object">
+                        <element-create>entry('name',../name/text())</element-create>
+                    </element-ignore>
+                </element>
+            </element>
+
+
+            <element in="root" if="$metric_name!='_metrics_'">
+                    <element in="entries" out="select">
+                        <element in="name" out="option"/>
+                        <element-ignore/>
+                    </element>
+            </element>
+
+            <element in="root" if="$metric_name!='_metrics_'">
+                <element in="endpoint_metrics" out="metrics">
+                    <elements-ignore path="object/statuses">
+                        <element in="object" out="metrics">
+                            <attribute-create out="name">../../../name/text()</attribute-create>
+                            <attribute-create out="service">../../../service/text()</attribute-create>
+                            <attribute-create out="supergroup">../../../supergroup/text()</attribute-create>
+                            <attribute-create out="metric">../../../metric/text()</attribute-create>
+                            <attribute-create out="status">../value/text()</attribute-create>
+                            <attribute-create out="timestamp">../timestamp/text()</attribute-create>
+                            <attribute-create out="key">concat(../../../name/text(),../../../service/text())</attribute-create>
+                            <element-ignore/>
+                        </element>
+                    </elements-ignore>
+                </element>
+                <element-create>entries()</element-create>
+            </element>
+
+            <element in="root" if="$metric_name!='_metrics_'">
+                <element in="metrics">
+                    <element-ignore in="metrics"/>
+                    <element-create>sort_by_string(../metrics,'@timestamp',true())</element-create>
+                </element>
+            </element>
+
+            <element in="root" if="$metric_name!='_metrics_'">
+                <element in="metrics">
+                    <element-ignore in="metrics"/>
+                    <element-create>sort_by_string(../metrics,'@key')</element-create>
+                </element>
+                <element in="e:entries">
+                    <element-create>view('metrics_list',entry('tenant',$tenant)|entry('report',$report))/e:entries/*</element-create>
+                </element>
+            </element>
+
+            <element in="root" if="$metric_name!='_metrics_'">
+                <element in="metrics">
+                    <element-ignore in="metrics"></element-ignore>
+                    <element-create>uniq(../metrics,'@key')</element-create>
+                </element>
+            </element>
+
+            <element in="root" if="$metric_name!='_metrics_'">
+                <element in="metrics">
+                    <element-ignore in="metrics"/>
+                    <element-create>sort_by_string(../metrics,'@supergroup')</element-create>
+                </element>
+            </element>
+
+
+            <element in="root" if="$metric_name!='_metrics_'">
+                <element in="metrics">
+                    <element-create-as-parent out="group" group-by="@supergroup" attributes="@supergroup">
+                        <element in="metrics"/>
+                    </element-create-as-parent>
+                </element>
+            </element>
+        </processors>
+
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/status_metrics.html</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
+
+
+</views>

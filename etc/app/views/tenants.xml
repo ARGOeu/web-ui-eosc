@@ -108,8 +108,28 @@
 
     <view name="listProbes">
         <connector type="XMLConnector">
-            <parameter name="content" eval="view('metrics_profile')"></parameter>
+            <parameter name="content" eval="view('metrics_profile')"/>
         </connector>
+    </view>
+
+    <view name="metrics_list">
+        <argument name="tenant"/>
+        <argument name="report"/>
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('metrics_profile')"/>
+        </connector>
+
+        <processors>
+            <element in="e:entries">
+                <element in="e:entry" if="@tenant=$tenant and upper-case(@report)=upper-case($report)"/>
+                <element-ignore/>
+            </element>
+
+            <element in="e:entries">
+                <element-ignore></element-ignore>
+                <element-create>uniq(../e:entry,'@name')</element-create>
+            </element>
+        </processors>
     </view>
 
 
@@ -125,6 +145,9 @@
                         <attribute-create out="name">../text()</attribute-create>
                         <attribute-create out="service_flavour">../../../service/text()</attribute-create>
                         <attribute-create out="profile">../../../../../name/text()</attribute-create>
+                        <attribute-create out="tenant">ancestor::report/@tenant</attribute-create>
+                        <attribute-create out="report">ancestor::report/@report</attribute-create>
+
                         <text-ignore/>
                     </element>
                 </elements-ignore>

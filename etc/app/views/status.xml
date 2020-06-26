@@ -68,6 +68,9 @@
         </processors>
     </view>
 
+
+
+
     <view name="report-status" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd"
           xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings"
           xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
@@ -92,15 +95,16 @@
         <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
         <variable name="start_time"
                   eval="choose($start_date='_start_',concat(str:replace(substring(date:add(function:date-UTC(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z'),concat($start_date,'T00:00:00Z'))"/>
+    <!--
         <variable name="end_time"
-                  eval="choose($end_date='_end_',concat(str:replace(substring(function:date-UTC(),0,20),' ','T'),'Z'),concat($end_date,'T23:59:59Z'))"/>
-
+                  eval="choose($end_date='_end_',concat(str:replace(substring(function:date-UTC(),0,20),' ','T'),'Z'),concat($end_date,'T23:59:59Z'))"/>-->
+        <variable name="end_time"
+                  eval="choose($end_date='_end_' or( date:seconds(function:date-UTC()) &lt;= date:seconds($end_date)) ,concat(str:replace(substring(function:date-UTC(),0,20),' ','T'),'Z'),concat($end_date,'T23:59:59Z'))"/>
 
         <variable name="diff"
                   eval="choose($entity3!='_entity_',date:seconds(date:difference($start_time,$end_time)),0)"/>
-
         <variable name="url"
-                  eval="choose($diff &lt;= 432000,function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,$start_time,$end_time),function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,$end_time,$end_time))"/>
+                  eval="choose($diff &lt;= 432000,function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,$start_time,$end_time),function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,concat(str:replace(substring(date:add(function:date-UTC(),'-P3D'),0,20),' ','T'),'Z'),$end_time))"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>
@@ -115,6 +119,9 @@
 
         <processors>
 
+            <element>
+                <attribute-create out="urlApi">$url</attribute-create>
+            </element>
 
 
             <element in="object" out="root" if="groups/object/statuses">
