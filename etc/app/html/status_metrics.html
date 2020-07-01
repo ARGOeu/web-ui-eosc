@@ -48,6 +48,7 @@
                             <span class="input-group-text" ><i class="m-1 fas fa-cog"></i></span>
                         </div>
                         <select id="metric" class="form-control">
+                            <option>--Select a metric--</option>
                             <option tpl:foreach="/root/e:entries/e:entry" value="/{/root/@tenant}/{/root/@report}/metrics/{text()}">{{text()}}</option>
                         </select>
 
@@ -172,7 +173,7 @@
 
 
                 <div tpl:foreach="/root/metrics/group"  class="row">
-                        <div class="card col-10">
+                        <div class="card col-8">
                         <div class="card-header row">
 
                                 <div class="fas fa-home m-1"></div>
@@ -192,7 +193,6 @@
                                 <a  class="toggle-body" id="toggle_{{@supergroup}}"> <i class="fas fa-angle-double-down text-primary"></i></a>
                             </div>
 
-
                             </div>
 
 
@@ -207,13 +207,23 @@
                                     <a  class="untoggle-body" id="untoggle_{{@supergroup}}"> <i class="fas fa-angle-double-up text-primary"></i></a>
                                 </div>
                             </div>
-                            <div tpl:foreach="metrics" class="row">
-                                <div class="col-3 p-1 m-1">{{@name}}</div>
-                                <div class="col-2 p-1 m-1">{{@service}}</div>
-                                <div class="col-2 p-1 m-1">{{@timestamp}}</div>
-                                <div class="col-2 badge badge-{{@status}} m-1 p-1">{{@status}}</div>
+                            <div tpl:foreach="metrics">
+
+                                <div class="row">
+                                    <div class="col-3 m-1">{{@name}}</div>
+                                    <div class="col-2 m-1">{{@service}}</div>
+                                    <div class="col-2 m-1 small">{{@timestamp}}</div>
+                                    <div class="col-2 badge badge-{{@status}} m-2">{{@status}}</div>
+                                    <span  id="{{/root/@tenant}}_{{/root/@report}}_{{/root/@metrics}}_{{@name}}_{{@timestamp}}"   class="details fa fa-search-plus"></span>
+                                </div>
+
+                                <div class="row d-none border-top border-bottom m-1" id="content_{{/root/@tenant}}_{{/root/@report}}_{{/root/@metrics}}_{{@name}}_{{@timestamp}}">
+                                    <div><span  id="minus_{{/root/@tenant}}_{{/root/@report}}_{{/root/@metrics}}_{{@name}}_{{@timestamp}}"   class="m-details m-2 fa fa-search-minus"></span></div>
+                                </div>
+
 
                             </div>
+
 
 
                         </div>
@@ -247,6 +257,8 @@
 
 <!-- LOCAL SCRIPTS -->
 <script src="/resource/app/js/status-metrics.js?v={$app.version}"></script>
+
+
 
 
 </body>

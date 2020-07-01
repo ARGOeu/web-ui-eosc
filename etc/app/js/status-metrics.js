@@ -1,3 +1,45 @@
+$(".m-details").click(function() {
+var id=$(this).attr('id').split('minus_')[1];
+  var element = document.getElementById("content_"+id);
+   $(element).html("<div><span  id="+$(this).attr('id')+" class='m-2 m-details fa fa-search-minus'></span></div>");
+ $(element).addClass('d-none');
+});
+
+$(".details").click(function() {
+
+var id=$(this).attr('id');
+var tabDetails=id.split('_');
+
+var tenant=tabDetails[0];
+var report=tabDetails[1];
+var metrics=tabDetails[2];
+var endpoint=tabDetails[3];
+var timestamp=tabDetails[4];
+var status=tabDetails[5];
+
+//$("#content_"+id).removeClass('d-none');
+
+
+  var element = document.getElementById("content_"+id);
+
+    $.ajax({
+       url : '/lavoisier/report-metrics?report='+report+'&tenant='+tenant+'&exec_time='+timestamp+'&endpoint='+endpoint+'&metric_name='+metrics+'&status='+status+'&accept=html',
+       type : 'GET',
+       dataType : 'html',
+       success : function(code_html, statut){ // success est toujours en place, bien sûr !
+        $(element).append($(code_html).find("code"));
+        $(element).removeClass('d-none');
+       },
+
+       error : function(resultat, statut, erreur){
+          $(element).append('No output');
+       }
+
+    });
+
+
+});
+
 
 $(".toggle-body").click(function() {
 var id=$(this).attr('id');

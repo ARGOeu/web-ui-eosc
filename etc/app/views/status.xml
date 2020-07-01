@@ -473,7 +473,6 @@
             <element in="root">
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
-                <attribute-create out="topology">$topology</attribute-create>
                 <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
             </element>
         </processors>
