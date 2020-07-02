@@ -85,6 +85,13 @@
                 <element-create>view('gocdb.ngi')/ngis/*</element-create>
             </element>
 
+            <element in="filter">
+                <element-ignore/>
+                <element-create>sort_by_string(../scope,'text()')</element-create>
+                <element-create>sort_by_string(../ngi,'text()')</element-create>
+
+
+            </element>
 
         </processors>
 

@@ -5,11 +5,6 @@
         Created by cyril on 2018/06/13 
     -->
 
-    <!--
-
-
-    -->
-
 
     <view name="api-status-last" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings"
           xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
@@ -343,28 +338,6 @@
                 </element>
             </element>
 
-
-            <element in="root">
-                <set variable="StateColor">view('StateColor')</set>
-
-                <element in="group">
-                    <attribute in="name">str:replace(.,'+','%252B')</attribute>
-
-                    <element in="status">
-
-                        <attribute-create out="color">$StateColor/e:entries/e:entry[@key=current()/../@value]/text()
-                        </attribute-create>
-                        <attribute-create out="end_time" if="current()/../following-sibling::status">
-                            current()/../following-sibling::status/@timestamp
-                        </attribute-create>
-                        <attribute-create out="end_time" if="not(current()/../following-sibling::status)">
-                            ../ancestor::root/@end_time
-                        </attribute-create>
-
-                    </element>
-                </element>
-            </element>
-
             <element in="root" if="$tenant='egi'">
                 <set variable="listSites">view('gocdb.site')</set>
 
@@ -379,6 +352,30 @@
             <element in="root" if="$tenant='egi' and $filter!='_filter_'">
                 <element-ignore in="group" if="not(contains(@filters,concat(',',$filter,',')))"/>
             </element>
+            
+
+            <element in="root">
+                <set variable="StateColor">view('StateColor')</set>
+
+                <element in="group">
+                    <attribute in="name">str:replace(.,'+','%252B')</attribute>
+
+                    <element in="status">
+
+                        <attribute-create out="color">$StateColor/e:entries/e:entry[@key=current()/../@value]/text()
+                        </attribute-create>
+                        <attribute-create out="end_time" if="current()/../following-sibling::status[1]">
+                            current()/../following-sibling::status[1]/@timestamp
+                        </attribute-create>
+                        <attribute-create out="end_time" if="not(current()/../following-sibling::status[1])">
+                            ../ancestor::root/@end_time
+                        </attribute-create>
+
+                    </element>
+                </element>
+            </element>
+
+
 
 
         </processors>
