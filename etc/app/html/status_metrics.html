@@ -26,8 +26,6 @@
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/">Home</a></li>
                             <li class="breadcrumb-item"><a href="/{root/@tenant}/{/root/@report}/metrics">Metrics</a></li>
-                            <li class="breadcrumb-item" tpl:if="/root/@metrics!='_metrics_'"><a href="/{root/@tenant}/{/root/@report}/metrics/{root/@metrics}">{{root/@metrics}}</a></li>
-
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -156,7 +154,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-filter"><i class="m-1 fas fa-filter"></i></span>
                                 </div>
-                                <input type="text" class="form-control" id="input-site-filter" placeholder="filter by site name" aria-label="filter" aria-describedby="basic-filter" onkeyup="filter(this)" />
+                                <input type="text" class="form-control" id="input-site-filter" placeholder="filter by group name" aria-label="filter" aria-describedby="basic-filter" onkeyup="filter(this)" />
                                 <a class="erase" id="erase-input-site-filter"> <i class="fas fa-trash-alt m-1" /></a>
 
 
@@ -173,7 +171,7 @@
 
 
                 <div tpl:foreach="/root/metrics/group"  class="row">
-                        <div class="card col-8">
+                        <div class="card col-12">
                         <div class="card-header row">
 
                                 <div class="fas fa-home m-1"></div>
@@ -211,14 +209,14 @@
 
                                 <div class="row">
                                     <div class="col-3 m-1">{{@name}}</div>
-                                    <div class="col-2 m-1">{{@service}}</div>
+                                    <div class="col-3 m-1">{{@service}}</div>
                                     <div class="col-2 m-1 small">{{@timestamp}}</div>
                                     <div class="col-2 badge badge-{{@status}} m-2">{{@status}}</div>
-                                    <span  id="{{/root/@tenant}}_{{/root/@report}}_{{/root/@metrics}}_{{@name}}_{{@timestamp}}"   class="details fa fa-search-plus"></span>
+                                    <a href="#"><span  id="{{/root/@tenant}}_{{/root/@report}}_{{/root/@metrics}}_{{@name}}_{{@timestamp}}"   class="details fa fa-search-plus m-2"></span></a>
                                 </div>
 
-                                <div class="row d-none border-top border-bottom m-1" id="content_{{/root/@tenant}}_{{/root/@report}}_{{/root/@metrics}}_{{@name}}_{{@timestamp}}">
-                                    <div><span  id="minus_{{/root/@tenant}}_{{/root/@report}}_{{/root/@metrics}}_{{@name}}_{{@timestamp}}"   class="m-details m-2 fa fa-search-minus"></span></div>
+                                <div class="row d-none border-top border-bottom m-3" id="content_{{/root/@tenant}}_{{/root/@report}}_{{/root/@metrics}}_{{@name}}_{{@timestamp}}">
+                                    <div><a href="#"><span  id="minus_{{/root/@tenant}}_{{/root/@report}}_{{/root/@metrics}}_{{@name}}_{{@timestamp}}"   class="m-details m-2 fa fa-search-minus"></span></a></div>
                                 </div>
 
 

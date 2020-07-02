@@ -1,7 +1,7 @@
 $(".m-details").click(function() {
 var id=$(this).attr('id').split('minus_')[1];
   var element = document.getElementById("content_"+id);
-   $(element).html("<div><span  id="+$(this).attr('id')+" class='m-2 m-details fa fa-search-minus'></span></div>");
+   $(element).html("<div><a href='#'><span  id="+$(this).attr('id')+" class='m-2 m-details fa fa-search-minus'></span></a></div>");
  $(element).addClass('d-none');
 });
 
