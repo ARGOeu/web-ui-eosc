@@ -77,7 +77,7 @@
                         <element in="object" out="metrics">
                             <attribute-create out="name">../../../name/text()</attribute-create>
                             <attribute-create out="service">../../../service/text()</attribute-create>
-                            <attribute-create out="supergroup">../../../supergroup/text()</attribute-create>
+                            <attribute-create out="supergroup">str:replace(../../../supergroup/text(),' ','_')</attribute-create>
                             <attribute-create out="metric">../../../metric/text()</attribute-create>
                             <attribute-create out="status">../value/text()</attribute-create>
                             <attribute-create out="timestamp">../timestamp/text()</attribute-create>
