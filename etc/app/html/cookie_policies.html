@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+
+<head tpl:include="/resource/app/html/header.html"></head>
+
+<body class="hold-transition sidebar-mini ">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav tpl:include="/resource/app/html/navbar.html"></nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside tpl:include="/resource/app/html/sidebar.html"></aside>
+    <!-- /sidebar -->
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-9">
+                        <h1 class="m-0 text-primary" style="font-size:4rem">
+                            <img src="/resource/app/img/logo-argo.png"/> Cookie Policy</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-3">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active">Cookie Policy</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="card border border-primary">
+                            <div class="card-header ui-sortable-handle" style="cursor: move;">
+                                <h1 class="card-title">
+                                    <i class="ion ion-clipboard mr-1"></i>
+                                    Cookie Policy
+                                </h1>
+
+
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+
+
+                                       <div><h4>1. Purpose of this cookie policy</h4>
+
+                                        <div>This Website uses technologies such as "cookies" and "pixel tags". By browsing the webpage, the User agrees to the creation and use of cookies.</div>
+                                        <div> If User does not wish to consent to the use of cookies, User may either disable them or discontinue browsing this webpage.</div>
+                                        <div>For the purpose of this Policy, the following terms shall have the following meaning:
+                                           <ul>
+                                               <li>"Cookie" or "Cookies": Cookies are small text or message files sent from the server of an organization and stored on your computer.
+                                                   Cookies do not have access to data stored on your computer's hard disk or to Cookies placed by other websites, and they may not harm or damage your system.
+                                               </li>
+                                               <li>"Persistence cookies" remain during multiple website visits and get stored on your hard disk.
+                                               </li>
+                                               <li>"Session Cookies" are temporary cookies that disappear automatically after you leave a website; </li>
+                                               <li>"Third Party Cookies"  are cookies used by the websites of our partners, as integrated in our own Website or used by websites we link to.</li>
+                                           </ul>
+                                            <br/>
+                                        </div>
+
+                                       </div>
+                                        <div><h4>2. Which cookies are placed on your device when using our Website?</h4>
+
+                                            <div>When you access and/or use the Website, we place one or more Cookies on your device for the purposes described herein.
+                                                The following table and relevant information set out the cookies used for the Website.It also provides details of third parties setting cookies:</div>
+
+                                                <br/>
+
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Cookie Type</th>
+                                                    <th>Cookie Provider</th>
+                                                    <th>Cookie Name</th>
+                                                    <th>Third party cookie</th>
+                                                    <th>Persistent or session Cookie</th>
+                                                    <th>Purpose of cookie</th>
+                                                </tr>
+
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>Session State</td>
+                                                    <td tpl:if="/root/@tenant='egi'">argo.egi.eu</td>
+                                                    <td tpl:if="/root/@tenant='eudat'">avail.eudat.eu</td>
+                                                    <td tpl:if="/root/@tenant='sdc'">monitoring.seadatanet.org</td>
+                                                    <td tpl:if="/root/@tenant='eosc'">eosc.ui.argo.grnet.gr</td>
+                                                    <td tpl:if="/root/@tenant='ni4os'">argo.ni4os.eu</td>
+
+
+
+                                                    <td>JSESSIONID</td>
+                                                    <td>No</td>
+                                                    <td>Session</td>
+                                                    <td>Preserve user session information</td>
+                                                </tr>
+
+                                                </tbody>
+
+
+                                            </table>
+
+                                            <br/>
+
+                                        </div>
+                                        <div>
+                                            <h4>3. How long are cookies stored on your device?</h4>
+
+                                            <div>The duration for which a cookie will be stored on your browsing device depends on whether it is a "persistence" or a "session" cookie. Session cookies will be stored on a device until you turn off your web browser.</div>
+                                             <div>"Persistence cookies" shall remain on your device after you have finished browsing until they expire or until they are deleted by you.</div> <br/>
+                                        </div>
+                                        <div><h4>4. How can you disable cookies that have been placed on your device?</h4>
+
+                                            <div>You can usually use your web browser to enable, disable, or delete cookies. To do so, follow the instructions provided for by your web browser (usually located in the "Help", "Tools" or "Edit" settings). </div>
+                                            <div>You can also set your web browser to reject all cookies or to indicate when a cookie is being sent.</div>
+
+
+                                        </div>
+
+
+
+
+                                </div>
+                            <div class="card-footer">
+                                <div class="font-italic">
+                                    Cookies are important for identifying you, thereby enabling us to grant you access to the ARGO Monitoring service and other Infrastructure services and for optimizing your browsing experience.
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+                            </div>
+                            <!-- /.card-body -->
+
+                        <!-- /.card -->
+                    </div>
+
+                </div>
+                <!-- /.row -->
+
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Main Footer -->
+
+    <footer tpl:include="/resource/app/html/footer.html"></footer>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="/resource/app/html/adminlte/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- adminlte -->
+<script src="/resource/app/html/adminlte/dist/js/adminlte.js"></script>
+
+<!-- OPTIONAL SCRIPTS -->
+<script src="/resource/app/html/adminlte/plugins/chart.js/Chart.min.js"></script>
+<script src="/resource/app/html/adminlte/dist/js/demo.js"></script>
+<script src="/resource/app/html/adminlte/dist/js/pages/dashboard3.js"></script>
+</body>
+</html>
+
