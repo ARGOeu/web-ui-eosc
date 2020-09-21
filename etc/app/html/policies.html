@@ -125,11 +125,11 @@
                                                  including the entirety of the web pages thereof.
                                             </li>
                                             <li>" Argo Service Monitoring Service"  -
-                                                <span tpl:if="/root/@tenant='egi'">https://argo.egi.eu </span>
-                                                <span tpl:if="/root/@tenant='eudat'">https://avail.eudat.eu </span>
-                                                <span tpl:if="/root/@tenant='sdc'">https://monitoring.seadatanet.org </span>
-                                                <span tpl:if="/root/@tenant='eosc'">https://eosc.ui.argo.grnet.gr </span>
-                                                <span tpl:if="/root/@tenant='ni4os'">https://argo.ni4os.eu </span>
+                                                <span href="https://argo.egi.eu" tpl:if="/root/@tenant='egi'">https://argo.egi.eu </span>
+                                                <span href="https://avail.eudat.eu" tpl:if="/root/@tenant='eudat'">https://avail.eudat.eu </span>
+                                                <span href="https://monitoring.seadatanet.org" tpl:if="/root/@tenant='sdc'">https://monitoring.seadatanet.org </span>
+                                                <span href="https://eosc.ui.argo.grnet.gr" tpl:if="/root/@tenant='eosc'">https://eosc.ui.argo.grnet.gr </span>
+                                                <span href="https://argo.ni4os.eu" tpl:if="/root/@tenant='ni4os'">https://argo.ni4os.eu </span>
                                             </li>
                                             <li>“User”- the Argo Service Monitoring online service user, whom the data
                                                 refers to, whose identity is known or may be verified, namely it may be
@@ -471,7 +471,7 @@
                             </div>
                             <div class="card-body border-bottom p-3">
                                 <h2 class="m-2">K. Recourse/Complaint:</h2>
-                                In the event that any Argo Service Monitoring “user” request is not satisfied by the processor,  the  "user" may at any time address to/ file recourse with the Competent Supervisory Authority, namely the Data Protection Authority  https://www.dpa.gr .
+                                In the event that any Argo Service Monitoring “user” request is not satisfied by the processor,  the  "user" may at any time address to/ file recourse with the Competent Supervisory Authority, namely the Data Protection Authority  <a href="https://www.dpa.gr" title="Data Protection Authorit">https://www.dpa.gr</a> .
                             </div>
                         </div>
 
@@ -507,10 +507,6 @@
 <!-- adminlte -->
 <script src="/resource/app/html/adminlte/dist/js/adminlte.js"></script>
 
-<!-- OPTIONAL SCRIPTS -->
-<script src="/resource/app/html/adminlte/plugins/chart.js/Chart.min.js"></script>
-<script src="/resource/app/html/adminlte/dist/js/demo.js"></script>
-<script src="/resource/app/html/adminlte/dist/js/pages/dashboard3.js"></script>
 </body>
 </html>
 
