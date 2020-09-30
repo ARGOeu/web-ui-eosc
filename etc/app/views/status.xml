@@ -367,8 +367,12 @@
                         <attribute-create out="end_time" if="current()/../following-sibling::status[1]">
                             current()/../following-sibling::status[1]/@timestamp
                         </attribute-create>
-                        <attribute-create out="end_time" if="not(current()/../following-sibling::status[1])">
+                        <attribute-create out="end_time" if="not(current()/../following-sibling::status[1]) and date:seconds(date:difference(function:date-UTC(),date:add(../@timestamp,concat('P',1,'D'))))&lt;0">
                             ../ancestor::root/@end_time
+                        </attribute-create>
+
+                        <attribute-create out="end_time" if="not(current()/../following-sibling::status[1]) and date:seconds(date:difference(function:date-UTC(),date:add(../@timestamp,concat('P',1,'D'))))&gt;0">
+                           ../@timestamp
                         </attribute-create>
 
                     </element>
