@@ -321,22 +321,6 @@
                 <element-create>sort_by_string(../status,'@timestamp')</element-create>
             </elements>
 
-            <element in="root">
-                <element in="group" if="count(status)&gt;100">
-                    <element-create-as-parent out="status" attributes="@value" group-by="@value">
-                        <element in="status"/>
-                    </element-create-as-parent>
-                </element>
-            </element>
-
-            <element in="root">
-                <element in="group" >
-                    <element in="status" if="status">
-                        <attribute-create out="timestamp">../status[1]/@timestamp</attribute-create>
-                        <element-ignore in="status"/>
-                    </element>
-                </element>
-            </element>
 
             <element in="root" if="$tenant='egi'">
                 <set variable="listSites">view('gocdb.site')</set>
@@ -364,17 +348,21 @@
 
                         <attribute-create out="color">$StateColor/e:entries/e:entry[@key=current()/../@value]/text()
                         </attribute-create>
+
                         <attribute-create out="end_time" if="current()/../following-sibling::status[1]">
                             current()/../following-sibling::status[1]/@timestamp
                         </attribute-create>
 
                         <attribute-create out="end_time" if="not(current()/../following-sibling::status[1])">
-                           date:add(../@timestamp,concat('PT',10,'M'))
+                           choose(date:seconds(date:difference(date:add(../@timestamp,concat('P',1,'D')),function:date-UTC())) &gt;0 , ../@timestamp, date:add(../@timestamp,concat('PT',10,'M')))
                         </attribute-create>
 
                     </element>
                 </element>
             </element>
+
+
+
 
 
 

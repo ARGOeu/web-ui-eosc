@@ -180,9 +180,7 @@ $(function() {
         var view = $("input[name=type]:checked").val() ;
         var entity = $("#services option:selected").text().replace("+", "%252B");
         var range = 'start_date=' + $('#reportrange span').text().replace(' / ','&end_date=');
-
-
-         var link = '/' + tenant + '/' + view + '/' + report + '/' + topology + '/' + entity + '?' + range;
+        var link = '/' + tenant + '/' + view + '/' + report + '/' + topology + '/' + entity + '?' + range;
 
         window.location=link;
 
