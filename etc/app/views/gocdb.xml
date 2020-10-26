@@ -259,6 +259,64 @@
 
     </view>
 
+    <view name="api.topology">
+        <argument name="tenant"/>
+        <argument name="group">_group_</argument>
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="url" eval="property('api.topology.endpoints')"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+            <fallback
+                    eval="new_element('exception',new_attribute('exception',concat('exception with topology endpoints',$url)))">
+                <exception type="java.io.IOException"/>
+            </fallback>
+        </connector>
+
+        <serializer type="JSONStreamSerializer"/>
+
+        <processors>
+            <element in="object" out="root">
+                <element-ignore in="data">
+                    <element in="object" out="group">
+                        <attribute-create out="name">../group/text()</attribute-create>
+
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="root" if="$group='_group_'">
+                <element in="group">
+                    <element-ignore/>
+                </element>
+            </element>
+
+            <element in="root" if="$group='_group_'">
+                <element-ignore in="group"/>
+                <element-create>uniq(../group,'@name')</element-create>
+            </element>
+
+
+            <element in="root" if="$group!='_group_'">
+                <element-ignore in="group" if="@name!=$group">
+                </element-ignore>
+            </element>
+
+        </processors>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
+
+    </view>
 
     <view name="gocdb.site" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
 

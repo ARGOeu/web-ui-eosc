@@ -557,6 +557,7 @@
 
         <pre-renderers>
             <row foreach="/root/group/results">
+                <column label="group">ancestor::root/@group</column>
                 <column label="name">ancestor::group/@name</column>
                 <column label="timestamp">@timestamp</column>
                 <column label="availability">@availability</column>

@@ -19,6 +19,13 @@ else
 window.location=baseUrl[0]+ '/services?'+baseUrl[1];
 }
 
+function my_export(format){
+var baseUrl=urlI.split('?');
+       window.location=baseUrl[0]+ '/' + format +'?'+baseUrl[1];
+
+
+}
+
 if (~urlI.indexOf('egi')) {
     $('#ar').DataTable(
         {

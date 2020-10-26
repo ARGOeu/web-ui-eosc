@@ -93,6 +93,13 @@
                             <input class="d-none" id="subtitlePDF2" tpl:if="@group"
                                    value="{{@group}}  {{@group2}}  {{@group3}} "/>
 
+                            <div class="card-body" tpl:if="count(group) &gt;1">
+                                <h2 class="card-title">{{/root/@group}} - Global Export :
+                                    <span>  <a  href="javascript:my_export('csv')"     title="Export CSV"   class="text-white m-2 badge badge-primary">CSV</a></span>
+                                </h2>
+                                <span>Please see details and exports per sub-groups below</span>
+                            <hr/>
+                            </div>
                             <div class="card-body" tpl:foreach="group">
 
 
