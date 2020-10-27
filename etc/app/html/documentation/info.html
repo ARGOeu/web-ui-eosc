@@ -1,0 +1,79 @@
+<div class="card" >
+    <div class="card-header">
+
+        <div class="card-title"><h3><i class="fas fa-info mr-2"></i> Global information</h3></div>
+    </div>
+
+    <div class="card-body">
+       <div class="m-1">The SDC monitoring infrastructure divides Services in 2 main categories:
+           <ul>
+                <li>The first category includes the Core Services.</li>
+                <li>The second category includes all the other Services, apart from the Core Services.</li>
+            </ul>
+       </div>
+        <hr/>
+        <h1>Core Services</h1>
+        <div class="mt-4">The first category 'Core Services' consists of 3 Service Groups
+            <ol>
+                <li>The Infrastructure Service Group</li>
+                <li>The Homepage Service Group</li>
+                <li>The Downstream Service Group</li>
+            </ol>
+        </div>
+        <div class="m-1">The above 3 Service Groups, should all be in 'OK' state simultaneously,
+            in order for the Core Services to be considered in 'OK' state.</div>
+        <div class="m-1">
+            If one of these 3 Service Groups is in 'CRITICAL' state,  then Core Services are likewise considered in 'CRITICAL' state.
+            Every one of these 3 Service Groups includes a number of Service Types, for achieving most accurate monitoring results.
+        </div>
+        <h3 class="mt-4">1. The Infrastructure Service Group</h3>
+        <div class="m-1">The Infrastructure Service Group       is responsible for monitoring the EUDAT services    and includes 4 Service Types
+        <ul>
+            <li>b2access.unity</li>
+            <li>b2safe.irods</li>
+            <li>b2stage.http-api</li>
+            <li>eu.eudat.b2stage.http-api-ingestion</li>
+        </ul>
+        </div>
+        <h3>2. The Homepage Service Group</h3>
+        <div class="m-1"> The Homepage Service Group is responsible for monitoring the main SeaDataNet website,  where a guest user can browse, search and download dataand includes 1 Service Type
+            <ul><li>eu.seadatanet.org.homepage</li></ul>
+        </div>
+
+        <h3>3. The Downstream Service Group</h3>
+        <div class="m-1">The Downstream Service Group is responsible for monitoring the downstream services
+            that enable the users to download the desired data
+            and includes 4 Service Types
+            <ul>
+                <li>eu.seadatanet.org.login</li>
+                <li>eu.seadatanet.org.rsm</li>
+                <li>eu.seadatanet.org.search</li>
+                <li>eu.seadatanet.org.search-cdi</li>
+            </ul>
+        </div>
+        <hr/>
+
+        <h1>Other Services</h1>
+
+        <div class="mt-4">The second category, that includes all the Services apart from the Core Services,
+            consists of Service Groups that do not relate to each other.
+        </div>
+        <div class="m-1">
+            As a result, if one Service Group is in 'CRITICAL' state
+            then the other Service Groups are not affected by this result,
+            as they operate and are monitored independently.
+        </div>
+    <div class="m-1">
+        To check the Availability/Reliability of a Service Group,  you can generate a Custom Report in the following link
+        <a href="https://monitoring.seadatanet.org/sdc/Critical/custom" title="link to custom report">https://monitoring.seadatanet.org/sdc/Critical/custom</a>
+    </div>
+        <div class="m-1">
+        Along with the Service Group, you can select the time period you want information about it.
+        After the Report is generated, you can export it in Excel, CSV or PDF format.
+        </div>
+        <div class="m-1">
+        On the same link you can also check the Status of a Service Group, Service Type or metric,
+        by generating a Custom Report, though in this scenario there is no way of exporting the report.
+        </div>
+    </div>
+</div>

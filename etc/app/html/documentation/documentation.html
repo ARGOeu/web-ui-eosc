@@ -52,6 +52,7 @@
                             <a class="nav-item nav-link" tpl:if="/root/@tenant='sdc'" href="#help4" data-toggle="tab"><h4><i class="fas fa-power-off mr-1"></i>Downtimes</h4></a>
                             <a class="nav-item nav-link" href="#help5" data-toggle="tab"><h4><i class="fa fa-eye mr-1"></i>Dashboard</h4></a>
                             <a class="nav-item nav-link" href="#help6" data-toggle="tab"><h4><i class="fa fa-file mr-1"></i>Custom report</h4></a>
+                            <a class="nav-item nav-link"  tpl:if="/root/@tenant='sdc'" href="#help7" data-toggle="tab"><h4><i class="fa fa-info mr-1"></i>Global information</h4></a>
 
                         </nav>
 
@@ -63,6 +64,7 @@
                             <div class="tab-pane" tpl:if="/root/@tenant='sdc'" id="help4"><div tpl:include="/resource/app/html/documentation/downtimes.html"></div></div>
                             <div class="tab-pane" id="help5"><div tpl:include="/resource/app/html/documentation/dashboard.html"></div></div>
                             <div class="tab-pane" id="help6"><div tpl:include="/resource/app/html/documentation/custom.html"></div></div>
+                            <div tpl:if="/root/@tenant='sdc'" class="tab-pane" id="help7"><div tpl:include="/resource/app/html/documentation/info.html"></div></div>
 
                         </div>
 
