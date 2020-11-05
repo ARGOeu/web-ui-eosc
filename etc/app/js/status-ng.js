@@ -1,3 +1,4 @@
+$('span[data-toggle="tooltip"]').tooltip();
 $("#refreshPage").click(function() {
 
     var view='status-egiCore';
@@ -73,10 +74,10 @@ $("#input-status-filter").val(status);
         });
 
       function filter(element) {
-            var value = $(element).val();
+            var value = $(element).val().toLowerCase();
 
             $("div.group").each(function() {
-                if ($(this).text().search(value) > -1) {
+                if ($(this).text().toLowerCase().search(value) > -1) {
                     $(this).parents( ".card" ).show();
                 }
                 else {
