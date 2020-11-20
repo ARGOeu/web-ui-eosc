@@ -133,10 +133,7 @@
                     </div>
 
 
-<!--                    <div class="float-right ml-auto m-2"><a class="mr-2 link" id="refreshPage"><i-->
-<!--                            class="fas fa-sync-alt"></i> </a>-->
-<!--                        <small>Last Refresh : {{/root/@lastRefresh}}</small>-->
-<!--                    </div>-->
+
                 </div>
 
 
@@ -148,13 +145,28 @@
                             <h4 class="col-3">
                                 <div class="group small">{{@key}}</div>
                             </h4>
-                            <div tpl:foreach="issue" class="col-1 text-center">
-                                <span class="d-block status m-1 badge badge-{{status/text()}}" data-toggle="tooltip" data-html="true" title="&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Service: &lt;/strong&gt;&lt;br&gt;{{service}}&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Endpoint: &lt;/strong&gt;&lt;br&gt;{{endpoint}}&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Timestamp: &lt;/strong&gt;&lt;br&gt;{{timestamp}}&lt;/li&gt;&lt;/ul&gt;">{{status/text()}}</span>
+                            <div tpl:foreach="issue" class="col-1 text-center">                             
+                                <span class="d-block status m-1 badge badge-{{status/text()}}">{{status/text()}}</span>
                             </div>
-
-
+                            <div class="ml-auto">
+                                <a  class="toggle-body" id="toggle_{{@key}}"> <i class="fas fa-angle-double-down text-primary"></i></a>
+                            </div>
                         </div>
+                        <div class="card-body d-none row" id="body-{{@key}}" >
+                           <div tpl:foreach="issue" class="col-3">
+                               <span class="d-block status m-1 badge badge-{{status/text()}}">{{status/text()}}</span>
+                               <ul >
+                                   <li><strong>Service: </strong>{{service}}</li>
+                                   <li><strong>Endpoint: </strong>{{endpoint}}</li>
+                                   <li><strong>Timestamp: </strong>{{timestamp}}</li>
+                                   <li><a href="/{/root/@tenant}/report-status/{/root/@report}/{/root/report[@tenant=/root/@tenant][@report=/root/@report]/@topology2}/{@key}/{service}/{endpoint}"><span class="fa fa-link m-1"></span>Status for last 5 days</a></li>
 
+                               </ul>
+                           </div>
+                            <div class="ml-auto">
+                                <a  class="untoggle-body" id="untoggle_{{@key}}"> <i class="fas fa-angle-double-up text-primary"></i></a>
+                            </div>
+                        </div>
                     </div>
 
 

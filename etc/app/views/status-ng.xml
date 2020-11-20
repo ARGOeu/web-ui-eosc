@@ -25,6 +25,7 @@
             <element in="object" out="root">
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
+                <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
                     <element-ignore in="data">
                         <element-ignore in="object"/>
                         <element-create>sort_by_string(../object,'endpoint_group/text()')</element-create>
