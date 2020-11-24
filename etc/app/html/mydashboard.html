@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+
+<head tpl:include="/resource/app/html/header.html"></head>
+
+<body class="sidebar-mini layout-fixed layout-navbar-fixed" style="height: auto;" cz-shortcut-listen="true">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav tpl:include="/resource/app/html/navbar.html"></nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside tpl:include="/resource/app/html/sidebar.html"></aside>
+    <!-- /sidebar -->
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-9">
+
+                    </div><!-- /.col -->
+                    <div class="col-sm-3">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/"></a></li>
+
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-md-3 col-sm-6 col-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-info"><i class="fas fa-sitemap"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center">Tenant</span>
+                                <span class="info-box-text text-center">
+                                    <select id="selectTenant" class="form-control">
+                                        <option>--Select your tenant--</option>
+                                        <option tpl:foreach="/tenants/tenant" value="{@id}">{{@id}}</option>
+                                    </select>
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+
+
+                    <div tpl:foreach="/tenants/tenant" id="report_{@id}" class="report d-none col-md-3 col-sm-6 col-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-primary"><i class="fas fa-list"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center">Report</span>
+                                <span class="info-box-text text-center">
+                                    <select class="form-control selectReport">
+                                        <option>--Select your report--</option>
+                                        <option tpl:foreach="report" value="{ancestor::tenant/@id}_{@name}">{{@name}}</option>
+                                    </select>
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+
+
+                    <div tpl:foreach="/tenants/tenant/report" id="group_{ancestor::tenant/@id}_{@name}" class="group d-none col-md-3 col-sm-6 col-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-primary"><i class="fas fa-list"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center">Group {{group_type/text()}}</span>
+                                <span class="info-box-text text-center">
+                                    <select class="form-control" >
+                                        <option>--Select your group--</option>
+                                        <option tpl:foreach="group_list/item" value="{@text}">{{text()}}</option>
+                                    </select>
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <div class="info-box">
+                            <span class="info-box-icon bg-primary"><i class="fas fa-list"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center">Group {{endpoint_group_type/text()}}</span>
+                                <span class="info-box-text text-center">
+                                    <select class="form-control" >
+                                        <option>--Select your group--</option>
+                                        <option tpl:foreach="endpoint_group_list/item" value="{@text}">{{text()}}</option>
+                                    </select>
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                        <div class="info-box">
+                            <span class="info-box-icon bg-primary"><i class="fas fa-list"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center">Services</span>
+                                <span class="info-box-text text-center">
+                                    <select class="form-control" >
+                                        <option>--ALL--</option>
+                                        <option tpl:foreach="service_list/item" value="{@text}">{{text()}}</option>
+                                    </select>
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Main Footer -->
+
+    <footer tpl:include="/resource/app/html/footer.html"></footer>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="/resource/app/html/adminlte/plugins/jquery/jquery.min.js?v={$app.version}"></script>
+<!-- Bootstrap -->
+<script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js?v={$app.version}"></script>
+<!-- adminlte -->
+<script src="/resource/app/html/adminlte/dist/js/adminlte.js?v={$app.version}"></script>
+
+
+<!-- LOCAL SCRIPTS -->
+<script src="/resource/app/js/mydashboard.js?v={$app.version}"></script>
+
+
+</body>
+</html>
+

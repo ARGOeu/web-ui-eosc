@@ -5,6 +5,19 @@
         Created by cyril on 2018/06/13 
     -->
 
+    <view name="myDashboard" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd" xmlns:date="http://exslt.org/dates-and-times">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('tenants.reports')"/>
+        </connector>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/mydashboard.html</parameter>
+            </renderer>
+        </renderers>
+    </view>
+
+
     <view name="issues" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd" xmlns:date="http://exslt.org/dates-and-times">
         <argument name="tenant"></argument>
         <argument name="report"></argument>
@@ -25,6 +38,7 @@
             <element in="object" out="root">
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="url">$url</attribute-create>
                 <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
                     <element-ignore in="data">
                         <element-ignore in="object"/>
