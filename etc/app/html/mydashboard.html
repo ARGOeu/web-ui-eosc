@@ -36,94 +36,205 @@
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
-                <div class="row">
+                <div class="card">
+                    <div class="row card-header">
+                        <h2>Tenants and entities</h2>
+                    </div>
 
-                    <div class="col-md-3 col-sm-6 col-12">
-                        <div class="info-box">
-                            <span class="info-box-icon bg-info"><i class="fas fa-sitemap"></i></span>
+                    <div class="row card-body">
+                        <div class="col-md-3 col-sm-6 col-12">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-primary"><i class="fas fa-sitemap"></i></span>
 
-                            <div class="info-box-content">
-                                <span class="info-box-text text-center">Tenant</span>
-                                <span class="info-box-text text-center">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center">Tenant</span>
+                                    <span class="info-box-text text-center">
                                     <select id="selectTenant" class="form-control">
                                         <option>--Select your tenant--</option>
                                         <option tpl:foreach="/tenants/tenant" value="{@id}">{{@id}}</option>
                                     </select>
                                 </span>
+                                </div>
+                                <!-- /.info-box-content -->
                             </div>
-                            <!-- /.info-box-content -->
+                            <!-- /.info-box -->
                         </div>
-                        <!-- /.info-box -->
-                    </div>
 
 
-                    <div tpl:foreach="/tenants/tenant" id="report_{@id}" class="report d-none col-md-3 col-sm-6 col-12">
-                        <div class="info-box">
-                            <span class="info-box-icon bg-primary"><i class="fas fa-list"></i></span>
+                        <div tpl:foreach="/tenants/tenant" id="report_{@id}" class="report d-none col-md-3 col-sm-6 col-12">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-primary"><i class="fas fa-list"></i></span>
 
-                            <div class="info-box-content">
-                                <span class="info-box-text text-center">Report</span>
-                                <span class="info-box-text text-center">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center">Report</span>
+                                    <span class="info-box-text text-center">
                                     <select class="form-control selectReport">
                                         <option>--Select your report--</option>
                                         <option tpl:foreach="report" value="{ancestor::tenant/@id}_{@name}">{{@name}}</option>
                                     </select>
                                 </span>
+                                </div>
+                                <!-- /.info-box-content -->
                             </div>
-                            <!-- /.info-box-content -->
+                            <!-- /.info-box -->
                         </div>
-                        <!-- /.info-box -->
-                    </div>
 
 
-                    <div tpl:foreach="/tenants/tenant/report" id="group_{ancestor::tenant/@id}_{@name}" class="group d-none col-md-3 col-sm-6 col-12">
-                        <div class="info-box">
-                            <span class="info-box-icon bg-primary"><i class="fas fa-list"></i></span>
+                        <div tpl:foreach="/tenants/tenant/report" id="group_{ancestor::tenant/@id}_{@name}" class="group d-none col-md-3 col-sm-6 col-12">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-primary"><i class="fas fa-globe"></i></span>
 
-                            <div class="info-box-content">
-                                <span class="info-box-text text-center">Group {{group_type/text()}}</span>
-                                <span class="info-box-text text-center">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center">Group {{group_type/text()}}</span>
+                                    <span class="info-box-text text-center">
                                     <select class="form-control" >
                                         <option>--Select your group--</option>
                                         <option tpl:foreach="group_list/item" value="{@text}">{{text()}}</option>
                                     </select>
                                 </span>
+                                </div>
+                                <!-- /.info-box-content -->
                             </div>
-                            <!-- /.info-box-content -->
-                        </div>
-                        <div class="info-box">
-                            <span class="info-box-icon bg-primary"><i class="fas fa-list"></i></span>
+                            <div class="info-box">
+                                <span class="info-box-icon bg-primary"><i class="fas fa-home"></i></span>
 
-                            <div class="info-box-content">
-                                <span class="info-box-text text-center">Group {{endpoint_group_type/text()}}</span>
-                                <span class="info-box-text text-center">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center">Group {{endpoint_group_type/text()}}</span>
+                                    <span class="info-box-text text-center">
                                     <select class="form-control" >
                                         <option>--Select your group--</option>
                                         <option tpl:foreach="endpoint_group_list/item" value="{@text}">{{text()}}</option>
                                     </select>
                                 </span>
+                                </div>
+                                <!-- /.info-box-content -->
                             </div>
-                            <!-- /.info-box-content -->
-                        </div>
-                        <!-- /.info-box -->
-                        <div class="info-box">
-                            <span class="info-box-icon bg-primary"><i class="fas fa-list"></i></span>
+                            <!-- /.info-box -->
+                            <div class="info-box">
+                                <span class="info-box-icon bg-primary"><i class="fas fa-hdd"></i></span>
 
-                            <div class="info-box-content">
-                                <span class="info-box-text text-center">Services</span>
-                                <span class="info-box-text text-center">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center">Services</span>
+                                    <span class="info-box-text text-center">
                                     <select class="form-control" >
                                         <option>--ALL--</option>
                                         <option tpl:foreach="service_list/item" value="{@text}">{{text()}}</option>
                                     </select>
                                 </span>
+                                </div>
+                                <!-- /.info-box-content -->
                             </div>
-                            <!-- /.info-box-content -->
                         </div>
                     </div>
+
                 </div>
                 <!-- /.row -->
-            </div>
+
+                <div class="card">
+                    <div class="row card-header">
+                        <h2>Figures</h2>
+                    </div>
+
+                    <div class="row card-body">
+                        <div class="col-md-3 col-sm-6 col-12">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-info"><i class="fas fa-poll"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center">Type of metrics</span>
+                                    <span class="info-box-text text-center">
+                                    <select id="selectResults" class="form-control">
+                                        <option>--Select the type of metrics--</option>
+                                        <option value="avre">Availabilities/Reliabilities</option>
+                                        <option value="status">Status</option>
+                                        <option value="issues">Issues</option>
+                                    </select>
+                                </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+
+                        <div class="col-md-3 col-sm-6 col-12 results_avre results d-none">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-info"><i class="fas fa-chart-bar"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center">Format</span>
+                                    <span class="info-box-text text-center">
+                                    <select id="selectFormat" class="form-control">
+                                        <option>table</option>
+                                        <option>chart : bar</option>
+                                        <option>chart : lines</option>
+                                    </select>
+                                </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+
+                        <div class="col-md-3 col-sm-6 col-12 results_status results d-none">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-info"><i class="fas fa-chart-bar"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center">Format</span>
+                                    <span class="info-box-text text-center">
+                                    <select id="selectFormat" class="form-control">
+                                        <option>chart : bars</option>
+                                        <option>list of last statuses</option>
+                                    </select>
+                                </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+
+                        <div class="col-md-3 col-sm-6 col-12 results_avre results d-none">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-info"><i class="fas fa-calendar"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center">Timeline</span>
+                                    <div id="reportrange1"
+                                         style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                        <i class="fa fa-calendar mr-3"></i>
+                                        <span></span> <i class="ml-3 fa fa-caret-down"></i>
+                                    </div>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+
+
+
+                        <div class="col-md-3 col-sm-6 col-12 results_status results d-none">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-info"><i class="fas fa-calendar"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center">Timeline</span>
+                                    <div id="reportrange2"
+                                         style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                        <i class="fa fa-calendar mr-3"></i>
+                                        <span></span> <i class="ml-3 fa fa-caret-down"></i>
+                                    </div>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <button type="button" class="m-2 btn btn-primary" id="submitF">Submit</button>
+
+
+                    </div>
+                </div>
+
+                    </div>
             <!-- /.container-fluid -->
         </div>
         <!-- /.content -->
@@ -145,6 +256,11 @@
 <!-- adminlte -->
 <script src="/resource/app/html/adminlte/dist/js/adminlte.js?v={$app.version}"></script>
 
+
+<!-- date range picker -->
+<link rel="stylesheet" href="/resource/app/html/adminlte/plugins/daterangepicker/daterangepicker.css"/>
+<script src="/resource/app/html/adminlte/plugins/daterangepicker/moment.min.js"></script>
+<script src="/resource/app/html/adminlte/plugins/daterangepicker/daterangepicker.min.js"></script>
 
 <!-- LOCAL SCRIPTS -->
 <script src="/resource/app/js/mydashboard.js?v={$app.version}"></script>
