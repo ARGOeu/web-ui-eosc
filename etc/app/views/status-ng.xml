@@ -5,17 +5,6 @@
         Created by cyril on 2018/06/13 
     -->
 
-    <view name="myDashboard" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd" xmlns:date="http://exslt.org/dates-and-times">
-        <connector type="XMLConnector">
-            <parameter name="content" eval="view('tenants.reports')"/>
-        </connector>
-
-        <renderers>
-            <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/mydashboard.html</parameter>
-            </renderer>
-        </renderers>
-    </view>
 
 
     <view name="issues" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd" xmlns:date="http://exslt.org/dates-and-times">

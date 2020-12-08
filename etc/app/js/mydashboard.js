@@ -2,6 +2,7 @@
     var start1 = moment().subtract(29, 'days');
     var end1 = moment();
 
+
     function cb(start, end) {
         $('#reportrange1 span').html(start.format('YYYY-MM-DD') + ' / ' + end.format('YYYY-MM-DD'));
     }
@@ -44,27 +45,26 @@
         cb2(start2, end2);
 
 
-$('#selectTenant').on('change', function() {
-  var tenantId= this.value ;
-  $("div.report").addClass("d-none");
-
-  $("#report_"+tenantId).addClass("show");
-   $("#report_"+tenantId).removeClass("d-none");
-});
 
 $('.selectReport').on('change', function() {
   var reportId= this.value ;
   $("div.group").addClass("d-none");
-
   $("#group_"+reportId).addClass("show");
    $("#group_"+reportId).removeClass("d-none");
 });
 
-$('#selectResults').on('change', function() {
+ $('.subgroup_check').on('change',function(){
+    var subgroup=$(this).val();
+    console.log("subgroup"+subgroup);
+    $("select.subgroup").addClass("d-none");
+    $("select#subgroup_"+subgroup).removeClass("d-none");
+
+ });
+
+$('.selectResults').on('change', function() {
   var resultId= this.value ;
 
   $("div.results").addClass("d-none");
-
   $(".results_"+resultId).addClass("show");
    $(".results_"+resultId).removeClass("d-none");
    $("#submitF").removeClass("d-none");

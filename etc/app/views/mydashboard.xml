@@ -1,0 +1,114 @@
+<views xmlns="http://software.in2p3.fr/lavoisier/application.xsd"
+       xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:t="http://software.in2p3.fr/lavoisier/tables.xsd">
+
+    <view name="myDashboard" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd" xmlns:date="http://exslt.org/dates-and-times">
+        <argument name="tenant">egi</argument>
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('tenants.reports')"/>
+        </connector>
+
+        <processors>
+            <element in="tenants">
+                <element-ignore in="tenant" if="@id!=$tenant"/>
+            </element>
+        </processors>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/mydashboard.html</parameter>
+            </renderer>
+        </renderers>
+    </view>
+
+    <view name="results" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd" xmlns:date="http://exslt.org/dates-and-times">
+        <argument name="tenant"/>
+        <argument name="report"/>
+        <argument name="start_date"/>
+        <argument name="end_date"/>
+        <argument name="group_type"/>
+        <argument name="group_name"/>
+        <argument name="type_results"/>
+        <argument name="format_results"/>
+        <argument name="av_threshold">90</argument>
+        <argument name="re_threshold">95</argument>
+
+        <variable name="uniqueId" eval="date:seconds()"/>
+
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view($type_results,arguments())"/>
+        </connector>
+
+        <processors>
+            <element in="results">
+                <attribute-create out="format_results">$format_results</attribute-create>
+                <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="av_threshold">$av_threshold</attribute-create>
+                <attribute-create out="re_threshold">$re_threshold</attribute-create>
+                <attribute-create out="uniqueId">$uniqueId</attribute-create>
+            </element>
+        </processors>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/card.html</parameter>
+            </renderer>
+        </renderers>
+    </view>
+
+    <view name="dash_avre">
+        <argument name="tenant"/>
+        <argument name="report"/>
+        <argument name="start_date"/>
+        <argument name="end_date"/>
+        <argument name="group_type"/>
+        <argument name="group_name"/>
+        <argument name="format_results"/>
+
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="url" eval="choose($group_name!='ALL',concat(property('api.report'),'/',$report,'/',$group_type,'/',$group_name,'?start_time=',$start_date,'&amp;end_time=',$end_date),concat(property('api.report'),'/',$report,'/',$group_type,'?start_time=',$start_date,'&amp;end_time=',$end_date))"/>
+
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+        </connector>
+
+        <serializer type="JSONStreamSerializer"></serializer>
+
+        <processors>
+            <element in="object" out="results" if="$group_type='NGI' or $group_type='PROJECT'" attributes="new_attribute('name',$group_name)|new_attribute('type',$group_type)">
+                <element-create as="first-child">new_attribute($group_type,$group_name)</element-create>
+                <elements-ignore path="results/object">
+                    <element in="results" out="ars">
+                        <element in="object" out="ar">
+                            <element if="name()!='timestamp'">
+                                <text>round(. * 100 ) div 100</text>
+                            </element>
+                        </element>
+                    </element>
+                </elements-ignore>
+            </element>
+
+            <element in="object" out="results" if="$group_type='SITES' or $group_type='SERVICEGROUPS'" attributes="new_attribute('name',$group_name)|new_attribute('type',$group_type)">
+
+                <elements-ignore path="results/object/endpoints/object">
+                    <element in="results" out="ars">
+                        <element in="object" out="ar">
+                            <element if="name()!='timestamp'">
+                                <text>round(. * 100 ) div 100</text>
+                            </element>
+                        </element>
+                    </element>
+                </elements-ignore>
+            </element>
+
+        </processors>
+
+    </view>
+
+
+</views>
