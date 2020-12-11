@@ -1,4 +1,9 @@
 
+       $('[rel=tooltip]').tooltip({
+                placement: 'right'
+             });
+
+
       $( ".arTable" ).each(function( index ) {
 
     var id =$(this).attr('id').split("data_")[1];
