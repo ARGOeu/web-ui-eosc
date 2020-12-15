@@ -34,137 +34,163 @@
         <!-- /.content-header -->
         <div class="content">
             <div class="container-fluid">
-                 <div class="d-flex flex-row">
-                <div class="card p-2 m-2">
-                    <div class="card-header">
-                        <h4 class="card-title">Settings</h4>
 
-                            <ul class="card-tools">
+                <div class="row">
+                    <button type="button" class="col-1 btn btn-primary" data-toggle="modal" data-target="#settingsModal">
+                        <i class="fas fa-plus-square m-1"></i>  Add a widget
+                    </button>
+                    <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
 
-                                <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
-                                </button>
-                                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
-                                </button>
-                            </ul>
-                        </div>
-
-                    <div class="card-body">
                         <form role="form" id="target">
-                            <div class="form-group">
-                                <label><i class="fas fa-list m-1"></i> Report</label>
-                                <select class="selectReport form-control">
-                                    <option value="0">--Select your report --</option>
-                                    <option tpl:foreach="/tenants/tenant/report" value="{ancestor::tenant/@id}_{@name}">
-                                        {{@name}}
-                                    </option>
-                                </select>
-
+                            <div class="modal-header">
+                                <h4 class="modal-title">Settings</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">x</span>
+                                </button>
                             </div>
-                            <hr/>
-                            <div class="form-group d-none group" id="group_{ancestor::tenant/@id}_{@name}"    tpl:foreach="/tenants/tenant/report">
-                                <label><i class="fas fa-sitemap m-1"></i> Groups</label>
+
+                            <div class="modal-body">
 
                                 <div class="form-group">
-                                    <div class="form-check">
-                                        <input class="subgroup_check form-check-input" type="radio" name="subgroup_{@name}"
-                                               value="{@name}_{group_type/text()}" checked="true"/>
-                                        <label class="form-check-label">{{group_type/text()}}</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="subgroup_check form-check-input" type="radio" name="subgroup_{@name}"
-                                               value="{@name}_{endpoint_group_type/text()}"/>
-                                        <label class="form-check-label">{{endpoint_group_type/text()}}</label>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <select class="subgroup form-control" id="subgroup_{@name}_{group_type/text()}">
-                                        <option value="0">--{{group_type/text()}}--</option>
-                                        <option tpl:foreach="group_list/item" value="{text()}">{{text()}}</option>
+                                    <label><i class="fas fa-list m-1"></i> Report</label>
+                                    <select class="selectReport form-control">
+                                        <option value="0">--Select your report --</option>
+                                        <option tpl:foreach="/tenants/tenant/report"
+                                                value="{ancestor::tenant/@id}_{@name}">
+                                            {{@name}}
+                                        </option>
                                     </select>
+
+                                </div>
+                                <hr/>
+                                <div class="form-group d-none group" id="group_{ancestor::tenant/@id}_{@name}"
+                                     tpl:foreach="/tenants/tenant/report">
+                                    <label><i class="fas fa-sitemap m-1"></i> Groups</label>
+
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="subgroup_check form-check-input" type="radio"
+                                                   name="subgroup_{@name}"
+                                                   value="{@name}_{group_type/text()}" checked="true"/>
+                                            <label class="form-check-label">{{group_type/text()}}</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="subgroup_check form-check-input" type="radio"
+                                                   name="subgroup_{@name}"
+                                                   value="{@name}_{endpoint_group_type/text()}"/>
+                                            <label class="form-check-label">{{endpoint_group_type/text()}}</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <select class="subgroup form-control" id="subgroup_{@name}_{group_type/text()}">
+                                            <option value="0">--{{group_type/text()}}--</option>
+                                            <option tpl:foreach="group_list/item" value="{text()}">{{text()}}</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <select class="subgroup form-control d-none"
+                                                id="subgroup_{@name}_{endpoint_group_type/text()}">
+                                            <option value="0">--{{endpoint_group_type/text()}}--</option>
+                                            <option tpl:foreach="endpoint_group_list/item" value="{text()}">{{text()}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <hr/>
                                 </div>
                                 <div>
-                                    <select class="subgroup form-control d-none"  id="subgroup_{@name}_{endpoint_group_type/text()}">
-                                        <option value="0">--{{endpoint_group_type/text()}}--</option>
-                                        <option tpl:foreach="endpoint_group_list/item" value="{text()}">{{text()}}</option>
-                                    </select>
-                                </div>
-                                <hr/>
-                            </div>
-                            <div>
-                                <div class="form-group">
-                                    <label><i class="fas fa-file-invoice m-1"></i>Results</label>
-                                    <select id="selectResults"  class="selectResults form-control">
-                                        <option value="0">--Select the type of results--</option>
-                                        <option value="dash_avre">Availabilities/Reliabilities</option>
-                                        <option value="dash_status">Status</option>
-                                    </select>
+                                    <div class="form-group">
+                                        <label><i class="fas fa-file-invoice m-1"></i>Results</label>
+                                        <select id="selectResults" class="selectResults form-control">
+                                            <option value="0">--Select the type of results--</option>
+                                            <option value="dash_avre">Availabilities/Reliabilities</option>
+                                            <option value="dash_status">Status</option>
+                                        </select>
 
-                                </div>
-
-                                <div class="results_dash_avre results d-none form-group">
-                                    <label><i class="fas fa-chart-bar m-1"></i>Format of results</label>
-                                    <select id="selectFormat_dash_avre" class="selectFormat form-control">
-                                        <option value="table_ar">table</option>
-                                        <option value="bar_ar">chart : bar</option>
-                                        <option value="line_ar">chart : lines</option>
-                                    </select>
-                                </div>
-                                <div class="results_dash_avre results d-none form-group">
-                                    <label><i class="fa fa-calendar m-1"></i>Timeline</label>
-                                    <div id="reportrange1"
-                                         style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
-                                        <i class="fa fa-calendar mr-3"></i> <span class="small"></span> <i
-                                            class="ml-3 fa fa-caret-down"></i>
                                     </div>
-                                </div>
-                                <div class="results_dash_avre results d-none form-group">
+
+                                    <div class="results_dash_avre results d-none form-group">
+                                        <label><i class="fas fa-chart-bar m-1"></i>Format of results</label>
+                                        <select id="selectFormat_dash_avre" class="selectFormat form-control">
+                                            <option value="table_ar">table</option>
+                                            <option value="bar_ar">chart : bar</option>
+                                            <option value="line_ar">chart : lines</option>
+                                        </select>
+                                    </div>
+                                    <div class="results_dash_avre results d-none form-group">
+                                        <label><i class="fa fa-calendar m-1"></i>Timeline</label>
+                                        <div id="reportrange1"
+                                             style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                            <i class="fa fa-calendar mr-3"></i> <span class="small"></span> <i
+                                                class="ml-3 fa fa-caret-down"></i>
+                                        </div>
+                                    </div>
+                                    <div class="results_dash_avre results d-none form-group">
                                         <label><i class="fas fa-level-up-alt m-1"></i>Availability threshold</label>
-                                        <input class="form-control" type="number" value="90" min="0" step="1" data-number-to-fixed="2" data-number-stepfactor="100"  id="av_threshold" />
-                                </div>
-                                <div class="results_dash_avre results d-none form-group">
-                                    <label><i class="fas fa-level-up-alt  m-1"></i>Reliability threshold</label>
-                                    <input class="form-control"  type="number" value="95" min="0" step="1" data-number-to-fixed="2" data-number-stepfactor="100"  id="re_threshold" />
+                                        <input class="form-control" type="number" value="90" min="0" step="1"
+                                               data-number-to-fixed="2" data-number-stepfactor="100" id="av_threshold"/>
+                                    </div>
+                                    <div class="results_dash_avre results d-none form-group">
+                                        <label><i class="fas fa-level-up-alt  m-1"></i>Reliability threshold</label>
+                                        <input class="form-control" type="number" value="95" min="0" step="1"
+                                               data-number-to-fixed="2" data-number-stepfactor="100" id="re_threshold"/>
+                                    </div>
+
+                                    <div class="results_dash_status results d-none form-group">
+                                        <label><i class="fas fa-chart-bar m-1"></i>Format of results</label>
+                                        <select id="selectFormat_dash_status" class="selectFormat form-control">
+                                            <option value="bar">chart:bar</option>
+                                        </select>
+                                    </div>
+                                    <div class="results_dash_status results d-none form-group">
+                                        <label><i class="fa fa-calendar m-1"></i>Timeline</label>
+                                        <div id="reportrange2"
+                                             style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                            <i class="fa fa-calendar mr-3"></i> <span class="small"></span> <i
+                                                class="ml-3 fa fa-caret-down"></i>
+                                        </div>
+                                    </div>
+
+
+                                    <hr/>
                                 </div>
 
-                                <div class="results_dash_status results d-none form-group">
-                                    <label><i class="fas fa-chart-bar m-1"></i>Format of results</label>
-                                    <select id="selectFormat_dash_status"   class="selectFormat form-control">
-                                        <option value="table">table</option>
-                                        <option value="bar">chart:bar</option>
-                                    </select>
-                                </div>
-                                <div class="results_dash_status results d-none form-group">
-                                    <label><i class="fa fa-calendar m-1"></i>Timeline</label>
-                                    <div id="reportrange2"
-                                         style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
-                                        <i class="fa fa-calendar mr-3"></i> <span class="small"></span> <i
-                                            class="ml-3 fa fa-caret-down"></i>
-                                    </div>
-                                </div>
-                                <hr/>
+
+                            </div>
+                            <div class="modal-footer">
                                 <div class="form-group text-center">
                                     <div id="errorSub" class="d-none"></div>
-                                    <button type="submit" class="btn btn-primary">SUBMIT</button>
+                                    <button type="submit"   class="btn btn-primary">
+                                        SUBMIT
+                                    </button>
                                 </div>
+
+
                             </div>
                         </form>
+                    </div>
+                    </div>
 
-
+                </div>
+                    <div id="spinner" class="m-1 mr-auto d-none form-group spinner-border text-primary"  role="status">
+                        <span class="sr-only">Loading...</span>
                     </div>
                 </div>
-                <div class="d-none" id="resultsCard"></div>
 
-                 </div>
+
+                <div id="resultsCard" class="row row-cols-4"></div>
+
+
             </div>
         </div>
-
-
     </div>
+
     <!-- /.content-wrapper -->
     <!-- Main Footer -->
 
-    <footer tpl:include="/resource/app/html/footer.html"></footer>
+<!--    <footer tpl:include="/resource/app/html/footer.html"></footer>-->
 
 </div>
 <!-- ./wrapper -->
@@ -185,7 +211,6 @@
 <script src="/resource/app/html/adminlte/plugins/daterangepicker/daterangepicker.min.js"></script>
 
 <!-- Datatable -->
-
 
 
 <script type="text/javascript" charset="utf8"
@@ -222,7 +247,6 @@
 
 <script src="/resource/app/js/form_submit.js?v={$app.version}"></script>
 <script src="/resource/app/js/mydashboard.js?v={$app.version}"></script>
-
 
 
 </body>

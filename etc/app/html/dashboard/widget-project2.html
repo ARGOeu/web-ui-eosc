@@ -19,7 +19,7 @@
             <ul class="nav flex-column" tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]">
                 <li class="nav-item">
                     <a href="#" class="nav-link" data-toggle="modal" data-target="#{{group_type/text()}}">
-                        {{group_type/text()}}<span class="float-right badge bg-primary">{{group_count/text()}} </span>
+                        {{group_type/text()}}<span class="float-right badge badge-primary">{{group_count/text()}} </span>
                     </a>
 
 
@@ -53,7 +53,7 @@
 
                 <li>
                     <a href="#" class="nav-link" data-toggle="modal" data-target="#{{endpoint_group_type/text()}}">
-                        {{endpoint_group_type/text()}}<span class="float-right badge bg-primary">{{endpoint_group_count/text()}} </span>
+                        {{endpoint_group_type/text()}}<span class="float-right badge badge-primary">{{endpoint_group_count/text()}} </span>
                     </a>
                     <!-- Modal -->
                     <div class="modal fade" id="{{endpoint_group_type/text()}}" tabindex="-1" role="dialog"
@@ -83,7 +83,7 @@
                 </li>
                 <li>
                     <a href="#" class="nav-link" data-toggle="modal" data-target="#services">
-                        SERVICE TYPES<span class="float-right badge bg-primary">{{service_count/text()}} </span>
+                        SERVICE TYPES<span class="float-right badge badge-primary">{{service_count/text()}} </span>
                     </a>
                     <div class="modal fade" id="services" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">

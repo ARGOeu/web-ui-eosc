@@ -19,6 +19,9 @@
     <link tpl:if="root/@tenant" rel="stylesheet"
           href="/resource/app/html/adminlte/dist/css/adminlte-{root/@tenant}.css?v={$app.version}"/>
 
+    <link tpl:if="tenants/tenant/@id" rel="stylesheet"
+          href="/resource/app/html/adminlte/dist/css/adminlte-{tenants/tenant/@id}.css?v={$app.version}"/>
+
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"/>
 

@@ -20,36 +20,43 @@
         </renderers>
     </view>
 
-    <view name="test">
+    <view name="test" xmlns:t="http://software.in2p3.fr/lavoisier/tables.xsd">
+        <connector type="FileConnector">
+            <parameter name="path">/app/resources/test.csv</parameter>
+        </connector>
+        <serializer type="CSVSerializer">
+            <parameter name="strict">false</parameter>
+        </serializer>
 
-        <argument name="tenant">egi</argument>
-        <argument name="report">Critical</argument>
-        <argument name="start_date">2020-11-11T00:00:00Z</argument>
-        <argument name="end_date">2020-12-11T22:00:00Z</argument>
-        <argument name="group_type">SITES</argument>
-        <argument name="group_name">IN2P3-CC</argument>
-        <argument name="format_results">ee</argument>
-        <argument name="type_results">type</argument>
+        <processors>
+            <element in="t:tables" out="row">
+                <element-ignore in="t:table">
+                    <element-ignore in="t:row">
+                        <element in="t:column" if="@label=1" out="number"><attribute-ignore/></element>
+                    </element-ignore>
+                </element-ignore>
 
+            </element>
+        </processors>
+
+        <cache type="FileCache">
+            <trigger type="ViewCreatedTrigger"></trigger>
+        </cache>
+    </view>
+
+    <view name="rez">
         <connector type="XMLConnector">
-            <parameter name="content" eval="new_element('root')"></parameter>
+            <parameter name="content" eval="view('test')"></parameter>
         </connector>
 
         <processors>
-            <element in="root">
-                <attribute-create out="tenant">$tenant</attribute-create>
-                <attribute-create out="group_type">$group_type</attribute-create>
-                <attribute-create out="group_name">$group_name</attribute-create>
-                <attribute-create out="format_results">$format_results</attribute-create>
-                <attribute-create out="type_results">$type_results</attribute-create>
-                <attribute-create out="report">$report</attribute-create>
-            </element>
+            <element in="row">
+                <set variable="rez1">view('test')</set>
+                <element-ignore in="number">
+                    <element-create>new_element('number',current()/../text()+$rez1/row/number/text())</element-create>
+                </element-ignore>
+             </element>
         </processors>
-        <renderers>
-            <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/card1.html</parameter>
-            </renderer>
-        </renderers>
     </view>
 
     <view name="results" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd" xmlns:date="http://exslt.org/dates-and-times">
@@ -73,11 +80,17 @@
         <processors>
             <element in="results">
                 <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="report">$report</attribute-create>
+
+                <attribute-create out="start_date">$start_date</attribute-create>
+                <attribute-create out="end_date">$end_date</attribute-create>
+
                 <attribute-create out="group_type">$group_type</attribute-create>
                 <attribute-create out="group_name">$group_name</attribute-create>
-                <attribute-create out="format_results">$format_results</attribute-create>
+
                 <attribute-create out="type_results">$type_results</attribute-create>
-                <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="format_results">$format_results</attribute-create>
+
                 <attribute-create out="av_threshold">$av_threshold</attribute-create>
                 <attribute-create out="re_threshold">$re_threshold</attribute-create>
                 <attribute-create out="uniqueId">$uniqueId</attribute-create>
@@ -93,16 +106,23 @@
 
 
     <view name="dash_status" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd"  xmlns:m="http://exslt.org/math" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
-        <argument name="tenant">egi</argument>
-        <argument name="report">Critical</argument>
-        <argument name="start_date">2020-11-11T00:00:00Z</argument>
-        <argument name="end_date">2020-12-11T22:00:00Z</argument>
-        <argument name="group_type">SITES</argument>
-        <argument name="group_name">IN2P3-CC</argument>
-        <argument name="format_results">ee</argument>
+        <argument name="tenant"/>
+        <argument name="report"/>
+        <argument name="start_date"/>
+        <argument name="end_date"/>
+        <argument name="group_type"/>
+        <argument name="group_name"/>
+        <argument name="format_results"/>
+
+        <variable name="group_topo" eval="choose($group_type='NGI','SITES','SERVICEGROUPS')"/>
 
     <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
-    <variable name="url" eval="choose($group_name!='ALL',concat(property('api.status'),'/',$report,'/',$group_type,'/',$group_name,'/services?start_time=',$start_date,'&amp;end_time=',$end_date),concat(property('api.report'),'/',$report,'/',$group_type,'?start_time=',$start_date,'&amp;end_time=',$end_date))"/>
+
+        <variable name="url" eval="choose($group_type!='NGI' and $group_type!='PROJECT',
+    concat(property('api.status'),'/',$report,'/',$group_type,'/',$group_name,'?start_time=',$start_date,'&amp;end_time=',$end_date),
+    concat(property('api.status'),'/',$report,'/',$group_topo,'?start_time=',$start_date,'&amp;end_time=',$end_date))"/>
+
+    <variable name="longueur">100</variable>
 
     <connector type="HTTPConnector">
         <parameter name="url" eval="$url"/>
@@ -115,6 +135,8 @@
         <serializer type="JSONStreamSerializer"></serializer>
 
         <processors>
+
+
 
             <element in="object" out="root" if="groups/object/statuses">
                 <attribute-create out="urlApi">$url</attribute-create>
@@ -221,6 +243,21 @@
                 </element-ignore>
             </element>
 
+            <element in="root" if="$group_type='NGI'">
+                <set variable="indexSite">view('gocdb.site')/results/SITE</set>
+                <element if="$indexSite[@NAME=current()/@name]/ROC/text()=$group_name" in="group">
+                    <attribute-create out="group1">$group_name</attribute-create>
+                </element>
+                <element-ignore/>
+            </element>
+
+            <element in="root" if="$group_type='PROJECT'">
+                <element in="group">
+                    <attribute-create out="group1">$group_name</attribute-create>
+                </element>
+                <element-ignore/>
+            </element>
+
             <element in="root">
                 <element-ignore in="group" if="count(group)>0">
                     <element in="group">
@@ -248,16 +285,27 @@
                 </element>
             </element>
 
+            <elements path="root/group">
+                <element in="status">
+                    <attribute-create out="end_time" if="current()/../following-sibling::status[1]">
+                        current()/../following-sibling::status[1]/@timestamp
+                    </attribute-create>
+
+                    <attribute-create out="last_time" if="not(current()/../following-sibling::status[1])">
+                        choose(date:seconds(date:difference(date:add(../@timestamp,concat('P',1,'D')),function:date-UTC())) &gt;0 , ../@timestamp, date:add(../@timestamp,concat('PT',10,'M')))
+                    </attribute-create>
+                </element>
+            </elements>
 
             <elements path="root/group">
                 <element in="status">
-                    <attribute-create out="duration">
-                        date:seconds(current()/../following-sibling::status/@timestamp)-date:seconds(current()/../@timestamp)
+                    <attribute-create out="duration" if="../@end_time">
+                        date:seconds(../@end_time)-date:seconds(../@timestamp)
                     </attribute-create>
-                    <attribute-create out="duration" if="not(current()/../following-sibling::status)">
-                        m:abs(date:seconds(function:date-UTC())-date:seconds(current()/../@timestamp))
+                    <attribute-create out="duration" if="../@last_time">
+                        m:abs(date:seconds(../@last_time)-date:seconds(../@timestamp))
                     </attribute-create>
-                    <attribute-create out="last" if="not(current()/../following-sibling::status)">
+                    <attribute-create out="last" if="../@last_time">
                         date:seconds(current()/../@timestamp)-date:seconds(current()/../../status[1]/@timestamp) +1
                     </attribute-create>
                 </element>
@@ -266,7 +314,7 @@
             <elements path="root/group">
                 <attribute-create out="status">../status[not(following-sibling::status)]/@value</attribute-create>
                 <element in="status">
-                    <attribute in="duration">round(800 * number(.) div current()/../../status/@last)</attribute>
+                    <attribute in="duration">round($longueur * number(.) div current()/../../status/@last)</attribute>
                     <attribute-create out="color" if="../@value='OK'">'#28a745'</attribute-create>
                     <attribute-create out="color" if="../@value='CRITICAL'">'#dc3545'</attribute-create>
                     <attribute-create out="color" if="../@value='WARNING'">'#ffc107'</attribute-create>
@@ -290,7 +338,9 @@
                 </element>
             </elements>
 
-            <element in="root" out="results"/>
+            <element in="root" out="results">
+                <attribute-create out="longueur">$longueur</attribute-create>
+            </element>
 
         </processors>
     </view>

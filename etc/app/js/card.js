@@ -1,7 +1,47 @@
+ function submitResults(formData) {
+
+         // process the form
+         $.ajax({
+             type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+             url         : '/lavoisier/results?accept=html', // the url where we want to POST
+             data        : formData, // our data object
+             dataType    : 'html', // what type of data do we expect back from the server,
+
+
+             beforeSend: function () {
+                 $('#spinner').removeClass('d-none');
+             },
+             success : function(code_html, statut){
+                      $("#resultsCard").removeClass('d-none');
+                      $("#resultsCard").prepend(code_html);
+                       $(".dataTable").DataTable();
+                 },
+
+                 error : function(resultat, statut, erreur){
+                 $("#resultsCard").removeClass('d-none');
+                         $("#resultsCard").html('<span class="alert alert-critical m-1">An error occured</span>');
+                 },
+                  complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                                 $('#spinner').addClass('d-none');
+                             },
+         });
+
+ };
+
+
+
+ $( ".targetCard" ).submit(function( event ) {
+    event.preventDefault();
+       var form = $(this);
+      var formData= form.serialize();
+    console.log(formData);
+    submitResults(formData);
+    });
 
        $('[rel=tooltip]').tooltip({
                 placement: 'right'
              });
+
 
 
       $( ".arTable" ).each(function( index ) {

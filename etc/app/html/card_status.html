@@ -1,38 +1,70 @@
-<div xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd" >
+<div xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
 
-    <div class="card p-2 m-2" tpl:foreach="results[@type_results='dash_status']/group[status]">
+    <div class="card" tpl:foreach="results[@type_results='dash_status']">
+
+
+
         <div class="card-header">
-            <h3 class="card-title"><span tpl:if="{@group1}">{{@group1}} > </span><span tpl:if="{@group2}">{{@group2}} > </span>{{@name}}</h3>
+            <h3 class="card-title">
+                <div tpl:if="group[1]/@group1">{{group[1]/@group1}}</div>
+                <div tpl:else="group[1]/@group2">{{group[1]/@group2}}</div>
+                <div tpl:else="">{{group[1]/@name}}</div>
+                <div class="small text-muted"> report {{@report}}</div>
+            </h3>
 
-            <span class="small text-muted"> report {{ancestor::results/@report}}</span>
+
             <ul class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
                 </button>
                 <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
                 </button>
             </ul>
+
+
         </div>
 
 
-        <div class="card-body" id="card_{{@uniqueId}}">
-            <svg id="svg-status" width="800px" height="40px">
-                <g>
-                    <rect
-                            data-html="true"  stroke-opacity="0.9" fill-opacity="0.6" stroke="{{@stroke}}"
-                          rel="tooltip" tpl:foreach="status[@duration]" width="{{@duration}}"
-                          height="20" x="{{@position}}" y="0" fill="{{@color}}"
-                          title="{{@value}} status &lt;br/&gt;
+        <div class="card-body"  style="max-height:800px;overflow-y: auto;">
+            <div class="p-2" id="card_{{@uniqueId}}" tpl:foreach="group[status]">
+
+                <form class="targetCard">
+                    <div class="row">
+                        <div class="cardParameters d-none">
+                            <input tpl:foreach="/results/@*[name()!='group_name' and name()!='group_type']" value="{{.}}" name="{{name()}}"/>
+                            <input tpl:if="/results/@group_type='NGI'" name="group_type" value="SITES"/>
+                            <input tpl:else="/results/@group_type='SITES'" name="group_type" value="SITES"/>
+                            <input tpl:if="/results/@group_type='SITES'" name="group_name" value="{{@name}}/services"/>
+                            <input tpl:else="" name="group_name" value="{{@name}}"/>
+
+                        </div>
+
+                        <div class="small" tpl:if="@group1 or @group2">{{@name}}</div>
+                        <button class="btn btn-sm btn-light ml-auto"  type="submit" ><span
+                                class="fas fa-search-plus"> </span> <span class="ml-1 small">More details</span>
+                        </button>
+                    </div>
+
+                </form>
+                <svg id="svg-status" width="{/results/@longueur}%" height="36px">
+                    <g>
+                        <rect
+                                data-html="true" stroke-opacity="0.9" fill-opacity="0.8" stroke="{{@stroke}}"
+                                rel="tooltip" tpl:foreach="status[@duration]" width="{{@duration}}%"
+                                height="10" x="{{@position}}%" y="10" fill="{{@color}}"
+                                title="{{@value}} status &lt;br/&gt;
                                   From {{@timestamp}}  &lt;br/&gt;
                                   To {{following-sibling::status/@timestamp}}"/>
-                    <text x="0" y="35" font-family="Roboto" font-size="10" fill="black">
-                        {{status[@duration][1]/@timestamp}}
-                    </text>
-                    <text x="700" y="35" font-family="Roboto" font-size="10" fill="black">
-                        {{status[@duration][last()]/@timestamp}}
-                    </text>
+                        <text x="0" y="32" font-family="monospace" font-size="10" fill="black">
+                            {{status[@duration][1]/@timestamp}}
+                        </text>
+                        <text x="80%" y="32" font-family="monospace" font-size="10" fill="black">
+                            {{status[@duration][last()]/@timestamp}}
+                        </text>
 
-                </g>
-            </svg>
+                    </g>
+                </svg>
+
+            </div>
         </div>
     </div>
 

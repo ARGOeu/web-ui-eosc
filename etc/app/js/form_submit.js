@@ -1,9 +1,12 @@
  $(function() {
 
  $( "#target" ).submit(function( event ) {
+
+
     event.preventDefault();
     var sendOk=true;
     $('#errorSub').addClass('d-none');
+
 
     if ($('.selectReport').val()!=0)
     {
@@ -45,7 +48,7 @@
 
         if (sendOk==true)
         {
-
+        $('#settingsModal').modal('toggle');
         // get the form data
         // there are many ways to get this data using jQuery (you can use the class or id also)
         var formData = {
@@ -61,8 +64,14 @@
             're_threshold'   :  re_threshold,
 
         };
+        submitResults(formData);
+        }
+    });
 
-        console.log(formData);
+
+
+
+function submitResults(formData) {
 
         // process the form
         $.ajax({
@@ -71,6 +80,10 @@
             data        : formData, // our data object
             dataType    : 'html', // what type of data do we expect back from the server,
 
+
+            beforeSend: function () {
+                $('#spinner').removeClass('d-none');
+            },
             success : function(code_html, statut){
                      $("#resultsCard").removeClass('d-none');
                      $("#resultsCard").prepend(code_html);
@@ -80,11 +93,12 @@
                 error : function(resultat, statut, erreur){
                 $("#resultsCard").removeClass('d-none');
                         $("#resultsCard").html('<span class="alert alert-critical m-1">An error occured</span>');
-                }
+                },
+                 complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                                $('#spinner').addClass('d-none');
+                            },
         });
-        }
-    });
 
-
+}
 
  });

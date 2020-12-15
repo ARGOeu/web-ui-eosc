@@ -39,7 +39,7 @@
                 <div class="row">
 
 
-                    <div class="info-box m-2">
+                    <div class="info-box m-2 col-3">
                         <span class="info-box-icon bg-info"><i class="far fa-id-card"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">{{/root/@report}} Report</span>
@@ -49,7 +49,7 @@
                     </div>
 
 
-                    <div class="info-box m-2" tpl:if="count(/root/issues/issue[status/text()='OK'])&gt;0">
+                    <div class="info-box m-2 col-3" tpl:if="count(/root/issues/issue[status/text()='OK'])&gt;0">
                         <span class="info-box-icon bg-OK"><i class="far fa-thumbs-up"></i></span>
                         <div class="info-box-content">
                             <a class="filter-status" id="status_OK" href="#OK"><span class="info-box-text">OK</span></a>
@@ -58,7 +58,7 @@
                         <!-- /.info-box-content -->
                     </div>
 
-                    <div class="info-box m-2" tpl:if="count(/root/issues/issue[status/text()='CRITICAL'])&gt;0">
+                    <div class="info-box m-2 col-3" tpl:if="count(/root/issues/issue[status/text()='CRITICAL'])&gt;0">
                         <span class="info-box-icon bg-CRITICAL"><i class="fas fa-times-circle"></i></span>
                         <div class="info-box-content">
                             <a class="filter-status" id="status_CRITICAL" href="#CRITICAL"><span class="info-box-text">CRITICAL</span></a>
@@ -67,7 +67,7 @@
                         <!-- /.info-box-content -->
                     </div>
 
-                    <div class="info-box m-2" tpl:if="count(/root/issues/issue[status/text()='WARNING'])&gt;0">
+                    <div class="info-box m-2 col-3" tpl:if="count(/root/issues/issue[status/text()='WARNING'])&gt;0">
                         <span class="info-box-icon bg-WARNING"><i class="fas fa-exclamation-triangle"></i></span>
                         <div class="info-box-content">
                             <a class="filter-status" id="status_WARNING" href="#WARNING"><span class="info-box-text">WARNING</span></a>
@@ -76,7 +76,7 @@
                         <!-- /.info-box-content -->
                     </div>
 
-                    <div class="info-box m-2" tpl:if="count(/root/issues/issue[status/text()='DOWNTIME'])&gt;0">
+                    <div class="info-box m-2 col-3" tpl:if="count(/root/issues/issue[status/text()='DOWNTIME'])&gt;0">
                         <span class="info-box-icon bg-DOWNTIME"><i class="far fa-calendar-times"></i></span>
                         <div class="info-box-content">
                             <a class="filter-status" id="status_DOWNTIME" href="#DOWNTIME"><span class="info-box-text">DOWNTIME</span></a>
@@ -86,7 +86,7 @@
                         <!-- /.info-box-content -->
                     </div>
 
-                    <div class="info-box m-2" tpl:if="count(/root/issues/issue[status/text()='UNKNOWN'])&gt;0">
+                    <div class="info-box m-2 col-3" tpl:if="count(/root/issues/issue[status/text()='UNKNOWN'])&gt;0">
                         <span class="info-box-icon bg-UNKNOWN"><i class="fas fa-question-circle text-dark"></i></span>
                         <div class="info-box-content">
                             <a class="filter-status" id="status_UNKNOWN" href="#UNKNOWN"><span class="info-box-text">UNKNOWN</span></a>
@@ -95,7 +95,7 @@
                         <!-- /.info-box-content -->
                     </div>
 
-                    <div class="info-box m-2" tpl:if="count(/root/issues/issue[status/text()='MISSING'])&gt;0">
+                    <div class="info-box m-2 col-3" tpl:if="count(/root/issues/issue[status/text()='MISSING'])&gt;0">
 
                         <span class="info-box-icon bg-MISSING"><i class="fas fa-unlink"></i></span>
                         <div class="info-box-content">
@@ -180,7 +180,7 @@
         <!-- /.content-wrapper -->
     </div>
         <!-- Main Footer -->
-
+    <div class='clearfix'></div>
         <footer tpl:include="/resource/app/html/footer.html"></footer>
 
 </div>

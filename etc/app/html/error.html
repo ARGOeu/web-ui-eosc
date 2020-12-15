@@ -45,7 +45,7 @@
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <aside class="main-sidebar sidebar-dark-danger elevation-4">
         <!-- Brand Logo -->
         <a href="/" class="brand-link">
             <img src="/resource/app/img/logo-argo.png" alt="ARGO Logo" class="brand-image img-circle elevation-3"
@@ -109,6 +109,17 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a tpl:if="$app.instance!='prod'" href="http://{$neanias.instance.devel}" class="nav-link">
+                            <i class="nav-icon far fa-circle text-orange"></i>
+                            <p>NEANIAS ARGO</p>
+                        </a>
+                        <a tpl:else="" href="http://{$neanias.instance.prod}" class="nav-link">
+                            <i class="nav-icon far fa-circle text-orange"></i>
+                            <p>NEANIAS ARGO</p>
+                        </a>
+                    </li>
+
                     <li class="nav-header">ABOUT ARGO</li>
 
                     <li class="nav-item">
@@ -148,17 +159,17 @@
 
             <div class="col-lg-9 col-9" tpl:foreach="error[not(contains(text(),'No results found for given query'))]">
                 <!-- small card -->
-                <div class="small-box bg-info">
-                    <div class="inner">
+                <div class="small-box bg-danger">
+                    <div class="inner text-white" >
                         <h3>ERROR #{{@code}}</h3>
-                        <code>This page isn't available. </code><br/><br/>
-                        <code>
+                        <code class="text-white">This page isn't available. </code><br/><br/>
+                        <code class="text-white">
                             <small>{{text()}}</small>
                         </code>
-                        <code>
+                        <code class="text-white">
                             <small>{{message/text()}}</small>
                         </code>
-                        <code>
+                        <code class="text-white">
                             <small>{{details/text()}}</small>
                         </code>
                     </div>
@@ -220,9 +231,8 @@
 <!-- AdminLTE -->
 <script src="/resource/app/html/adminlte/dist/js/adminlte.js"></script>
 
-<!-- OPTIONAL SCRIPTS -->
-<script src="/resource/app/html/adminlte/plugins/chart.js/Chart.min.js"></script>
-<script src="/resource/app/html/adminlte/dist/js/demo.js"></script>
-<script src="/resource/app/html/adminlte/dist/js/pages/dashboard3.js"></script>
+
+
+
 </body>
 </html>
