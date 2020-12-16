@@ -17,13 +17,14 @@
                        $(".dataTable").DataTable();
                  },
 
-                 error : function(resultat, statut, erreur){
-                 $("#resultsCard").removeClass('d-none');
-                         $("#resultsCard").html('<span class="alert alert-critical m-1">An error occured</span>');
-                 },
-                  complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
-                                 $('#spinner').addClass('d-none');
-                             },
+            error : function(resultat, statut, erreur){
+                       $("#resultsCard").removeClass('d-none');
+                        $("#errorCard").removeClass('d-none');
+
+                       },
+             complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                                       $('#spinner').addClass('d-none');
+                                   },
          });
 
  };

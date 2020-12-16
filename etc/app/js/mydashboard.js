@@ -4,7 +4,7 @@
 
 
     function cb(start, end) {
-        $('#reportrange1 span').html(start.format('YYYY-MM-DD') + ' / ' + end.format('YYYY-MM-DD'));
+        $('#reportrange1 span').html(start.format('YYYY-MM-DDTHH:mm:ss') + '/' + end.format('YYYY-MM-DDTHH:mm:ss'));
     }
 
     $('#reportrange1').daterangepicker({
@@ -29,7 +29,7 @@
         var end2 = moment();
 
         function cb2(start, end) {
-            $('#reportrange2 span').html(start.format('YYYY-MM-DD') + ' / ' + end.format('YYYY-MM-DD'));
+       $('#reportrange2 span').html(start.format('YYYY-MM-DDThh:mm:ss') + '/' + end.format('YYYY-MM-DDThh:mm:ss'));
         }
 
         $('#reportrange2').daterangepicker({
@@ -40,7 +40,7 @@
                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
                'Last 3 Days': [moment().subtract(3, 'days'), moment()]
             }
-        }, cb);
+        }, cb2);
 
         cb2(start2, end2);
 

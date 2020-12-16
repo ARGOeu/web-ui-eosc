@@ -19,6 +19,9 @@
     var group_name= $("#subgroup_"+report+"_"+group_type).val();
     var type_results=$("#selectResults").val();
     var format_results=$("#selectFormat_"+type_results).val();
+
+    var topology1=$("#"+report+"_topology1").val();
+    var topology2=$("#"+report+"_topology2").val()
     }
     else
     {
@@ -45,6 +48,17 @@
     var av_threshold=$("#av_threshold").val();
     var re_threshold=$("#re_threshold").val();
 
+    if (type_results=='dash_status')
+    {
+    var range=$("#reportrange1 span").text().trim();
+    }
+     if (type_results=='dash_avre')
+     {
+        var range=$("#reportrange1").text().trim();
+     }
+        var dates=range.split('/')
+        var start_date=dates[0]+'Z';
+        var end_date=dates[1]+'Z';
 
         if (sendOk==true)
         {
@@ -55,15 +69,18 @@
             'group_type'     :  group_type,
             'group_name'     :  group_name,
             'tenant'         :  tenant,
-            'start_date'     : '2020-10-10T10:00:00Z',
-            'end_date'       : '2020-11-11T10:00:00Z',
+            'start_date'     :  start_date,
+            'end_date'       :  end_date,
             'report'         :  report,
-            'type_results'   : type_results,
-            'format_results' : format_results,
+            'type_results'   :  type_results,
+            'format_results' :  format_results,
             'av_threshold'   :  av_threshold,
             're_threshold'   :  re_threshold,
+            'topology1'       :  topology1,
+            'topology2'      :  topology2
 
         };
+        console.log(formData);
         submitResults(formData);
         }
     });
@@ -92,7 +109,7 @@ function submitResults(formData) {
 
                 error : function(resultat, statut, erreur){
                 $("#resultsCard").removeClass('d-none');
-                        $("#resultsCard").html('<span class="alert alert-critical m-1">An error occured</span>');
+                  $("#errorCard").removeClass('d-none');
                 },
                  complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
                                 $('#spinner').addClass('d-none');

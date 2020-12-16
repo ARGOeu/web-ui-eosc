@@ -7,9 +7,9 @@
         <div class="card-header">
             <h3 class="card-title">
                 <div tpl:if="group[1]/@group1">{{group[1]/@group1}}</div>
-                <div tpl:else="group[1]/@group2">{{group[1]/@group2}}</div>
                 <div tpl:else="">{{group[1]/@name}}</div>
                 <div class="small text-muted"> report {{@report}}</div>
+                <div class="d-none small text-danger">{{@url}}</div>
             </h3>
 
 
@@ -31,15 +31,20 @@
                     <div class="row">
                         <div class="cardParameters d-none">
                             <input tpl:foreach="/results/@*[name()!='group_name' and name()!='group_type']" value="{{.}}" name="{{name()}}"/>
-                            <input tpl:if="/results/@group_type='NGI'" name="group_type" value="SITES"/>
-                            <input tpl:else="/results/@group_type='SITES'" name="group_type" value="SITES"/>
-                            <input tpl:if="/results/@group_type='SITES'" name="group_name" value="{{@name}}/services"/>
-                            <input tpl:else="" name="group_name" value="{{@name}}"/>
+
+                            <input tpl:if="/results/@group_type=/results/@topology1" name="group_type" value="{/results/@topology2}"/>
+                            <input tpl:else="/results/@group_type=/results/@topology2" name="group_type" value="services"/>
+                            <input tpl:else="/results/@group_type='services'" name="group_type" value="endpoints"/>
+
+
+
+                            <input  tpl:if="/results/@group_type='services' and @group1"  name="group_name" value="{{/results/@topology2}}/{{@group1}}/services/{{@name}}"/>
+                            <input  tpl:else=""  name="group_name" value="{{@name}}"/>
 
                         </div>
 
                         <div class="small" tpl:if="@group1 or @group2">{{@name}}</div>
-                        <button class="btn btn-sm btn-light ml-auto"  type="submit" ><span
+                        <button  tpl:if="/results/@group_type!='endpoints'" class="btn btn-sm btn-light ml-auto"  type="submit" ><span
                                 class="fas fa-search-plus"> </span> <span class="ml-1 small">More details</span>
                         </button>
                     </div>
@@ -57,7 +62,7 @@
                         <text x="0" y="32" font-family="monospace" font-size="10" fill="black">
                             {{status[@duration][1]/@timestamp}}
                         </text>
-                        <text x="80%" y="32" font-family="monospace" font-size="10" fill="black">
+                        <text x="70%" y="32" font-family="monospace" font-size="10" fill="black">
                             {{status[@duration][last()]/@timestamp}}
                         </text>
 

@@ -36,7 +36,7 @@
             <div class="container-fluid">
 
                 <div class="row">
-                    <button type="button" class="col-1 btn btn-primary" data-toggle="modal" data-target="#settingsModal">
+                    <button type="button" class="m-1 btn btn-primary" data-toggle="modal" data-target="#settingsModal" style="max-height:40px">
                         <i class="fas fa-plus-square m-1"></i>  Add a widget
                     </button>
                     <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true">
@@ -68,6 +68,11 @@
                                 <div class="form-group d-none group" id="group_{ancestor::tenant/@id}_{@name}"
                                      tpl:foreach="/tenants/tenant/report">
                                     <label><i class="fas fa-sitemap m-1"></i> Groups</label>
+
+                                    <div class="d-none">
+                                        <input id="{@name}_topology1" value="{{group_type/text()}}"/>
+                                        <input id="{@name}_topology2" value="{{endpoint_group_type/text()}}"/>
+                                    </div>
 
                                     <div class="form-group">
                                         <div class="form-check">
@@ -161,6 +166,7 @@
                             </div>
                             <div class="modal-footer">
                                 <div class="form-group text-center">
+
                                     <div id="errorSub" class="d-none"></div>
                                     <button type="submit"   class="btn btn-primary">
                                         SUBMIT
@@ -174,9 +180,20 @@
                     </div>
 
                 </div>
-                    <div id="spinner" class="m-1 mr-auto d-none form-group spinner-border text-primary"  role="status">
+                    <div id="spinner" class="m-1 mr-auto d-none form-group spinner-border text-primary" style="width:30px" role="status">
                         <span class="sr-only">Loading...</span>
                     </div>
+                    <div id="errorCard" class="d-none card card-sm">
+                        <div class="card-header bg-danger">
+                            <div class="card-title">An error occured</div>
+                        </div>
+                        <div class="card-body">
+                            The widget creation has failed.
+                            If the problem occurs again please contact us !
+                        </div>
+                    </div>
+
+
                 </div>
 
 

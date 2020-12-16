@@ -20,44 +20,6 @@
         </renderers>
     </view>
 
-    <view name="test" xmlns:t="http://software.in2p3.fr/lavoisier/tables.xsd">
-        <connector type="FileConnector">
-            <parameter name="path">/app/resources/test.csv</parameter>
-        </connector>
-        <serializer type="CSVSerializer">
-            <parameter name="strict">false</parameter>
-        </serializer>
-
-        <processors>
-            <element in="t:tables" out="row">
-                <element-ignore in="t:table">
-                    <element-ignore in="t:row">
-                        <element in="t:column" if="@label=1" out="number"><attribute-ignore/></element>
-                    </element-ignore>
-                </element-ignore>
-
-            </element>
-        </processors>
-
-        <cache type="FileCache">
-            <trigger type="ViewCreatedTrigger"></trigger>
-        </cache>
-    </view>
-
-    <view name="rez">
-        <connector type="XMLConnector">
-            <parameter name="content" eval="view('test')"></parameter>
-        </connector>
-
-        <processors>
-            <element in="row">
-                <set variable="rez1">view('test')</set>
-                <element-ignore in="number">
-                    <element-create>new_element('number',current()/../text()+$rez1/row/number/text())</element-create>
-                </element-ignore>
-             </element>
-        </processors>
-    </view>
 
     <view name="results" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd" xmlns:date="http://exslt.org/dates-and-times">
         <argument name="tenant"/>
@@ -70,6 +32,9 @@
         <argument name="format_results"/>
         <argument name="av_threshold">90</argument>
         <argument name="re_threshold">95</argument>
+        <argument name="topology1"/>
+        <argument name="topology2"/>
+
 
         <variable name="uniqueId" eval="date:seconds()"/>
 
@@ -94,6 +59,9 @@
                 <attribute-create out="av_threshold">$av_threshold</attribute-create>
                 <attribute-create out="re_threshold">$re_threshold</attribute-create>
                 <attribute-create out="uniqueId">$uniqueId</attribute-create>
+                <attribute-create out="topology1">$topology1</attribute-create>
+                <attribute-create out="topology2">$topology2</attribute-create>
+
             </element>
         </processors>
 
@@ -105,6 +73,28 @@
     </view>
 
 
+    <view name="buildUrlStatus">
+        <argument name="group_type"/>
+        <argument name="group_name"/>
+        <argument name="report"/>
+        <argument name="topology1"/>
+        <argument name="topology2"/>
+
+        <connector type="XMLConnector">
+            <parameter name="content" eval="new_element('root')"/>
+        </connector>
+
+        <processors>
+            <element in="root" attributes="arguments()">
+                <element-create if="$group_type=$topology1">new_element('baseurl',new_text(concat(property('api.status'),'/',$report,'/',$topology2)))</element-create>
+                <element-create if="$group_type=$topology2">new_element('baseurl',new_text(concat(property('api.status'),'/',$report,'/',$topology2,'/',$group_name)))</element-create>
+                <element-create if="$group_type='services'">new_element('baseurl',new_text(concat(property('api.status'),'/',$report,'/',$topology2,'/',$group_name,'/services')))</element-create>
+                <element-create if="$group_type='endpoints'">new_element('baseurl',new_text(concat(property('api.status'),'/',$report,'/',$group_name,'/endpoints')))</element-create>
+            </element>
+        </processors>
+
+    </view>
+
     <view name="dash_status" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd"  xmlns:m="http://exslt.org/math" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
         <argument name="tenant"/>
         <argument name="report"/>
@@ -113,16 +103,16 @@
         <argument name="group_type"/>
         <argument name="group_name"/>
         <argument name="format_results"/>
+        <argument name="topology1"/>
+        <argument name="topology2"/>
 
-        <variable name="group_topo" eval="choose($group_type='NGI','SITES','SERVICEGROUPS')"/>
 
-    <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="baseUrl" eval="view('buildUrlStatus',arguments())/root/baseurl/text()"/>
+        <variable name="url" eval="concat($baseUrl,'?start_time=',$start_date,'&amp;end_time=',$end_date)"/>
+        <variable name="longueur">100</variable>
 
-        <variable name="url" eval="choose($group_type!='NGI' and $group_type!='PROJECT',
-    concat(property('api.status'),'/',$report,'/',$group_type,'/',$group_name,'?start_time=',$start_date,'&amp;end_time=',$end_date),
-    concat(property('api.status'),'/',$report,'/',$group_topo,'?start_time=',$start_date,'&amp;end_time=',$end_date))"/>
 
-    <variable name="longueur">100</variable>
 
     <connector type="HTTPConnector">
         <parameter name="url" eval="$url"/>
@@ -132,7 +122,7 @@
             <entry key="Accept">application/json</entry>
         </parameter>
     </connector>
-        <serializer type="JSONStreamSerializer"></serializer>
+        <serializer type="JSONStreamSerializer"/>
 
         <processors>
 
@@ -185,7 +175,7 @@
                                 <attribute from-element="true" if="name()!='endpoints'"/>
                                 <element-ignore in="endpoints">
 
-                                    <element in="object" out="endpoint">
+                                    <element in="object" out="group">
                                         <attribute from-element="true" if="name()!='statuses'"/>
                                         <attribute-create out="url" if="../info/URL">../info/URL/text()</attribute-create>
 
@@ -215,7 +205,7 @@
                                 <attribute from-element="true" if="name()!='endpoints'"/>
                                 <element-ignore in="endpoints">
 
-                                    <element in="object" out="endpoint">
+                                    <element in="object" out="group">
                                         <attribute from-element="true" if="name()!='metrics'"/>
 
                                         <element-ignore in="metrics">
@@ -260,9 +250,14 @@
 
             <element in="root">
                 <element-ignore in="group" if="count(group)>0">
-                    <element in="group">
+                    <element in="group" if="count(group)=0">
                         <attribute-create out="group1">ancestor::group/@name</attribute-create>
                     </element>
+                    <element-ignore in="group" if="count(group)>0">
+                        <element in="group">
+                        <attribute-create out="group1">ancestor::group/@name</attribute-create>
+                        </element>
+                    </element-ignore>
                 </element-ignore>
             </element>
 
@@ -300,13 +295,13 @@
             <elements path="root/group">
                 <element in="status">
                     <attribute-create out="duration" if="../@end_time">
-                        date:seconds(../@end_time)-date:seconds(../@timestamp)
+                        m:abs( date:seconds(../@end_time)-date:seconds(../@timestamp))
                     </attribute-create>
                     <attribute-create out="duration" if="../@last_time">
                         m:abs(date:seconds(../@last_time)-date:seconds(../@timestamp))
                     </attribute-create>
                     <attribute-create out="last" if="../@last_time">
-                        date:seconds(current()/../@timestamp)-date:seconds(current()/../../status[1]/@timestamp) +1
+                        m:abs(date:seconds(current()/../@timestamp)-date:seconds(current()/../../status[1]/@timestamp))
                     </attribute-create>
                 </element>
             </elements>
@@ -340,6 +335,7 @@
 
             <element in="root" out="results">
                 <attribute-create out="longueur">$longueur</attribute-create>
+                <attribute-create out="url">$url</attribute-create>
             </element>
 
         </processors>
