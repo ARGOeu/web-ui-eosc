@@ -146,7 +146,7 @@
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="details">'level0'</attribute-create>
 
-                <element-create>view('tenants.reports')/tenants/tenant[@id=$tenant]/report</element-create>
+                <element-create>view('tenants.reports')/tenants/tenant[@id=upper-case($tenant)]/report</element-create>
             </element>
 
             <element in="root" if="$scope='_scope_'">
