@@ -6,8 +6,8 @@
 
         <div class="card-header">
             <h3 class="card-title">
-                <div tpl:if="group[1]/@group1">{{group[1]/@group1}}</div>
-                <div tpl:else="">{{group[1]/@name}}</div>
+                <div tpl:if="group[1]/@group1">{{group[1]/@group1}}<span class="m-1 small text-muted"> - {{@group_type}}</span> </div>
+                <div tpl:else="">{{group[1]/@name}}<span class="m-1 small text-muted"> - {{@group_type}}</span></div>
                 <div class="small text-muted"> report {{@report}}</div>
                 <div class="d-none small text-danger">{{@url}}</div>
             </h3>
@@ -43,7 +43,7 @@
 
                         </div>
 
-                        <div class="small" tpl:if="@group1 or @group2">{{@name}}</div>
+                        <div class="small">{{@name}}</div>
                         <button  tpl:if="/results/@group_type!='endpoints'" class="btn btn-sm btn-light ml-auto"  type="submit" ><span
                                 class="fas fa-search-plus"> </span> <span class="ml-1 small">More details</span>
                         </button>

@@ -251,11 +251,11 @@
             <element in="root">
                 <element-ignore in="group" if="count(group)>0">
                     <element in="group" if="count(group)=0">
-                        <attribute-create out="group1">ancestor::group/@name</attribute-create>
+                        <attribute-create out="group1">ancestor::group[last()]/@name</attribute-create>
                     </element>
                     <element-ignore in="group" if="count(group)>0">
                         <element in="group">
-                        <attribute-create out="group1">ancestor::group/@name</attribute-create>
+                        <attribute-create out="group1">ancestor::group[last()]/@name</attribute-create>
                         </element>
                     </element-ignore>
                 </element-ignore>
