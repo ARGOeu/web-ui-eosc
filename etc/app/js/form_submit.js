@@ -10,13 +10,12 @@
 
     if ($('.selectReport').val()!=0)
     {
-    var results=$('.selectReport').val().split('_');
+    var results=$('.selectReport').val().split('__');
     var tenant=results[0];
     var report=results[1];
-    var group_type= $("input[name='subgroup_"+report+"']:checked").val().split('_')[1];
+    var group_type= $("input[name='subgroup__"+report+"']:checked").val().split('__')[1];
 
-    var string1= "#subgroup_"+report+"_"+group_type;
-    var group_name= $("#subgroup_"+report+"_"+group_type).val();
+    var group_name= $("#subgroup__"+report+"__"+group_type).val();
     var type_results=$("#selectResults").val();
     var format_results=$("#selectFormat_"+type_results).val();
 
@@ -50,15 +49,16 @@
 
     if (type_results=='dash_status')
     {
-    var range=$("#reportrange1 span").text().trim();
+    var range=$("#reportrange2 span").text().trim();
     }
      if (type_results=='dash_avre')
      {
-        var range=$("#reportrange1").text().trim();
+        var range=$("#reportrange1 span").text().trim();
      }
         var dates=range.split('/')
         var start_date=dates[0]+'Z';
         var end_date=dates[1]+'Z';
+
 
         if (sendOk==true)
         {
@@ -76,8 +76,9 @@
             'format_results' :  format_results,
             'av_threshold'   :  av_threshold,
             're_threshold'   :  re_threshold,
-            'topology1'       :  topology1,
-            'topology2'      :  topology2
+            'topology1'      :  topology1,
+            'topology2'      :  topology2,
+            'call'           : 1
 
         };
         console.log(formData);

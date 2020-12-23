@@ -1,13 +1,17 @@
 <div xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
 
-    <div class="card" tpl:foreach="results[@type_results='dash_status']">
+    <div class="card" tpl:foreach="results[last()][@type_results='dash_status']">
 
 
 
         <div class="card-header">
             <h3 class="card-title">
-                <div tpl:if="group[1]/@group1">{{group[1]/@group1}}<span class="m-1 small text-muted"> - {{@group_type}}</span> </div>
-                <div tpl:else="">{{group[1]/@name}}<span class="m-1 small text-muted"> - {{@group_type}}</span></div>
+                <div tpl:if="@group3">{{@group3}}<span class="m-1 small text-muted"> - {{@group2}}</span> </div>
+                <div tpl:else="@group2">{{@group2}}<span class="m-1 small text-muted"> - {{@group1}}</span> </div>
+
+                <div tpl:else="@group1">{{@group1}}<span class="m-1 small text-muted"> - {{@group_type}}</span> </div>
+
+                <div tpl:else="">{{@name}}<span class="m-1 small text-muted"> - {{@group_type}}</span></div>
                 <div class="small text-muted"> report {{@report}}</div>
                 <div class="d-none small text-danger">{{@url}}</div>
             </h3>
@@ -25,36 +29,42 @@
 
 
         <div class="card-body"  style="max-height:800px;overflow-y: auto;">
+
             <div class="p-2" id="card_{{@uniqueId}}" tpl:foreach="group[status]">
 
-                <form class="targetCard">
+
                     <div class="row">
+                        <form class="targetCard" id="form_{{ancestor::results/@uniqueId}}_{{count(preceding-sibling::group)}}">
                         <div class="cardParameters d-none">
-                            <input tpl:foreach="/results/@*[name()!='group_name' and name()!='group_type']" value="{{.}}" name="{{name()}}"/>
+
+
+                            <input tpl:foreach="/results/@*[name()!='group_name' and name()!='group_type' and name()!='call']" value="{{.}}" name="{{name()}}"/>
 
                             <input tpl:if="/results/@group_type=/results/@topology1" name="group_type" value="{/results/@topology2}"/>
                             <input tpl:else="/results/@group_type=/results/@topology2" name="group_type" value="services"/>
                             <input tpl:else="/results/@group_type='services'" name="group_type" value="endpoints"/>
+                            <input tpl:else="/results/@group_type='endpoints'" name="group_type" value="metrics"/>
 
-
-
-                            <input  tpl:if="/results/@group_type='services' and @group1"  name="group_name" value="{{/results/@topology2}}/{{@group1}}/services/{{@name}}"/>
+                            <input  tpl:if="/results/@group_type='services' and ancestor::results/@group1"  name="group_name" value="{{/results/@topology2}}/{{ancestor::results/@group1}}/services/{{@name}}"/>
+                            <input  tpl:else="/results/@group_type='endpoints' and ancestor::results/@group2"  name="group_name" value="{{/results/@topology2}}/{{ancestor::results/@group1}}/services/{{ancestor::results/@group2}}/endpoints/{{@name}}"/>
                             <input  tpl:else=""  name="group_name" value="{{@name}}"/>
 
                         </div>
 
                         <div class="small">{{@name}}</div>
-                        <button  tpl:if="/results/@group_type!='endpoints'" class="btn btn-sm btn-light ml-auto"  type="submit" ><span
+                        <div  tpl:if="/results/@group_type!='metrics'" class="submit_card btn btn-sm btn-light ml-auto" id="sub_{{ancestor::results/@uniqueId}}_{{count(preceding-sibling::group)}}"  ><span
                                 class="fas fa-search-plus"> </span> <span class="ml-1 small">More details</span>
-                        </button>
+                        </div>
+                        </form>
+
                     </div>
 
-                </form>
+
                 <svg id="svg-status" width="{/results/@longueur}%" height="36px">
-                    <g>
-                        <rect
+                    <g tpl:if="/results/@group_type!='metrics'">
+                        <rect id="metrics_{{@timestamp}}__{{@value}}__{{@name}}"
                                 data-html="true" stroke-opacity="0.9" fill-opacity="0.8" stroke="{{@stroke}}"
-                                rel="tooltip" tpl:foreach="status[@duration]" width="{{@duration}}%"
+                                rel="tooltip" tpl:foreach="status[@duration!=0]" width="{{@duration}}%"
                                 height="10" x="{{@position}}%" y="10" fill="{{@color}}"
                                 title="{{@value}} status &lt;br/&gt;
                                   From {{@timestamp}}  &lt;br/&gt;
@@ -67,9 +77,24 @@
                         </text>
 
                     </g>
+                    <g tpl:else="/results/@group_type='metrics'">
+                        <rect id="metrics_{{@timestamp}}__{{@value}}__{{ancestor::group/@name}}__{{/results/@tenant}}__{{/results/@group3}}" class="rect_clickable"
+                              data-html="true" stroke-opacity="0.9" fill-opacity="0.8" stroke="{{@stroke}}"
+                              rel="tooltip" tpl:foreach="status[@duration]" width="{{@duration}}%"
+                              height="10" x="{{@position}}%" y="10" fill="{{@color}}"
+                              title="Click to see details"/>
+                        <text x="0" y="32" font-family="monospace" font-size="10" fill="black">
+                            {{status[@duration][1]/@timestamp}}
+                        </text>
+                        <text x="70%" y="32" font-family="monospace" font-size="10" fill="black">
+                            {{status[@duration][last()]/@timestamp}}
+                        </text>
+
+                    </g>
                 </svg>
 
             </div>
+
         </div>
     </div>
 

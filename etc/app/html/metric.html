@@ -41,19 +41,28 @@
             <div class="container-fluid">
                 <div class="row">
 
-                    <div class="col-lg-12 col-md-8" tpl:if="not(root/missing)">
+                    <div id="resultMetric" class="col-lg-12 col-md-8" tpl:if="not(root/missing)">
 
 
-                        <div class="small-box bg-white border border-success"
-                             tpl:if="root/host/metric/status/@value='OK'">
+                        <div class="p-2 m-2 card card-outline card-success" tpl:if="root/host/metric/status/@value='OK'">
+                            <div class="card-header">
 
-                            <div class="inner">
-
-
-                                <h3>Status
+                                <h3 class="card-title"> Status
                                     <span class="badge bg-success">{{root/host/metric/status/@value}}</span>
+                                </h3>
 
-                                </h3><br/>
+                                <ul class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                                    </button>
+                                </ul>
+                            </div>
+
+                            <div class="card-body">
+
+
+
                                 <p><label class="m-1">Host : </label> {{root/host/@name}}</p>
                                 <p><label class="m-1">Metric : </label> {{root/host/metric/@name}}</p>
                                 <p><label class="m-1">Timestamp : </label> {{root/host/metric/status/@timestamp}}</p>
@@ -63,16 +72,25 @@
 
                         </div>
 
-                        <div class="small-box bg-white border border-warning"
+                        <div class="p-2 m-2 card card-outline card-warning"
                              tpl:else="root/host/metric/status/@value='WARNING'">
 
-                            <div class="inner">
+                            <div class="card-header">
 
-
-                                <h3>Status
+                                <h3 class="card-title"> Status
                                     <span class="badge bg-warning">{{root/host/metric/status/@value}}</span>
+                                </h3>
 
-                                </h3><br/>
+                                <ul class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                                    </button>
+                                </ul>
+                            </div>
+
+                           <div class="card-body">
+
                                 <p><label class="m-1">Host: </label> {{root/host/@name}}</p>
                                 <p><label class="m-1">Metric: </label> {{root/host/metric/@name}}</p>
                                 <p><label class="m-1">Timestamp: </label> {{root/host/metric/status/@timestamp}}</p>
@@ -82,16 +100,24 @@
 
                         </div>
 
-                        <div class="small-box bg-white border border-danger"
+                        <div class="p-2 m-2 card card-outline card-danger"
                              tpl:else="root/host/metric/status/@value='CRITICAL'">
 
-                            <div class="inner">
+                            <div class="card-header">
 
-
-                                <h3>Status
+                                <h3 class="card-title"> Status
                                     <span class="badge bg-danger">{{root/host/metric/status/@value}}</span>
+                                </h3>
 
-                                </h3><br/>
+                                <ul class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                                    </button>
+                                </ul>
+                            </div>
+                           <div class="card-body">
+
                                 <p><label class="m-1">Host: </label> {{root/host/@name}}</p>
                                 <p><label class="m-1">Metric: </label> {{root/host/metric/@name}}</p>
                                 <p><label class="m-1">Timestamp: </label> {{root/host/metric/status/@timestamp}}</p>
@@ -101,16 +127,25 @@
 
                         </div>
 
-                        <div class="small-box bg-white border border-info"
+                        <div class="p-2 m-2 card card-outline card-info"
                              tpl:else="root/host/metric/status/@value='MISSING'">
 
-                            <div class="inner">
+                            <div class="card-header">
 
-
-                                <h3>Status
+                                <h3 class="card-title"> Status
                                     <span class="badge bg-info">{{root/host/metric/status/@value}}</span>
+                                </h3>
 
-                                </h3><br/>
+                                <ul class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                                    </button>
+                                </ul>
+                            </div>
+
+                           <div class="card-body">
+
                                 <p><label class="m-1">Host: </label> {{root/host/@name}}</p>
                                 <p><label class="m-1">Metric: </label> {{root/host/metric/@name}}</p>
                                 <p><label class="m-1">Timestamp: </label> {{root/host/metric/status/@timestamp}}</p>
@@ -120,15 +155,24 @@
 
                         </div>
 
-                        <div class="small-box bg-white border border-dark" tpl:else="">
+                        <div class="p-2 m-2 card card-outline card-dark" tpl:else="">
 
-                            <div class="inner">
+                            <div class="card-header">
 
-
-                                <h3>Status
+                                <h3 class="card-title"> Status
                                     <span class="badge bg-dark">{{root/host/metric/status/@value}}</span>
+                                </h3>
 
-                                </h3><br/>
+                                <ul class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                                    </button>
+                                </ul>
+                            </div>
+
+                           <div class="card-body">
+
                                 <p><label class="m-1">Host: </label> {{root/host/@name}}</p>
                                 <p><label class="m-1">Metric: </label> {{root/host/metric/@name}}</p>
                                 <p><label class="m-1">Timestamp: </label> {{root/host/metric/status/@timestamp}}</p>
@@ -142,20 +186,27 @@
                     </div>
 
 
-                    <div class="col-lg-12 col-md-8" tpl:else="">
+                    <div id="resultMetric"  class="col-lg-12 col-md-8" tpl:else="">
 
 
 
-                        <div class="small-box bg-white border border-info">
+                        <div class="p-2 m-2 card card-outline card-info">
 
+                            <div class="card-header">
 
-                            <div class="inner">
-
-
-                                <h3>Status
+                                <h3 class="card-title"> Status
                                     <span class="badge bg-info">MISSING</span>
+                                </h3>
 
-                                </h3><br/>
+                                <ul class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                                    </button>
+                                </ul>
+                            </div>
+
+                           <div class="card-body">
 
                                 <code>This metric is not existing </code>
                             </div>

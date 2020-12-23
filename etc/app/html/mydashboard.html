@@ -58,14 +58,14 @@
                                     <select class="selectReport form-control">
                                         <option value="0">--Select your report --</option>
                                         <option tpl:foreach="/tenants/tenant/report"
-                                                value="{ancestor::tenant/@id}_{@name}">
+                                                value="{ancestor::tenant/@id}__{@name}">
                                             {{@name}}
                                         </option>
                                     </select>
 
                                 </div>
                                 <hr/>
-                                <div class="form-group d-none group" id="group_{ancestor::tenant/@id}_{@name}"
+                                <div class="form-group d-none group" id="group__{ancestor::tenant/@id}__{@name}"
                                      tpl:foreach="/tenants/tenant/report">
                                     <label><i class="fas fa-sitemap m-1"></i> Groups</label>
 
@@ -77,27 +77,27 @@
                                     <div class="form-group">
                                         <div class="form-check">
                                             <input class="subgroup_check form-check-input" type="radio"
-                                                   name="subgroup_{@name}"
-                                                   value="{@name}_{group_type/text()}" checked="true"/>
+                                                   name="subgroup__{@name}"
+                                                   value="{@name}__{group_type/text()}" checked="true"/>
                                             <label class="form-check-label">{{group_type/text()}}</label>
                                         </div>
                                         <div class="form-check">
                                             <input class="subgroup_check form-check-input" type="radio"
-                                                   name="subgroup_{@name}"
-                                                   value="{@name}_{endpoint_group_type/text()}"/>
+                                                   name="subgroup__{@name}"
+                                                   value="{@name}__{endpoint_group_type/text()}"/>
                                             <label class="form-check-label">{{endpoint_group_type/text()}}</label>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <select class="subgroup form-control" id="subgroup_{@name}_{group_type/text()}">
+                                        <select class="subgroup form-control" id="subgroup__{@name}__{group_type/text()}">
                                             <option value="0">--{{group_type/text()}}--</option>
                                             <option tpl:foreach="group_list/item" value="{text()}">{{text()}}</option>
                                         </select>
                                     </div>
                                     <div>
                                         <select class="subgroup form-control d-none"
-                                                id="subgroup_{@name}_{endpoint_group_type/text()}">
+                                                id="subgroup__{@name}__{endpoint_group_type/text()}">
                                             <option value="0">--{{endpoint_group_type/text()}}--</option>
                                             <option tpl:foreach="endpoint_group_list/item" value="{text()}">{{text()}}
                                             </option>
@@ -262,9 +262,11 @@
 <script src="/resource/app/js/dataTable.js?v={$app.version}"></script>
 
 <!-- LOCAL SCRIPTS -->
-
+<script  src="/resource/app/html/adminlte/plugins/chart.js/Chart.min.js?v={$app.version}"></script>
 <script src="/resource/app/js/form_submit.js?v={$app.version}"></script>
 <script src="/resource/app/js/mydashboard.js?v={$app.version}"></script>
+<script   src="/resource/app/js/card.js?v={$app.version}"></script>
+
 
 
 </body>

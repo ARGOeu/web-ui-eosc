@@ -49,15 +49,15 @@
 $('.selectReport').on('change', function() {
   var reportId= this.value ;
   $("div.group").addClass("d-none");
-  $("#group_"+reportId).addClass("show");
-   $("#group_"+reportId).removeClass("d-none");
+  $("#group__"+reportId).addClass("show");
+   $("#group__"+reportId).removeClass("d-none");
 });
 
  $('.subgroup_check').on('change',function(){
     var subgroup=$(this).val();
     console.log("subgroup"+subgroup);
     $("select.subgroup").addClass("d-none");
-    $("select#subgroup_"+subgroup).removeClass("d-none");
+    $("select#subgroup__"+subgroup).removeClass("d-none");
 
  });
 

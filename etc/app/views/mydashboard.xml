@@ -34,7 +34,7 @@
         <argument name="re_threshold">95</argument>
         <argument name="topology1"/>
         <argument name="topology2"/>
-
+        <argument name="call">2</argument>
 
         <variable name="uniqueId" eval="date:seconds()"/>
 
@@ -61,7 +61,7 @@
                 <attribute-create out="uniqueId">$uniqueId</attribute-create>
                 <attribute-create out="topology1">$topology1</attribute-create>
                 <attribute-create out="topology2">$topology2</attribute-create>
-
+                <attribute-create out="call">$call</attribute-create>
             </element>
         </processors>
 
@@ -90,6 +90,8 @@
                 <element-create if="$group_type=$topology2">new_element('baseurl',new_text(concat(property('api.status'),'/',$report,'/',$topology2,'/',$group_name)))</element-create>
                 <element-create if="$group_type='services'">new_element('baseurl',new_text(concat(property('api.status'),'/',$report,'/',$topology2,'/',$group_name,'/services')))</element-create>
                 <element-create if="$group_type='endpoints'">new_element('baseurl',new_text(concat(property('api.status'),'/',$report,'/',$group_name,'/endpoints')))</element-create>
+                <element-create if="$group_type='metrics'">new_element('baseurl',new_text(concat(property('api.status'),'/',$report,'/',$group_name,'/metrics')))</element-create>
+
             </element>
         </processors>
 
@@ -126,10 +128,25 @@
 
         <processors>
 
+            <element in="object" if="$group_type=$topology1">
+                <set variable="indexSite">view('gocdb.site')/results/SITE</set>
+                <attribute-create out="group1">$group_name</attribute-create>
+
+                <elements path="groups">
+                    <element-ignore in="object" if="$group_type='NGI'  and $tenant='egi' and not($indexSite[@NAME=current()/name/text()]/ROC/text()=$group_name)"/>
+                </elements>
+            </element>
+
+
+            <element in="object" if="$group_type!=$topology1">
+                <attribute-create out="group1" if="/object/groups/object/name/text()">/object/groups/object/name/text()</attribute-create>
+                <attribute-create out="group2" if="count(/object/groups/object/services/object)=1">/object/groups/object/services/object/name/text()</attribute-create>
+                <attribute-create out="group3" if="count(/object/groups/object/services/object/endpoints/object)=1">/object/groups/object/services/object/endpoints/object/name/text()</attribute-create>
+                <attribute-create out="urlApi">$url</attribute-create>
+            </element>
 
 
             <element in="object" out="root" if="groups/object/statuses">
-                <attribute-create out="urlApi">$url</attribute-create>
                 <element-ignore in="groups">
                     <element in="object" out="group">
                         <attribute from-element="true" if="name()!='statuses'"/>
@@ -177,8 +194,6 @@
 
                                     <element in="object" out="group">
                                         <attribute from-element="true" if="name()!='statuses'"/>
-                                        <attribute-create out="url" if="../info/URL">../info/URL/text()</attribute-create>
-
                                         <element-ignore in="statuses">
                                             <element in="object" out="status">
                                                 <attribute from-element="true"/>
@@ -209,10 +224,10 @@
                                         <attribute from-element="true" if="name()!='metrics'"/>
 
                                         <element-ignore in="metrics">
-                                            <element in="object" out="metric">
+                                            <element in="object" out="group">
                                                 <attribute from-element="true" if="name()!='statuses'"/>
                                                 <element-ignore in="statuses">
-                                                    <element in="object" out="status">
+                                                    <element in="object" out="status" if="value/text()!=preceding-sibling::object/value/text() or not(following-sibling::object) or not(preceding-sibling::object) and timestamp/text()">
                                                         <attribute from-element="true"/>
                                                         <element-ignore/>
                                                     </element>
@@ -233,31 +248,16 @@
                 </element-ignore>
             </element>
 
-            <element in="root" if="$group_type='NGI'">
-                <set variable="indexSite">view('gocdb.site')/results/SITE</set>
-                <element if="$indexSite[@NAME=current()/@name]/ROC/text()=$group_name" in="group">
-                    <attribute-create out="group1">$group_name</attribute-create>
-                </element>
-                <element-ignore/>
-            </element>
 
-            <element in="root" if="$group_type='PROJECT'">
-                <element in="group">
-                    <attribute-create out="group1">$group_name</attribute-create>
-                </element>
-                <element-ignore/>
-            </element>
 
             <element in="root">
                 <element-ignore in="group" if="count(group)>0">
-                    <element in="group" if="count(group)=0">
-                        <attribute-create out="group1">ancestor::group[last()]/@name</attribute-create>
-                    </element>
                     <element-ignore in="group" if="count(group)>0">
-                        <element in="group">
-                        <attribute-create out="group1">ancestor::group[last()]/@name</attribute-create>
-                        </element>
+                        <element-ignore in="group" if="count(group)>0"><element/></element-ignore>
+                        <element in="group"/>
                     </element-ignore>
+
+                    <element in="group" if="count(group)=0"/>
                 </element-ignore>
             </element>
 
@@ -309,7 +309,7 @@
             <elements path="root/group">
                 <attribute-create out="status">../status[not(following-sibling::status)]/@value</attribute-create>
                 <element in="status">
-                    <attribute in="duration">round($longueur * number(.) div current()/../../status/@last)</attribute>
+                    <attribute in="duration">round(10 * $longueur * number(.) div current()/../../status/@last) div 10 </attribute>
                     <attribute-create out="color" if="../@value='OK'">'#28a745'</attribute-create>
                     <attribute-create out="color" if="../@value='CRITICAL'">'#dc3545'</attribute-create>
                     <attribute-create out="color" if="../@value='WARNING'">'#ffc107'</attribute-create>
