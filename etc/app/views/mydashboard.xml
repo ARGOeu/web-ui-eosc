@@ -316,14 +316,14 @@
                     <attribute-create out="color" if="../@value='WARNING'">'#ffc107'</attribute-create>
                     <attribute-create out="color" if="../@value='MISSING'">'#343a40'</attribute-create>
                     <attribute-create out="color" if="../@value='DOWNTIME'">'#17a2b8'</attribute-create>
-                    <attribute-create out="color" if="../@value='UNKNOWN'">'#f8f9fa'</attribute-create>
+                    <attribute-create out="color" if="../@value='UNKNOWN'">'#3B7FBF'</attribute-create>
 
                     <attribute-create out="stroke" if="../@value='OK'">'#28a745'</attribute-create>
                     <attribute-create out="stroke" if="../@value='CRITICAL'">'#dc3545'</attribute-create>
                     <attribute-create out="stroke" if="../@value='WARNING'">'#ffc107'</attribute-create>
                     <attribute-create out="stroke" if="../@value='MISSING'">'#343a40'</attribute-create>
                     <attribute-create out="stroke" if="../@value='DOWNTIME'">'#17a2b8'</attribute-create>
-                    <attribute-create out="stroke" if="../@value='UNKNOWN'">'black'</attribute-create>
+                    <attribute-create out="stroke" if="../@value='UNKNOWN'">'#3B7FBF'</attribute-create>
 
                 </element>
             </elements>
