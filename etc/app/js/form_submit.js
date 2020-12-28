@@ -20,7 +20,9 @@
     var format_results=$("#selectFormat_"+type_results).val();
 
     var topology1=$("#"+report+"_topology1").val();
-    var topology2=$("#"+report+"_topology2").val()
+    var topology2=$("#"+report+"_topology2").val();
+    var granularity=$("input[name='granularity']:checked").val();
+
     }
     else
     {
@@ -76,6 +78,7 @@
             'format_results' :  format_results,
             'av_threshold'   :  av_threshold,
             're_threshold'   :  re_threshold,
+            'granularity'    :  granularity,
             'topology1'      :  topology1,
             'topology2'      :  topology2,
             'call'           : 1
@@ -114,9 +117,239 @@ function submitResults(formData) {
                 },
                  complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
                                 $('#spinner').addClass('d-none');
+                                completeSub();
                             },
         });
 
 }
 
- });
+
+function completeSub() {
+
+      $( ".arTable" ).each(function( index ) {
+
+    var id =$(this).attr('id').split("data_")[1];
+
+
+    var type_result=$("#type_result_"+id).val();
+    var av_threshold=$("#av_threshold_"+id).val();
+    var re_threshold=$("#re_threshold_"+id).val();
+
+
+   if (type_result=='table_ar'){
+   $("#card_"+id).removeClass("d-none");
+
+   }
+    if (type_result=='bar_ar'){
+        var idChart = 'myBarChart_' +id;
+        var ctx = document.getElementById(idChart).getContext('2d');
+
+
+    }
+
+    if (type_result=='line_ar'){
+        var idChart = 'myLineChart_' +id;
+        var ctx = document.getElementById(idChart).getContext('2d');
+    }
+
+
+ if (type_result=='line_ar' || type_result=='bar_ar') {
+         var horizonalLinePlugin = {
+           afterDraw: function(chartInstance) {
+             var yScale = chartInstance.scales["y-axis-0"];
+             var canvas = chartInstance.chart;
+
+             var index;
+             var line;
+             var style;
+             if (chartInstance.options.horizontalLine) {
+               for (index = 0; index < chartInstance.options.horizontalLine.length; index++) {
+                 line = chartInstance.options.horizontalLine[index];
+                 if (!line.style) {
+                   style = "rgba(169,169,169, .6)";
+                 } else {
+                   style = line.style;
+                 }
+                 if (line.y) {
+                   yValue = yScale.getPixelForValue(line.y);
+                 } else {
+                   yValue = 0;
+                 }
+                 ctx.lineWidth = 1;
+                 if (yValue) {
+                   ctx.setLineDash([10, 10]);
+                   ctx.beginPath();
+                   ctx.moveTo(0, yValue);
+                   ctx.lineTo(canvas.width, yValue);
+                   ctx.strokeStyle = style;
+                   ctx.stroke();
+                 }
+                 if (line.text) {
+                   ctx.fillStyle = style;
+                   ctx.fillText(line.text, 0, yValue + ctx.lineWidth);
+                 }
+               }
+               return;
+             };
+           }
+         };
+         Chart.pluginService.register(horizonalLinePlugin);
+ }
+    var dataAvailability =[];
+    var dataReliability =[];
+    var dataTimestamp =[];
+
+    $(this).find( "td.ar").each(function( index ) {
+      if (type_result=='table_ar'){
+
+          if (Number($( this ).text()) > av_threshold)
+            $(this).html("<span class='badge badge-success'>"+$( this ).text()+"</span>");
+            else
+            $(this).html("<span class='badge badge-danger'>"+$( this ).text()+"</span>");
+      }
+      else
+          dataAvailability.push($( this ).text());
+        });
+
+    $(this).find( "td.re" ).each(function( index ) {
+      if (type_result=='table_ar'){
+              if (Number($( this ).text()) > re_threshold)
+            $(this).html("<span class='badge badge-success'>"+$( this ).text()+"</span>");
+                else
+            $(this).html("<span class='badge badge-danger'>"+$( this ).text()+"</span>");
+          }
+          else
+          dataReliability.push($( this ).text());
+        });
+
+    $(this).find( "td.timestamp" ).each(function( index ) {
+            dataTimestamp.push($( this ).text());
+         });
+
+if (type_result=='bar_ar'){
+
+
+    var myBarChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: dataTimestamp,
+          datasets: [
+            {
+              label: "Availability",
+              backgroundColor: "#3e95cd",
+
+              data: dataAvailability
+            }, {
+              label: "Reliability",
+              backgroundColor: "#8e5ea2",
+              data: dataReliability
+            }
+          ]
+        },
+    options: {
+        "horizontalLine": [{
+                 "y": re_threshold,
+                 "style": "#3e95cd",
+
+               }, {
+                 "y": av_threshold,
+                 "style": "#8e5ea2",
+
+
+               }],
+         title: {
+                    display : true,
+                     text : "Availability/Reliability"
+
+                },
+         layout: {
+            padding: {        // Any unspecified dimensions are assumed to be 0
+                left: 5,
+                 bottom: 5
+                 }
+
+                },
+               scales : {
+               						yAxes: [{
+               							ticks: {
+               								beginAtZero:true,
+               								min:0,
+               								max:100
+               								}
+               							}],
+               						}
+
+                },
+
+
+    });
+
+
+    }
+
+if (type_result=='line_ar'){
+     var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: dataTimestamp,
+          datasets: [
+            {
+             label: 'Availability',
+             backgroundColor: "#3e95cd",
+             borderColor: "#3e95cd",
+             fill: false,
+             data: dataAvailability,
+            }, {
+              label: "Reliability",
+              backgroundColor:"#8e5ea2",
+               borderColor: "#8e5ea2",
+               fill: false,
+              data: dataReliability,
+            }
+          ]
+        },
+    options: {
+       "horizontalLine": [{
+                     "y": re_threshold,
+                     "style": "#3e95cd",
+
+                   }, {
+                     "y": av_threshold,
+                     "style": "#8e5ea2",
+
+                   }
+                   ],
+         title: {
+                    display : true,
+                     text : "Availability/Reliability"
+
+                },
+         layout: {
+            padding: {        // Any unspecified dimensions are assumed to be 0
+                left: 5,
+                 bottom: 5
+                 }
+
+                },
+               scales : {
+               						yAxes: [{
+               							ticks: {
+               								beginAtZero:true,
+               								min:0,
+               								max:100
+               								}
+               							}],
+               						}
+
+                }
+    });
+    }
+
+
+});
+
+ };
+
+
+});
+
