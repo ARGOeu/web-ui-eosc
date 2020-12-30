@@ -1,5 +1,5 @@
 <div xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd" >
-    <div class="card"  tpl:foreach="results">
+    <div  class="card p-2 m-2"  tpl:foreach="results">
 
 
         <div class="cardParameters d-none">
@@ -27,8 +27,8 @@
         <input class="d-none" id="re_threshold_{{@uniqueId}}" value="{@re_threshold}"/>
 
 
-        <div  class="d-none card-body" id="card_{{@uniqueId}}" style="min-height:500px">
-            <table class="arTable dataTable table table-condensed" id="data_{{@uniqueId}}">
+        <div  class="d-none card-body" id="card_{{@uniqueId}}">
+            <table class="arTable dataTable table table-condensed small" id="data_{{@uniqueId}}">
                 <thead>
                 <tr>
                     <th></th>
@@ -48,7 +48,7 @@
 
         <div tpl:if="@format_results='bar_ar'" class="card-body">
                 <div class="chart-responsive">
-                    <canvas id="myBarChart_{{@uniqueId}}" width="150%"  ></canvas>
+                    <canvas id="myBarChart_{{@uniqueId}}" width="100%"  ></canvas>
                 </div>
 
         </div>
@@ -56,7 +56,7 @@
 
         <div tpl:if="@format_results='line_ar'" class="card-body">
             <div class="chart-responsive">
-                <canvas id="myLineChart_{{@uniqueId}}" width="150%" ></canvas>
+                <canvas id="myLineChart_{{@uniqueId}}" width="100%"></canvas>
             </div>
         </div>
 

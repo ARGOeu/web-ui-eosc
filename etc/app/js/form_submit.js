@@ -1,5 +1,20 @@
  $(function() {
 
+
+
+  $( ".widget" ).each(function( index ) {
+   var leng = $( ".widget" ).length;
+    var formData={};
+    $(this).find('input').each(function() {
+         formData[$(this).attr('name')] = $(this).val();
+    })
+     if (index != (leng - 1)) {
+    submitResults(formData, false);
+     }
+     else
+     submitResults(formData, true);
+  });
+
  $( "#target" ).submit(function( event ) {
 
 
@@ -52,10 +67,12 @@
     if (type_results=='dash_status')
     {
     var range=$("#reportrange2 span").text().trim();
+    var labelRange =  $('#reportrange2').data('daterangepicker').chosenLabel;
     }
      if (type_results=='dash_avre')
      {
         var range=$("#reportrange1 span").text().trim();
+        var labelRange =  $('#reportrange1').data('daterangepicker').chosenLabel;
      }
         var dates=range.split('/')
         var start_date=dates[0]+'Z';
@@ -81,18 +98,19 @@
             'granularity'    :  granularity,
             'topology1'      :  topology1,
             'topology2'      :  topology2,
-            'call'           : 1
+            'call'           : 1,
+            'labelRange'     : labelRange
 
         };
         console.log(formData);
-        submitResults(formData);
+        submitResults(formData,true);
         }
     });
 
 
 
 
-function submitResults(formData) {
+function submitResults(formData,single) {
 
         // process the form
         $.ajax({
@@ -108,6 +126,7 @@ function submitResults(formData) {
             success : function(code_html, statut){
                      $("#resultsCard").removeClass('d-none');
                      $("#resultsCard").prepend(code_html);
+                     if (single == true)
                       $(".dataTable").DataTable();
                 },
 
@@ -117,7 +136,9 @@ function submitResults(formData) {
                 },
                  complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
                                 $('#spinner').addClass('d-none');
+                                $("#registerDash").removeClass('d-none');
                                 completeSub();
+
                             },
         });
 

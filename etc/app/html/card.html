@@ -2,12 +2,12 @@
 
 
 
-<div  class="p-2 m-2" style="min-height: 30rem;max-height: 36rem;min-width:32rem"  tpl:if="results/@type_results='dash_status'">
+<div  tpl:if="results/@type_results='dash_status'">
     <div  tpl:include="/resource/app/html/card_status.html"></div>
 </div>
 
 
-<div   class="p-2 m-2" style="min-height: 30rem;max-height: 36rem;min-width:32rem"  tpl:if="results/@type_results='dash_avre'" >
+<div    tpl:if="results/@type_results='dash_avre'" >
     <div tpl:include="/resource/app/html/card_ar.html"></div>
 </div>
 

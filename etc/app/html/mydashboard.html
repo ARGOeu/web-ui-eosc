@@ -39,6 +39,10 @@
                     <button type="button" class="m-1 btn btn-primary" data-toggle="modal" data-target="#settingsModal" style="max-height:40px">
                         <i class="fas fa-plus-square m-1"></i>  Add a widget
                     </button>
+                    <button type="button" class="m-1 btn btn-info d-none" id="registerDash" style="max-height:40px">
+                        <i class="fas fa-download m-1"></i>  Register your dashboard
+                    </button>
+                    <div id="dashboards"  class="ml-auto"></div>
                     <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -52,7 +56,7 @@
                             </div>
 
                             <div class="modal-body">
-
+                                <input class="d-none" name="tenant" id="tenant" value="{/tenants/tenant/@id}"/>
                                 <div class="form-group">
                                     <label><i class="fas fa-list m-1"></i> Report</label>
                                     <select class="selectReport form-control">
@@ -125,7 +129,7 @@
                                         </select>
                                     </div>
                                     <div class="results_dash_avre results d-none form-group">
-                                        <label><i class="fa fa-calendar m-1"></i>Timeline</label>
+                                        <label><i class="fa fa-calendar m-1"></i>Dates range</label>
                                         <div id="reportrange1"
                                              style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
                                             <i class="fa fa-calendar mr-3"></i> <span class="small"></span> <i
@@ -162,11 +166,11 @@
                                     <div class="results_dash_status results d-none form-group">
                                         <label><i class="fas fa-chart-bar m-1"></i>Format of results</label>
                                         <select id="selectFormat_dash_status" class="selectFormat form-control">
-                                            <option value="bar">chart:bar</option>
+                                            <option value="bar">chart:timeline</option>
                                         </select>
                                     </div>
                                     <div class="results_dash_status results d-none form-group">
-                                        <label><i class="fa fa-calendar m-1"></i>Timeline</label>
+                                        <label><i class="fa fa-calendar m-1"></i>Dates range</label>
                                         <div id="reportrange2"
                                              style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
                                             <i class="fa fa-calendar mr-3"></i> <span class="small"></span> <i
@@ -184,6 +188,7 @@
                                 <div class="form-group text-center">
 
                                     <div id="errorSub" class="d-none"></div>
+                                    <input name="reportrange" id="reportrange" class="d-none"/>
                                     <button type="submit"   class="btn btn-primary">
                                         SUBMIT
                                     </button>
@@ -202,6 +207,12 @@
                     <div id="errorCard" class="d-none card card-sm">
                         <div class="card-header bg-danger">
                             <div class="card-title">An error occured</div>
+                            <ul class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                                </button>
+                            </ul>
                         </div>
                         <div class="card-body">
                             The widget creation has failed.
@@ -213,7 +224,14 @@
                 </div>
 
 
-                <div id="resultsCard" class="row row-cols-4"></div>
+                <div id="resultsCard" class="row row-cols-4">
+                    <div tpl:foreach="/tenants/dashboard/widget">
+                        <div class="widget d-none">
+                            <input tpl:foreach="*" name="{{name()}}" value="{{text()}}"/>
+
+                        </div>
+                    </div>
+                </div>
 
 
             </div>

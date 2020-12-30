@@ -3,6 +3,7 @@
 
     <view name="myDashboard" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd" xmlns:date="http://exslt.org/dates-and-times">
         <argument name="tenant">egi</argument>
+        <argument name="id">_id_</argument>
         <connector type="XMLConnector">
             <parameter name="content" eval="view('tenants.reports')"/>
         </connector>
@@ -10,6 +11,7 @@
         <processors>
             <element in="tenants">
                 <element-ignore in="tenant" if="@id!=$tenant"/>
+                <element-create if="$id!='_id_'">view('list_dashboard', entry('id',$id))</element-create>
             </element>
         </processors>
 
@@ -19,6 +21,81 @@
             </renderer>
         </renderers>
     </view>
+
+    <view name="list_dashboard" xmlns:str="http://exslt.org/strings">
+        <argument name="id"/>
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('store_layout',entry('id',$id))"/>
+        </connector>
+
+        <processors>
+            <element in="dashboard">
+                <element-ignore in="widget" if="text()='_widget_'"/>
+            </element>
+
+            <element in="dashboard">
+                <element in="widget">
+                    <text-ignore/>
+                    <element-create>str:split(../text(),'___')</element-create>
+                </element>
+            </element>
+            <element in="dashboard">
+                <element in="widget">
+                    <element-ignore in="token">
+                        <element-create>new_element(substring-before(../text(),'='),new_text(substring-after(../text(),'=')))</element-create>
+                    </element-ignore>
+                </element>
+            </element>
+
+        </processors>
+    </view>
+
+
+    <view name="register_layout">
+        <argument name="id"/>
+        <argument name="widget_0" >_widget_</argument>
+        <argument name="widget_1" >_widget_</argument>
+        <argument name="widget_2" >_widget_</argument>
+        <argument name="widget_3" >_widget_</argument>
+        <argument name="widget_4" >_widget_</argument>
+        <argument name="widget_5" >_widget_</argument>
+        <argument name="widget_6" >_widget_</argument>
+        <argument name="widget_7" >_widget_</argument>
+        <argument name="widget_8" >_widget_</argument>
+        <argument name="widget_9" >_widget_</argument>
+
+
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('store_layout', entry('mode','W')|entry('id', $id) | entry('widget_0',$widget_0) | entry('widget_1',$widget_1) | entry('widget_2',$widget_2) |
+            entry('widget_3',$widget_3) |  entry('widget_4',$widget_4) |  entry('widget_5',$widget_5) | entry('widget_6',$widget_6) |  entry('widget_7',$widget_7) |  entry('widget_8',$widget_8)  |entry('widget_9',$widget_9)    )"/>
+        </connector>
+    </view>
+
+    <view name="store_layout" authenticators="admin" xmlns:str="http://exslt.org/strings">
+        <argument name="id">#</argument>
+        <argument name="mode" pattern="R|W|DEL">R</argument>
+        <argument name="widget_0" >_widget_</argument>
+        <argument name="widget_1" >_widget_</argument>
+        <argument name="widget_2" >_widget_</argument>
+        <argument name="widget_3" >_widget_</argument>
+        <argument name="widget_4" >_widget_</argument>
+        <argument name="widget_5" >_widget_</argument>
+        <argument name="widget_6" >_widget_</argument>
+        <argument name="widget_7" >_widget_</argument>
+        <argument name="widget_8" >_widget_</argument>
+        <argument name="widget_9" >_widget_</argument>
+
+        <connector type="RotatingCacheConnector">
+            <parameter name="content" eval="new_element('dashboard', new_element('widget',$widget_0)|new_element('widget',$widget_1) |new_element('widget',$widget_2)|new_element('widget',$widget_3)|new_element('widget',$widget_4)|new_element('widget',$widget_5) | new_element('widget_6',$widget_6) |  new_element('widget_7',$widget_7) |  new_element('widget_8',$widget_8)  |new_element('widget_9',$widget_9)   )" />
+            <parameter name="key" eval="concat('dashboard_',$id)"/>
+            <parameter name="size">500</parameter>
+            <parameter name="mode" eval="$mode"/>
+        </connector>
+        
+      
+
+    </view>
+
 
 
     <view name="results" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd" xmlns:date="http://exslt.org/dates-and-times">
@@ -34,8 +111,9 @@
         <argument name="re_threshold">95</argument>
         <argument name="topology1"/>
         <argument name="topology2"/>
-        <argument name="granularity"/>
+        <argument name="granularity">daily</argument>
         <argument name="call">2</argument>
+        <argument name="labelRange" eval="choose($type_results='dash_status','Last 3 Days','Last 3 Months')"/>
 
         <variable name="uniqueId" eval="date:seconds()"/>
 
@@ -47,22 +125,19 @@
             <element in="results">
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
-
                 <attribute-create out="start_date">$start_date</attribute-create>
                 <attribute-create out="end_date">$end_date</attribute-create>
-
                 <attribute-create out="group_type">$group_type</attribute-create>
                 <attribute-create out="group_name">$group_name</attribute-create>
-
                 <attribute-create out="type_results">$type_results</attribute-create>
                 <attribute-create out="format_results">$format_results</attribute-create>
-
                 <attribute-create out="av_threshold">$av_threshold</attribute-create>
                 <attribute-create out="re_threshold">$re_threshold</attribute-create>
                 <attribute-create out="uniqueId">$uniqueId</attribute-create>
                 <attribute-create out="topology1">$topology1</attribute-create>
                 <attribute-create out="topology2">$topology2</attribute-create>
                 <attribute-create out="call">$call</attribute-create>
+                <attribute-create out="labelRange">$labelRange</attribute-create>
             </element>
         </processors>
 
@@ -108,6 +183,7 @@
         <argument name="format_results"/>
         <argument name="topology1"/>
         <argument name="topology2"/>
+        <argument name="labelRange"/>
 
 
         <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
@@ -143,7 +219,6 @@
                 <attribute-create out="group1" if="/object/groups/object/name/text()">/object/groups/object/name/text()</attribute-create>
                 <attribute-create out="group2" if="count(/object/groups/object/services/object)=1">/object/groups/object/services/object/name/text()</attribute-create>
                 <attribute-create out="group3" if="count(/object/groups/object/services/object/endpoints/object)=1">/object/groups/object/services/object/endpoints/object/name/text()</attribute-create>
-                <attribute-create out="urlApi">$url</attribute-create>
             </element>
 
 
@@ -354,7 +429,7 @@
         <argument name="granularity"/>
         <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
         <variable name="url" eval="choose($group_name!='ALL',concat(property('api.report'),'/',$report,'/',$group_type,'/',$group_name,'?start_time=',$start_date,'&amp;end_time=',$end_date,'&amp;granularity=',$granularity),concat(property('api.report'),'/',$report,'/',$group_type,'?start_time=',$start_date,'&amp;end_time=',$end_date,'&amp;granularity=',$granularity))"/>
-
+        <variable name="labelRange"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>

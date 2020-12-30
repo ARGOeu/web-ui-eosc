@@ -1,10 +1,66 @@
 
+$("#registerDash").on('click', function() {
+
+var tabParameters=[];
+var dashboardId=Date.now();
+var formData = { 'id': dashboardId  } ;
+var cpt=0;
+var tenant=$('#tenant').val();
+
+   $("div.cardParameters" ).each(function( index1 ) {
+              $(this).find('input').each(function( index2 ) {
+            if (tabParameters[index1]!= undefined)
+                tabParameters[index1]=tabParameters[index1]+'___'+$(this).attr('name')+'='+$(this).val();
+            else
+                tabParameters[index1]=$(this).attr('name')+'='+$(this).val();
+           });
+           formData['widget_'+index1]=tabParameters[index1];
+            cpt++;
+   });
+
+
+       if (cpt < 10) {
+
+     // process the form
+        $.ajax({
+            type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+            url         : '/lavoisier/register_layout', // the url where we want to POST
+            data        : formData, // our data object
+            dataType    : 'xml', // what type of data do we expect back from the server,
+
+
+            beforeSend: function () {
+                $('#spinner').removeClass('d-none');
+            },
+            success : function(code_html, statut){
+                     $("#resultsCard").removeClass('d-none');
+                },
+
+                error : function(resultat, statut, erreur){
+                $("#resultsCard").removeClass('d-none');
+                  $("#errorCard").removeClass('d-none');
+                },
+                 complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                            $('#spinner').addClass('d-none');
+                            $("#dashboards").html("<button type='button' class='m-1 p-1 btn btn-outline-dark'><a href='/"+tenant+"/mydashboard?id="+dashboardId+"' ><i class='fas fa-save m-1'></i> Dashboard "+dashboardId+"</a></button>");
+                    },
+        });
+        }
+        else {
+
+           $("#dashboards").html("<div class='m-1 p-1 text-white badge badge-danger'>Your dashboard could not be registered . The number of widgets is exceding the maximum of 10. Please remove some of them and try again . </div></a>");
+
+        }
+
+ });
+
     var start1 = moment().subtract(29, 'days');
     var end1 = moment();
 
 
-    function cb(start, end) {
+    function cb(start, end ) {
         $('#reportrange1 span').html(start.format('YYYY-MM-DDTHH:mm:ss') + '/' + end.format('YYYY-MM-DDTHH:mm:ss'));
+
     }
 
     $('#reportrange1').daterangepicker({
@@ -30,6 +86,7 @@
 
         function cb2(start, end) {
        $('#reportrange2 span').html(start.format('YYYY-MM-DDThh:mm:ss') + '/' + end.format('YYYY-MM-DDThh:mm:ss'));
+
         }
 
         $('#reportrange2').daterangepicker({
