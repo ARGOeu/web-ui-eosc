@@ -98,10 +98,10 @@
 
 
                 <element-create>
-                    view('api-status-last',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topology2)|entry('entity',$entity)|entry('status',$status))
+                    view('api-status-last',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[upper-case(@tenant)=upper-case(../@tenant)][upper-case(@report)=upper-case(../@report)]/@topology2)|entry('entity',$entity)|entry('status',$status))
                 </element-create>
                 <element-create>
-                    view('report-ar',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[@tenant=../@tenant][upper-case(@report)=upper-case(../@report)]/@topology2)|entry('entity',$entity))
+                    view('report-ar',entry('report',$report)|entry('tenant',$tenant)|entry('topology',../report[upper-case(@tenant)=upper-case(../@tenant)][upper-case(@report)=upper-case(../@report)]/@topology2)|entry('entity',$entity))
                 </element-create>
 
 
