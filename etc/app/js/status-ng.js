@@ -1,4 +1,7 @@
+$('.main-footer').addClass('d-none');
+
 $('span[data-toggle="tooltip"]').tooltip();
+
 $("#refreshPage").click(function() {
 
     var view='status-egiCore';
