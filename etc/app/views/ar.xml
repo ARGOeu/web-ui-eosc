@@ -215,7 +215,7 @@
 
             </element>
 
-            <element in="root" if="$tenant='egi' and $filter!='_filter_'">
+            <element in="root" if="($tenant='egi' or $tenant='biomed') and $filter!='_filter_'">
                 <element-ignore in="group" if="not(contains(@filters,concat(',',$filter,',')))"/>
             </element>
 
