@@ -160,7 +160,7 @@
 
             <element in="root">
                 <attribute-create out="filter" if="$filter!='_filter_'">$filter</attribute-create>
-                <element-create if="$tenant='egi' and $topology='SITES'" as="first-child">view('gocdb.filter')
+                <element-create if="($tenant='egi' or $tenant='biomed' ) and $topology='SITES'" as="first-child">view('gocdb.filter')
                 </element-create>
                 <element-create>view('tenants.reports')/tenants/tenant[@id=$tenant]/report</element-create>
                 <element-ignore in="group" if="@type!=$topology">
