@@ -204,7 +204,7 @@
             </element>
 
 
-            <element in="root" if="$tenant='egi'">
+            <element in="root" if="$tenant='egi' or $tenant='biomed'">
                 <set variable="listSites">view('gocdb.site')</set>
 
                 <element in="group" if="@type='SITES' and $filter!='_filter_'">
