@@ -5,9 +5,11 @@ SUBJECT="[ARGO] Recomputation request #$2"
 URL=$3
 EMAIL="$1,$4"
 
-function urldecode() { : "${*//+/ }"; echo -e "${_//%/\\x}"; }
+function urldecode  {
+ : "${*//+/ }"; echo -e "${_//%/\\x}";
+ }
 
-SUMMARY= y=$(urldecode "$6")
+SUMMARY= `urldecode "$6"`
 
 if [ $# -eq 6 ]
   then
