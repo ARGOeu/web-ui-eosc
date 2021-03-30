@@ -212,10 +212,11 @@
                     <div class="col-lg-12">
 
                         <div class="card border border-primary">
-                            <div class="card-header ui-sortable-handle" style="cursor: move;">
+                            <div class="card-header" >
                                 <h3 class="card-title">
                                     Recomputation summary
                                 </h3>
+                            </div>
                                 <div class="card-body" tpl:if="/root/result/e:entries/e:entry[@key='update']">
                                     <div class="alert alert-success">Your recomputation has been properly updated.</div>
                                 </div>
@@ -228,7 +229,7 @@
                                         <div tpl:foreach="result/e:entries/e:entry[@key!='baseUrl']" class="col-4">
                                             <hr/>
                                             <label>{{@key}} </label>
-                                            <div>{{text()}}</div>
+                                            <pre class="{{@key}}">{{text()}}</pre>
                                         </div>
 
 
@@ -237,8 +238,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
+
 
 
 

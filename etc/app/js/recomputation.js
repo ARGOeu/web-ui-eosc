@@ -30,13 +30,18 @@
 
     cb(start, end);
 
-
-
 });
 
 (function() {
   'use strict';
   window.addEventListener('load', function() {
+
+    var reasonO=  decodeURIComponent($("pre.reason").text());
+    $("pre.reason").text(reasonO);
+
+      var reason=decodeURIComponent($('textarea.form-control').val());
+       $('textarea.form-control').val(reason);
+
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     var forms = document.getElementsByClassName('needs-validation');
     // Loop over them and prevent submission
@@ -57,6 +62,8 @@
             $('#start_time').val(period[0]);
             $('#end_time').val(period[1]);
 
+            var reason=encodeURIComponent($('textarea.form-control').val());
+           $('textarea.form-control').val(reason);
 
         if (form.checkValidity() === false) {
           event.preventDefault();
