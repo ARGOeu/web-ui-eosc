@@ -4,8 +4,8 @@
 SUBJECT="[ARGO] Recomputation request #$2"
 URL=$3
 EMAIL="$1,$4"
-SUMMARY=$6
 
+SUMMARY=$(echo "$6" | 's/&nbsp;/ /g; s/&amp;/\&/g; s/&lt;/\</g; s/&gt;/\>/g; s/&quot;/\"/g; s/#&#39;/\'"'"'/g; s/&ldquo;/\"/g; s/&rdquo;/\"/g;')
 
 if [ $# -eq 6 ]
   then

@@ -200,7 +200,7 @@
 
                                     <tr tpl:foreach="/root/data" class="row">
                                         <th class="col-1">Reason</th>
-                                        <td class="col-10" colspan="5" > {{reason}}</td>
+                                        <td class="col-10" colspan="5" > <textarea id="decodeReason" cols="80" rows="5">{{reason}}</textarea></td>
                                     </tr>
 
                                     </tbody>
@@ -276,7 +276,10 @@ $(function () {
  $(".dataTableRecomputation").DataTable( {
     "order": [[ 6, "desc" ]]
  } );
-  $('[data-toggle="popover"]').popover()
+  $('[data-toggle="popover"]').popover();
+
+   var reason=decodeURIComponent($('#decodeReason').val());
+       $('#decodeReason').val(reason);
 })
 
 
