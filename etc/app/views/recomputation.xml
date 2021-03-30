@@ -360,13 +360,14 @@
 
     </view>
 
-    <view name="recomputation_SendEmail">
+    <view name="recomputation_SendEmail" xmlns:java="http://software.in2p3.fr/lavoisier/java">
 
         <argument name="id"></argument>
         <argument name="url"></argument>
         <argument name="cc"></argument>
         <argument name="summary"></argument>
 
+        <variable name="summaryFormated" eval="java:java.net.URLDecoder.decode($summary, StandardCharsets.UTF_8.name())"/>
 
         <connector type="ShellConnector">
             <parameter name="executable">/bin/sh</parameter>
@@ -377,7 +378,7 @@
                 <entry eval="$url"></entry>
                 <entry eval="$cc"></entry>
                 <entry eval="property('contact.recomputation')"></entry>
-                <entry eval="$summary"></entry>
+                <entry eval="$summaryFormated"></entry>
             </parameter>
 
         </connector>
