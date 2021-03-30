@@ -367,7 +367,7 @@
         <argument name="cc"></argument>
         <argument name="summary"></argument>
 
-        <variable name="summaryFormated" eval="java:java.net.URLDecoder.decode($summary, StandardCharsets.UTF_8.name())"/>
+        <variable name="summaryFormated" eval="java:java.net.URLDecoder.decode($summary, 'UTF-8')"/>
 
         <connector type="ShellConnector">
             <parameter name="executable">/bin/sh</parameter>
