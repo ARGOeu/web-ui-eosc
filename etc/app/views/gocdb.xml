@@ -328,7 +328,7 @@
 
 
         <processors>
-            <element in="results">
+            <element in="results" >
                 <element-ignore in="SITE"/>
                 <element-create>sort_by_string(../SITE,'@NAME')</element-create>
             </element>
