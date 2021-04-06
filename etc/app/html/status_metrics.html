@@ -188,7 +188,7 @@
 
 
                             <div class="ml-auto">
-                                <a  class="toggle-body" id="toggle_{{@supergroup}}"> <i class="fas fa-angle-double-down text-primary"></i></a>
+                                <a  class="toggle-body" id="toggle_{{count(preceding-sibling::group)}}"> <i class="fas fa-angle-double-down text-primary"></i></a>
                             </div>
 
                             </div>
@@ -196,13 +196,13 @@
 
 
 
-                        <div class="card-body d-none" id="body-{{@supergroup}}" >
+                        <div class="card-body d-none" id="body-{{count(preceding-sibling::group)}}" >
 
                             <div class="row">
 
 
                                 <div class="ml-auto">
-                                    <a  class="untoggle-body" id="untoggle_{{@supergroup}}"> <i class="fas fa-angle-double-up text-primary"></i></a>
+                                    <a  class="untoggle-body" id="untoggle_{{count(preceding-sibling::group)}}"> <i class="fas fa-angle-double-up text-primary"></i></a>
                                 </div>
                             </div>
                             <div tpl:foreach="metrics">

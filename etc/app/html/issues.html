@@ -150,10 +150,10 @@
                                 <span class="d-block status m-1 badge badge-{{status/text()}}">{{status/text()}}</span>
                             </div>
                             <div class="ml-auto">
-                                <a  class="toggle-body" id="toggle_{{@key}}"> <i class="fas fa-angle-double-down text-primary"></i></a>
+                                <a  class="toggle-body" id="toggle_{{count(preceding-sibling::issues)}}"> <i class="fas fa-angle-double-down text-primary"></i></a>
                             </div>
                         </div>
-                        <div class="card-body d-none row" id="body-{{@key}}" >
+                        <div class="card-body d-none row" id="body-{{count(preceding-sibling::issues)}}" >
                            <div tpl:foreach="issue" class="col-3">
                                <span class="d-block status m-1 badge badge-{{status/text()}}">{{status/text()}}</span>
                                <ul class="small">
@@ -165,7 +165,7 @@
                                </ul>
                            </div>
                             <div class="ml-auto">
-                                <a  class="untoggle-body" id="untoggle_{{@key}}"> <i class="fas fa-angle-double-up text-primary"></i></a>
+                                <a  class="untoggle-body" id="untoggle_{{count(preceding-sibling::issues)}}"> <i class="fas fa-angle-double-up text-primary"></i></a>
                             </div>
                         </div>
                     </div>
