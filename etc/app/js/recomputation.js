@@ -13,7 +13,7 @@
         var end =  moment().startOf('second');
 
     function cb(start, end) {
-        $('#reportrange input').val(start.format('YYYY-MM-DDThh:mm:ss') + 'Z / ' + end.format('YYYY-MM-DDThh:mm:ss')+ 'Z') ;
+        $('#reportrange input').val(start.format('YYYY-MM-DDTH:mm:ss') + 'Z / ' + end.format('YYYY-MM-DDTH:mm:ss')+ 'Z') ;
     }
 
     $('#reportrange').daterangepicker({
@@ -23,7 +23,7 @@
         startDate: start,
         endDate: end,
         locale: {
-        format: 'YYYY-MM-DDThh:mm:ss'
+        format: 'YYYY-MM-DDTH:mm:ss'
     }
 
     }, cb);

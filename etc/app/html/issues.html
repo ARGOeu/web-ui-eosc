@@ -3,7 +3,7 @@
 
 <head tpl:include="/resource/app/html/header.html"></head>
 
-<body class="sidebar-mini layout-fixed layout-navbar-fixed">
+<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
     <!-- Navbar -->
     <nav tpl:include="/resource/app/html/navbar.html"></nav>
@@ -50,7 +50,7 @@
                     </div>
 
 
-                    <div class="info-box m-1 col-3" tpl:if="count(/root/issues/issue[status/text()='OK'])&gt;0">
+                    <div class="info-box m-1 col-2" tpl:if="count(/root/issues/issue[status/text()='OK'])&gt;0">
                         <span class="info-box-icon bg-OK"><i class="far fa-thumbs-up"></i></span>
                         <div class="info-box-content">
                             <a class="filter-status" id="status_OK" href="#OK"><span class="info-box-text">OK</span></a>
@@ -59,7 +59,7 @@
                         <!-- /.info-box-content -->
                     </div>
 
-                    <div class="info-box m-1 col-3" tpl:if="count(/root/issues/issue[status/text()='CRITICAL'])&gt;0">
+                    <div class="info-box m-1 col-2" tpl:if="count(/root/issues/issue[status/text()='CRITICAL'])&gt;0">
                         <span class="info-box-icon bg-CRITICAL"><i class="fas fa-times-circle"></i></span>
                         <div class="info-box-content">
                             <a class="filter-status" id="status_CRITICAL" href="#CRITICAL"><span class="info-box-text">CRITICAL</span></a>
@@ -68,7 +68,7 @@
                         <!-- /.info-box-content -->
                     </div>
 
-                    <div class="info-box m-1 col-3" tpl:if="count(/root/issues/issue[status/text()='WARNING'])&gt;0">
+                    <div class="info-box m-1 col-2" tpl:if="count(/root/issues/issue[status/text()='WARNING'])&gt;0">
                         <span class="info-box-icon bg-WARNING"><i class="fas fa-exclamation-triangle"></i></span>
                         <div class="info-box-content">
                             <a class="filter-status" id="status_WARNING" href="#WARNING"><span class="info-box-text">WARNING</span></a>
@@ -77,7 +77,7 @@
                         <!-- /.info-box-content -->
                     </div>
 
-                    <div class="info-box m-1 col-3" tpl:if="count(/root/issues/issue[status/text()='DOWNTIME'])&gt;0">
+                    <div class="info-box m-1 col-2" tpl:if="count(/root/issues/issue[status/text()='DOWNTIME'])&gt;0">
                         <span class="info-box-icon bg-DOWNTIME"><i class="far fa-calendar-times"></i></span>
                         <div class="info-box-content">
                             <a class="filter-status" id="status_DOWNTIME" href="#DOWNTIME"><span class="info-box-text">DOWNTIME</span></a>
@@ -87,7 +87,7 @@
                         <!-- /.info-box-content -->
                     </div>
 
-                    <div class="info-box m-1 col-3" tpl:if="count(/root/issues/issue[status/text()='UNKNOWN'])&gt;0">
+                    <div class="info-box m-1 col-2" tpl:if="count(/root/issues/issue[status/text()='UNKNOWN'])&gt;0">
                         <span class="info-box-icon bg-UNKNOWN"><i class="fas fa-question-circle text-dark"></i></span>
                         <div class="info-box-content">
                             <a class="filter-status" id="status_UNKNOWN" href="#UNKNOWN"><span class="info-box-text">UNKNOWN</span></a>
@@ -96,7 +96,7 @@
                         <!-- /.info-box-content -->
                     </div>
 
-                    <div class="info-box m-1 col-3" tpl:if="count(/root/issues/issue[status/text()='MISSING'])&gt;0">
+                    <div class="info-box m-1 col-2" tpl:if="count(/root/issues/issue[status/text()='MISSING'])&gt;0">
 
                         <span class="info-box-icon bg-MISSING"><i class="fas fa-unlink"></i></span>
                         <div class="info-box-content">
@@ -156,7 +156,7 @@
                         <div class="card-body d-none row" id="body-{{@key}}" >
                            <div tpl:foreach="issue" class="col-3">
                                <span class="d-block status m-1 badge badge-{{status/text()}}">{{status/text()}}</span>
-                               <ul >
+                               <ul class="small">
                                    <li><strong>Service: </strong>{{service}}</li>
                                    <li><strong>Endpoint: </strong>{{endpoint}}</li>
                                    <li><strong>Timestamp: </strong>{{timestamp}}</li>
@@ -181,7 +181,7 @@
         <!-- /.content-wrapper -->
     </div>
         <!-- Main Footer -->
-    <div class='clearfix'></div>
+
         <footer tpl:include="/resource/app/html/footer.html"></footer>
 
 </div>
@@ -196,7 +196,7 @@
         <!-- Bootstrap -->
         <script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js?v={$app.version}"></script>
         <!-- adminlte -->
-        <script src="/resource/app/html/adminlte/dist/js/adminlte.js?v={$app.version}"></script>
+        <script src="/resource/app/html/adminlte/dist/js/adminlte2.min.js?v={$app.version}"></script>
 
 <script src="/resource/app/js/status-ng.js?v={$app.version}"></script>
         <!-- LOCAL SCRIPTS -->
