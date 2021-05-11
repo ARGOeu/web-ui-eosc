@@ -298,7 +298,7 @@
         <cache type="FileCache">
 
             <trigger type="DeltaTimeTrigger">
-                <parameter name="minutes">15</parameter>
+                <parameter name="minutes">18</parameter>
             </trigger>
 
          <trigger type="DependencyRefreshedTrigger">

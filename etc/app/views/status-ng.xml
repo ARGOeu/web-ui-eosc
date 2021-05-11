@@ -73,7 +73,7 @@
             <trigger type="ViewCreatedTrigger"/>
             <trigger type="ViewNotifiedTrigger"/>
             <trigger type="DeltaTimeTrigger">
-                <parameter name="minutes">5</parameter>
+                <parameter name="minutes">9</parameter>
             </trigger>
         </cache>
 
@@ -101,7 +101,7 @@
             <trigger type="ViewCreatedTrigger"/>
             <trigger type="ViewNotifiedTrigger"/>
             <trigger type="DeltaTimeTrigger">
-                <parameter name="minutes">3</parameter>
+                <parameter name="minutes">8</parameter>
             </trigger>
         </cache>
 
