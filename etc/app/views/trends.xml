@@ -1,0 +1,89 @@
+<views xmlns="http://software.in2p3.fr/lavoisier/application.xsd"
+       xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:t="http://software.in2p3.fr/lavoisier/tables.xsd">
+    <!-- 
+        Project : argo-eosc 
+        File    : trends.xml
+        Created by cyril on 2021/06/04 
+    -->
+
+    <view name="api.flapping" authenticators="admin">
+
+        <argument name="type"/>
+        <argument name="date"/>
+        <argument name="report"/>
+        <argument name="tenant"/>
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+
+
+    <variable name="url" eval="property('api.trends')"/>
+
+    <connector type="HTTPConnector">
+        <parameter name="url" eval="concat($url,$report,'/flapping/',$type,'?date=',$date)"/>
+        <parameter name="force-redirect">true</parameter>
+        <parameter name="header">
+            <entry key="x-api-key" eval="$api-key"/>
+            <entry key="Accept">application/json</entry>
+        </parameter>
+        <fallback
+                eval="new_element('exception',new_attribute('exception',' : exception with flapping view '))">
+            <exception type="java.io.IOException"/>
+        </fallback>
+    </connector>
+    <serializer type="JSONStreamSerializer"/>
+
+    </view>
+
+    <view name="trends_flapping" xmlns:date="http://exslt.org/dates-and-times">
+        <argument name="date">_date_</argument>
+        <argument name="report">Critical</argument>
+        <argument name="tenant">egi</argument>
+
+        <variable name="dateF" eval="choose($date!='_date_',$date, substring(date:date-time(),0,11))"/>
+
+
+        <connector type="XMLConnector">
+            <parameter name="content" eval="new_element('root')"/>
+        </connector>
+
+        <processors>
+
+            <element in="root">
+                <attribute-create out="date">$dateF</attribute-create>
+                <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="report">$report</attribute-create>
+                <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
+
+                <element-create>new_element("groups")</element-create>
+                <element-create>new_element("services")</element-create>
+                <element-create>new_element("endpoints")</element-create>
+                <element-create>new_element("metrics")</element-create>
+
+            </element>
+
+            <element in="root">
+                <element>
+                    <element-create>view('api.flapping',entry('type',name(..))|entry('date',$dateF)|entry('report',$report)|entry('tenant',$tenant))</element-create>
+                </element>
+            </element>
+
+            <element in="root">
+                <element>
+                    <elements-ignore path="object/data">
+                        <element-ignore in="object"/>
+                        <element-create>sort_by_string(../object,'endpoint_group/text()')</element-create>
+                    </elements-ignore>
+
+                </element>
+            </element>
+        </processors>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/trends/flapping.html</parameter>
+            </renderer>
+        </renderers>
+
+
+    </view>
+
+</views>
