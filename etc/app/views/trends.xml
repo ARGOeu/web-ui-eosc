@@ -61,7 +61,7 @@
             </element>
 
             <element in="root">
-                <element>
+                <element if="name()!='report'">
                     <element-create>view('api.flapping',entry('type',name(..))|entry('date',$dateF)|entry('report',$report)|entry('tenant',$tenant))</element-create>
                 </element>
             </element>

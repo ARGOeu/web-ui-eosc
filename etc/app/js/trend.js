@@ -1,4 +1,4 @@
-  $('.flappingTable').DataTable();
+  $('.flappingTable').DataTable().columns(-1).order('desc').draw();;
 
         $('#calendar').datepicker({
         format: 'yyyy-mm-dd'
