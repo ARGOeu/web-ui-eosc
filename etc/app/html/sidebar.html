@@ -27,10 +27,10 @@
 
                         <li class="nav-item">
                             <p>
-                                <select tpl:foreach="/root" id="profiles" class="custom-select">
-                                    <option value="/{{@tenant}}/{{@report}}" selected="true">{{@tenant}} - {{@report}}
+                                <select tpl:foreach="/root" id="profiles" class="select2-class" style="width: 100%;">
+                                    <option value="/{{@tenant}}/{{@report}}" class=" m-1 p-1"  selected="true">{{@tenant}} - {{@report}}
                                     </option>
-                                    <option tpl:foreach="report[@tenant=/root/@tenant]"
+                                    <option tpl:foreach="report[@tenant=/root/@tenant]" class=" m-1 p-1"
                                             value="/{{@tenant}}/{{@report}}">{{@tenant}} - {{@report}}
                                     </option>
                                 </select>
@@ -42,9 +42,9 @@
                         <li class="nav-item"
                             tpl:if="count(/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text())>1">
                             <p>
-                                <select class="custom-select" id="servicesGroup">
-                                    <option selected="true" disabled="true">--Select your group --</option>
-                                    <option tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()"
+                                <select class="select2-class" id="servicesGroup"  style="width: 100%;">
+                                    <option selected="true" class=" m-1 p-1"  disabled="true">--Select your group --</option>
+                                    <option class=" m-1 p-1"  tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()"
                                             value="/{/root/@tenant}/dashboard/{/root/@report}/{.}">{{.}}
                                     </option>
                                 </select>
@@ -113,13 +113,13 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="/{{@tenant}}/{{@report}}/flapping"
-                               title="Flapping Items" class="nav-link">
-                                <i class="fas fa-exchange-alt nav-icon"></i>
-                                <p class="text-capitalize">Flapping items</p>
-                            </a>
-                        </li>
+<!--                        <li class="nav-item">-->
+<!--                            <a href="/{{@tenant}}/{{@report}}/flapping"-->
+<!--                               title="Flapping Items" class="nav-link">-->
+<!--                                <i class="fas fa-exchange-alt nav-icon"></i>-->
+<!--                                <p class="text-capitalize">Flapping items</p>-->
+<!--                            </a>-->
+<!--                        </li>-->
 
 
 

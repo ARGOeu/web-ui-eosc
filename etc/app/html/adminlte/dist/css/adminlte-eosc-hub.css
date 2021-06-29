@@ -22376,7 +22376,7 @@ body.iframe-mode-fullscreen .content-wrapper.iframe-mode {
 }
 
 .select2-container--default .select2-results__option {
-  padding: 6px 12px;
+  padding: 8px 18px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
