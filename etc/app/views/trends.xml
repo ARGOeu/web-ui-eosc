@@ -6,40 +6,72 @@
         Created by cyril on 2021/06/04 
     -->
 
-    <view name="api.flapping" authenticators="admin">
+    <view name="api.flapping.date" authenticators="admin">
 
         <argument name="type"/>
         <argument name="date"/>
         <argument name="report"/>
         <argument name="tenant"/>
+        <argument name="top"/>
         <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
 
 
     <variable name="url" eval="property('api.trends')"/>
 
     <connector type="HTTPConnector">
-        <parameter name="url" eval="concat($url,$report,'/flapping/',$type,'?date=',$date)"/>
+        <parameter name="url" eval="choose($top='all',concat($url,$report,'/flapping/',$type,'?date=',$date),concat($url,$report,'/flapping/',$type,'?date=',$date,'&amp;top=',$top))"/>
         <parameter name="force-redirect">true</parameter>
         <parameter name="header">
             <entry key="x-api-key" eval="$api-key"/>
             <entry key="Accept">application/json</entry>
         </parameter>
         <fallback
-                eval="new_element('exception',new_attribute('exception',' : exception with flapping view '))">
+                eval="new_element('exception',new_attribute('exception',' : exception with api.flapping.date view '))">
             <exception type="java.io.IOException"/>
         </fallback>
     </connector>
     <serializer type="JSONStreamSerializer"/>
-
     </view>
 
+    <view name="api.flapping.range" authenticators="admin">
+
+        <argument name="type"/>
+        <argument name="report"/>
+        <argument name="tenant"/>
+        <argument name="start_date"/>
+        <argument name="end_date"/>
+        <argument name="top"/>
+
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+
+
+        <variable name="url" eval="property('api.trends')"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="choose($top='all',concat($url,$report,'/flapping/',$type,'?granularity=montlhy&amp;start_date=',$start_date,'&amp;end_date=',$end_date),concat($url,$report,'/flapping/',$type,'?start_date=',$start_date,'&amp;end_date=',$end_date,'&amp;top=',$top))"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+            <fallback
+                    eval="new_element('exception',new_attribute('exception',' : exception api.flapping.range flapping view '))">
+                <exception type="java.io.IOException"/>
+            </fallback>
+        </connector>
+        <serializer type="JSONStreamSerializer"/>
+    </view>
+
+
+
     <view name="trends_flapping" xmlns:date="http://exslt.org/dates-and-times">
-        <argument name="date">_date_</argument>
+
+        <argument name="date" eval="substring(date:date-time(),0,11)"/>
+        <argument name="start_date">_start_date_</argument>
+        <argument name="end_date">_end_date_</argument>
         <argument name="report">Critical</argument>
         <argument name="tenant">egi</argument>
-
-        <variable name="dateF" eval="choose($date!='_date_',$date, substring(date:date-time(),0,11))"/>
-
+        <argument name="top">all</argument>
 
         <connector type="XMLConnector">
             <parameter name="content" eval="new_element('root')"/>
@@ -48,9 +80,14 @@
         <processors>
 
             <element in="root">
-                <attribute-create out="date">$dateF</attribute-create>
+                <attribute-create out="date">$date</attribute-create>
+                <attribute-create out="start_date">$start_date</attribute-create>
+                <attribute-create out="end_date">$end_date</attribute-create>
+
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="top">$top</attribute-create>
+
                 <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
 
                 <element-create>new_element("groups")</element-create>
@@ -62,7 +99,9 @@
 
             <element in="root">
                 <element if="name()!='report'">
-                    <element-create>view('api.flapping',entry('type',name(..))|entry('date',$dateF)|entry('report',$report)|entry('tenant',$tenant))</element-create>
+                    <element-create if="$start_date='_start_date_'">view('api.flapping.date',entry('type',name(..))|entry('date',$date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top))</element-create>
+                    <element-create if="$start_date!='_start_date_'">view('api.flapping.range',entry('type',name(..))|entry('start_date',$start_date)|entry('end_date',$end_date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top))</element-create>
+
                 </element>
             </element>
 

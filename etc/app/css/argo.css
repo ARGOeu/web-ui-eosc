@@ -2,9 +2,12 @@
     min-height: 100% !important;
 }
 
+
+
 .main-sidebar .sidebar {
     overflow-y: scroll;
 }
+
 
   @keyframes spinner-border {
       to { transform: rotate(360deg); }

@@ -38,12 +38,48 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-8 m-1 p-1">
-                        <input class="input col-2" id="calendar"  value="{root/@date}"/><i class="fas fa-calendar m-1"></i>
-                        <div class="spinner-border text-primary d-none" role="status" id="spinner">
-                            <span class="sr-only">Loading...</span>
+                    <div class="card col-8 m-1 p-1 border-blue">
+                        <div class="card-header"><h3><i class="fas fa-cog"></i> Parameters</h3></div>
+                        <div class="card-body">
+                            <input type="radio" name="period" value="date" tpl:if="/root/@start_date='_start_date_'" checked="true"/>
+                            <input type="radio" name="period" value="date" tpl:else=""/>
+                            <label class="m-1">Day date</label>
+                            <input class="input col-2" id="calendar"  value="{root/@date}"/><i class="fas fa-calendar m-1 mr-5"></i>
+
+                            <input type="radio" class="ml-2" name="period" tpl:if="/root/@start_date='_start_date_'" value="range"/>
+                            <input type="radio" name="period" tpl:else="" value="range" checked="true"/>
+                            <label class="m-1">Range</label>
+                            <input class="input col-3" id="calendar-range"  /><i class="fas fa-calendar m-1"></i>
+                            <input id="start_date" class="d-none" value="{{/root/@start_date}}" tpl:if="/root/@start_date!='_start_date_'"/>
+                            <input id="end_date" class="d-none" value="{{/root/@end_date}}" tpl:if="/root/@end_date!='_end_date_'"/>
+
                         </div>
+
+                        <div class="card-body">
+                            <label class="m-1">Filter by Top flapping Items</label>
+                            <select id="top">
+                                <option value="{{/root/@top}}">{{/root/@top}}</option>
+                                <option value="all">all</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="30">30</option>
+                            </select>
+                        </div>
+
+                        <div class="card-footer">
+                            <button class="btn btn-primary submit" id="parametersF" value="submit">submit</button>
+
+
+                                <div class="m-1 p-1 spinner-border text-primary d-none" role="status" id="spinner">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+
+
+                        </div>
+
                     </div>
+
+
                 </div>
 
               <div class="row">
@@ -90,10 +126,11 @@
 
                 </div>
 
-
+                <div class="row clear-fix" style="padding:50px"></div>
         </div>
     </div>
     </div>
+
     <footer tpl:include="/resource/app/html/footer.html"></footer>
 </div>
 
@@ -109,6 +146,12 @@
 <!-- datepicker -->
 <script src="/resource/app/html/adminlte/plugins/datepicker/bootstrap-datepicker.js?v={$app.version}"></script>
 <link rel="stylesheet" type="text/css" href="/resource/app/html/adminlte/plugins/datepicker/datepicker3.css"/>
+
+
+<!-- Date Ranger Picker -->
+<link rel="stylesheet" href="/resource/app/html/adminlte/plugins/daterangepicker/daterangepicker.css"/>
+<script src="/resource/app/html/adminlte/plugins/daterangepicker/moment.min.js"></script>
+<script src="/resource/app/html/adminlte/plugins/daterangepicker/daterangepicker.min.js"></script>
 
 <!-- dataTable -->
 <script type="text/javascript" charset="utf8"
