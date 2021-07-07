@@ -64,6 +64,16 @@
                                 <option value="10">10</option>
                                 <option value="30">30</option>
                             </select>
+
+
+                                <label class="ml-4">Group by month</label>
+                                <input type="radio" class="ml-2" name="granularity"  tpl:if="root/@granularity='_granularity_'" value="0" checked="true"/>
+                                <input type="radio" class="ml-2" name="granularity"  tpl:else="" value="0" /> No
+
+                                <input type="radio" class="ml-2" name="granularity" tpl:if="root/@granularity!='_granularity_'" value="1" checked="true"/>
+                                <input type="radio" class="ml-2" name="granularity" tpl:else="" value="1" /> Yes
+
+
                         </div>
 
                         <div class="card-footer">
@@ -82,7 +92,7 @@
 
                 </div>
 
-              <div class="row">
+              <div class="row" tpl:if="/root/@granularity='_granularity_'">
 
 
                   <div  class="card m-1 p-1" tpl:foreach="/root/*[name()!='report']">
@@ -125,6 +135,53 @@
                   </div>
 
                 </div>
+
+                <div class="row" tpl:else="">
+
+
+                    <div  class="card m-1 p-1" tpl:foreach="/root/*[name()!='report']">
+
+
+                        <div class="card-body">
+
+                            <div tpl:if="count(object)&gt;1">
+                                <table  class="small dataTable table flappingTable">
+                                    <thead>
+                                    <tr>
+                                        <th colspan="{{count(object[1]/*[name()!='flappings'])}}" class="text-center">Entities</th>
+                                        <th colspan="{{count(object[1]/flappings/flapping)}}" class="text-center">Flapping items per month</th>
+
+                                    </tr>
+
+                                    <tr>
+                                        <th tpl:foreach="object[1]/*[name()!='flappings']">{{name()}}</th>
+                                        <th tpl:foreach="object[1]/flappings/flapping">{{@date}}</th>
+                                    </tr>
+
+                                    </thead>
+
+                                    <tbody>
+                                    <tr tpl:foreach="object">
+                                        <td tpl:foreach="*[name()!='flappings']">{{text()}}</td>
+                                        <td tpl:foreach="flappings/flapping">{{text()}}</td>
+                                    </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <div tpl:else="">
+                                <span class="badge badge-info">No flapping {{name()}} for the given day</span>
+
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
 
                 <div class="row clear-fix" style="padding:50px"></div>
         </div>

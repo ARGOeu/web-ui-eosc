@@ -41,14 +41,19 @@
         <argument name="start_date"/>
         <argument name="end_date"/>
         <argument name="top"/>
+        <argument name="granularity"/>
 
+
+        <variable name="option" eval="choose($granularity!='_granularity_',concat('?granularity=',$granularity,'&amp;'),'?')"/>
         <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
 
 
-        <variable name="url" eval="property('api.trends')"/>
+        <variable name="base-url" eval="property('api.trends')"/>
+
+        <variable name="url" eval="choose($top='all',concat($base-url,$report,'/flapping/',$type,$option,'start_date=',$start_date,'&amp;end_date=',$end_date),concat($base-url,$report,'/flapping/',$type,$option,'start_date=',$start_date,'&amp;end_date=',$end_date,'&amp;top=',$top))"/>
 
         <connector type="HTTPConnector">
-            <parameter name="url" eval="choose($top='all',concat($url,$report,'/flapping/',$type,'?granularity=montlhy&amp;start_date=',$start_date,'&amp;end_date=',$end_date),concat($url,$report,'/flapping/',$type,'?start_date=',$start_date,'&amp;end_date=',$end_date,'&amp;top=',$top))"/>
+            <parameter name="url" eval="$url"/>
             <parameter name="force-redirect">true</parameter>
             <parameter name="header">
                 <entry key="x-api-key" eval="$api-key"/>
@@ -60,11 +65,16 @@
             </fallback>
         </connector>
         <serializer type="JSONStreamSerializer"/>
+        <processors>
+            <element in="object">
+                <attribute-create out="url">$url</attribute-create>
+            </element>
+        </processors>
     </view>
 
 
 
-    <view name="trends_flapping" xmlns:date="http://exslt.org/dates-and-times">
+    <view name="trends_flapping" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 
         <argument name="date" eval="substring(date:date-time(),0,11)"/>
         <argument name="start_date">_start_date_</argument>
@@ -72,6 +82,7 @@
         <argument name="report">Critical</argument>
         <argument name="tenant">egi</argument>
         <argument name="top">all</argument>
+        <argument name="granularity">_granularity_</argument>
 
         <connector type="XMLConnector">
             <parameter name="content" eval="new_element('root')"/>
@@ -87,6 +98,8 @@
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="top">$top</attribute-create>
+                <attribute-create out="granularity">$granularity</attribute-create>
+
 
                 <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
 
@@ -94,26 +107,124 @@
                 <element-create>new_element("services")</element-create>
                 <element-create>new_element("endpoints")</element-create>
                 <element-create>new_element("metrics")</element-create>
+                <element-create>new_element("dates")</element-create>
 
             </element>
 
             <element in="root">
-                <element if="name()!='report'">
-                    <element-create if="$start_date='_start_date_'">view('api.flapping.date',entry('type',name(..))|entry('date',$date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top))</element-create>
-                    <element-create if="$start_date!='_start_date_'">view('api.flapping.range',entry('type',name(..))|entry('start_date',$start_date)|entry('end_date',$end_date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top))</element-create>
+                <element if="name()!='report' and name()!='dates'">
+                    <element-create if="$start_date='_start_date_'">view('api.flapping.date',entry('type',name(..))|entry('date',$date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top)|entry('granularity',$granularity))</element-create>
+                    <element-create if="$start_date!='_start_date_'">view('api.flapping.range',entry('type',name(..))|entry('start_date',$start_date)|entry('end_date',$end_date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top)|entry('granularity',$granularity))</element-create>
 
                 </element>
             </element>
 
-            <element in="root">
+            <element in="root" if="$granularity='_granularity_'">
                 <element>
+                    <attribute-create out="url">../object/@url</attribute-create>
                     <elements-ignore path="object/data">
                         <element-ignore in="object"/>
                         <element-create>sort_by_string(../object,'endpoint_group/text()')</element-create>
                     </elements-ignore>
-
                 </element>
             </element>
+
+            <element in="root" if="$granularity!='_granularity_'">
+                <element>
+                    <elements path="object/data/object/date">
+                        <text>concat(.,',')</text>
+                    </elements>
+                </element>
+            </element>
+
+            <element in="root" if="$granularity!='_granularity_'">
+                <element in="dates">
+                    <element-create>str:concat(../../*/object/data/object/date/text())</element-create>
+                </element>
+            </element>
+
+            <element in="root" if="$granularity!='_granularity_'">
+                <element>
+                    <attribute-create out="url" if="../object/@url">../object/@url</attribute-create>
+                    <elements-ignore path="object/data/object/top">
+                                <element in="object">
+                                    <attribute-create out="key">concat(../endpoint_group,'**',../service,'**',../endpoint,'**',../metric)</attribute-create>
+                                    <element in="flapping">
+                                        <attribute-create out="date">substring-before(ancestor::object/date/text(),',')</attribute-create>
+                                    </element>
+                                </element>
+                    </elements-ignore>
+                </element>
+
+            </element>
+
+            <element in="root" if="$granularity!='_granularity_'">
+                    <element>
+                        <element-ignore in="object"/>
+                        <element-create>sort_by_string(../object,'@key')</element-create>
+                    </element>
+            </element>
+
+            <element in="root" if="$granularity!='_granularity_'">
+                <element>
+                   <element-create-as-parent out="object" group-by="@key">
+                       <element-ignore in="object"><element></element></element-ignore>
+                   </element-create-as-parent>
+                </element>
+            </element>
+
+            <element in="root" if="$granularity!='_granularity_'">
+                <element>
+                    <element in="object">
+                        <element in="endpoint_group" if="not(preceding-sibling::endpoint_group)"></element>
+                        <element in="service" if="not(preceding-sibling::service)"></element>
+                        <element in="endpoint" if="not(preceding-sibling::endpoint)"></element>
+                        <element in="metric" if="not(preceding-sibling::metric)"></element>
+                        <element in="flapping"/>
+                        <element-ignore/>
+                    </element>
+                </element>
+            </element>
+
+            <element in="root" if="$granularity!='_granularity_'">
+                <element in="dates">
+                    <element-create>str:split(../text(),',')</element-create>
+                    <text-ignore/>
+                </element>
+            </element>
+
+            <element in="root" if="$granularity!='_granularity_'">
+                <element in="dates">
+                    <element in="token" out="date" if="not(preceding-sibling::token/text()=current()/text())"/>
+                    <element-ignore/>
+                </element>
+            </element>
+
+            <element in="root" if="$granularity!='_granularity_'">
+                <element if="name()!='dates'">
+                    <element in="object">
+                        <element-create>../../../dates</element-create>
+                    </element>
+                </element>
+            </element>
+
+            <element in="root" if="$granularity!='_granularity_'">
+                <element if="name()!='dates'">
+                    <element in="object">
+                        <element in="dates" out="flappings">
+                            <element in="date" out="flapping">
+                                <attribute-create out="date">../text()</attribute-create>
+                                <text-ignore/>
+                                <text-create if="../../../flapping[@date=current()/../text()]/text()">../../../flapping[@date=current()/../text()]/text()</text-create>
+                                <text-create if="not(../../../flapping[@date=current()/../text()]/text())">0</text-create>
+                            </element>
+                        </element>
+                        <element-ignore in="flapping"/>
+                    </element>
+                </element>
+                <element-ignore/>
+            </element>
+
         </processors>
 
         <renderers>

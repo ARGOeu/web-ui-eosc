@@ -6,10 +6,13 @@
 
          $('#calendar-range').click(function () {
             $("input[value='range']").prop("checked", true);
+
+
          });
 
            $('#calendar').click(function () {
                  $("input[value='date']").prop("checked", true);
+
           });
 
 
@@ -57,16 +60,26 @@
         {
         var urlI=window.location.href;
         var baseUrl=urlI.split('?');
-        window.location = baseUrl[0]+'?date='+$('#calendar').val()+'&top='+$("#top").val();
+
+         window.location = baseUrl[0]+'?date='+$('#calendar').val()+'&top='+$("#top").val();
+
+
         $("#spinner").removeClass('d-none');
         }
         else
         {
+        var granularity=$("input[name='granularity']:checked").val();
 
           var range = 'start_date=' + $('#calendar-range').val().replace(' - ','&end_date=');
           var urlI=window.location.href;
           var baseUrl=urlI.split('?');
+
+          if (granularity==0)
            window.location = baseUrl[0]+'?'+range+'&top='+$("#top").val();
+                  else
+           window.location = baseUrl[0]+'?'+range+'&top='+$("#top").val()+'&granularity=monthly';
+
+
           $("#spinner").removeClass('d-none');
         }
 
