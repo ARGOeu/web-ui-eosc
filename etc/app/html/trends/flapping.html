@@ -53,11 +53,9 @@
                             <input id="start_date" class="d-none" value="{{/root/@start_date}}" tpl:if="/root/@start_date!='_start_date_'"/>
                             <input id="end_date" class="d-none" value="{{/root/@end_date}}" tpl:if="/root/@end_date!='_end_date_'"/>
 
-                        </div>
 
-                        <div class="card-body">
-                            <label class="m-1">Filter by Top flapping Items</label>
-                            <select id="top">
+                            <label class="ml-4">Number of results</label>
+                            <select id="top" class="m-1">
                                 <option value="{{/root/@top}}">{{/root/@top}}</option>
                                 <option value="all">all</option>
                                 <option value="5">5</option>
@@ -95,14 +93,12 @@
               <div class="row" tpl:if="/root/@granularity='_granularity_'">
 
 
-                  <div  class="card m-1 p-1" tpl:foreach="/root/*[name()!='report']">
+                  <div  class="card m-1 p-1" tpl:foreach="/root/*[name()!='report' and name()!='dates']">
 
-                      <div class="card-header" tpl:if="name()='groups' or name()='services'">
+                      <div class="card-header">
                           <h3 class="title">Flapping {{name()}} <span class="badge badge-info m-1">{{count(object)}}</span> </h3>
                       </div>
-                      <div class="card-header" tpl:else="">
-                          <h3 class="title">Flapping {{name()}} <span class="badge badge-info m-1">{{count(object)}}</span> </h3>
-                      </div>
+
 
                       <div class="card-body">
 
