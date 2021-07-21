@@ -364,6 +364,21 @@
         </connector>
     </view>
 
+    <view name="sla_reports"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
+
+        <argument name="report">SLA</argument>
+        <argument name="tenant">egi</argument>
+        <argument name="topology">SERVICEGROUPS</argument>
+        <argument name="granularity">monthly</argument>
+        <argument name="start_date"></argument>
+        <argument name="end_date"></argument>
+        <argument name="level">0</argument>
+
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('report-ar-dates',arguments())"></parameter>
+        </connector>
+    </view>
+
     <view name="report-ar-dates" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 
         <argument name="report">Critical</argument>
