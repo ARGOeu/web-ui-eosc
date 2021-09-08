@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+
+<head tpl:include="/resource/app/html/header.html"></head>
+
+<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav tpl:include="/resource/app/html/navbar.html"></nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside tpl:include="/resource/app/html/sidebar.html"></aside>
+    <!-- /sidebar -->
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-9">
+
+                    </div><!-- /.col -->
+                    <div class="col-sm-3">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active"><a href="/{{/root/@tenant}}/{{/root/@report}}/trends">Trends</a></li>
+
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="card col-8 m-1 p-1 border-blue" id="preferences">
+                        <div class="card-header"><h3><i class="fas fa-cog"></i> Parameters
+                            <a  id="togglePreferences" class="ml-4"><i class="fas fa-angle-double-down"></i> </a>
+                            <a  id="untogglePreferences" class="ml-4 d-none"><i class="fas fa-angle-double-up"></i> </a>
+                        </h3></div>
+                        <div class="card-body d-none">
+                            <label>Type of Trend</label><br/>
+                            <input type="radio" name="trends" value="flapping" checked="true" tpl:if="root/@trends='flapping'"/>
+                            <input type="radio" name="trends" value="flapping" tpl:else=""/> Flapping Items
+
+                            <input type="radio" name="trends" value="status" checked="true" tpl:if="root/@trends='status'"/>
+                            <input type="radio" name="trends" value="status" tpl:else=""/> Status
+                        </div>
+                        <div class="card-body d-none">
+                            <label>Period</label><br/>
+                            <input type="radio" name="period" value="date" tpl:if="/root/@start_date='_start_date_'" checked="true"/>
+                            <input type="radio" name="period" value="date" tpl:else=""/>
+                            <label class="m-1">Day date</label>
+                            <input class="input col-2" id="calendar"  value="{root/@date}"/><i class="fas fa-calendar m-1 mr-5"></i>
+
+
+
+                            <input type="radio" class="ml-2" name="period" tpl:if="/root/@start_date='_start_date_'" value="range"/>
+                            <input type="radio" name="period" tpl:else="" value="range" checked="true"/>
+                            <label class="m-1">Range</label>
+                            <input class="input col-3" id="calendar-range"  /><i class="fas fa-calendar m-1"></i>
+                            <input id="start_date" class="d-none" value="{{/root/@start_date}}" tpl:if="/root/@start_date!='_start_date_'"/>
+                            <input id="end_date" class="d-none" value="{{/root/@end_date}}" tpl:if="/root/@end_date!='_end_date_'"/>
+                        </div>
+
+                        <div class="card-body d-none">
+                            <label>Number of results</label><br/>
+                            <select id="top" class="m-1">
+                                <option value="{{/root/@top}}">{{/root/@top}}</option>
+                                <option value="all">all</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="30">30</option>
+                            </select>
+                        </div>
+
+                        <div class="card-body d-none">
+                            <label>Group by Month</label><br/>
+
+
+                                <input type="radio" class="ml-2" name="granularity"  tpl:if="root/@granularity='_granularity_'" value="0" checked="true"/>
+                                <input type="radio" class="ml-2" name="granularity"  tpl:else="" value="0" /> No
+
+                                <input type="radio" class="ml-2" name="granularity" tpl:if="root/@granularity!='_granularity_'" value="1" checked="true"/>
+                                <input type="radio" class="ml-2" name="granularity" tpl:else="" value="1" /> Yes
+
+
+                        </div>
+
+                        <div class="card-footer d-none">
+                            <button class="btn btn-primary submit" id="parametersF" value="submit">submit</button>
+
+                                <div class="m-1 p-1 spinner-border text-primary d-none" role="status" id="spinner">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <div  tpl:if="/root/@trends='flapping'">
+                    <h2 class="m-2">Flapping items</h2><br/>
+
+                    <div class="row" tpl:if="/root/@granularity='_granularity_'">
+
+
+                      <div  class="card m-1 p-1" tpl:foreach="/root/*[name()!='report' and name()!='dates' and name()!='status']">
+
+                          <div class="card-header">
+                              <h3 class="title">Flapping {{name()}} <span class="badge badge-info m-1">{{count(object)}}</span> </h3>
+                          </div>
+
+
+                          <div class="card-body">
+
+                              <div tpl:if="count(object)&gt;1">
+                                  <table  class="small dataTable table flappingTable">
+                                      <thead>
+                                      <tr>
+                                          <th tpl:foreach="object[1]/*">{{name()}}</th>
+                                      </tr>
+
+                                      </thead>
+
+                                      <tbody>
+                                      <tr tpl:foreach="object">
+                                          <td tpl:foreach="*">{{text()}}</td>
+                                      </tr>
+                                      </tbody>
+
+                                  </table>
+                              </div>
+                              <div tpl:else="">
+                                  <span class="badge badge-info">No flapping {{name()}} for the given day</span>
+
+                              </div>
+
+
+
+                          </div>
+
+                      </div>
+
+                    </div>
+
+                    <div class="row" tpl:else="">
+
+
+                        <div  class="card m-1 p-1" tpl:foreach="/root/*[name()!='report' and name()!='status']">
+
+
+                            <div class="card-body">
+
+                                <div tpl:if="count(object)&gt;1">
+                                    <table  class="small dataTable table flappingTable">
+                                        <thead>
+                                        <tr>
+                                            <th colspan="{{count(object[1]/*[name()!='flappings'])}}" class="text-center">Entities</th>
+                                            <th colspan="{{count(object[1]/flappings/flapping)}}" class="text-center">Flapping items per month</th>
+
+                                        </tr>
+
+                                        <tr>
+                                            <th tpl:foreach="object[1]/*[name()!='flappings']">{{name()}}</th>
+                                            <th tpl:foreach="object[1]/flappings/flapping">{{@date}}</th>
+                                        </tr>
+
+                                        </thead>
+
+                                        <tbody>
+                                        <tr tpl:foreach="object">
+                                            <td tpl:foreach="*[name()!='flappings']">{{text()}}</td>
+                                            <td tpl:foreach="flappings/flapping">{{text()}}</td>
+                                        </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                                <div tpl:else="">
+                                    <span class="badge badge-info">No flapping {{name()}} for the given day</span>
+
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div  tpl:if="/root/@trends='status'">
+                    <h2 class="m-2">Status trends</h2><br/>
+
+                    <div class="row">
+
+                        <div class="card m-1" tpl:foreach="/root/status/object">
+                            <div class="card-header">
+                                <h4>Status <span class="badge bg-{{status/text()}}">{{status/text()}}</span> <span class="m-1 badge bg-light border border-black " tpl:if="date">{{date/text()}}</span> </h4>
+                            </div>
+                            <div class="card-body">
+                                <table class="dataTable statusTable" style="border:none">
+                                    <thead tpl:foreach="top/object[1]">
+                                        <th tpl:foreach="*[name()!='status' and name()!='events']">{{name()}}</th>
+                                        <th><span class="badge bg-primary m-2">Events Nb</span></th>
+                                    </thead>
+                                    <tbody>
+                                    <tr tpl:foreach="top/object">
+                                        <td tpl:foreach="*[name()!='status' and name()!='events']"><span class="badge bg-light border border-dark m-1">{{text()}}</span></td>
+                                        <td><span class="badge bg-primary m-2">{{events/text()}}</span></td>
+                                    </tr>
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row clear-fix" style="padding:50px"></div>
+        </div>
+    </div>
+    </div>
+
+    <footer tpl:include="/resource/app/html/footer.html"></footer>
+</div>
+
+<!-- jQuery -->
+<script src="/resource/app/html/adminlte/plugins/jquery/jquery.min.js?v={$app.version}"></script>
+<!-- Bootstrap -->
+<script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js?v={$app.version}"></script>
+<!-- adminlte -->
+<script src="/resource/app/html/adminlte/dist/js/adminlte2.min.js?v={$app.version}"></script>
+
+<script src="/resource/app/js/dashboard.js?v={$app.version}"></script>
+
+<!-- datepicker -->
+<script src="/resource/app/html/adminlte/plugins/datepicker/bootstrap-datepicker.js?v={$app.version}"></script>
+<link rel="stylesheet" type="text/css" href="/resource/app/html/adminlte/plugins/datepicker/datepicker3.css"/>
+
+
+<!-- Date Ranger Picker -->
+<link rel="stylesheet" href="/resource/app/html/adminlte/plugins/daterangepicker/daterangepicker.css"/>
+<script src="/resource/app/html/adminlte/plugins/daterangepicker/moment.min.js"></script>
+<script src="/resource/app/html/adminlte/plugins/daterangepicker/daterangepicker.min.js"></script>
+
+<!-- dataTable -->
+<script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+
+
+<link rel="stylesheet" type="text/css"
+      href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"/>
+
+
+
+<script src="/resource/app/js/trend.js?v={$app.version}"></script>
+<script src="/resource/app/html/adminlte/plugins/select2/select2.full.min.js?v={$app.version}"></script>
+<script src="/resource/app/js/select.js?v={$app.version}"></script>
+
+
+</body>
+</html>

@@ -6,6 +6,76 @@
         Created by cyril on 2021/06/04 
     -->
 
+    <view name="api.status.date" authenticators="admin">
+
+    <argument name="date"/>
+    <argument name="report"/>
+    <argument name="tenant"/>
+    <argument name="top"/>
+    <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+    <variable name="url" eval="property('api.trends')"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="choose($top='all',concat($url,$report,'/status/metrics','?date=',$date),concat($url,$report,'/status/metrics','?date=','&amp;top=',$top))"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+            <fallback
+                    eval="new_element('exception',new_attribute('exception',' : exception with api.flapping.status view '))">
+                <exception type="java.io.IOException"/>
+            </fallback>
+        </connector>
+
+        <serializer type="JSONStreamSerializer"/>
+
+    </view>
+
+    <view name="api.status.range" authenticators="admin">
+
+
+        <argument name="report"/>
+        <argument name="tenant"/>
+        <argument name="start_date"/>
+        <argument name="end_date"/>
+        <argument name="top"/>
+        <argument name="granularity"/>
+
+
+        <variable name="option" eval="choose($granularity!='_granularity_',concat('?granularity=',$granularity,'&amp;'),'?')"/>
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+
+
+        <variable name="base-url" eval="property('api.trends')"/>
+
+        <variable name="url" eval="choose($top='all',concat($base-url,$report,'/status/metrics',$option,'start_date=',$start_date,'&amp;end_date=',$end_date),concat($base-url,$report,'/status/metrics',$option,'start_date=',$start_date,'&amp;end_date=',$end_date,'&amp;top=',$top))"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+            <fallback
+                    eval="new_element('exception',new_attribute('exception',' : exception with api.status.range view '))">
+                <exception type="java.io.IOException"/>
+            </fallback>
+        </connector>
+
+
+        <serializer type="JSONStreamSerializer"/>
+
+
+        <processors>
+            <element in="object">
+                <attribute-create out="url">$url</attribute-create>
+            </element>
+        </processors>
+
+    </view>
+
     <view name="api.flapping.date" authenticators="admin">
 
         <argument name="type"/>
@@ -74,7 +144,7 @@
 
 
 
-    <view name="trends_flapping" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
+    <view name="trends" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 
         <argument name="date" eval="substring(date:date-time(),0,11)"/>
         <argument name="start_date">_start_date_</argument>
@@ -83,6 +153,7 @@
         <argument name="tenant">egi</argument>
         <argument name="top">all</argument>
         <argument name="granularity">_granularity_</argument>
+        <argument name="trends">flapping</argument>
 
         <connector type="XMLConnector">
             <parameter name="content" eval="new_element('root')"/>
@@ -99,28 +170,43 @@
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="top">$top</attribute-create>
                 <attribute-create out="granularity">$granularity</attribute-create>
+                <attribute-create out="trends">$trends</attribute-create>
+
 
 
                 <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
 
-                <element-create>new_element("groups")</element-create>
-                <element-create>new_element("services")</element-create>
-                <element-create>new_element("endpoints")</element-create>
-                <element-create>new_element("metrics")</element-create>
+                <element-create if="$trends='flapping'">new_element("groups")</element-create>
+                <element-create if="$trends='flapping'">new_element("services")</element-create>
+                <element-create if="$trends='flapping'">new_element("endpoints")</element-create>
+                <element-create if="$trends='flapping'">new_element("metrics")</element-create>
+                <element-create if="$trends='status'">new_element("status")</element-create>
                 <element-create>new_element("dates")</element-create>
+
 
             </element>
 
-            <element in="root">
-                <element if="name()!='report' and name()!='dates'">
+            <element in="root" if="$trends='flapping'">
+                <element if="name()!='report' and name()!='dates' and name()!='status'">
                     <element-create if="$start_date='_start_date_'">view('api.flapping.date',entry('type',name(..))|entry('date',$date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top)|entry('granularity',$granularity))</element-create>
                     <element-create if="$start_date!='_start_date_'">view('api.flapping.range',entry('type',name(..))|entry('start_date',$start_date)|entry('end_date',$end_date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top)|entry('granularity',$granularity))</element-create>
-
                 </element>
             </element>
 
+            <element in="root" if="$trends='status'">
+                <element if="name()='status'">
+                    <element-create if="$start_date='_start_date_'">view('api.status.date',entry('date',$date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top)|entry('granularity',$granularity))</element-create>
+                    <element-create if="$start_date!='_start_date_'">view('api.status.range',entry('start_date',$start_date)|entry('end_date',$end_date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top)|entry('granularity',$granularity))</element-create>
+                </element>
+            </element>
+
+
+            <!-- ################################ -->
+            <!-- TRAITEMENT des FLAPPINGs TRENDS -->
+            <!-- ################################ -->
+
             <element in="root" if="$granularity='_granularity_'">
-                <element>
+                <element if="name()!='status'">
                     <attribute-create out="url">../object/@url</attribute-create>
                     <elements-ignore path="object/data">
                         <element-ignore in="object"/>
@@ -130,7 +216,7 @@
             </element>
 
             <element in="root" if="$granularity!='_granularity_'">
-                <element>
+                <element if="name()!='status'">
                     <elements path="object/data/object/date">
                         <text>concat(.,',')</text>
                     </elements>
@@ -144,7 +230,7 @@
             </element>
 
             <element in="root" if="$granularity!='_granularity_'">
-                <element>
+                <element if="name()!='status'">
                     <attribute-create out="url" if="../object/@url">../object/@url</attribute-create>
                     <elements-ignore path="object/data/object/top">
                                 <element in="object">
@@ -159,14 +245,14 @@
             </element>
 
             <element in="root" if="$granularity!='_granularity_'">
-                    <element>
+                    <element if="name()!='status'">
                         <element-ignore in="object"/>
                         <element-create>sort_by_string(../object,'@key')</element-create>
                     </element>
             </element>
 
             <element in="root" if="$granularity!='_granularity_'">
-                <element>
+                <element if="name()!='status'">
                    <element-create-as-parent out="object" group-by="@key">
                        <element-ignore in="object"><element></element></element-ignore>
                    </element-create-as-parent>
@@ -174,7 +260,7 @@
             </element>
 
             <element in="root" if="$granularity!='_granularity_'">
-                <element>
+                <element if="name()!='status'">
                     <element in="object">
                         <element in="endpoint_group" if="not(preceding-sibling::endpoint_group)"></element>
                         <element in="service" if="not(preceding-sibling::service)"></element>
@@ -201,15 +287,15 @@
             </element>
 
             <element in="root" if="$granularity!='_granularity_'">
-                <element if="name()!='dates'">
+                <element if="name()!='dates' and name()!='status'">
                     <element in="object">
                         <element-create>../../../dates</element-create>
                     </element>
                 </element>
             </element>
 
-            <element in="root" if="$granularity!='_granularity_'">
-                <element if="name()!='dates'">
+            <element in="root" if="$granularity!='_granularity_' and $trends!='status'">
+                <element if="name()!='dates' and name()!='status'">
                     <element in="object">
                         <element in="dates" out="flappings">
                             <element in="date" out="flapping">
@@ -225,11 +311,28 @@
                 <element-ignore/>
             </element>
 
+            <!-- ################################ -->
+            <!-- TRAITEMENT des STATUS TRENDS -->
+            <!-- ################################ -->
+
+
+            <element in="root" if="$granularity!='_granularity_'">
+                <element in="status">
+                    <elements-ignore path="object/data">
+                        <element/>
+                    </elements-ignore>
+                </element>
+            </element>
+
+
+
         </processors>
+
+
 
         <renderers>
             <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/trends/flapping.html</parameter>
+                <parameter name="template">app/html/trends/trends.html</parameter>
             </renderer>
         </renderers>
 
