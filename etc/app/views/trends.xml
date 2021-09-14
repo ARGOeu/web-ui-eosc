@@ -143,8 +143,76 @@
     </view>
 
 
+    <view name="trends-status" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 
-    <view name="trends" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
+    <argument name="date" eval="substring(date:date-time(),0,11)"/>
+    <argument name="start_date">_start_date_</argument>
+    <argument name="end_date">_end_date_</argument>
+    <argument name="report">Critical</argument>
+    <argument name="tenant">egi</argument>
+    <argument name="top">all</argument>
+    <argument name="granularity">_granularity_</argument>
+    <argument name="trends">status</argument>
+
+    <connector type="XMLConnector">
+        <parameter name="content" eval="new_element('root')"/>
+    </connector>
+
+    <processors>
+
+        <element in="root">
+            <attribute-create out="date">$date</attribute-create>
+            <attribute-create out="start_date">$start_date</attribute-create>
+            <attribute-create out="end_date">$end_date</attribute-create>
+
+            <attribute-create out="tenant">$tenant</attribute-create>
+            <attribute-create out="report">$report</attribute-create>
+            <attribute-create out="top">$top</attribute-create>
+            <attribute-create out="granularity">$granularity</attribute-create>
+            <attribute-create out="trends">$trends</attribute-create>
+
+            <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
+            <element-create if="$trends='status'">new_element("status")</element-create>
+
+
+        </element>
+
+
+
+        <element in="root">
+            <element if="name()='status'">
+                <element-create if="$start_date='_start_date_'">view('api.status.date',entry('date',$date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top)|entry('granularity',$granularity))</element-create>
+                <element-create if="$start_date!='_start_date_'">view('api.status.range',entry('start_date',$start_date)|entry('end_date',$end_date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top)|entry('granularity',$granularity))</element-create>
+            </element>
+        </element>
+
+
+
+
+        <element in="root">
+            <element in="status">
+                <elements-ignore path="object/data">
+                    <element/>
+                </elements-ignore>
+            </element>
+        </element>
+
+
+
+    </processors>
+
+
+
+    <renderers>
+        <renderer type="HTMLRenderer">
+            <parameter name="template">app/html/trends/trends.html</parameter>
+        </renderer>
+    </renderers>
+    </view>
+
+
+
+    <view name="trends-flapping" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 
         <argument name="date" eval="substring(date:date-time(),0,11)"/>
         <argument name="start_date">_start_date_</argument>
@@ -165,7 +233,6 @@
                 <attribute-create out="date">$date</attribute-create>
                 <attribute-create out="start_date">$start_date</attribute-create>
                 <attribute-create out="end_date">$end_date</attribute-create>
-
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="top">$top</attribute-create>
@@ -176,34 +243,23 @@
 
                 <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
 
-                <element-create if="$trends='flapping'">new_element("groups")</element-create>
-                <element-create if="$trends='flapping'">new_element("services")</element-create>
-                <element-create if="$trends='flapping'">new_element("endpoints")</element-create>
-                <element-create if="$trends='flapping'">new_element("metrics")</element-create>
-                <element-create if="$trends='status'">new_element("status")</element-create>
+                <element-create>new_element("groups")</element-create>
+                <element-create >new_element("services")</element-create>
+                <element-create >new_element("endpoints")</element-create>
+                <element-create >new_element("metrics")</element-create>
+
                 <element-create>new_element("dates")</element-create>
 
 
             </element>
 
-            <element in="root" if="$trends='flapping'">
-                <element if="name()!='report' and name()!='dates' and name()!='status'">
+            <element in="root">
+                <element if="name()!='report' and name()!='dates'">
                     <element-create if="$start_date='_start_date_'">view('api.flapping.date',entry('type',name(..))|entry('date',$date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top)|entry('granularity',$granularity))</element-create>
                     <element-create if="$start_date!='_start_date_'">view('api.flapping.range',entry('type',name(..))|entry('start_date',$start_date)|entry('end_date',$end_date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top)|entry('granularity',$granularity))</element-create>
                 </element>
             </element>
 
-            <element in="root" if="$trends='status'">
-                <element if="name()='status'">
-                    <element-create if="$start_date='_start_date_'">view('api.status.date',entry('date',$date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top)|entry('granularity',$granularity))</element-create>
-                    <element-create if="$start_date!='_start_date_'">view('api.status.range',entry('start_date',$start_date)|entry('end_date',$end_date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top)|entry('granularity',$granularity))</element-create>
-                </element>
-            </element>
-
-
-            <!-- ################################ -->
-            <!-- TRAITEMENT des FLAPPINGs TRENDS -->
-            <!-- ################################ -->
 
             <element in="root" if="$granularity='_granularity_'">
                 <element if="name()!='status'">
@@ -260,7 +316,7 @@
             </element>
 
             <element in="root" if="$granularity!='_granularity_'">
-                <element if="name()!='status'">
+                <element>
                     <element in="object">
                         <element in="endpoint_group" if="not(preceding-sibling::endpoint_group)"></element>
                         <element in="service" if="not(preceding-sibling::service)"></element>
@@ -287,7 +343,7 @@
             </element>
 
             <element in="root" if="$granularity!='_granularity_'">
-                <element if="name()!='dates' and name()!='status'">
+                <element if="name()!='dates'">
                     <element in="object">
                         <element-create>../../../dates</element-create>
                     </element>
@@ -295,7 +351,7 @@
             </element>
 
             <element in="root" if="$granularity!='_granularity_' and $trends!='status'">
-                <element if="name()!='dates' and name()!='status'">
+                <element if="name()!='dates'">
                     <element in="object">
                         <element in="dates" out="flappings">
                             <element in="date" out="flapping">
@@ -309,19 +365,6 @@
                     </element>
                 </element>
                 <element-ignore/>
-            </element>
-
-            <!-- ################################ -->
-            <!-- TRAITEMENT des STATUS TRENDS -->
-            <!-- ################################ -->
-
-
-            <element in="root" if="$granularity!='_granularity_'">
-                <element in="status">
-                    <elements-ignore path="object/data">
-                        <element/>
-                    </elements-ignore>
-                </element>
             </element>
 
 

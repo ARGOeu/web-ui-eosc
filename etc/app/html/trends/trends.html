@@ -37,78 +37,71 @@
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="card col-8 m-1 p-1 border-blue" id="preferences">
-                        <div class="card-header"><h3><i class="fas fa-cog"></i> Parameters
-                            <a  id="togglePreferences" class="ml-4"><i class="fas fa-angle-double-down"></i> </a>
-                            <a  id="untogglePreferences" class="ml-4 d-none"><i class="fas fa-angle-double-up"></i> </a>
-                        </h3></div>
-                        <div class="card-body d-none">
-                            <label>Type of Trend</label><br/>
-                            <input type="radio" name="trends" value="flapping" checked="true" tpl:if="root/@trends='flapping'"/>
-                            <input type="radio" name="trends" value="flapping" tpl:else=""/> Flapping Items
 
-                            <input type="radio" name="trends" value="status" checked="true" tpl:if="root/@trends='status'"/>
-                            <input type="radio" name="trends" value="status" tpl:else=""/> Status
+                <input type="radio" class="d-none" name="trends" value="flapping" checked="true" tpl:if="root/@trends='flapping'"/>
+                <input type="radio" class="d-none" name="trends" value="status" checked="true" tpl:if="root/@trends='status'"/>
+
+                <div class="card card-primary collapsed-card">
+
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-cog"></i> Parameters</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus fa-2x"></i>
+                            </button>
                         </div>
-                        <div class="card-body d-none">
-                            <label>Period</label><br/>
-                            <input type="radio" name="period" value="date" tpl:if="/root/@start_date='_start_date_'" checked="true"/>
-                            <input type="radio" name="period" value="date" tpl:else=""/>
-                            <label class="m-1">Day date</label>
-                            <input class="input col-2" id="calendar"  value="{root/@date}"/><i class="fas fa-calendar m-1 mr-5"></i>
-
-
-
-                            <input type="radio" class="ml-2" name="period" tpl:if="/root/@start_date='_start_date_'" value="range"/>
-                            <input type="radio" name="period" tpl:else="" value="range" checked="true"/>
-                            <label class="m-1">Range</label>
-                            <input class="input col-3" id="calendar-range"  /><i class="fas fa-calendar m-1"></i>
-                            <input id="start_date" class="d-none" value="{{/root/@start_date}}" tpl:if="/root/@start_date!='_start_date_'"/>
-                            <input id="end_date" class="d-none" value="{{/root/@end_date}}" tpl:if="/root/@end_date!='_end_date_'"/>
-                        </div>
-
-                        <div class="card-body d-none">
-                            <label>Number of results</label><br/>
-                            <select id="top" class="m-1">
-                                <option value="{{/root/@top}}">{{/root/@top}}</option>
-                                <option value="all">all</option>
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="30">30</option>
-                            </select>
-                        </div>
-
-                        <div class="card-body d-none">
-                            <label>Group by Month</label><br/>
-
-
-                                <input type="radio" class="ml-2" name="granularity"  tpl:if="root/@granularity='_granularity_'" value="0" checked="true"/>
-                                <input type="radio" class="ml-2" name="granularity"  tpl:else="" value="0" /> No
-
-                                <input type="radio" class="ml-2" name="granularity" tpl:if="root/@granularity!='_granularity_'" value="1" checked="true"/>
-                                <input type="radio" class="ml-2" name="granularity" tpl:else="" value="1" /> Yes
-
-
-                        </div>
-
-                        <div class="card-footer d-none">
-                            <button class="btn btn-primary submit" id="parametersF" value="submit">submit</button>
-
-                                <div class="m-1 p-1 spinner-border text-primary d-none" role="status" id="spinner">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-
-
-                        </div>
-
+                        <!-- /.card-tools -->
                     </div>
 
+                    <!-- /.card-header -->
+                    <div class="card-body" style="display: none;">
+
+                        <input type="radio" name="period" value="date" tpl:if="/root/@start_date='_start_date_'" checked="true"/>
+                        <input type="radio" name="period" value="date" tpl:else=""/>
+                        <label class="m-1">Day date</label>
+                        <input class="input" id="calendar"  value="{root/@date}"/>
+
+                        <input type="radio" class="m-1" name="period" tpl:if="/root/@start_date='_start_date_'" value="range"/>
+                        <input class="m-1" type="radio" name="period" tpl:else="" value="range" checked="true"/>
+                        <label class="m-1">Range</label>
+                        <input class="input" id="calendar-range"  />
+                        <input id="start_date" class="d-none" value="{{/root/@start_date}}" tpl:if="/root/@start_date!='_start_date_'"/>
+                        <input id="end_date" class="d-none" value="{{/root/@end_date}}" tpl:if="/root/@end_date!='_end_date_'"/>
+                        <label class="ml-1">|</label>
+                        <label>Number of results</label>
+                        <select id="top" class="m-1">
+                            <option value="{{/root/@top}}">{{/root/@top}}</option>
+                            <option value="all">all</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="30">30</option>
+                        </select>
+                        <label class="ml-1">|</label>
+                        <label class="ml-1">Group by Month </label>
+                        <input type="radio" class="ml-2" name="granularity"  tpl:if="root/@granularity='_granularity_'" value="0" checked="true"/>
+                        <input type="radio" class="ml-2" name="granularity"  tpl:else="" value="0" /> No
+
+                        <input type="radio" class="ml-2" name="granularity" tpl:if="root/@granularity!='_granularity_'" value="1" checked="true"/>
+                        <input type="radio" class="ml-2" name="granularity" tpl:else="" value="1" /> Yes
+
+                        <button class="btn btn-primary submit ml-3" id="parametersF" value="submit">submit</button>
+
+                        <div class="m-1 p-1 spinner-border text-primary d-none" role="status" id="spinner">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
 
                 </div>
 
+
+
+
+
+
+
+
                 <div  tpl:if="/root/@trends='flapping'">
-                    <h2 class="m-2">Flapping items</h2><br/>
+
 
                     <div class="row" tpl:if="/root/@granularity='_granularity_'">
 
@@ -200,7 +193,7 @@
 
                 </div>
                 <div  tpl:if="/root/@trends='status'">
-                    <h2 class="m-2">Status trends</h2><br/>
+
 
                     <div class="row">
 

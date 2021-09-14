@@ -65,27 +65,91 @@
                             </a>
                         </li>
 
-                        <li tpl:if="@tenant='egi' and @report='Critical'" class="nav-item">
-                            <a href="/{{@tenant}}/report-ar/{{@report}}/{{@topology1}}"
-                               title="Availability/Reliability - NGI Reports" class="nav-link">
-                                <i class="fa fa-globe nav-icon"></i>
-                                <p class="text-capitalize">NGIs Report</p>
+
+
+
+                            <li class="nav nav-item has-treeview" data-widget="treeview">
+                                <a  class="nav-link">
+                                    <i class="nav-icon fas fa-list"></i>
+                                    <p style="width:140px">
+                                        Reports
+                                        <i class="fa fa-angle-left right pull-right"></i>
+                                    </p>
+
+                                </a>
+
+                                <ul class="nav nav-treeview">
+                                    <div class="dropdown-divider"></div>
+                                    <li  class="nav-item">
+                                        <a href="/{{@tenant}}/report-ar/{{@report}}/{{@topology1}}"
+                                           title="Availability/Reliability - NGI Reports" class="nav-link">
+                                            <i class="fa fa-globe nav-icon"></i>
+                                            <p class="text-capitalize">NGIs Report</p>
+                                        </a>
+                                    </li>
+                                    <li tpl:if="@tenant='egi' and @report='Critical'" class="nav-item">
+                                        <a href="/{{@tenant}}/report-ar/{{@report}}/SITES"
+                                           title="Availability/Reliability - Sites reports" class="nav-link">
+                                            <i class="fa fa-home nav-icon"></i>
+                                            <p class="text-capitalize">Sites Report</p>
+                                        </a>
+                                    </li>
+                                    <li tpl:else="" class="nav-item">
+                                        <a href="/{{@tenant}}/report-ar/{{@report}}/{{@topology1}}"
+                                           title="Availability/Reliability of {{@topology1}}" class="nav-link">
+                                            <i class="fa fa-tachometer-alt nav-icon"></i>
+                                            <p class="text-capitalize">Availability/Reliability</p>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="/{{@tenant}}/{{@report}}/custom" class="nav-link">
+                                            <i class="fa  fa-file nav-icon"></i>
+                                            <p>Custom Report</p>
+                                        </a>
+                                    </li>
+
+                                    <div class="dropdown-divider"></div>
+                                </ul>
+                            </li>
+
+
+
+                        <li class="nav nav-item has-treeview" data-widget="treeview">
+                            <a class="nav-link">
+                                <i class="nav-icon fas fa-chart-line"></i>
+                                <p style="width:140px">
+                                    Trends
+                                <i class="fas fa-angle-left right pull-right"></i>
+                                </p>
+
                             </a>
+
+                            <ul tpl:if="@tenant='egi' or @tenant='eudat'"  class="nav nav-treeview">
+                                <div class="dropdown-divider"></div>
+
+                                <li class="nav-item">
+                                    <a href="/{{@tenant}}/{{@report}}/trends/flapping"
+                                       title="Flapping Items" class="nav-link">
+                                        <i class="fas fa-exchange-alt nav-icon"></i>
+                                        <p class="text-capitalize">Flapping Items</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="/{{@tenant}}/{{@report}}/trends/status"
+                                       title="Status" class="nav-link">
+                                        <i class="fas fa-check nav-icon"></i>
+                                        <p class="text-capitalize">Status</p>
+                                    </a>
+                                </li>
+
+                                <div class="dropdown-divider"></div>
+                            </ul>
                         </li>
-                        <li tpl:if="@tenant='egi' and @report='Critical'" class="nav-item">
-                            <a href="/{{@tenant}}/report-ar/{{@report}}/SITES"
-                               title="Availability/Reliability - Sites reports" class="nav-link">
-                                <i class="fa fa-home nav-icon"></i>
-                                <p class="text-capitalize">Sites Report</p>
-                            </a>
-                        </li>
-                        <li tpl:else="" class="nav-item">
-                            <a href="/{{@tenant}}/report-ar/{{@report}}/{{@topology1}}"
-                               title="Availability/Reliability of {{@topology1}}" class="nav-link">
-                                <i class="fa fa-tachometer-alt nav-icon"></i>
-                                <p class="text-capitalize">Availability/Reliability</p>
-                            </a>
-                        </li>
+
+
+
 
                         <li class="nav-item">
                             <a href="/{{@tenant}}/report-status/{{@report}}/{{@topology2}}"
@@ -115,21 +179,6 @@
 
 
 
-                        <li tpl:if="@tenant='egi' or @tenant='eudat'" class="nav-item">
-                            <a href="/{{@tenant}}/{{@report}}/trends"
-                               title="Flapping Items" class="nav-link">
-                                <i class="fas fa-chart-line nav-icon"></i>
-                                <p class="text-capitalize">Trends</p>
-                            </a>
-                        </li>
-
-
-                        <li class="nav-item">
-                            <a href="/{{@tenant}}/{{@report}}/custom" class="nav-link">
-                                <i class="fa  fa-file nav-icon"></i>
-                                <p>Custom Report</p>
-                            </a>
-                        </li>
 
                         <li class="nav-item">
                             <a href="/{{@tenant}}/reportDetails/{{@report}}" class="nav-link">
