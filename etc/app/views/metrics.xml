@@ -6,17 +6,16 @@
     -->
 
 
-
-
-    <view name="metrics" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd"
-          xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" >
+    <view name="metrics" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings"
+          xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd"
+          xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
 
         <argument name="report">OPS-MONITOR-Critical</argument>
         <argument name="tenant">egi</argument>
         <argument name="metric_name">_metrics_</argument>
 
         <variable name="start_time"
-                  eval="concat(str:replace(substring(date:add(function:date-UTC(),'-PT6H'),0,20),' ','T'),'Z')"/>
+                  eval="choose($tenant='eosc',concat(str:replace(substring(date:add(function:date-UTC(),'-PT1H'),0,20),' ','T'),'Z'),concat(str:replace(substring(date:add(function:date-UTC(),'-PT4H'),0,20),' ','T'),'Z'))"/>
         <!--
             <variable name="end_time"
                       eval="choose($end_date='_end_',concat(str:replace(substring(function:date-UTC(),0,20),' ','T'),'Z'),concat($end_date,'T23:59:59Z'))"/>-->
@@ -25,7 +24,8 @@
 
         <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
 
-        <variable name="url" eval="concat(property('api.status'),'/',$report,'/metrics/',$metric_name,'?start_time=',$start_time,'&amp;end_time=',$end_time)"></variable>
+        <variable name="url"
+                  eval="concat(property('api.status'),'/',$report,'/metrics/',$metric_name,'?start_time=',$start_time,'&amp;end_time=',$end_time)"></variable>
 
         <connector type="HTTPConnector">
             <parameter name="url"
@@ -52,7 +52,8 @@
             </element>
 
             <element in="root" if="$metric_name='_metrics_'">
-                <element-create>view('metrics_profile')/e:entries/e:entry[@profile=$report][@tenant=$tenant]</element-create>
+                <element-create>view('metrics_profile')/e:entries/e:entry[@profile=$report][@tenant=$tenant]
+                </element-create>
             </element>
 
             <element in="root" if="$metric_name='_metrics_'">
@@ -65,10 +66,10 @@
 
 
             <element in="root" if="$metric_name!='_metrics_'">
-                    <element in="entries" out="select">
-                        <element in="name" out="option"/>
-                        <element-ignore/>
-                    </element>
+                <element in="entries" out="select">
+                    <element in="name" out="option"/>
+                    <element-ignore/>
+                </element>
             </element>
 
             <element in="root" if="$metric_name!='_metrics_'">
@@ -77,11 +78,13 @@
                         <element in="object" out="metrics">
                             <attribute-create out="name">../../../name/text()</attribute-create>
                             <attribute-create out="service">../../../service/text()</attribute-create>
-                            <attribute-create out="supergroup">str:replace(../../../supergroup/text(),' ','_')</attribute-create>
+                            <attribute-create out="supergroup">str:replace(../../../supergroup/text(),' ','_')
+                            </attribute-create>
                             <attribute-create out="metric">../../../metric/text()</attribute-create>
                             <attribute-create out="status">../value/text()</attribute-create>
                             <attribute-create out="timestamp">../timestamp/text()</attribute-create>
-                            <attribute-create out="key">concat(../../../name/text(),../../../service/text())</attribute-create>
+                            <attribute-create out="key">concat(../../../name/text(),../../../service/text())
+                            </attribute-create>
                             <element-ignore/>
                         </element>
                     </elements-ignore>
@@ -102,7 +105,8 @@
                     <element-create>sort_by_string(../metrics,'@key')</element-create>
                 </element>
                 <element in="e:entries">
-                    <element-create>view('metrics_list',entry('tenant',$tenant)|entry('report',$report))/e:entries/*</element-create>
+                    <element-create>view('metrics_list',entry('tenant',$tenant)|entry('report',$report))/e:entries/*
+                    </element-create>
                 </element>
             </element>
 
@@ -138,7 +142,6 @@
         </renderers>
 
     </view>
-
 
 
 </views>
