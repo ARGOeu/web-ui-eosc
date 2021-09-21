@@ -12,6 +12,16 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>logging-mailhandler</artifactId>
+            <version>1.6.1</version>
+        </dependency>
 
 
     </dependencies>
@@ -21,7 +31,6 @@
             <url>http://maven.in2p3.fr</url>
         </repository>
     </repositories>
-  
+
 
 </project>
-
