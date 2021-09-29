@@ -82,16 +82,16 @@
                                     <div class="dropdown-divider"></div>
                                     <li  class="nav-item">
                                         <a href="/{{@tenant}}/report-ar/{{@report}}/{{@topology1}}"
-                                           title="Availability/Reliability - NGI Reports" class="nav-link">
+                                           title="Availability/Reliability - {{@topology1}} Reports" class="nav-link">
                                             <i class="fa fa-globe nav-icon"></i>
-                                            <p class="text-capitalize">NGIs Report</p>
+                                            <p class="text-capitalize">{{@topology1}} Report</p>
                                         </a>
                                     </li>
-                                    <li tpl:if="@tenant='egi' and @report='Critical'" class="nav-item">
-                                        <a href="/{{@tenant}}/report-ar/{{@report}}/SITES"
-                                           title="Availability/Reliability - Sites reports" class="nav-link">
+                                    <li  class="nav-item">
+                                        <a href="/{{@tenant}}/report-ar/{{@report}}//{{@topology2}}"
+                                           title="Availability/Reliability - {{@topology2}} reports" class="nav-link">
                                             <i class="fa fa-home nav-icon"></i>
-                                            <p class="text-capitalize">Sites Report</p>
+                                            <p class="text-capitalize">{{@topology2}} Report</p>
                                         </a>
                                     </li>
                                     <li tpl:else="" class="nav-item">
