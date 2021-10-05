@@ -15,7 +15,7 @@
         <argument name="metric_name">_metrics_</argument>
 
         <variable name="start_time"
-                  eval="choose($tenant='eosc',concat(str:replace(substring(date:add(function:date-UTC(),'-PT1H'),0,20),' ','T'),'Z'),concat(str:replace(substring(date:add(function:date-UTC(),'-PT4H'),0,20),' ','T'),'Z'))"/>
+                  eval="choose($metric_name='org.nagios.WebCheck',concat(str:replace(substring(date:add(function:date-UTC(),'-PT11M'),0,20),' ','T'),'Z'),concat(str:replace(substring(date:add(function:date-UTC(),'-PT4H'),0,20),' ','T'),'Z'))"/>
         <!--
             <variable name="end_time"
                       eval="choose($end_date='_end_',concat(str:replace(substring(function:date-UTC(),0,20),' ','T'),'Z'),concat($end_date,'T23:59:59Z'))"/>-->

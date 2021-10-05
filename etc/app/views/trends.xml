@@ -170,6 +170,8 @@
             <attribute-create out="top">$top</attribute-create>
             <attribute-create out="granularity">$granularity</attribute-create>
             <attribute-create out="trends">$trends</attribute-create>
+            <attribute-create out="topology2">view('tenants.reports')/tenants/tenant[@id=$tenant]/report[@name=$report]/@topology2</attribute-create>
+            <attribute-create out="topology3">view('tenants.reports')/tenants/tenant[@id=$tenant]/report[@name=$report]/@topology3</attribute-create>
 
             <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
             <element-create if="$trends='status'">new_element("status")</element-create>
@@ -197,9 +199,15 @@
             </element>
         </element>
 
-
-
-    </processors>
+        <element in="root">
+            <element in="status">
+                <elements path="object/top">
+                    <element in="object">
+                        <attribute-create out="link">concat('/',/root/@tenant,'/report-status/',/root/@report,'/',/root/@topology2,'/',../endpoint_group/text(),'/',../service/text(),'/',../endpoint/text())</attribute-create>
+                    </element>
+                </elements>
+            </element>
+        </element>    </processors>
 
 
 

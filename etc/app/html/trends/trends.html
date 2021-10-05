@@ -3,6 +3,7 @@
 
 <head tpl:include="/resource/app/html/header.html"></head>
 
+
 <body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
     <!-- Navbar -->
@@ -43,13 +44,8 @@
 
                 <div class="card card-primary collapsed-card">
 
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-cog"></i> Parameters</h3>
-
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus fa-2x"></i>
-                            </button>
-                        </div>
+                    <div class="card-header" data-card-widget="collapse">
+                        <h3 class="card-title"><i class="fas fa-cog"></i> Parameters - <em>Click to change the default values</em></h3>
                         <!-- /.card-tools -->
                     </div>
 
@@ -209,7 +205,11 @@
                                     </thead>
                                     <tbody>
                                     <tr tpl:foreach="top/object">
-                                        <td tpl:foreach="*[name()!='status' and name()!='events']"><span class="badge bg-light border border-dark m-1">{{text()}}</span></td>
+                                        <td tpl:foreach="*[name()!='status' and name()!='events']">
+                                            <a tpl:if="name()!='metrics'" href="{{concat(substring-before(../@link,concat('/',text())),'/',text())}}" alt="link to status page"><span class="badge bg-light border border-dark m-1">{{text()}}</span></a>
+                                            <a tpl:if="name()='metrics'"  alt="link to status page"><span class="badge bg-light border border-dark m-1">{{text()}}</span></a>
+
+                                        </td>
                                         <td><span class="badge bg-primary m-2">{{events/text()}}</span></td>
                                     </tr>
 
