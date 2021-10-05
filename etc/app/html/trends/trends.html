@@ -206,8 +206,8 @@
                                     <tbody>
                                     <tr tpl:foreach="top/object">
                                         <td tpl:foreach="*[name()!='status' and name()!='events']">
-                                            <a tpl:if="name()!='metrics'" href="{{concat(substring-before(../@link,concat('/',text())),'/',text())}}" alt="link to status page"><span class="badge bg-light border border-dark m-1">{{text()}}</span></a>
-                                            <a tpl:if="name()='metrics'"  alt="link to status page"><span class="badge bg-light border border-dark m-1">{{text()}}</span></a>
+                                            <a tpl:if="name()!='metric'" href="{{concat(substring-before(../@link,concat('/',text())),'/',text())}}" alt="link to status page"><span class="badge bg-light border border-dark m-1">{{text()}}</span></a>
+                                            <a tpl:if="name()='metric'"  alt="link to status page"><span class="badge bg-light border border-dark m-1">{{text()}}</span></a>
 
                                         </td>
                                         <td><span class="badge bg-primary m-2">{{events/text()}}</span></td>
