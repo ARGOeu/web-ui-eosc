@@ -66,7 +66,7 @@
                                 <p><label class="m-1">Host : </label> {{root/host/@name}}</p>
                                 <p><label class="m-1">Metric : </label> {{root/host/metric/@name}}</p>
                                 <p><label class="m-1">Timestamp : </label> {{root/host/metric/status/@timestamp}}</p>
-                                <p tpl:if="root/host/info/URL"><label class="m-1">Additional information : </label><a href="{{root/host/info/URL}}">{{root/host/info/URL}}</a></p>
+                                <p tpl:if="root/host/info/URL"><label class="m-1">Endpoint URL : </label><a href="{{root/host/info/URL}}">{{root/host/info/URL}}</a></p>
                                 <code>{{root/host/metric/status/summary/text()}}</code>
                                 <code>{{root/host/metric/status/message/text()}}</code>
                             </div>
