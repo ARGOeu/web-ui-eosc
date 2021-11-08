@@ -210,6 +210,7 @@
                         <element-create>
                             view('reportTopology',entry('tenant',../ancestor::tenant/id/text())|entry('report',../info/name/text()))/object/data/*
                         </element-create>
+
                         <element-ignore if="$details='_details_'"/>
                     </element>
                 </elements-ignore>
@@ -217,6 +218,7 @@
 
             <element in="tenants" out="root" if="$details!='_details_'">
                 <elements-ignore path="tenant">
+                    <element-create as="first-child">new_element('threshold_profiles', view('threshold_profiles',entry('tenant',../name/text()))/object/data/*)</element-create>
                     <element in="report">
                         <element in="profiles">
                             <element in="object" out="aggregation" if="type/text()='aggregation'">

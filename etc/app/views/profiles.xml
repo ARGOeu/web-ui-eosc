@@ -30,6 +30,12 @@
         </connector>
 
         <serializer type="JSONStreamSerializer"/>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
     </view>
 
     <view name="aggregation_profiles">
@@ -55,6 +61,71 @@
         </connector>
 
         <serializer type="JSONStreamSerializer"/>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+    </view>
+
+    <view name="threshold_profiles"   xmlns:str="http://exslt.org/strings">
+
+        <argument name="tenant"/>
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="url" eval="property('api.profiles.thresholds')"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+            <fallback
+                    eval="new_element('exception',new_attribute('exception',concat('exception with threshold profile: ',$url)))">
+                <exception type="java.io.IOException"/>
+            </fallback>
+        </connector>
+        <serializer type="JSONStreamSerializer"/>
+
+        <processors>
+            <elements path="/object/data/object/rules/object">
+                <element in="thresholds">
+                    <text-ignore/>
+                    <element-create>str:split(../text(),' ')</element-create>
+                </element>
+            </elements>
+
+            <elements path="/object/data/object/rules/object">
+                <element in="thresholds">
+                    <element in="token" out="test">
+                        <text-ignore/>
+                        <element-create>str:split(../text(),';')</element-create>
+                    </element>
+                </element>
+            </elements>
+
+            <elements path="/object/data/object/rules/object">
+                <element in="thresholds">
+                    <element in="test">
+                        <element in="token">
+                            <text>str:replace(.,':',' to ')</text>
+                        </element>
+                    </element>
+                </element>
+            </elements>
+
+        </processors>
+
+
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
     </view>
 
 </views>
