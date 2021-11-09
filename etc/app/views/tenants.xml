@@ -218,7 +218,6 @@
 
             <element in="tenants" out="root" if="$details!='_details_'">
                 <elements-ignore path="tenant">
-                    <element-create as="first-child">new_element('threshold_profiles', view('threshold_profiles',entry('tenant',../name/text()))/object/data/*)</element-create>
                     <element in="report">
                         <element in="profiles">
                             <element in="object" out="aggregation" if="type/text()='aggregation'">
@@ -231,6 +230,12 @@
                             <element in="object" out="metrics" if="type/text()='metric'">
                                 <element-create>
                                     view('metric_profiles',entry('tenant',../ancestor::report/@tenant)|entry('id',../id/text()))
+                                </element-create>
+                            </element>
+
+                            <element in="object" out="thresholds_profiles" if="type/text()='thresholds'">
+                                <element-create>
+                                    view('thresholds_profiles',entry('tenant',../ancestor::report/@tenant)|entry('id',../id/text()))
                                 </element-create>
                             </element>
                         </element>

@@ -75,7 +75,7 @@
                            aria-selected="true"><span class="fa fa-calculator"></span> Aggregation Profiles</a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item" tpl:if="count(root/report/profiles/thresholds_profiles/object)&gt;0">
                         <a class="nav-link" id="table-thresholds" data-toggle="tab" href="#thresholds" role="tab" aria-controls="thresholds"
                            aria-selected="true"><i class="fas fa-layer-group"></i> Thresholds Profiles</a>
                     </li>
@@ -155,34 +155,72 @@
                     </div>
 
                     <div class="tab-pane fade show" id="thresholds" role="tabpanel" aria-labelledby="table-thresholds">
+                        <div class="pull-right">
+<!--                            <button class="btn btn-primary fa fa-question-circle m-2" style="align:right" type="button" data-toggle="modal" data-target="#ModalDoc"  >-->
+<!--                                Documentation-->
+<!--                            </button>-->
+                            <a href="https://argoeu.github.io/argo-monitoring/docs/Profiles/thresholds-profile" target="_blank" alt="link to the doc of treshold profiles">
+                                <button class="btn btn-primary fa fa-question-circle m-2 p-1"  type="button"> Documentation</button>
+                            </a>
+                            <div class="modal fade" id="ModalDoc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Threshold Documentation</h5>
+                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">x</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            The thresholds is defined by following this format
+                                            <span class="label label-default">'label'=value[UOM];[warn];[crit];[min];[max]</span>
+                                            <br/>
+                                            <ul> <li><strong>label :</strong> can contain alphanumeric characters but must always begin with a letter</li>
+                                                <li><strong>value :</strong> is a float or integer</li>
+                                                <li><strong>uom :</strong> is a string unit of measurement (accepted values: s,us,ms,B,KB,MB,TB,%,c)</li>
+                                                <li><strong>warning:</strong> is a range defining the warning threshold limits</li>
+                                                <li><strong>critical:</strong> is a range defining the critical threshold limits</li>
 
-                        <div class="card m-2" tpl:foreach="root/threshold_profiles/object">
+                                            </ul>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="card m-2" tpl:foreach="root/report/profiles/thresholds_profiles/object/data/object">
                             <div class="card-header bg-primary">
-                                <h3>{{name/text()}}</h3>
+                                <h3>{{name/text()}}
+                                </h3>
                             </div>
                             <div class="card-body">
                                 <table class="table dataTable">
                                     <tr>
-                                        <th>Endpoint Group</th>
+                                        <th>Group</th>
                                         <th>Host</th>
                                         <th>Metrics</th>
-                                        <th colspan="5" class="text-center">Thresholds</th>
+                                        <th colspan="6" class="text-center">Thresholds</th>
                                     </tr>
                                     <tr>
                                         <th></th>
                                         <th></th>
                                         <th></th>
-                                        <th>Test Type</th>
-                                        <th>Warning boundaries</th>
-                                        <th>Critical boundaries</th>
-                                        <th>Min</th>
-                                        <th>Max</th>
+                                        <th>Threshold</th>
+                                        <th>label/value/uom</th>
+                                        <th>warning</th>
+                                        <th>critical</th>
+                                        <th>min</th>
+                                        <th>max</th>
                                     </tr>
                                     <tr tpl:foreach="rules/object/thresholds/test">
+
                                         <td>{{ancestor::object/endpoint_group/text()}}</td>
                                         <td>{{ancestor::object/host/text()}}</td>
                                         <td>{{ancestor::object/metric/text()}}</td>
-
+                                        <td>{{text()}}</td>
                                         <td>{{token[1]/text()}}</td>
                                         <td>{{token[2]/text()}}</td>
                                         <td>{{token[3]/text()}}</td>

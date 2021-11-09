@@ -69,11 +69,12 @@
         </renderers>
     </view>
 
-    <view name="threshold_profiles"   xmlns:str="http://exslt.org/strings">
+    <view name="thresholds_profiles"   xmlns:str="http://exslt.org/strings">
 
         <argument name="tenant"/>
+        <argument name="id"/>
         <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
-        <variable name="url" eval="property('api.profiles.thresholds')"/>
+        <variable name="url" eval="concat(property('api.profiles.thresholds'),'/',$id)"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>
@@ -100,7 +101,6 @@
             <elements path="/object/data/object/rules/object">
                 <element in="thresholds">
                     <element in="token" out="test">
-                        <text-ignore/>
                         <element-create>str:split(../text(),';')</element-create>
                     </element>
                 </element>
