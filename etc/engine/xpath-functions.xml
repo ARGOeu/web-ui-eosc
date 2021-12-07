@@ -10,7 +10,7 @@
     eval="concat(property('api.status'),'/',$report,'/',$topology,
     choose($entity1!='_entity_' and $entity2='_entity_',concat('/',$entity1,'/services')),
     choose($entity2!='_entity_' and $entity3='_entity_',concat('/',$entity1,'/services/',$entity2,'/endpoints')),
-    choose($entity3!='_entity_' and $entity4='_entity_',concat('/',$entity1,'/services/',$entity2,'/endpoints/',$entity3,'/metrics')),'?start_time=',$start_time,'&amp;end_time=',$end_time)"
+    choose($entity3!='_entity_' and $entity4='_entity_',concat('/',$entity1,'/services/',$entity2,'/endpoints/',$entity3,'/metrics')),'?view=details&amp;start_time=',$start_time,'&amp;end_time=',$end_time)"
     >
         <argument>report</argument>
         <argument>topology</argument>

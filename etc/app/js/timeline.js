@@ -3,7 +3,6 @@
                 var chart = new google.visualization.Timeline(container);
 
 
-
                 google.visualization.events.addListener(chart, 'select', function () {
                     var selectedItem = chart.getSelection()[0].row;
                     window.location = links[selectedItem];

@@ -18,10 +18,19 @@
 
             for (j = 0; j < local_groups.length; j++) {
 
-
-
                 var tempArray = local_groups[j].textContent.split(",");
                 var color = tempArray.pop();
+                var original_status = tempArray.pop();
+                var thresholdsRaw= tempArray.pop();
+                var performances = tempArray.pop().split(';')[0];
+
+                threshold=thresholdsRaw.split(";")
+                warning=String(threshold[1]);
+                warning=warning.replace(':',' to ');
+
+                critical=String(threshold[2]);
+                critical=critical.replace(':',' to ');
+
                 var bg;
 
                 tempArray[0] = decodeURIComponent(unescape(tempArray[0])) ;
@@ -44,14 +53,28 @@
                     bg='unknown';
 
 
+                    if (performances!='' && performances!=undefined) {
+                        tempArray[4] = '<div class="card card-' + bg + '">' +
+                            '<div class="card-header">' + tempArray[0] + '</div>'
+                            + '<div class="card-body">' +
+                            '<label> Status: &nbsp;<span class="badge bg-' + bg + '">' + tempArray[1].split("_")[0] + '</span></label>' +
+                            '<br/><label>Start Time : &nbsp;</label>' + tempArray[2] +
+                            '<br/><label>End Time : &nbsp;</label>' + tempArray[3] +
+                            '<br/><label>Actual Data : &nbsp;</label>' + performances +
+                            '<br/><label>Applied Threshold : &nbsp;</label><ul><li>label/value/uom : ' + threshold[0] + '</li><li>warning : ' + warning + '</li><li>critical : ' + critical  + '</li><li>min : ' + threshold[3] + '</li><li>max : ' + threshold[4] + '</li></ul>' +
+                            '<label>Original Status: &nbsp;<span class="badge bg-' + original_status.toLowerCase() + '">' + original_status + '</span></label></div>' +
+                            '<div class="card-footer text-muted">Click on the bar to access the next granularity level</div></div>';
+                    } else {
+                        tempArray[4] = '<div class="card card-' + bg + '">' +
+                            '<div class="card-header">' + tempArray[0] + '</div>'
+                            + '<div class="card-body">' +
+                            '<label> Status: &nbsp;<span class="badge bg-' + bg + '">' + tempArray[1].split("_")[0] + '</span></label>' +
+                            '<br/><label>Start Time : &nbsp;</label>' + tempArray[2] +
+                            '<br/><label>End Time : &nbsp;</label>' + tempArray[3] + '</div>' +
+                            '<div class="card-footer text-muted">Click on the bar to access the next granularity level</div></div>';
+                    }
 
-                tempArray[4]= '<div class="card card-'+ bg +'">' +
-                '<div class="card-header">'+ tempArray[0] +'</div>'
-                + '<div class="card-body">' +
-                '<label> Status: &nbsp;<span class="badge bg-'+ bg +'">'+tempArray[1].split("_")[0] + '</span></label>' +
-                '<br/><label>Start Time : &nbsp;</label>' + tempArray[2] +
-                '<br/><label>End Time : &nbsp;</label>' + tempArray[3] + '</div>' +
-                '<div class="card-footer text-muted">Click on the bar to access the next granularity level</div></div>';
+
 
 
 
