@@ -53,7 +53,7 @@
                     bg='unknown';
 
 
-                    if (performances!='' && performances!=undefined) {
+                    if (performances!='' && performances!=undefined && original_status!='' && original_status!=undefined) {
                         tempArray[4] = '<div class="card card-' + bg + '">' +
                             '<div class="card-header">' + tempArray[0] + '</div>'
                             + '<div class="card-body">' +
