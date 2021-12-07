@@ -55,7 +55,7 @@
 
                     if (performances!='' && performances!=undefined && original_status!='' && original_status!=undefined) {
                         tempArray[4] = '<div class="card card-' + bg + '">' +
-                            '<div class="card-header">' + tempArray[0] + '<i class="fas fa-user-tag"></i></div>'
+                            '<div class="card-header">' + tempArray[0] + ' <i class="ml-2 fas fa-user-tag" style="font-size:1.4em"></i></div>'
                             + '<div class="card-body">' +
                             '<label> Status: &nbsp;<span class="badge bg-' + bg + '">' + tempArray[1].split("_")[0] + '</span></label>' +
                             '<br/><label>Start Time : &nbsp;</label>' + tempArray[2] +
