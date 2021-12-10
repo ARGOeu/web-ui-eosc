@@ -5,6 +5,12 @@
         Created by cyril on 2018/03/29 
     -->
 
+    <view name="reportDetails-eudat" authenticators="eudat">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('reportDetails',arguments())"/>
+        </connector>
+    </view>
+
     <view name="reportDetails">
         <argument name="report"/>
         <argument name="tenant"/>

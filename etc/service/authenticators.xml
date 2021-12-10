@@ -7,7 +7,14 @@
         </authenticator>
     </authenticators>
 
-    <authenticators name="aai">
+    <authenticators name="eudat">
+        <authenticator type="WhiteListHTTPBasicAuthenticator">
+            <parameter name="passwords"><entry key="eudat-user">012240ba8fc925e9cff712b0600eb669</entry></parameter>
+        </authenticator>
+    </authenticators>
+
+
+    <authenticators name="aai" >
         <authenticator type="OAuth2Authenticator">
             <!-- required: The URL of the OAuth2 Authorization URL (String) -->
             <parameter name="authz_location" eval="property('egi.oidc.authorize')"/>

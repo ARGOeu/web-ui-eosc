@@ -1453,6 +1453,11 @@
 
     </view>
 
+    <view name="report-ar-eudat" authenticators="eudat">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('report-ar',arguments())"/>
+        </connector>
+    </view>
 
     <view name="report-ar" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 

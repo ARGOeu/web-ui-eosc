@@ -64,7 +64,11 @@
     </view>
 
 
-
+    <view name="report-status-eudat" authenticators="eudat">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('report-status',arguments())"/>
+        </connector>
+    </view>
 
     <view name="report-status" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd"
           xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings"
