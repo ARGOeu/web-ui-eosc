@@ -9,7 +9,7 @@
 
     <authenticators name="eudat">
         <authenticator type="WhiteListHTTPBasicAuthenticator">
-            <parameter name="passwords"><entry key="eudat-user">012240ba8fc925e9cff712b0600eb669</entry></parameter>
+            <parameter name="passwords"><entry key="eudat">012240ba8fc925e9cff712b0600eb669</entry></parameter>
         </authenticator>
     </authenticators>
 
