@@ -68,6 +68,12 @@
         <connector type="XMLConnector">
             <parameter name="content" eval="view('report-status',arguments())"/>
         </connector>
+        <renderers>
+
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/status.html</parameter>
+            </renderer>
+        </renderers>
     </view>
 
     <view name="report-status" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd"

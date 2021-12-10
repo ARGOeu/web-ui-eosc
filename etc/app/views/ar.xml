@@ -1457,6 +1457,20 @@
         <connector type="XMLConnector">
             <parameter name="content" eval="view('report-ar',arguments())"/>
         </connector>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/report-ar/report.html</parameter>
+            </renderer>
+            <renderer type="PDFRenderer">
+                <parameter name="template">app/html/report-ar/report_pdf.html</parameter>
+            </renderer>
+
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
     </view>
 
     <view name="report-ar" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">

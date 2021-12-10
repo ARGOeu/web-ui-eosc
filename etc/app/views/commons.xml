@@ -9,6 +9,12 @@
         <connector type="XMLConnector">
             <parameter name="content" eval="view('reportDetails',arguments())"/>
         </connector>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/report-ar/report_details.html</parameter>
+            </renderer>
+        </renderers>
     </view>
 
     <view name="reportDetails">
