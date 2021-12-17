@@ -396,13 +396,14 @@
 
 
 
-    <view name="argo-report-status">
+    <view name="argo-report-status" xmlns:date="http://exslt.org/dates-and-times">
     <connector type="XMLConnector">
         <parameter name="content" eval="view('tenants.reports')"></parameter>
     </connector>
 
         <processors>
             <element in="tenants">
+                <attribute-create out="date">date:date-time()</attribute-create>
                 <element in="tenant">
                     <element in="report" out="reports">
                         <element-create>view('report-ar-groups',entry('tenant',../@tenant)|entry('report',../@name)|entry('topology',../@topology1))</element-create>

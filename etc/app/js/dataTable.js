@@ -29,7 +29,7 @@ $('#reportMonitor').DataTable({
     "dom": "lftip",
     "paging": true,
     "autoWidth": true,
-    "lengthMenu": [[50, 25, 10, -1], [50, 25, 10, "All"]],
+    "lengthMenu": [[25, 10, -1], [ 25, 10, "All"]],
     "order": [[ 3, "desc" ]]
 });
 

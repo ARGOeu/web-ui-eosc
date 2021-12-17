@@ -3,8 +3,7 @@
       xmlns:date="http://exslt.org/dates-and-times">
 <head tpl:include="/resource/app/html/header.html"></head>
 
-
-<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed" style="height: auto;"
+<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed"
       cz-shortcut-listen="true">
 <div class="wrapper">
 
@@ -19,56 +18,76 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div tpl:include="/resource/app/html/report-ar/header_report.html" class="content-header"/>
-        <!-- /.content-header -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-9">
+
+                        </div><!-- /.col -->
+                        <div class="col-sm-3">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="/monitor-reports">Report Checkings </a></li>
+                                <li class="breadcrumb-item active small">Last update : {{/tenants/@date}}</li>
+
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
 
         <!-- Main content -->
         <div class="content">
 
 
             <div class="container-fluid">
-                <table id="reportMonitor" class="table datatable">
-                    <thead>
-                    <th>Tenant</th>
-                    <th>Report</th>
-                    <th>Topology</th>
-                    <th>Nb groups</th>
-                    <th>Nb results</th>
-                    </thead>
-                    <tbody>
-                    <tr tpl:foreach="/tenants/tenant/reports/report">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="reportMonitor" class="table-responsive-lg table datatable table-condensed table-hover m-4">
+                            <thead>
+                            <th>Tenant</th>
+                            <th>Report</th>
+                            <th>Topology</th>
+                            <th>Nb groups</th>
+                            <th>Nb results</th>
+                            </thead>
+                            <tbody>
+                            <tr tpl:foreach="/tenants/tenant/reports/report">
+                                <td>
+                                    <span class="badge badge-primary m-1">{{ancestor::reports/@tenant}}</span>
+                                </td>
 
-                        <td>
-                            <span class="badge badge-primary m-1">{{ancestor::reports/@tenant}}</span>
-                        </td>
+                                <td>
+                                    <span class="badge badge-primary m-1">{{ancestor::reports/@name}}</span>
+                                </td>
 
-                        <td>
-                            <span class="badge badge-primary m-1">{{ancestor::reports/@name}}</span>
-                        </td>
+                                <td tpl:if="not(@exception)">
+                                    <span class="badge badge-success m-1">{{@topology}}</span>
+                                </td>
+                                <td tpl:else=""><span class="badge badge-critical">{{@topology}} </span></td>
 
-                        <td tpl:if="not(@exception)">
-                            <span class="badge badge-success m-1">{{@topology}}</span>
-                        </td>
-                        <td tpl:else=""><span class="badge badge-critical">{{@topology}} </span></td>
+                                <td tpl:if="not(@exception) and @groups>0">
+                                    <span  class="badge  border bg-success border-dark">{{ @groups}}</span>
+                                </td>
+                                <td tpl:else="not(@exception) and @groups=0">
+                                    <span class="badge  border bg-critical border-dark">0</span>
+                                </td>
+                                <td data-sort="0" tpl:else="@exception"><span class="m-2 badge bg-critical">CALL TO API FAILED !</span></td>
 
-                        <td tpl:if="not(@exception) and @groups>0">
-                            <span  class="badge  border bg-success border-dark">{{ @groups}}</span>
-                        </td>
-                        <td tpl:else="not(@exception) and @groups=0">
-                            <span class="badge  border bg-critical border-dark">0</span>
-                        </td>
-                        <td data-sort="0" tpl:else="@exception"><span class="m-2 badge bg-critical">CALL TO API FAILED !</span></td>
+                                <td tpl:if="not(@exception) and @results>@groups+1"><span
+                                        class="badge  border bg-success border-dark">{{ @results}}</span></td>
+                                <td tpl:else="not(@exception) and @results&lt;@groups+1"><span
+                                        class="badge  border bg-critical border-dark">{{ @results}}</span></td>
+                                <td data-sort="0" tpl:else="@exception"><span class="m-2 badge bg-critical">CALL TO API FAILED !</span></td>
 
-                        <td tpl:if="not(@exception) and @results>@groups+1"><span
-                                class="badge  border bg-success border-dark">{{ @results}}</span></td>
-                        <td tpl:else="not(@exception) and @results&lt;@groups+1"><span
-                                class="badge  border bg-critical border-dark">{{ @results}}</span></td>
-                        <td data-sort="0" tpl:else="@exception"><span class="m-2 badge bg-critical">CALL TO API FAILED !</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
 
-                    </tr>
-                    </tbody>
-                </table>
+
+                    </div>
+
+                </div>
+                <br/><br/>
             </div>
 
         </div>
@@ -94,7 +113,6 @@
 <!-- adminlte -->
 <script src="/resource/app/html/adminlte/dist/js/adminlte2.min.js?v={$app.version}"></script>
 
-<!--<script src="/resource/app/js/dashboard.js?v={$app.version}"></script>-->
 
 
 <script type="text/javascript" charset="utf8"
@@ -104,56 +122,11 @@
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
 
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
-<script src="https://cdn.datatables.net/scroller/1.5.0/js/dataTables.scroller.min.js"></script>
-<script src="https://cdn.datatables.net/select/1.2.6/js/dataTables.select.min.js"></script>
-<script src="https://cdn.datatables.net/colreorder/1.5.0/js/dataTables.colReorder.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.2/js/responsive.bootstrap4.min.js"></script>
-
-
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.6/css/select.dataTables.min.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css"/>
-<link rel="stylesheet" type="text/css"
-      href="https://cdn.datatables.net/colreorder/1.5.0/css/colReorder.bootstrap4.min.css"/>
-<link rel="stylesheet" type="text/css"
-      href="https://cdn.datatables.net/scroller/1.5.0/css/scroller.bootstrap4.min.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.6/css/select.bootstrap4.min.css"/>
-<link rel="stylesheet" type="text/css"
-      href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css"/>
+<link rel="stylesheet" type="text/css"     href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css"/>
 
-
-<script src="/resource/app/js/filter.js?v={$app.version}"></script>
 <script src="/resource/app/js/dataTable.js?v={$app.version}"></script>
-<script src="/resource/app/js/ar_chart.js?v={$app.version}"></script>
-
-<script src="/resource/app/html/adminlte/plugins/chart.js/Chart.min.js?v={$app.version}"></script>
-<script src="/resource/app/html/adminlte/plugins/select2/select2.full.min.js?v={$app.version}"></script>
-<script src="/resource/app/js/select.js?v={$app.version}"></script>
-
-<style>
-    #ar_wrapper .dt-buttons {
-        float: left;
-    }
-
-    #ar_wrapper .dataTables_filter {
-        float: right;
-    }
-
-    #ar_wrapper .dataTables_length {
-        float: right;
-    }
-
-
-</style>
-
-
-<script src="/resource/app/js/dashboard.js?v={$app.version}"></script>
 
 
 </body>
