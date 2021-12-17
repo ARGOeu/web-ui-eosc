@@ -384,6 +384,40 @@
         </connector>
     </view>
 
+
+    <view name="report-ar-dates-eudat" authenticators="eudat">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('report-ar-dates',arguments())"/>
+        </connector>
+
+        <pre-renderers>
+            <row foreach="/root/group/results">
+                <column label="group">ancestor::root/@group</column>
+                <column label="name">ancestor::group/@name</column>
+                <column label="timestamp">@timestamp</column>
+                <column label="availability">@availability</column>
+                <column label="reliability">@reliability</column>
+                <column label="downtime">@downtime</column>
+                <column label="uptime">@uptime</column>
+                <column label="unknown">@unknown</column>
+            </row>
+
+        </pre-renderers>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/report-ar/report_daily.html</parameter>
+            </renderer>
+            <renderer type="PDFRenderer">
+                <parameter name="template">app/html/report-ar/report_daily_pdf.html</parameter>
+            </renderer>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
     <view name="report-ar-dates" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 
         <argument name="report">Critical</argument>
@@ -1227,6 +1261,24 @@
 
     </view>
 
+    <view name="report-ar-endpoint-details-eudat">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('report-ar-endpoint-details',arguments())"/>
+        </connector>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/report-ar/report.html</parameter>
+            </renderer>
+            <renderer type="PDFRenderer">
+                <parameter name="template">app/html/report-ar/report_pdf.html</parameter>
+            </renderer>
+
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+    </view>
 
     <view name="report-ar-endpoint-details" xmlns:date="http://exslt.org/dates-and-times"
           xmlns:str="http://exslt.org/strings">

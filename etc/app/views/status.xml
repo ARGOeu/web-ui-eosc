@@ -410,6 +410,19 @@
 
     </view>
 
+    <view name="report-metrics-eudat" authenticators="eudat">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('report-metrics',arguments())"/>
+        </connector>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/metric.html</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
     <view name="report-metrics" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd"
           xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings"
           xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
