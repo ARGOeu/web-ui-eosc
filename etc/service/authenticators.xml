@@ -3,13 +3,13 @@
 
     <authenticators name="admin">
         <authenticator type="WhiteListHTTPBasicAuthenticator">
-            <parameter name="passwords"><entry key="admin">F1C35504536383D98C613F6F0B790005</entry></parameter>
+            <parameter name="passwords"><entry key="admin" eval="upper-case('f1c35504536383d98c613f6f0b790005')"/></parameter>
         </authenticator>
     </authenticators>
 
     <authenticators name="eudat">
         <authenticator type="WhiteListHTTPBasicAuthenticator">
-            <parameter name="passwords"><entry key="eudat" eval="upper-case('012240ba8fc925e9cff712b0600eb669')"></entry></parameter>
+            <parameter name="passwords"><entry key="eudat" eval="upper-case('012240ba8fc925e9cff712b0600eb669')"/></parameter>
         </authenticator>
     </authenticators>
 

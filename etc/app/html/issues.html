@@ -158,7 +158,8 @@
                                <span class="d-block status m-1 badge badge-{{status/text()}}">{{status/text()}}</span>
                                <ul class="small">
                                    <li><strong>Service: </strong>{{service}}</li>
-                                   <li><strong>Endpoint: </strong>{{endpoint}}</li>
+                                   <li tpl:if="contains(endpoint,'_')"><strong>Endpoint: </strong>{{substring-before(endpoint,'_')}}</li>
+                                   <li tpl:else=""><strong>Endpoint: </strong>{{endpoint}}</li>
                                    <li><strong>Timestamp: </strong>{{timestamp}}</li>
                                    <li><a href="/{/root/@tenant}/report-status/{/root/@report}/{/root/report[@tenant=/root/@tenant][@report=/root/@report]/@topology2}/{@key}/{service}/{endpoint}"><span class="fa fa-link m-1"></span>Status for last 5 days</a></li>
 

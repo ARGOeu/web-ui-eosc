@@ -361,6 +361,39 @@
 
     </view>
 
+    <view name="argo-ui-status">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('status')"></parameter>
+        </connector>
+
+        <processors>
+            <element in="jmx" out="argo-ui-status">
+                <elements-ignore path="/domain/group/mbean">
+                    <element in="attribute" if="@name='Status'">
+                        <attribute-create out="value">../value/text()</attribute-create>
+                        <attribute-ignore/>
+                        <text-ignore/>
+                        <element-ignore/>
+                    </element>
+                </elements-ignore>
+            </element>
+
+            <element in="argo-ui-status">
+                <element-ignore in="attribute"/>
+                <element-create>new_element('view',new_attribute('status','ok')|new_attribute('count',count(../attribute[@value='SUCCESSFUL'])))</element-create>
+                <element-create>new_element('view',new_attribute('status','critical')|new_attribute('count',count(../attribute[@value='FAILURE'])))</element-create>
+                <element-create>new_element('view',new_attribute('status','under-build')|new_attribute('count',count(../attribute[@value='BUILDING'])))</element-create>
+            </element>
+        </processors>
+
+        <pre-renderers>
+            <row foreach="argo-ui-status/view">
+                <column label="statut">@status</column>
+                <column label="count">@count</column>
+            </row>
+        </pre-renderers>
+    </view>
+
 
 
 
