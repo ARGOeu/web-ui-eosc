@@ -431,9 +431,79 @@
         </pre-renderers>
     </view>
 
+    <view name="monitor-reports-status" xmlns:date="http://exslt.org/dates-and-times" authenticators="admin">
+    <connector type="XMLConnector">
+        <parameter name="content" eval="view('tenants.reports')"></parameter>
+    </connector>
 
+        <processors>
+            <element in="tenants">
+                <attribute-create out="date">date:date-time()</attribute-create>
+                <element in="tenant">
+                    <element in="report" out="reports">
+                        <element-create>view('report-status',entry('tenant',../@tenant)|entry('report',../@name)|entry('topology',../@topology2))</element-create>
+                        <element-ignore/>
+                    </element>
+                </element>
+            </element>
+            <element in="tenants">
+                <element in="tenant">
+                    <element in="reports">
+                        <element in="root" out="report">
+                            <attribute-create out="groups">count(../group)</attribute-create>
+                            <attribute-create out="results">count(../*/status)</attribute-create>
+                            <attribute-create out="firstElement">../group[1]/@name</attribute-create>
+                            <element-ignore/>
+                        </element>
+                    </element>
+                </element>
+            </element>
+            <element in="tenants">
+                <element in="tenant">
+                    <element in="reports">
+                        <element in="report">
+                            <element-create if="../@firstElement!=''">view('report-status',entry('tenant',../@tenant)|entry('report',../@report)|entry('topology',../@topology)|entry('entity1',../@firstElement))</element-create>
+                        </element>
+                    </element>
+                </element>
+            </element>
 
-    <view name="argo-report-status" xmlns:date="http://exslt.org/dates-and-times">
+            <element in="tenants">
+                <element in="tenant">
+                    <element in="reports">
+                        <element in="report">
+                            <element in="root" out="report">
+                                <attribute-create out="groups">count(../group)</attribute-create>
+                                <attribute-create out="results">count(../*/status)</attribute-create>
+                                <attribute-create out="firstElement">../group[1]/@name</attribute-create>
+                                <element-ignore/>
+                            </element>
+                        </element>
+                    </element>
+                </element>
+            </element>
+
+        </processors>
+
+    <cache type="FileCache">
+
+        <trigger type="DeltaTimeTrigger">
+            <parameter name="minutes">9</parameter>
+        </trigger>
+
+        <trigger type="ViewCreatedTrigger"></trigger>
+
+        <trigger type="ViewNotifiedTrigger"/>
+    </cache>
+    <renderers>
+        <renderer type="HTMLRenderer">
+            <parameter name="template">app/html/admin/monitor-reports.html</parameter>
+        </renderer>
+
+    </renderers>
+    </view>
+
+    <view name="monitor-reports-ar" xmlns:date="http://exslt.org/dates-and-times" authenticators="admin">
     <connector type="XMLConnector">
         <parameter name="content" eval="view('tenants.reports')"></parameter>
     </connector>
@@ -449,6 +519,7 @@
                     </element>
                 </element>
             </element>
+
             <element in="tenants">
                 <element in="tenant">
                     <element in="reports">
@@ -456,13 +527,27 @@
                             <attribute-create out="groups">count(../group)</attribute-create>
                             <attribute-create out="results">count(../*/results)</attribute-create>
                             <attribute-create out="firstElement">../group[1]/@name</attribute-create>
+                            <element-create if="../group[1]/@name!='' and ../@topology!=../../@topology1">view('report-ar-group-details',entry('tenant',../@tenant)|entry('report',../@report)|entry('topology',../@topology)|entry('group',../group[1]/@name))</element-create>
                             <element-ignore/>
                         </element>
-
                     </element>
                 </element>
             </element>
 
+            <element in="tenants">
+                <element in="tenant">
+                    <element in="reports">
+                        <element in="report">
+                            <element in="root" out="report">
+                                <attribute-create out="groups">count(../group)</attribute-create>
+                                <attribute-create out="results">count(../*/results)</attribute-create>
+                                <attribute-create out="firstElement">../group[1]/@name</attribute-create>
+                                <element-ignore/>
+                            </element>
+                        </element>
+                    </element>
+                </element>
+            </element>
         </processors>
 
         <cache type="FileCache">
@@ -477,10 +562,7 @@
         </cache>
         <renderers>
             <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/report-ar/report-status.html</parameter>
-            </renderer>
-            <renderer type="DefaultRenderer">
-                <parameter name="contentType">text/html</parameter>
+                <parameter name="template">app/html/admin/monitor-reports.html</parameter>
             </renderer>
 
         </renderers>

@@ -53,15 +53,15 @@
                             <tbody>
                             <tr tpl:foreach="/tenants/tenant/reports/report">
                                 <td>
-                                    <span class="badge badge-primary m-1">{{ancestor::reports/@tenant}}</span>
+                                    <span class="badge badge-primary ml-1 m">{{ancestor::reports/@tenant}}</span>
                                 </td>
 
                                 <td>
-                                    <span class="badge badge-primary m-1">{{ancestor::reports/@name}}</span>
+                                    <span class="badge badge-primary ml-1 m">{{ancestor::reports/@name}}</span>
                                 </td>
 
                                 <td tpl:if="not(@exception)">
-                                    <span class="badge badge-success m-1">{{@topology}}</span>
+                                    <span class="badge badge-success ml-1 m">{{@topology}}</span>
                                 </td>
                                 <td tpl:else=""><span class="badge badge-critical">{{@topology}} </span></td>
 
@@ -73,13 +73,44 @@
                                 </td>
                                 <td data-sort="0" tpl:else="@exception"><span class="m-2 badge bg-critical">CALL TO API FAILED !</span></td>
 
-                                <td tpl:if="not(@exception) and @results>@groups+1"><span
+                                <td tpl:if="not(@exception) and @results>=@groups"><span
                                         class="badge  border bg-success border-dark">{{ @results}}</span></td>
-                                <td tpl:else="not(@exception) and @results&lt;@groups+1"><span
+                                <td tpl:else="not(@exception) and @results&lt;@groups"><span
                                         class="badge  border bg-critical border-dark">{{ @results}}</span></td>
                                 <td data-sort="0" tpl:else="@exception"><span class="m-2 badge bg-critical">CALL TO API FAILED !</span></td>
-
+                                <td tpl:else=""><span   class="badge  border bg-critical border-dark">{{ @results}}</span></td>
                             </tr>
+
+                            <tr tpl:foreach="/tenants/tenant/reports/report/report">
+                                <td>
+                                    <span class="badge badge-primary ml-1 m">{{ancestor::reports/@tenant}}</span>
+                                </td>
+
+                                <td>
+                                    <span class="badge badge-primary ml-1 m">{{ancestor::reports/@name}}</span>
+                                </td>
+
+                                <td tpl:if="not(@exception)">
+                                    <span class="badge badge-success ml-1 m">{{@topology}} / {{@entity1}}{{@group}}</span>
+                                </td>
+                                <td tpl:else=""><span class="badge badge-critical">{{@topology}} / {{@entity1}}{{@group}}</span></td>
+
+                                <td tpl:if="not(@exception) and @groups>0">
+                                    <span  class="badge  border bg-success border-dark">{{ @groups}}</span>
+                                </td>
+                                <td tpl:else="not(@exception) and @groups=0">
+                                    <span class="badge  border bg-critical border-dark">0</span>
+                                </td>
+                                <td data-sort="0" tpl:else="@exception"><span class="m-2 badge bg-critical">CALL TO API FAILED !</span></td>
+
+                                <td tpl:if="not(@exception) and @results>=@groups"><span
+                                        class="badge  border bg-success border-dark">{{ @results}}</span></td>
+                                <td tpl:else="not(@exception) and @results&lt;@groups"><span
+                                        class="badge  border bg-critical border-dark">{{ @results}}</span></td>
+                                <td data-sort="0" tpl:else="@exception"><span class="m-2 badge bg-critical">CALL TO API FAILED !</span></td>
+                                <td tpl:else=""> <span    class="badge  border bg-critical border-dark">{{ @results}}</span></td>
+                            </tr>
+
                             </tbody>
                         </table>
 
