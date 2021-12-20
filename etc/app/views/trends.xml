@@ -142,6 +142,17 @@
         </processors>
     </view>
 
+    <view name="trends-status-eudat" authenticators="eudat">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('trends-status',arguments())"/>
+        </connector>
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/trends/trends.html</parameter>
+            </renderer>
+        </renderers>
+    </view>
+
 
     <view name="trends-status" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 
@@ -219,6 +230,16 @@
     </view>
 
 
+    <view name="trends-flapping-eudat" authenticators="eudat">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('trends-flapping',arguments())"/>
+        </connector>
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/trends/trends.html</parameter>
+            </renderer>
+        </renderers>
+    </view>
 
     <view name="trends-flapping" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 

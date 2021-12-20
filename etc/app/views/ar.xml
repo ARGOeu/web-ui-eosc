@@ -31,6 +31,29 @@
         </renderers>
     </view>
 
+
+    <view name="report-ar-groups-eudat" authenticators="eudat">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('report-ar-groups',arguments())"/>
+        </connector>
+
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/report-ar/report.html</parameter>
+            </renderer>
+            <renderer type="PDFRenderer">
+                <parameter name="template">app/html/report-ar/report_pdf.html</parameter>
+            </renderer>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+            <renderer type="ChartRenderer">
+            </renderer>
+        </renderers>
+
+    </view>
+
     <view name="report-ar-groups" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 
         <argument name="report"/>
@@ -653,6 +676,25 @@
 
     </view>
 
+    <view name="report-ar-endpoints-eudat" authenticators="eudat">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('report-ar-endpoints-eudat',arguments())"/>
+        </connector>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/report-ar/report_daily.html</parameter>
+            </renderer>
+            <renderer type="PDFRenderer">
+                <parameter name="template">app/html/report-ar/report_daily_pdf.html</parameter>
+            </renderer>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
     <view name="report-ar-endpoints" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 
 
@@ -830,6 +872,25 @@
 
         </processors>
 
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/report-ar/report_daily.html</parameter>
+            </renderer>
+            <renderer type="PDFRenderer">
+                <parameter name="template">app/html/report-ar/report_daily_pdf.html</parameter>
+            </renderer>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
+    <view name="report-ar-group-eudat" authenticators="eudat">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('report-ar-group-eudat',arguments())"/>
+        </connector>
 
         <renderers>
             <renderer type="HTMLRenderer">
@@ -1730,7 +1791,26 @@
         </renderers>
     </view>
 
-    
+
+    <view name="report-all-endpoints-eudat" authenticators="eudat">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('report-all-endpoints',arguments())"/>
+        </connector>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/report-ar/report_endpoints.html</parameter>
+            </renderer>
+
+
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
+
     <view name="report-all-endpoints" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 
         <!-- /results/{report_name}/endpoints?[start_time]&[end_time]&[granularity]&[pageSize]&[nextPageToken] -->

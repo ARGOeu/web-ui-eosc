@@ -197,6 +197,32 @@
         </renderers>
     </view>
 
+    <view name="custom-eudat" authenticators="eudat">
+        <argument name="report">Operational-Services</argument>
+        <argument name="tenant">eudat</argument>
+
+        <connector type="XMLConnector">
+            <parameter name="content" eval="new_element('root')"/>
+        </connector>
+
+        <processors>
+
+            <element in="root">
+                <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="tenant">$tenant</attribute-create>
+                <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
+
+            </element>
+        </processors>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/custom.html</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
     <view name="custom">
 
         <argument name="report">Critical</argument>
