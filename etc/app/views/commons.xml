@@ -137,6 +137,17 @@
 
     </view>
 
+    <view name="dashboard-eudat" authenticators="eudat">
+
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('dashboard',arguments())"/>
+        </connector>
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/dashboard/dashboard.html</parameter>
+            </renderer>
+        </renderers>
+    </view>
 
     <view name="dashboard">
 
