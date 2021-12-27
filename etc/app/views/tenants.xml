@@ -80,7 +80,7 @@
         <cache type="FileCache">
             <trigger type="ViewNotifiedTrigger"/>
             <trigger type="DeltaTimeTrigger">
-                <parameter name="minutes">36</parameter>
+                <parameter name="minutes">6</parameter>
             </trigger>
             <trigger type="ViewCreatedTrigger"/>
         </cache>
