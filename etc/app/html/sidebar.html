@@ -115,7 +115,7 @@
 
 
 
-                        <li class="nav nav-item has-treeview" data-widget="treeview">
+                        <li tpl:if="@tenant='egi' or @tenant='eudat'"  class="nav nav-item has-treeview" data-widget="treeview">
                             <a class="nav-link">
                                 <i class="nav-icon fas fa-chart-line"></i>
                                 <p style="width:140px">
@@ -125,7 +125,7 @@
 
                             </a>
 
-                            <ul tpl:if="@tenant='egi' or @tenant='eudat'"  class="nav nav-treeview">
+                            <ul  class="nav nav-treeview">
                                 <div class="dropdown-divider"></div>
 
                                 <li class="nav-item">

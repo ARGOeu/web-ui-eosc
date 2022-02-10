@@ -31,9 +31,15 @@
                             <span tpl:else="status/text()='MISSING'" class="badge bg-info"> {{status/text()}}</span>
                             <span tpl:else="" class="badge bg-gray"> {{status/text()}}</span>
                         </td>
-                        <td>
+
+                        <td tpl:if="contains(endpoint/text(),'_')">
                             <a href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/metrics/{{endpoint/text()}}/{{metric/text()}}/{{timestamp/text()}}/{{status/text()}}">{{endpoint_group/text()}}
-                                ({{endpoint/text()}})</a></td>
+                                ({{substring-before(endpoint/text(),'_')}})</a>
+                        </td>
+                        <td tpl:else="">
+                            <a href="/{{/root/@tenant}}/report-status/{{/root/@report}}/{{/root/@topology}}/metrics/{{endpoint/text()}}/{{metric/text()}}/{{timestamp/text()}}/{{status/text()}}">{{endpoint_group/text()}}
+                                ({{endpoint/text()}})</a>
+                        </td>
                         <td>{{metric/text()}}</td>
                         <td> {{timestamp/text()}}</td>
 

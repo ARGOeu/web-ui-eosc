@@ -62,8 +62,9 @@
                             <div class="card-body">
 
 
+                                <p tpl:if="contains(root/host/@name,'_')"><label class="m-1">Host : </label> {{substring-before(root/host/@name,'_')}}</p>
+                                <p tpl:else=""><label class="m-1">Host : </label> {{root/host/@name}}</p>
 
-                                <p><label class="m-1">Host : </label> {{root/host/@name}}</p>
                                 <p><label class="m-1">Metric : </label> {{root/host/metric/@name}}</p>
                                 <p><label class="m-1">Timestamp : </label> {{root/host/metric/status/@timestamp}}</p>
                                 <p tpl:if="root/host/info/URL"><label class="m-1">Endpoint URL : </label><a href="{{root/host/info/URL}}">{{root/host/info/URL}}</a></p>
