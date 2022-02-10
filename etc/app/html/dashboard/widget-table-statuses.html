@@ -54,7 +54,15 @@
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content ">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="{timestamp/text()}Label">
+                                            <h5 tpl:if="contains(endpoint/text(),'_')" class="modal-title" id="{timestamp/text()}Label">
+                                                {{endpoint_group/text()}} / {{substring-before(endpoint/text(),'_')}} / {{metric/text()}} >
+                                                <span tpl:if="status/text()='OK'" class="badge bg-success m-2">{{status/text()}}</span>
+                                                <span tpl:else="status/text()='WARNING'" class="badge bg-warning m-2"> {{status/text()}}</span>
+                                                <span tpl:else="status/text()='CRITICAL'" class="badge bg-danger m-2"> {{status/text()}}</span>
+                                                <span tpl:else="status/text()='MISSING'" class="badge bg-info m-2"> {{status/text()}}</span>
+                                                <span tpl:else="" class="badge bg-gray m-2"> {{status/text()}}</span>
+                                            </h5>
+                                            <h5 tpl:else="" class="modal-title" id="{timestamp/text()}Label">
                                                 {{endpoint_group/text()}} / {{endpoint/text()}} / {{metric/text()}} >
                                                 <span tpl:if="status/text()='OK'" class="badge bg-success m-2">{{status/text()}}</span>
                                                 <span tpl:else="status/text()='WARNING'" class="badge bg-warning m-2"> {{status/text()}}</span>
