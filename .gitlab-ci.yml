@@ -1,6 +1,6 @@
 stages:
   - tests
-  -
+
 job_tests:
   image: openjdk:8-alpine
   stage: tests
