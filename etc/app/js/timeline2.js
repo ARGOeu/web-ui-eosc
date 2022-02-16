@@ -54,6 +54,7 @@
 
 
                     if (performances!='' && performances!=undefined && original_status!='' && original_status!=undefined) {
+
                         tempArray[4] = '<div class="card card-' + bg + '">' +
                             '<div class="card-header">' + tempArray[0] + ' <i class="ml-2 fas fa-user-tag" style="font-size:1.4em"></i></div>'
                             + '<div class="card-body">' +
@@ -73,9 +74,6 @@
                             '<br/><label>End Time : &nbsp;</label>' + tempArray[3] + '</div>' +
                             '<div class="card-footer text-muted">Click on the bar to access the next granularity level</div></div>';
                     }
-
-
-
 
 
                 tempArray[2] = new Date(tempArray[2].substr(0,19));
@@ -100,5 +98,4 @@
 
        google.charts.load('current', {packages: ['timeline'] , 'language':'en'});
        google.charts.setOnLoadCallback(drawChart);
-
 
