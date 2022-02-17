@@ -128,6 +128,10 @@
 
                             </div>
 
+                            <div class="row" tpl:if="/root/group[status/@original_status]">
+                                Sites or groups with customised thresholds modifying statuses are signaled by &#9733;
+                            </div>
+
                             <div class="row">
                                 <div class="float-left col-11"><a
                                         href="?start_date={{/root/@start_date_0}}&amp;end_date={{/root/@end_date_0}}"
