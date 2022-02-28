@@ -465,10 +465,10 @@
                                 <attribute-create out="value">../Value/text()</attribute-create>
                                 <attribute-create out="class" if="upper-case(../Value/text())='OK'">'success'</attribute-create>
                                 <attribute-create out="class" if="upper-case(../Value/text())='CRITICAL'">'danger'</attribute-create>
-                                <attribute-create out="class" if="upper-case(../Value/text())='MISSING'">'info'</attribute-create>
+                                <attribute-create out="class" if="upper-case(../Value/text())='MISSING'">'dark'</attribute-create>
                                 <attribute-create out="class" if="upper-case(../Value/text())='WARNING'">'warning'</attribute-create>
 
-                                <attribute-create out="class" if="upper-case(../Value/text())='UNKNOWN'">'default'</attribute-create>
+                                <attribute-create out="class" if="upper-case(../Value/text())='UNKNOWN'">'light border border-dark'</attribute-create>
 
                                 <element in="Message" out="message"/>
                                 <element in="Summary" out="summary"/>

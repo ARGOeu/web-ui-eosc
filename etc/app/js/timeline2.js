@@ -50,7 +50,10 @@
                     bg='dark';
 
                 if (tempArray[1].split("_")[0]=='UNKNOWN')
-                    bg='unknown';
+                    bg='light';
+
+                if (tempArray[1].split("_")[0]=='DOWNTIME')
+                    bg='downtime';
 
 
                     if (performances!='' && performances!=undefined && original_status!='' && original_status!=undefined) {

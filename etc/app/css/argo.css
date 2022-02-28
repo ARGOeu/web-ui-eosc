@@ -163,48 +163,73 @@ button.label-CRITICAL:focus {
 
 .badge-UNKNOWN {
   color: #1F2D3D;
-  background-color: #f8f9fa;
+  background-color: #d3e3ef;
    border:1 px solid black;
+}
+
+.badge-light {
+    color: #1F2D3D;
+    background-color: #d3e3ef;
+    border:1 px solid black;
+}
+
+.badge-light[href]:hover, .badge-light[href]:focus {
+    color: #1F2D3D;
+    text-decoration: none;
+    background-color: #d3e3ef;
+    border:1 px solid dark;
 }
 
 .badge-UNKNOWN[href]:hover, .badge-UNKNOWN[href]:focus {
   color: #1F2D3D;
   text-decoration: none;
-  background-color: #dae0e5;
+  background-color: #d3e3ef;
   border:1 px solid dark;
 }
 
 .bg-UNKNOWN {
-  background-color: #f8f9fa !important;
+  background-color: #d3e3ef !important;
    color:black;
    border: 1px solid dark;
+}
+
+badge .bg-light {
+    background-color: #d3e3ef !important;
+    color:black;
+    border: 1px solid dark;
+}
+
+badge .bg-default {
+    background-color: #d3e3ef !important;
+    color:black;
+    border: 1px solid dark;
 }
 
 a.bg-UNKNOWN:hover, a.bg-UNKNOWN:focus,
 button.bg-UNKNOWN:hover,
 button.bg-UNKNOWN:focus {
-  background-color: #dae0e5 !important;
+  background-color: #d3e3ef !important;
 }
 
 
 .badge-MISSING{
   color: #ffffff;
-  background-color: #343a40;
+    background-color: #3b7fbf;
 }
 
 .badge-MISSING[href]:hover, .badge-MISSING[href]:focus {
   color: #ffffff;
   text-decoration: none;
-  background-color: #1d2124;
+    background-color: #2168ab;
 }
 
 .bg-MISSING{
-  background-color: #343a40 !important;
+  background-color: #3b7fbf !important;
    color:white;
 }
 
 a.bg-MISSING:hover, a.bg-MISSING:focus,
 button.bg-MISSING:hover,
 button.bg-MISSING:focus {
-  background-color: #1d2124 !important;
+  background-color: #2168ab !important;
 }

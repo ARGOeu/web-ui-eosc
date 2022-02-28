@@ -28,8 +28,8 @@
                             <span tpl:if="status/text()='OK'" class="badge bg-success">{{status/text()}}</span>
                             <span tpl:else="status/text()='WARNING'" class="badge bg-warning"> {{status/text()}}</span>
                             <span tpl:else="status/text()='CRITICAL'" class="badge bg-danger"> {{status/text()}}</span>
-                            <span tpl:else="status/text()='MISSING'" class="badge bg-info"> {{status/text()}}</span>
-                            <span tpl:else="" class="badge bg-gray"> {{status/text()}}</span>
+                            <span tpl:else="status/text()='MISSING'" class="badge bg-dark"> {{status/text()}}</span>
+                            <span tpl:else="" class="badge bg-light border border-dark"> {{status/text()}}</span>
                         </td>
 
                         <td tpl:if="contains(endpoint/text(),'_')">

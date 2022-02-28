@@ -58,26 +58,31 @@
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
+
+
                 <div class="row">
 
                     <div class="card col-lg-12 col-md-8">
                         <div class="card-header">Status for {{root/@tenant}} tenant - {{root/@report}} Report</div>
+                        <div class="card-body" tpl:if="/root/group[count(status/@original_status)&gt;0]">
+                            <div class="row m-2">
+                                <i class="fa fa-exclamation-triangle m-1 text-primary"/> Some sites/groups/endpoints in this page are affected by applying custom thresholds (drilldown to the endpoints page for details) :
+                                <span class="m-1 badge bg-light text-secondary border border-dark" tpl:foreach="/root/group[status/@original_status]">{{@name}}</span>
 
+                            </div>
+
+                            <div class="row border-bottom text-light"> </div>
+
+                        </div>
 
                         <div style="display: none" tpl:if="/root/group/@url" id="local_groups">
-                            <div tpl:foreach="/root/group[status/@original_status]/status" class="url">
-                                {{concat('&#9733;',ancestor::group/@url)}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@actual_data}},{{@threshold_rule_applied}},{{@original_status}},{{@color}}
-                            </div>
-                            <div tpl:foreach="/root/group[not(status/@original_status)]/status" class="url">
+                            <div tpl:foreach="/root/group/status" class="url">
                                 {{ancestor::group/@url}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@actual_data}},{{@threshold_rule_applied}},{{@original_status}},{{@color}}
                             </div>
                         </div>
 
                         <div style="display: none" tpl:else="" id="local_groups">
-                            <div tpl:foreach="/root/group[status/@original_status]/status" class="names">
-                                {{concat('&#9733;',ancestor::group/@name)}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@actual_data}},{{@threshold_rule_applied}},{{@original_status}},{{@color}}
-                            </div>
-                            <div tpl:foreach="/root/group[not(status/@original_status)]/status" class="names">
+                            <div tpl:foreach="/root/group/status" class="names">
                                 {{ancestor::group/@name}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@actual_data}},{{@threshold_rule_applied}},{{@original_status}},{{@color}}
                             </div>
                         </div>
@@ -128,9 +133,8 @@
 
                             </div>
 
-                            <div class="row" tpl:if="/root/group[status/@original_status]">
-                                Sites or groups with customised thresholds modifying statuses are signaled by &#9733;
-                            </div>
+
+
 
                             <div class="row">
                                 <div class="float-left col-11"><a

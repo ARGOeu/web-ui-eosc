@@ -263,51 +263,7 @@
     </view>
 
 
-    <view name="reports">
 
-        <argument name="tenant"/>
-        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
-
-        <connector type="HTTPConnector">
-            <parameter name="url" eval="property('api.reports')"/>
-            <parameter name="force-redirect">true</parameter>
-            <parameter name="header">
-                <entry key="x-api-key" eval="$api-key"/>
-                <entry key="Accept">application/json</entry>
-            </parameter>
-
-        </connector>
-        <serializer type="JSONStreamSerializer"/>
-
-
-        <processors>
-
-            <element in="object" out="root">
-                <element in="data">
-                    <element in="object" out="result">
-                    <element-ignore in="profiles">
-                        <element in="object" out="profile">
-                            <attribute from-element="true"/>
-                            <element-ignore/>
-                        </element>
-                    </element-ignore>
-                    </element>
-                </element>
-
-            </element>
-
-            <element in="root">
-                <attribute-create out="tenant">lower-case($tenant)</attribute-create>
-                <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
-            </element>
-        </processors>
-
-        <renderers>
-            <renderer type="HTMLRenderer">
-                <parameter name="template">app/html/reports.html</parameter>
-            </renderer>
-        </renderers>
-    </view>
 
 
 
@@ -317,12 +273,12 @@
 
         <connector type="XMLConnector">
             <parameter name="content">
-                <entry key="OK">#28A745</entry>
-                <entry key="WARNING">#B5892E</entry>
-                <entry key="UNKNOWN">#bcbcbc</entry>
-                <entry key="MISSING">#76A3D6</entry>
-                <entry key="CRITICAL">#FF0000</entry>
-                <entry key="DOWNTIME">grey</entry>
+                <entry key="OK">#28a745</entry>
+                <entry key="WARNING">#ffc107</entry>
+                <entry key="UNKNOWN">#d3e3ef</entry>
+                <entry key="MISSING">#3b7fbf</entry>
+                <entry key="CRITICAL">#dc3545</entry>
+                <entry key="DOWNTIME">#17a2b8</entry>
             </parameter>
 
         </connector>
