@@ -63,11 +63,20 @@ $(function () {
     $(".parametersF").click(function () {
 
         var trend = $('input[name="trends"]:checked').val();
+        var checkings=true;
 
         if (trend === 'tags' && $("#tag").val()==0) {
-            alert('Please select a tag in the list');
+            $("#no-data").removeClass('d-none');
+            checkings=false;
         }
-        else {
+
+        if (trend === 'status' && $("#type").val()==0) {
+            $("#no-data").removeClass('d-none');
+            checkings=false;
+        }
+
+
+       if ( checkings) {
             var urlI = window.location.href;
             var baseUrl = urlI.split('?');
 
@@ -80,19 +89,30 @@ $(function () {
                     var tag = $("#tag").val();
                     wlocation = wlocation + '&tag=' + tag;
                 }
+
+                if (trend === 'status') {
+                    var type = $("#type").val();
+                    wlocation = wlocation + '&type=' + type;
+                }
                 window.location = wlocation;
                 $("#spinner").removeClass('d-none');
+
             } else {
                 var granularity = $("input[name='granularity']:checked").val();
                 var range = 'start_date=' + $('#calendar-range').val().replace(' - ', '&end_date=');
                 var wlocation = baseUrl[0] + '?' + range + '&top=' + $("#top").val() + '&trends=' + $('input[name="trends"]:checked').val();
 
-                if (granularity == 0)
+                if (granularity == 1)
                     wlocation = wlocation + '&granularity=monthly';
 
                 if (trend === 'tags') {
                     var tag = $("#tag").val();
                     wlocation = wlocation + '&tag=' + tag;
+                }
+
+                if (trend === 'status') {
+                    var type = $("#type").val();
+                    wlocation = wlocation + '&type=' + type;
                 }
 
                 window.location = wlocation;

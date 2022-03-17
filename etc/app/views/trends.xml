@@ -12,11 +12,12 @@
     <argument name="report"/>
     <argument name="tenant"/>
     <argument name="top"/>
+        <argument name="type">metrics</argument>
     <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
     <variable name="url" eval="property('api.trends')"/>
 
         <connector type="HTTPConnector">
-            <parameter name="url" eval="choose($top='all',concat($url,$report,'/status/metrics','?date=',$date),concat($url,$report,'/status/metrics','?date=','&amp;top=',$top))"/>
+            <parameter name="url" eval="choose($top='all',concat($url,$report,'/status/',$type,'?date=',$date),concat($url,$report,'/status/metrics','?date=','&amp;top=',$top))"/>
             <parameter name="force-redirect">true</parameter>
             <parameter name="header">
                 <entry key="x-api-key" eval="$api-key"/>
@@ -38,13 +39,15 @@
         <argument name="start_date"/>
         <argument name="end_date"/>
         <argument name="top"/>
-        <argument name="granularity"/>
+        <argument name="granularity">_granularity_</argument>
+        <argument name="type">metrics</argument>
+
 
         <variable name="option" eval="choose($granularity!='_granularity_',concat('?granularity=',$granularity,'&amp;'),'?')"/>
         <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
 
         <variable name="base-url" eval="property('api.trends')"/>
-        <variable name="url" eval="choose($top='all',concat($base-url,$report,'/status/metrics',$option,'start_date=',$start_date,'&amp;end_date=',$end_date),concat($base-url,$report,'/status/metrics',$option,'start_date=',$start_date,'&amp;end_date=',$end_date,'&amp;top=',$top))"/>
+        <variable name="url" eval="choose($top='all',concat($base-url,$report,'/status/',$type,$option,'start_date=',$start_date,'&amp;end_date=',$end_date),concat($base-url,$report,'/status/',$type,$option,'start_date=',$start_date,'&amp;end_date=',$end_date,'&amp;top=',$top))"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>
@@ -59,9 +62,7 @@
             </fallback>
         </connector>
 
-
         <serializer type="JSONStreamSerializer"/>
-
 
         <processors>
             <element in="object">
@@ -103,7 +104,7 @@
         <argument name="start_date"/>
         <argument name="end_date"/>
         <argument name="top"/>
-        <argument name="granularity"/>
+        <argument name="granularity">_granularity_</argument>
 
         <variable name="option" eval="choose($granularity!='_granularity_',concat('?granularity=',$granularity,'&amp;'),'?')"/>
         <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
@@ -295,6 +296,7 @@
     <argument name="top">all</argument>
     <argument name="granularity">_granularity_</argument>
     <argument name="trends">status</argument>
+        <argument name="type">_type_</argument>
 
     <connector type="XMLConnector">
         <parameter name="content" eval="new_element('root')"/>
@@ -312,6 +314,7 @@
             <attribute-create out="top">$top</attribute-create>
             <attribute-create out="granularity">$granularity</attribute-create>
             <attribute-create out="trends">$trends</attribute-create>
+            <attribute-create out="type">$type</attribute-create>
             <attribute-create out="topology2">view('tenants.reports')/tenants/tenant[@id=$tenant]/report[@name=$report]/@topology2</attribute-create>
             <attribute-create out="topology3">view('tenants.reports')/tenants/tenant[@id=$tenant]/report[@name=$report]/@topology3</attribute-create>
 
@@ -324,9 +327,9 @@
 
 
         <element in="root">
-            <element if="name()='status'">
-                <element-create if="$start_date='_start_date_'">view('api.status.date',entry('date',$date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top)|entry('granularity',$granularity))</element-create>
-                <element-create if="$start_date!='_start_date_'">view('api.status.range',entry('start_date',$start_date)|entry('end_date',$end_date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top)|entry('granularity',$granularity))</element-create>
+            <element if="name()='status' and $type!='_type_'">
+                <element-create if="$start_date='_start_date_'">view('api.status.date',entry('date',$date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top)|entry('granularity',$granularity)|entry('type',$type))</element-create>
+                <element-create if="$start_date!='_start_date_'">view('api.status.range',entry('start_date',$start_date)|entry('end_date',$end_date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top)|entry('type',$type)|entry('granularity',$granularity))</element-create>
             </element>
         </element>
 
@@ -335,6 +338,7 @@
 
         <element in="root">
             <element in="status">
+                <attribute-create out="url">../object/@url</attribute-create>
                 <elements-ignore path="object/data">
                     <element/>
                 </elements-ignore>

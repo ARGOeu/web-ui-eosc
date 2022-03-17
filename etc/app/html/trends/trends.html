@@ -82,7 +82,7 @@
                         <input type="radio" class="ml-2" name="granularity" tpl:else="" value="1" /> Yes
                         <label class="ml-1" tpl:if="root/@trends!='tags'">|</label>
 
-                        <button class="btn btn-primary submit ml-3 parametersF" id="parametersF" value="submit" tpl:if="root/@trends!='tags'">submit</button>
+                        <button class="btn btn-primary submit ml-3 parametersF" id="parametersF" value="submit" tpl:if="root/@trends='flapping'">submit</button>
                         <div class="m-1 p-1 spinner-border text-primary d-none" role="status" id="spinner">
                             <span class="sr-only">Loading...</span>
                         </div>
@@ -103,15 +103,35 @@
                                 <option tpl:foreach="/root/tags/object[tag/text()!=preceding-sibling::object/tag/text() or not(preceding-sibling::object)]/tag" value="{text()}">{{text()}}</option>
                             </select>
                             <button class="btn btn-primary submit ml-3 parametersF" id="parametersF" value="submit">submit</button>
+                            <span id="no-data" class="badge bg-info m-2 d-none">Please select a value in the list ! </span>
 
                         </div>
                     </div>
 
                 </div>
 
+                <div class="row mb-3" tpl:if="root/@trends='status'">
+                    <div class="float-left">
 
+                        <div class="input-group m-1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" ><i class="m-1 fas fa-cog"></i></span>
+                            </div>
+                            <select id="type" class="form-control">
+                                <option selected="true" tpl:if="/root/@type='_type_'" value="0">--Select the level of details --</option>
+                                <option tpl:else="" value="{/root/@type}"  selected="true">{{/root/@type}}</option>
+                                <option value="metrics">metrics</option>
+                                <option value="endpoints">endpoints</option>
+                                <option value="services">services</option>
+                                <option value="groups">groups</option>
+                            </select>
+                            <button class="btn btn-primary submit ml-3 parametersF" id="parametersF" value="submit">submit</button>
+                            <span id="no-data" class="badge bg-info m-2 d-none">Please select a value in the list ! </span>
 
+                        </div>
+                    </div>
 
+                </div>
 
 
 
@@ -219,7 +239,7 @@
                                 <table class="dataTable statusTable" style="border:none">
                                     <thead tpl:foreach="top/object[1]">
                                         <th tpl:foreach="*[name()!='status' and name()!='events']">{{name()}}</th>
-                                        <th><span class="badge bg-primary m-2">Events Nb</span></th>
+                                        <th  tpl:if="events"><span class="badge bg-primary m-2">Events Nb</span></th>
                                     </thead>
                                     <tbody>
                                     <tr tpl:foreach="top/object">
@@ -228,7 +248,7 @@
                                             <a tpl:if="name()='metric'"  alt="link to status page"><span class="badge bg-light border border-dark m-1">{{text()}}</span></a>
 
                                         </td>
-                                        <td><span class="badge bg-primary m-2">{{events/text()}}</span></td>
+                                        <td tpl:if="events"><span class="badge bg-primary m-2">{{events/text()}}</span></td>
                                     </tr>
 
                                     </tbody>
