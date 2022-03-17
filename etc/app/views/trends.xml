@@ -272,10 +272,15 @@
 
             <element in="root">
                 <element in="tags">
+                    <elements path="object/top">
+                        <element in="object">
+                            <attribute-create out="link">concat('/',/root/@tenant,'/report-status/',/root/@report,'/',/root/@topology2,'/',../endpoint_group/text(),'/',../service/text(),'/',../endpoint/text())</attribute-create>
+                        </element>
+                    </elements>
                 </element>
             </element>
 
-             </processors>
+        </processors>
 
 
 
@@ -308,7 +313,6 @@
             <attribute-create out="date">$date</attribute-create>
             <attribute-create out="start_date">$start_date</attribute-create>
             <attribute-create out="end_date">$end_date</attribute-create>
-
             <attribute-create out="tenant">$tenant</attribute-create>
             <attribute-create out="report">$report</attribute-create>
             <attribute-create out="top">$top</attribute-create>
@@ -317,13 +321,9 @@
             <attribute-create out="type">$type</attribute-create>
             <attribute-create out="topology2">view('tenants.reports')/tenants/tenant[@id=$tenant]/report[@name=$report]/@topology2</attribute-create>
             <attribute-create out="topology3">view('tenants.reports')/tenants/tenant[@id=$tenant]/report[@name=$report]/@topology3</attribute-create>
-
             <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
             <element-create if="$trends='status'">new_element("status")</element-create>
-
-
         </element>
-
 
 
         <element in="root">
@@ -332,8 +332,6 @@
                 <element-create if="$start_date!='_start_date_'">view('api.status.range',entry('start_date',$start_date)|entry('end_date',$end_date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top)|entry('type',$type)|entry('granularity',$granularity))</element-create>
             </element>
         </element>
-
-
 
 
         <element in="root">
@@ -353,7 +351,9 @@
                     </element>
                 </elements>
             </element>
-        </element>    </processors>
+        </element>
+
+    </processors>
 
 
 
