@@ -115,7 +115,7 @@
 
 
 
-                        <li tpl:if="@tenant='egi' or @tenant='eudat'"  class="nav nav-item has-treeview" data-widget="treeview">
+                        <li tpl:if="$app.instance!='prod'"  class="nav nav-item has-treeview" data-widget="treeview">
                             <a class="nav-link">
                                 <i class="nav-icon fas fa-chart-line"></i>
                                 <p style="width:140px">

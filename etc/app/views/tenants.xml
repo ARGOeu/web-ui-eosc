@@ -34,7 +34,22 @@
         </renderers>
     </view>
 
-
+<view name="tags" authenticators="admin">
+    <variable name="api-key" eval="property('admin.api.key')"/>
+    <connector type="HTTPConnector">
+        <parameter name="url" eval="property('api.admin.tags')"/>
+        <parameter name="force-redirect">true</parameter>
+        <parameter name="header">
+            <entry key="x-api-key" eval="$api-key"/>
+            <entry key="Accept">application/json</entry>
+        </parameter>
+        <fallback
+                eval="new_element('exception',new_attribute('exception',' : exception with admin tags view '))">
+            <exception type="java.io.IOException"/>
+        </fallback>
+    </connector>
+    <serializer type="JSONStreamSerializer"/>
+</view>
 
     <view name="tenants" authenticators="admin">
         <variable name="api-key" eval="property('admin.api.key')"/>

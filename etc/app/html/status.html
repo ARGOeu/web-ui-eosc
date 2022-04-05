@@ -85,7 +85,6 @@
                         </div>
 
 
-
                         <div style="display: none" tpl:if="contains(/root/@link,'/metrics/')" id="local_links">
                             <div tpl:foreach="/root/group/status">
                                 /{{ancestor::root/@tenant}}/report-status/{{ancestor::root/@link}}/{{ancestor::group/@name}}/{{@timestamp}}/{{@value}}
