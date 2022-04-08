@@ -76,10 +76,10 @@
                         </div>
 
                         <div style="display: none"  id="local_groups">
-                            <div tpl:foreach="/root/group/status[@url]" class="url">
+                            <div tpl:foreach="/root/group[@url]/status" class="url">
                                 {{ancestor::group/@url}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@actual_data}},{{@threshold_rule_applied}},{{@original_status}},{{@color}}
                             </div>
-                            <div tpl:foreach="/root/group/status[not(@url)]" class="names">
+                            <div tpl:foreach="/root/group[not(@url)]/status" class="names">
                                 {{ancestor::group/@name}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@actual_data}},{{@threshold_rule_applied}},{{@original_status}},{{@color}}
                             </div>
                         </div>
