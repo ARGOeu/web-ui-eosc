@@ -213,6 +213,7 @@
                 <attribute-create out="topology">$topology</attribute-create>
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="view">'report-ar'</attribute-create>
             </element>
 
 
@@ -889,7 +890,7 @@
 
     <view name="report-ar-group-eudat" authenticators="eudat">
         <connector type="XMLConnector">
-            <parameter name="content" eval="view('report-ar-group-eudat',arguments())"/>
+            <parameter name="content" eval="view('report-ar-group',arguments())"/>
         </connector>
 
         <renderers>
@@ -1069,6 +1070,7 @@
                 <attribute-create out="start_date">substring($start_time,0,11)</attribute-create>
                 <attribute-create out="end_date">substring($end_time,0,11)</attribute-create>
                 <attribute-create out="uri">$uri</attribute-create>
+                <attribute-create out="view">'report-ar'</attribute-create>
             </element>
 
 
@@ -1272,7 +1274,9 @@
                 <attribute-create out="month3">$month_3</attribute-create>
                 <attribute-create out="month4">$month_4</attribute-create>
                 <attribute-create out="month5">$month_5</attribute-create>
+                <attribute-create out="view">'report-ar'</attribute-create>
                 <element-create>view('tenants.reports')/tenants/tenant[@id=$tenant]/report</element-create>
+
 
 
             </element>
@@ -1511,7 +1515,7 @@
                 <attribute-create out="month3">$month_3</attribute-create>
                 <attribute-create out="month4">$month_4</attribute-create>
                 <attribute-create out="month5">$month_5</attribute-create>
-
+                <attribute-create out="view">'report-ar'</attribute-create>
                 <element-create>view('tenants.reports')/tenants/tenant[@id=$tenant]/report</element-create>
 
 
@@ -1722,6 +1726,7 @@
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="url">$url</attribute-create>
                 <attribute-create out="uri">$uri</attribute-create>
+                <attribute-create out="view">'report-ar'</attribute-create>
                 <element-create>view('tenants.reports')/tenants/tenant[@id=$tenant]/report</element-create>
 
                 <element-ignore in="group">

@@ -48,6 +48,20 @@
         <div class="content">
             <div class="container-fluid">
 
+                <div class="row"
+                        tpl:if="count(/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text())>1">
+                        <p>
+                            <select class="select2-class" id="servicesGroup"  style="width: 100%;">
+                                <option selected="true" class=" m-1 p-1"  disabled="true">--Select your group --</option>
+                                <option class=" m-1 p-1"  tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()"
+                                        value="/{/root/@tenant}/dashboard/{/root/@report}/{.}">{{.}}
+                                </option>
+                            </select>
+
+                        </p>
+
+                </div>
+
                 <div class="row" tpl:if="not(error)">
 
                     <div class="col-3" tpl:if="root/@details!='level1'">

@@ -136,14 +136,21 @@
 
     <view name="recomputationList" authenticators="aai">
 
+        <argument name="tenant"></argument>
+        <argument name="report"></argument>
+
         <connector type="XMLConnector">
             <parameter name="content" eval="new_element('root')"/>
         </connector>
 
         <processors>
             <element in="root">
+                <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="view">'recomputationList'</attribute-create>
                 <element-create>entry('token',user('token'))</element-create>
                 <element-create>view('userInfo', entry('token',user('token')))</element-create>
+
             </element>
 
             <element in="root" if="object/eduperson_entitlement/item='urn:mace:egi.eu:group:argo#sso.egi.eu'">
@@ -202,6 +209,7 @@
 
         <processors>
             <element in="root">
+                <attribute-create out="view">'recomputation'</attribute-create>
                 <element-create>entry('token',user('token'))</element-create>
                 <element-create>view('userInfo', entry('token',user('token')))</element-create>
             </element>

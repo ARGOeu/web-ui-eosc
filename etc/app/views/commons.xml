@@ -28,6 +28,7 @@
             <element in="root">
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="view">'reportDetails'</attribute-create>
 
                 <element in="report" if="@tenant=$tenant and @report=$report">
                     <attribute-create out="active">true()</attribute-create>
@@ -168,6 +169,7 @@
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="details">'level0'</attribute-create>
+                <attribute-create out="view">'dashboard'</attribute-create>
 
                 <element-create>view('tenants.reports')/tenants/tenant[@name=upper-case($tenant)]/report</element-create>
             </element>
@@ -249,6 +251,7 @@
             <element in="root">
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="view">'custom'</attribute-create>
                 <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
 
             </element>
@@ -286,10 +289,19 @@
 
 
     <view name="policies">
+        <argument name="report"/>
         <argument name="tenant"/>
         <connector type="XMLConnector">
-            <parameter name="content" eval="new_element('root',new_attribute('tenant',$tenant))"/>
+            <parameter name="content" eval="new_element('root',new_attribute('tenant',$tenant)|new_attribute('report',$report))"/>
         </connector>
+
+        <processors>
+            <element in="root">
+                <attribute-create out="view">'policies'</attribute-create>
+
+                <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
+            </element>
+        </processors>
 
         <renderers>
             <renderer type="DefaultRenderer">
@@ -303,10 +315,19 @@
     </view>
 
     <view name="cookie_policies">
+        <argument name="report"/>
         <argument name="tenant"/>
         <connector type="XMLConnector">
-            <parameter name="content" eval="new_element('root',new_attribute('tenant',$tenant))"/>
+            <parameter name="content" eval="new_element('root',new_attribute('tenant',$tenant)|new_attribute('report',$report))"/>
         </connector>
+
+        <processors>
+            <element in="root">
+                <attribute-create out="view">'cookie_policies'</attribute-create>
+
+                <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
+            </element>
+        </processors>
 
         <renderers>
             <renderer type="DefaultRenderer">
@@ -320,10 +341,18 @@
     </view>
 
     <view name="termsofUse">
+        <argument name="report"/>
         <argument name="tenant"/>
         <connector type="XMLConnector">
-            <parameter name="content" eval="new_element('root',new_attribute('tenant',$tenant))"/>
+            <parameter name="content" eval="new_element('root',new_attribute('tenant',$tenant)|new_attribute('report',$report))"/>
         </connector>
+
+        <processors>
+            <element in="root">
+                <attribute-create out="view">'termsofUse'</attribute-create>
+                <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
+            </element>
+        </processors>
 
         <renderers>
             <renderer type="DefaultRenderer">
@@ -339,9 +368,17 @@
 
     <view name="documentation">
         <argument name="tenant"/>
+        <argument name="report"/>
         <connector type="XMLConnector">
-            <parameter name="content" eval="new_element('root',new_attribute('tenant',$tenant))"/>
+            <parameter name="content" eval="new_element('root',new_attribute('tenant',$tenant)|new_attribute('report',$report))"/>
         </connector>
+
+        <processors>
+            <element in="root">
+                <attribute-create out="view">'documentation'</attribute-create>
+                <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
+            </element>
+        </processors>
 
         <renderers>
             <renderer type="DefaultRenderer">

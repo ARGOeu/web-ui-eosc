@@ -22,49 +22,13 @@
                 <li class="nav-item has-treeview menu-open">
 
 
-                    <ul class="nav nav-treeview sidebar-collapse" style="list-style:none;padding:0;margin:0"
-                        tpl:if="root/@tenant and root/@report">
-
-                        <li class="nav-item">
-                            <p>
-                                <select tpl:foreach="/root" id="profiles" class="select2-class" style="width: 100%;">
-                                    <option value="/{{@tenant}}/{{@report}}" class=" m-1 p-1"  selected="true">{{@tenant}} - {{@report}}
-                                    </option>
-                                    <option tpl:foreach="report[@tenant=/root/@tenant]" class=" m-1 p-1"
-                                            value="/{{@tenant}}/{{@report}}">{{@tenant}} - {{@report}}
-                                    </option>
-                                </select>
-                            </p>
-
-
-                        </li>
-
-                        <li class="nav-item"
-                            tpl:if="count(/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text())>1">
-                            <p>
-                                <select class="select2-class" id="servicesGroup"  style="width: 100%;">
-                                    <option selected="true" class=" m-1 p-1"  disabled="true">--Select your group --</option>
-                                    <option class=" m-1 p-1"  tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]/endpoint_group_list/item/text()"
-                                            value="/{/root/@tenant}/dashboard/{/root/@report}/{.}">{{.}}
-                                    </option>
-                                </select>
-
-
-                            </p>
-
-                        </li>
-                    </ul>
-
-
-                    <ul class="nav nav-treeview"
-                        tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]">
-                        <li class="nav-item">
+                    <ul class="nav nav-treeview"    tpl:foreach="/root/report[@tenant=/root/@tenant][@report=/root/@report]">
+                        <li class="nav-item mt-4">
                             <a href="/{{@tenant}}/{{@report}}" class="nav-link">
                                 <i class="fa fa-eye nav-icon"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
-
 
 
 
@@ -195,9 +159,9 @@
                             </a>
                         </li>
 
-                        <li class="nav-item"  tpl:if="@tenant='egi'">
+                        <li class="nav-item"  tpl:if="/root/@tenant='egi' and /root/@report='Critical'">
 
-                            <a href="/recomputation?tenant={{@tenant}}&amp;report={{@report}}" class="nav-link">
+                            <a href="/recomputation" class="nav-link">
                                 <i class="fa  fa-retweet nav-icon"></i>
                                 <p>Recomputation</p>
                             </a>
@@ -208,7 +172,7 @@
                 <li class="nav-header" tpl:if="/root/@tenant='egi'">
                     <h5>ADMIN</h5>
                 </li>
-                <li class="nav-item" tpl:if="/root/@tenant='egi'">
+                <li class="nav-item" tpl:if="/root/@tenant='egi' and /root/@report='Critical'">
                     <a href="/recomputationList" class="nav-link">
                         <i class="fa fa fa-lock nav-icon"></i>
                         <p>Recomputation List</p>
@@ -217,7 +181,7 @@
 
                 <li class="nav-header"><h5>ABOUT ARGO</h5></li>
                <li class="nav-item">
-                    <a href="/{{/root/@tenant}}/documentation" class="nav-link">
+                    <a href="/{{/root/@tenant}}/{{/root/@report}}/documentation" class="nav-link">
                         <i class="nav-icon fa fa-book"> </i>
                         <p>UI Documentation</p>
                     </a>
@@ -230,20 +194,20 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="/{{/root/@tenant}}/termsofUse" class="nav-link">
+                    <a href="/{{/root/@tenant}}/{{/root/@report}}/termsofUse" class="nav-link">
                         <i class="nav-icon fa fa-handshake"> </i>
                         <p> Terms of Use</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="/{{/root/@tenant}}/cookie_policies" class="nav-link">
+                    <a href="/{{/root/@tenant}}/{{/root/@report}}/cookie_policies" class="nav-link">
                         <i class="nav-icon fa  fa-gavel"> </i>
                         <p> Cookie Policy</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/{{/root/@tenant}}/policies" class="nav-link">
+                    <a href="/{{/root/@tenant}}/{{/root/@report}}/policies" class="nav-link">
                         <i class="nav-icon fa  fa-newspaper"> </i>
                         <p> Privacy Policy</p>
                     </a>

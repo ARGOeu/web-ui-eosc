@@ -18,10 +18,7 @@ $("[data-widget='pushmenu']").click(function (){
                         });
 
 
-    $("#profiles").change(function () {
-            window.location.href =  this.value.replace("+", "%252B");
 
-    });
 
    $("#servicesGroup").change(function () {
             window.location.href =   this.value.replace("+", "%252B");

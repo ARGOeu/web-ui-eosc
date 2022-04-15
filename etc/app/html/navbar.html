@@ -18,5 +18,83 @@
     <ul class="navbar-nav ml-auto">
         <!-- Messages Dropdown Menu -->
 
-    </ul>
+
+            <li class="nav-item">
+
+                <p tpl:if="/root/@view='recomputation' or /root/@view='recomputationList'">
+                    <select id="profiles" class="select2-class col-3" style="width: 250px;">
+                        <option  class=" m-1 p-1"  disabled="true" selected="true">EGI- Critical</option>
+                    </select>
+                </p>
+
+                <p tpl:else="/root/@view='dashboard'">
+                    <select tpl:foreach="/root" id="profiles" class="select2-class col-3" style="width: 250px;">
+                        <option value="/{{@tenant}}/{{@report}}" class=" m-1 p-1"  selected="true">{{@tenant}} - {{@report}}</option>
+                        <option tpl:foreach="report[@tenant=/root/@tenant]" class=" m-1 p-1"
+                                value="/{{@tenant}}/{{@report}}">{{@tenant}} - {{@report}}
+                        </option>
+                    </select>
+                </p>
+
+
+                <p tpl:else="/root/@view='custom' or /root/@view='reportDetails'  or /root/@view='issues'">
+                    <select tpl:foreach="/root" id="profiles" class="select2-class col-3" style="width: 250px;">
+                        <option value="/{{@tenant}}/{{@view}}/{{@report}}" class=" m-1 p-1"  selected="true">{{@tenant}} - {{@report}}</option>
+                        <option tpl:foreach="report[@tenant=/root/@tenant]" class=" m-1 p-1"
+                                value="/{{@tenant}}/{{/root/@view}}/{{@report}}">{{@tenant}} - {{@report}}
+                        </option>
+                    </select>
+                </p>
+
+                <p tpl:else="/root/@view='report-status'">
+                    <select tpl:foreach="/root" id="profiles" class="select2-class col-3" style="width: 250px;">
+                        <option value="/{{@tenant}}/report-status/{{@report}}/{{@topology}}" class=" m-1 p-1"  selected="true">{{@tenant}} - {{@report}}</option>
+                        <option tpl:foreach="report[@tenant=/root/@tenant]" class=" m-1 p-1"
+                                value="/{{@tenant}}/report-status/{{@report}}/{{@topology2}}">{{@tenant}} - {{@report}}
+                        </option>
+                    </select>
+                </p>
+
+                <p tpl:else="/root/@view='report-ar'">
+                    <select tpl:foreach="/root" id="profiles" class="select2-class col-3" style="width: 250px;">
+                        <option value="/{{@tenant}}/report-ar/{{@report}}/{{@topology}}" class=" m-1 p-1"  selected="true">{{@tenant}} - {{@report}}</option>
+                        <option tpl:foreach="report[@tenant=/root/@tenant]" class=" m-1 p-1"
+                                value="/{{@tenant}}/report-ar/{{@report}}/{{@topology1}}">{{@tenant}} - {{@report}}
+                        </option>
+                    </select>
+                </p>
+
+                <p tpl:else="/root/@view='trends'">
+                    <select tpl:foreach="/root" id="profiles" class="select2-class col-3" style="width: 250px;">
+                        <option value="/{{@tenant}}/{{@report}}/trends/{{@trends}}" class=" m-1 p-1"  selected="true">{{@tenant}} - {{@report}}</option>
+                        <option tpl:foreach="report[@tenant=/root/@tenant]" class=" m-1 p-1"
+                                value="/{{@tenant}}/{{@report}}/trends/{{/root/@trends}}">{{@tenant}} - {{@report}}
+                        </option>
+                    </select>
+                </p>
+
+                <p tpl:else="/root/@view">
+                    <select tpl:foreach="/root" id="profiles" class="select2-class col-3" style="width: 250px;">
+                        <option value="/{{@tenant}}/{{@report}}/{{@view}}" class=" m-1 p-1"  selected="true">{{@tenant}} - {{@report}}</option>
+                        <option tpl:foreach="report[@tenant=/root/@tenant]" class=" m-1 p-1"
+                                value="/{{@tenant}}/{{@report}}/{{/root/@view}}">{{@tenant}} - {{@report}}
+                        </option>
+                    </select>
+                </p>
+
+                <p tpl:else="">
+                    <select tpl:foreach="/root" id="profiles" class="select2-class col-3" style="width: 250px;">
+                        <option value="/{{@tenant}}/{{@report}}" class=" m-1 p-1"  selected="true">{{@tenant}} - {{@report}}</option>
+                        <option tpl:foreach="report[@tenant=/root/@tenant]" class=" m-1 p-1"
+                                value="/{{@tenant}}/{{@report}}">{{@tenant}} - {{@report}}
+                        </option>
+                    </select>
+                </p>
+
+
+            </li>
+
+
+        </ul>
+
 </nav>

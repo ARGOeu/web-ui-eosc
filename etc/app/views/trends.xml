@@ -249,6 +249,7 @@
             <attribute-create out="granularity">$granularity</attribute-create>
             <attribute-create out="trends">$trends</attribute-create>
             <attribute-create out="tag">$tag</attribute-create>
+            <attribute-create out="view">'trends'</attribute-create>
             <attribute-create out="topology2">view('tenants.reports')/tenants/tenant[@id=$tenant]/report[@name=$report]/@topology2</attribute-create>
             <attribute-create out="topology3">view('tenants.reports')/tenants/tenant[@id=$tenant]/report[@name=$report]/@topology3</attribute-create>
             <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
@@ -319,6 +320,7 @@
             <attribute-create out="granularity">$granularity</attribute-create>
             <attribute-create out="trends">$trends</attribute-create>
             <attribute-create out="type">$type</attribute-create>
+            <attribute-create out="view">'trends'</attribute-create>
             <attribute-create out="topology2">view('tenants.reports')/tenants/tenant[@id=$tenant]/report[@name=$report]/@topology2</attribute-create>
             <attribute-create out="topology3">view('tenants.reports')/tenants/tenant[@id=$tenant]/report[@name=$report]/@topology3</attribute-create>
             <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
@@ -402,6 +404,7 @@
                 <attribute-create out="top">$top</attribute-create>
                 <attribute-create out="granularity">$granularity</attribute-create>
                 <attribute-create out="trends">$trends</attribute-create>
+                <attribute-create out="view">'trends'</attribute-create>
 
 
 

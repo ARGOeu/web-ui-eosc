@@ -35,6 +35,7 @@
 
         <processors>
             <element in="object" out="root">
+                <attribute-create out="view">'issues'</attribute-create>
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="url">$url</attribute-create>
