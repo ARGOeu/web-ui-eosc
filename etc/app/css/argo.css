@@ -92,6 +92,22 @@ button.label-OK:focus {
    color:white;
 }
 
+.badge-under-build  {
+    color: #ffffff;
+    background-color: #17a2b8;
+}
+
+.badge-under-build [href]:hover, .badge-under-build [href]:focus {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #117a8b;
+}
+
+.bg-under-build , .alert-under-build , .label-under-build  {
+    background-color: #17a2b8 !important;
+    color:white;
+}
+
 a.bg-DOWNTIME:hover, a.alert-DOWNTIME:hover, a.label-DOWNTIME:hover, a.bg-DOWNTIME:focus, a.alert-DOWNTIME:focus, a.label-DOWNTIME:focus,
 button.bg-DOWNTIME:hover,
 button.alert-DOWNTIME:hover,

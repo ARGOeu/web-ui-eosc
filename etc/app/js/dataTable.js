@@ -25,6 +25,24 @@ var baseUrl=urlI.split('?');
 
 }
 
+$('#console_status').DataTable({
+
+    "dom": '<f<t>lip>',
+    "paging": true,
+    "autoWidth": true,
+    "lengthMenu": [[5,20, -1], [ 5, 20, "All"]],
+    "order": [[ 0, "asc" ]]
+});
+
+$('#console_ar').DataTable({
+    "dom": '<f<t>lip>',
+    "paging": true,
+    "autoWidth": true,
+    "lengthMenu": [[5,20, -1], [ 5, 20, "All"]],
+    "order": [[ 0, "asc" ]]
+
+});
+
 $('#reportMonitor').DataTable({
     "dom": "lftip",
     "paging": true,

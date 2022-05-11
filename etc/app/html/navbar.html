@@ -73,6 +73,15 @@
                     </select>
                 </p>
 
+                <p tpl:else="/root/@view='console'">
+                    <select tpl:foreach="/root" id="profiles" class="select2-class col-3" style="width: 250px;">
+                        <option value="/{{@tenant}}/{{@report}}" class=" m-1 p-1"  selected="true">{{@tenant}} - {{@report}}</option>
+                        <option tpl:foreach="report" class=" m-1 p-1"
+                                value="/{{@tenant}}/{{@report}}">{{@tenant}} - {{@report}}
+                        </option>
+                    </select>
+                </p>
+
                 <p tpl:else="/root/@view">
                     <select tpl:foreach="/root" id="profiles" class="select2-class col-3" style="width: 250px;">
                         <option value="/{{@tenant}}/{{@report}}/{{@view}}" class=" m-1 p-1"  selected="true">{{@tenant}} - {{@report}}</option>
