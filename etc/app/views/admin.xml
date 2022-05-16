@@ -7,7 +7,7 @@
     -->
 
 
- <view name="admin-console" authenticators="aai">
+ <view name="admin-console" authenticators="admin">
 
     <connector type="XMLConnector">
         <parameter name="content" eval="new_element('root')"/>
@@ -18,24 +18,16 @@
         <attribute-create out="view">'console'</attribute-create>
         <attribute-create out="tenant">'egi'</attribute-create>
         <attribute-create out="report">'Critical'</attribute-create>
-        <element-create>entry('token',user('token'))</element-create>
-        <element-create>view('userInfo', entry('token',user('token')))</element-create>
     </element>
 
-        <element in="root">
-            <element-ignore in="e:entry" if="@key='token'"/>
 
-        </element>
-
-    <element in="root" if="object/eduperson_entitlement/item='urn:mace:egi.eu:group:argo#sso.egi.eu'">
+    <element in="root" >
         <element-create>view('argo-ui-status')</element-create>
         <element-create>new_element('reports-status',view('monitor-reports-status'))</element-create>
         <element-create>new_element('reports-ar',view('monitor-reports-ar'))</element-create>
         <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
     </element>
-        <element in="root" if="not(object/eduperson_entitlement/item='urn:mace:egi.eu:group:argo#sso.egi.eu')">
-            <element-create>new_element('exception',' You are not authorized ! Page restricted to administrators.')</element-create>
-        </element>
+
     </processors>
 
 
