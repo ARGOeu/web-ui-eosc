@@ -49,6 +49,7 @@
             <element in="root">
                 <element in="object" out="issue">
                     <attribute-create out="key">../endpoint_group/text()</attribute-create>
+                    <element-ignore in="info"/>
                 </element>
             </element>
 
