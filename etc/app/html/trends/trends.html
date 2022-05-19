@@ -141,7 +141,7 @@
                     <div class="row" tpl:if="/root/@granularity='_granularity_'">
 
 
-                      <div  class="card m-1 p-1" tpl:foreach="/root/*[name()!='report' and name()!='dates' and name()!='status']">
+                      <div  class="card m-1 p-1" style="min-width: 540px" tpl:foreach="/root/*[name()!='report' and name()!='dates' and name()!='status']">
 
                           <div class="card-header">
                               <h3 class="title">Flapping {{name()}} <span class="badge badge-info m-1">{{count(object)}}</span> </h3>
@@ -151,7 +151,7 @@
                           <div class="card-body">
 
                               <div tpl:if="count(object)&gt;1">
-                                  <table  class="small dataTable table flappingTable">
+                                  <table  class="dataTable table flappingTable">
                                       <thead>
                                       <tr>
                                           <th tpl:foreach="object[1]/*">{{name()}}</th>
@@ -189,7 +189,7 @@
                             <div class="card-body">
 
                                 <div tpl:if="count(object)&gt;1">
-                                    <table  class="small dataTable table flappingTable">
+                                    <table  class="dataTable table flappingTable">
                                         <thead>
                                         <tr>
                                             <th colspan="{{count(object[1]/*[name()!='flappings'])}}" class="text-center">Entities</th>
@@ -231,12 +231,12 @@
 
                     <div class="row">
 
-                        <div class="card m-1" tpl:foreach="/root/status/object">
+                        <div class="card m-1" style="min-width: 540px" tpl:foreach="/root/status/object">
                             <div class="card-header">
                                 <h4>Status <span class="badge bg-{{status/text()}}">{{status/text()}}</span> <span class="m-1 badge bg-light border border-black " tpl:if="date">{{date/text()}}</span> </h4>
                             </div>
                             <div class="card-body">
-                                <table class="dataTable statusTable" style="border:none">
+                                <table class="dataTable statusTable table table-condensed" style="border:none">
                                     <thead tpl:foreach="top/object[1]">
                                         <th tpl:foreach="*[name()!='status' and name()!='events']">{{name()}}</th>
                                         <th  tpl:if="events"><span class="badge bg-primary m-2">Events Nb</span></th>
@@ -244,8 +244,8 @@
                                     <tbody>
                                     <tr tpl:foreach="top/object">
                                         <td tpl:foreach="*[name()!='status' and name()!='events']">
-                                            <a tpl:if="name()!='metric'" href="{{concat(substring-before(../@link,concat('/',text())),'/',text())}}" alt="link to status page"><span class="badge bg-light border border-dark m-1">{{text()}}</span></a>
-                                            <a tpl:if="name()='metric'"  alt="link to status page"><span class="badge bg-light border border-dark m-1">{{text()}}</span></a>
+                                            <a tpl:if="name()!='metric'  and name()!='duration_in_minutes'" href="{{concat(substring-before(../@link,concat('/',text())),'/',text())}}" alt="link to status page"><span class="badge bg-light border border-dark m-1">{{text()}}</span></a>
+                                            <a tpl:if="name()='metric'  or name()='duration_in_minutes'"  alt="link to status page"><span class="badge bg-light border border-dark m-1">{{text()}}</span></a>
 
                                         </td>
                                         <td tpl:if="events"><span class="badge bg-primary m-2">{{events/text()}}</span></td>
@@ -270,7 +270,7 @@
                                 <h4>Tag <span class="badge bg-info">{{tag/text()}}</span> - Status <span class="badge bg-{{status/text()}}">{{status/text()}}</span> <span class="m-1 badge bg-light border border-black " tpl:if="date">{{date/text()}}</span> </h4>
                             </div>
                             <div class="card-body">
-                                <table class="dataTable statusTable" style="border:none">
+                                <table class="dataTable statusTable  table table-condensed" style="border:none">
                                     <thead tpl:foreach="top/object[1]">
                                     <th tpl:foreach="*[name()!='status' and name()!='events']">{{name()}}</th>
                                     <th><span class="badge bg-primary m-2">Events Nb</span></th>
@@ -278,8 +278,8 @@
                                     <tbody>
                                     <tr tpl:foreach="top/object">
                                         <td tpl:foreach="*[name()!='status' and name()!='events']">
-                                            <a tpl:if="name()!='metric'" href="{{concat(substring-before(../@link,concat('/',text())),'/',text())}}" alt="link to status page"><span class="badge bg-light border border-dark m-1">{{text()}}</span></a>
-                                            <a tpl:if="name()='metric'"  alt="link to status page"><span class="badge bg-light border border-dark m-1">{{text()}}</span></a>
+                                            <a tpl:if="name()!='metric' and name()!='duration_in_minutes'" href="{{concat(substring-before(../@link,concat('/',text())),'/',text())}}" alt="link to status page"><span class="badge bg-light border border-dark m-1">{{text()}}</span></a>
+                                            <a tpl:if="name()='metric' or name()='duration_in_minutes'"  alt="link to status page"><span class="badge bg-light border border-dark m-1">{{text()}}</span></a>
 
                                         </td>
                                         <td><span class="badge bg-primary m-2">{{events/text()}}</span></td>
@@ -322,14 +322,9 @@
 <script src="/resource/app/html/adminlte/plugins/daterangepicker/daterangepicker.min.js"></script>
 
 <!-- dataTable -->
-<script type="text/javascript" charset="utf8"
-        src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-
-
-
-<link rel="stylesheet" type="text/css"
-      href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"/>
-
+<link rel="stylesheet"     href="/resource/app/css/dataTables.bootstrap5.min.css?v={$app.version}"/>
+<script src="/resource/app/js/jquery.dataTables.min.js?v={$app.version}"></script>
+<script src="/resource/app/js/dataTables.bootstrap5.min.js?v={$app.version}"></script>
 
 
 <script src="/resource/app/js/trend.js?v={$app.version}"></script>
