@@ -446,7 +446,6 @@
                 <entry key="Accept">application/json</entry>
             </parameter>
         </connector>
-      <serializer type="JSONStreamSerializer"/>
 
         <processors>
 
@@ -488,6 +487,12 @@
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="view">'report-status'</attribute-create>
                 <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
+            </element>
+
+            <element in="root">
+                <element in="info">
+                    <element-ignore if="name()!='ID' or name()!='URL'"/>
+                </element>
             </element>
         </processors>
 
