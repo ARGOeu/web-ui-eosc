@@ -100,7 +100,7 @@
                             <select id="tag" class="form-control">
                                 <option selected="true" tpl:if="/root/@tag='_tag_'" value="0">--Select a tag--</option>
                                 <option value="{/root/@tag}" tpl:else="" selected="true">{{/root/@tag}}</option>
-                                <option tpl:foreach="/root/tags/object[@first]/tag" value="{text()}">{{text()}}</option>
+                                <option tpl:foreach="/root/tags/object[@first]/tag[text()!=/root/@tag]" value="{text()}">{{text()}}</option>
                             </select>
                             <button class="btn btn-primary submit ml-3 parametersF" id="parametersF" value="submit">submit</button>
                             <span id="no-data" class="badge bg-info m-2 d-none">Please select a value in the list ! </span>
