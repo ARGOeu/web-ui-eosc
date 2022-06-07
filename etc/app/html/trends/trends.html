@@ -260,7 +260,7 @@
                     </div>
                 </div>
 
-                <div  tpl:if="/root/@trends='tags'">
+                <div  tpl:if="/root/@trends='tags' or /root/@trends='tags-flapping'">
 
                     <div class="row">
 
@@ -273,7 +273,7 @@
                                 <table class="dataTable statusTable  table table-condensed" style="border:none">
                                     <thead tpl:foreach="top/object[1]">
                                     <th tpl:foreach="*[name()!='status' and name()!='events']">{{name()}}</th>
-                                    <th><span class="badge bg-primary m-2">Events Nb</span></th>
+                                    <th tpl:if="/root/@trends='tags'"><span class="badge bg-primary m-2">Events Nb</span></th>
                                     </thead>
                                     <tbody>
                                     <tr tpl:foreach="top/object">
@@ -282,7 +282,7 @@
                                             <a tpl:if="name()='metric' or name()='duration_in_minutes'"  alt="link to status page"><span class="badge bg-light border border-dark m-1">{{text()}}</span></a>
 
                                         </td>
-                                        <td><span class="badge bg-primary m-2">{{events/text()}}</span></td>
+                                        <td tpl:if="/root/@trends='tags'"><span class="badge bg-primary m-2">{{events/text()}}</span></td>
                                     </tr>
 
                                     </tbody>

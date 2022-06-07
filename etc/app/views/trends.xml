@@ -245,7 +245,7 @@
         <argument name="tenant">egi</argument>
         <argument name="top">all</argument>
         <argument name="granularity">_granularity_</argument>
-        <argument name="trends">tags</argument>
+        <argument name="trends">tags-flapping</argument>
         <argument name="tag">_tag_</argument>
 
         <connector type="XMLConnector">
