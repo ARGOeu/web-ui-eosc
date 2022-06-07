@@ -224,6 +224,19 @@
         </renderers>
     </view>
 
+
+
+    <view name="trends-tags-flapping-eudat" authenticators="eudat">
+        <connector type="XMLConnector">
+            <parameter name="content" eval="view('trends-tags-flapping',arguments())"/>
+        </connector>
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/trends/trends.html</parameter>
+            </renderer>
+        </renderers>
+    </view>
+
     <view name="trends-tags-flapping" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
         <argument name="date" eval="substring(date:date-time(),0,11)"/>
         <argument name="start_date">_start_date_</argument>
