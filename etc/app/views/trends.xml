@@ -281,6 +281,14 @@
                 </element>
             </element>
 
+            <element in="root">
+                <element in="tags">
+                    <element in="object">
+                        <attribute-create out="first" if="not(../preceding-sibling::object/tag/text()=current()/../tag/text())">'true'</attribute-create>
+                    </element>
+                </element>
+            </element>
+
         </processors>
 
 
