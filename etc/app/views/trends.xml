@@ -14,17 +14,17 @@
     <argument name="top"/>
         <argument name="type">metrics</argument>
     <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
-    <variable name="url" eval="property('api.trends')"/>
+    <variable name="url" eval="choose($top='all',concat(property('api.trends'),$report,'/status/',$type,'?date=',$date),concat(property('api.trends'),$report,'/status/',$type,'?date=','&amp;top=',$top))"/>
 
         <connector type="HTTPConnector">
-            <parameter name="url" eval="choose($top='all',concat($url,$report,'/status/',$type,'?date=',$date),concat($url,$report,'/status/metrics','?date=','&amp;top=',$top))"/>
+            <parameter name="url" eval="$url" />
             <parameter name="force-redirect">true</parameter>
             <parameter name="header">
                 <entry key="x-api-key" eval="$api-key"/>
                 <entry key="Accept">application/json</entry>
             </parameter>
             <fallback
-                    eval="new_element('exception',new_attribute('exception',' : exception with api.flapping.status view '))">
+                    eval="new_element('exception',new_attribute('exception',concat(' : exception with api.flapping.status view ', $url)))">
                 <exception type="java.io.IOException"/>
             </fallback>
         </connector>
@@ -57,7 +57,7 @@
                 <entry key="Accept">application/json</entry>
             </parameter>
             <fallback
-                    eval="new_element('exception',new_attribute('exception',' : exception with api.status.range view '))">
+                    eval="new_element('exception',new_attribute('exception',concat(' : exception with api.status.range view ' , $url)))">
                 <exception type="java.io.IOException"/>
             </fallback>
         </connector>
@@ -78,18 +78,19 @@
         <argument name="report"/>
         <argument name="tenant"/>
         <argument name="top"/>
+        <argument name="type">metrics</argument>
         <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
-        <variable name="url" eval="property('api.trends')"/>
+        <variable name="url" eval="choose($top='all',concat(property('api.trends'),$report,'/status/',$type,'/tags','?date=',$date),concat(property('api.trends'),$report,'/status/',$type,'/tags','?date=','&amp;top=',$top))"/>
 
         <connector type="HTTPConnector">
-            <parameter name="url" eval="choose($top='all',concat($url,$report,'/status/metrics/tags','?date=',$date),concat($url,$report,'/status/metrics/tags','?date=','&amp;top=',$top))"/>
+            <parameter name="url" eval="$url"/>
             <parameter name="force-redirect">true</parameter>
             <parameter name="header">
                 <entry key="x-api-key" eval="$api-key"/>
                 <entry key="Accept">application/json</entry>
             </parameter>
             <fallback
-                    eval="new_element('exception',new_attribute('exception',' : exception with api.tags.status view '))">
+                    eval="new_element('exception',new_attribute('exception', concat('Exception with api.tags.status view:  ', $url)))">
                 <exception type="java.io.IOException"/>
             </fallback>
         </connector>
@@ -104,13 +105,14 @@
         <argument name="start_date"/>
         <argument name="end_date"/>
         <argument name="top"/>
+        <argument name="type">metrics</argument>
         <argument name="granularity">_granularity_</argument>
 
         <variable name="option" eval="choose($granularity!='_granularity_',concat('?granularity=',$granularity,'&amp;'),'?')"/>
         <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
 
         <variable name="base-url" eval="property('api.trends')"/>
-        <variable name="url" eval="choose($top='all',concat($base-url,$report,'/status/metrics/tags',$option,'start_date=',$start_date,'&amp;end_date=',$end_date),concat($base-url,$report,'/status/metrics/tags',$option,'start_date=',$start_date,'&amp;end_date=',$end_date,'&amp;top=',$top))"/>
+        <variable name="url" eval="choose($top='all',concat($base-url,$report,'/status/',$type,'/tags',$option,'start_date=',$start_date,'&amp;end_date=',$end_date),concat($base-url,$report,'/status/',$type,'/tags',$option,'start_date=',$start_date,'&amp;end_date=',$end_date,'&amp;top=',$top))"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>
@@ -120,7 +122,7 @@
                 <entry key="Accept">application/json</entry>
             </parameter>
             <fallback
-                    eval="new_element('exception',new_attribute('exception',' : exception with api.tags.range view '))">
+                    eval="new_element('exception',new_attribute('exception',concat(' : exception with api.tags.range view ', $url)))">
                 <exception type="java.io.IOException"/>
             </fallback>
         </connector>
@@ -215,6 +217,84 @@
         <connector type="XMLConnector">
             <parameter name="content" eval="view('trends-tags',arguments())"/>
         </connector>
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/trends/trends.html</parameter>
+            </renderer>
+        </renderers>
+    </view>
+
+    <view name="trends-tags-flapping" xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
+        <argument name="date" eval="substring(date:date-time(),0,11)"/>
+        <argument name="start_date">_start_date_</argument>
+        <argument name="end_date">_end_date_</argument>
+        <argument name="report">Critical</argument>
+        <argument name="tenant">egi</argument>
+        <argument name="top">all</argument>
+        <argument name="granularity">_granularity_</argument>
+        <argument name="trends">tags</argument>
+        <argument name="tag">_tag_</argument>
+
+        <connector type="XMLConnector">
+            <parameter name="content" eval="new_element('root')"/>
+        </connector>
+
+        <processors>
+
+            <element in="root">
+                <attribute-create out="date">$date</attribute-create>
+                <attribute-create out="start_date">$start_date</attribute-create>
+                <attribute-create out="end_date">$end_date</attribute-create>
+                <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="top">$top</attribute-create>
+                <attribute-create out="granularity">$granularity</attribute-create>
+                <attribute-create out="trends">$trends</attribute-create>
+                <attribute-create out="tag">$tag</attribute-create>
+                <attribute-create out="view">'trends'</attribute-create>
+                <attribute-create out="topology2">view('tenants.reports')/tenants/tenant[@id=$tenant]/report[@name=$report]/@topology2</attribute-create>
+                <attribute-create out="topology3">view('tenants.reports')/tenants/tenant[@id=$tenant]/report[@name=$report]/@topology3</attribute-create>
+                <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
+                <element-create>new_element("tags")</element-create>
+            </element>
+
+            <element in="root">
+                <element if="name()='tags'">
+                    <element-create if="$start_date='_start_date_'">view('api.flapping.date',entry('date',$date)|entry('report',$report)|entry('type','metrics/tags')|entry('tenant',$tenant)|entry('top',$top)|entry('granularity',$granularity))</element-create>
+                    <element-create if="$start_date!='_start_date_'">view('api.flapping.range',entry('start_date',$start_date)|entry('type','metrics/tags')|entry('end_date',$end_date)|entry('report',$report)|entry('tenant',$tenant)|entry('top',$top)|entry('granularity',$granularity))</element-create>
+                </element>
+            </element>
+
+            <element in="root">
+                <element in="tags">
+                    <elements-ignore path="object/data">
+                        <element/>
+                    </elements-ignore>
+                </element>
+            </element>
+
+            <element in="root">
+                <element in="tags">
+                    <elements path="object/top">
+                        <element in="object">
+                            <attribute-create out="link">concat('/',/root/@tenant,'/report-status/',/root/@report,'/',/root/@topology2,'/',../endpoint_group/text(),'/',../service/text(),'/',../endpoint/text())</attribute-create>
+                        </element>
+                    </elements>
+                </element>
+            </element>
+
+            <element in="root">
+                <element in="tags">
+                    <element in="object">
+                        <attribute-create out="first" if="not(../preceding-sibling::object/tag/text()=current()/../tag/text())">'true'</attribute-create>
+                    </element>
+                </element>
+            </element>
+
+        </processors>
+
+
+
         <renderers>
             <renderer type="HTMLRenderer">
                 <parameter name="template">app/html/trends/trends.html</parameter>
