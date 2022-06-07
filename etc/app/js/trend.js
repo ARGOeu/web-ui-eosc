@@ -70,6 +70,12 @@ $(function () {
             checkings=false;
         }
 
+        if (trend === 'tags-flapping' && $("#tag").val()==0) {
+            $("#no-data").removeClass('d-none');
+            checkings=false;
+        }
+
+
         if (trend === 'status' && $("#type").val()==0) {
             $("#no-data").removeClass('d-none');
             checkings=false;
@@ -90,6 +96,11 @@ $(function () {
                     wlocation = wlocation + '&tag=' + tag;
                 }
 
+                if (trend === 'tags-flapping') {
+                    var tag = $("#tag").val();
+                    wlocation = wlocation + '&tag=' + tag;
+                }
+
                 if (trend === 'status') {
                     var type = $("#type").val();
                     wlocation = wlocation + '&type=' + type;
@@ -106,6 +117,11 @@ $(function () {
                     wlocation = wlocation + '&granularity=monthly';
 
                 if (trend === 'tags') {
+                    var tag = $("#tag").val();
+                    wlocation = wlocation + '&tag=' + tag;
+                }
+
+                if (trend === 'tags-flapping') {
                     var tag = $("#tag").val();
                     wlocation = wlocation + '&tag=' + tag;
                 }
