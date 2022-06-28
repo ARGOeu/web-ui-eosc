@@ -351,17 +351,16 @@
             <element in="root" if="$tenant='egi' and $filter!='_filter_'">
                 <element-ignore in="group" if="not(contains(@filters,concat(',',$filter,',')))"/>
             </element>
-            
+
 
             <element in="root">
-                <set variable="StateColor">view('StateColor')</set>
+                <set variable="StateColor" index="@key">uniq(view('StateColor')/e:entries/e:entry,'@key')</set>
 
                 <element in="group">
                     <attribute in="name">str:replace(.,'+','%252B')</attribute>
-
                     <element in="status">
 
-                        <attribute-create out="color">$StateColor/e:entries/e:entry[@key=current()/../@value]/text()
+                        <attribute-create out="color">find($StateColor,current()/../@value)/text()
                         </attribute-create>
 
                         <attribute-create out="end_time" if="current()/../following-sibling::status[1]">
@@ -375,6 +374,14 @@
                     </element>
                 </element>
             </element>
+
+            <element in="root" if="$tenant='eosc'">
+            <set variable="api.topology.groups" index="@ugly_name">uniq(view('api.topology.groups')/results/group,'@ugly_name')</set>
+                <element in="group">
+                    <attribute-create out="url">find($api.topology.groups,../@name)/@nice_name</attribute-create>
+                </element>
+            </element>
+
 
 
         </processors>

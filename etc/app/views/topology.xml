@@ -1,0 +1,155 @@
+<views xmlns="http://software.in2p3.fr/lavoisier/application.xsd"
+       xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd" xmlns:t="http://software.in2p3.fr/lavoisier/tables.xsd">
+    <!-- 
+        Project : argo-eosc 
+        File    : topology.xml
+        Created by cyril on 2022/06/28 
+    -->
+
+    <view name="api.topology.endpoints">
+        <argument name="tenant">eosc</argument>
+
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="url" eval="property('api.topology.endpoints')"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+            <fallback
+                    eval="new_element('exception',new_attribute('exception',concat('exception with topology endpoints ',$url)))">
+                <exception type="java.io.IOException"/>
+            </fallback>
+        </connector>
+
+        <serializer type="JSONStreamSerializer"></serializer>
+
+        <cache type="FileCache">
+            <trigger type="DeltaTimeTrigger">
+                <parameter name="minutes">11</parameter>
+            </trigger>
+            <trigger type="ViewNotifiedTrigger"/>
+            <trigger type="ViewCreatedTrigger"/>
+        </cache>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+    </view>
+
+
+    <view name="api.topology.groups">
+        <argument name="tenant">eosc</argument>
+
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="url" eval="property('api.topology.groups')"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+            <fallback
+                    eval="new_element('exception',new_attribute('exception',concat('exception with topology by groups ',$url)))">
+                <exception type="java.io.IOException"/>
+            </fallback>
+        </connector>
+        <serializer type="JSONStreamSerializer"></serializer>
+
+        <processors>
+            <element in="object" out="results">
+                <element-ignore in="data">
+                    <element in="object" out="group">
+                        <attribute-create out="ugly_name">../subgroup/text()</attribute-create>
+                        <attribute-create out="nice_name">../tags/info_projectname/text()</attribute-create>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+                <element-ignore/>
+            </element>
+
+        </processors>
+        <cache type="FileCache">
+            <trigger type="DeltaTimeTrigger">
+                <parameter name="minutes">11</parameter>
+            </trigger>
+            <trigger type="ViewNotifiedTrigger"/>
+            <trigger type="ViewCreatedTrigger"/>
+        </cache>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
+
+    <view name="api.topology">
+        <argument name="tenant">egi</argument>
+        <argument name="group">_group_</argument>
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="url" eval="property('api.topology.endpoints')"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+            <fallback
+                    eval="new_element('exception',new_attribute('exception',concat('exception with topology endpoints',$url)))">
+                <exception type="java.io.IOException"/>
+            </fallback>
+        </connector>
+
+        <serializer type="JSONStreamSerializer"/>
+
+        <processors>
+            <element in="object" out="root">
+                <element-ignore in="data">
+                    <element in="object" out="group">
+                        <attribute-create out="name">../group/text()</attribute-create>
+
+                    </element>
+                </element-ignore>
+            </element>
+
+            <element in="root" if="$group='_group_'">
+                <element in="group">
+                    <element-ignore/>
+                </element>
+            </element>
+
+            <element in="root" if="$group='_group_'">
+                <element-ignore in="group"/>
+                <element-create>uniq(../group,'@name')</element-create>
+            </element>
+
+
+            <element in="root" if="$group!='_group_'">
+                <element-ignore in="group" if="@name!=$group">
+                </element-ignore>
+            </element>
+
+        </processors>
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+
+
+    </view>
+
+
+</views>
