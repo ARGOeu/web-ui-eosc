@@ -94,7 +94,7 @@
                 <entry key="x-api-key" eval="$api-key"/>
                 <entry key="Accept">application/json</entry>
             </parameter>
-            <fallback eval="new_element('root',new_attribute('exception','empty dataset for report')|new_attribute('tenant',$tenant)|new_attribute('report',$report)|new_attribute('topology',$topology))">
+            <fallback eval="new_element('root',new_attribute('exception','empty dataset for report')|new_attribute('tenant',$tenant)|new_attribute('report',$report)|new_attribute('topology',$topology)|new_attribute('url',$url))">
                 <exception type="org.xml.sax.SAXException"/>
                 <exception type="java.io.IOException"/>
             </fallback>

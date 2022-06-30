@@ -101,7 +101,7 @@
                             <tbody tpl:if="group[1]/@type!='endpoint' and group[1]/@type!='service'">
                             <tr tpl:foreach="group">
                                 <td tpl:if="@type='PROJECT'"><a
-                                        href="/{/root/@tenant}/report-ar/{/root/@report}/SERVICEGROUPS" class="urlenc">{{@name}}</a>
+                                        href="/{/root/@tenant}/report-ar/{/root/@report}/SERVICEGROUPS?filter={@name}" class="urlenc">{{@name}}</a>
                                 </td>
                                 <td tpl:else="@type='NGI'"><a
                                         href="/{/root/@tenant}/report-ar/{/root/@report}/SITES?filter={@name}" class="urlenc">{{@name}}</a>
