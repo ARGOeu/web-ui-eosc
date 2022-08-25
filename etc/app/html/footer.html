@@ -11,15 +11,34 @@
             href="http://www.cnrs.fr/en" title="cnrs website">CNRS</a>, <a href="https://grnet.gr/en/"
                                                                            title="Grnet web site">GRNET</a> and <a
             href="https://www.srce.unizg.hr/en/" title="SRCE web site">SRCE</a> co-funded by <a
-            href="https://www.eosc-hub.eu/">EOSC-Hub </a>  (Horizon 2020) under Grant number 777536 and <a href="http://egi.eu" title="egi web site">EGI
-        Foundation</a><img class="m-2" src="/resource/app/img/logo-eosc-hub.png" width="130px"/><img class="m-2" src="/resource/app/img/cee.png" width="50px"/></div>
+            href="https://www.egi.eu/project/egi-ace/">EGI-ACE project</a>  (Horizon 2020) under Grant number  No. 101017567 <img class="m-2" src="/resource/app/img/cee.png" width="50px"/></div>
 
+
+    <div tpl:else="/root/@tenant='eudat'">ARGO is a service jointly developed and maintained by <a
+            href="http://www.cnrs.fr/en" title="cnrs website">CNRS</a>, <a href="https://grnet.gr/en/"
+                                                                           title="Grnet web site">GRNET</a> and <a
+            href="https://www.srce.unizg.hr/en/" title="SRCE web site">SRCE</a> co-funded by <a
+            href="https://www.dice-eosc.eu/">DICE project</a> (Horizon 2020) under Grant number 101017207.<img class="m-2" src="/resource/app/img/cee.png" width="50px"/>
+    </div>
+
+    <div tpl:else="/root/@tenant='ni4os'">ARGO is a service jointly developed and maintained by <a
+            href="http://www.cnrs.fr/en" title="cnrs website">CNRS</a>, <a href="https://grnet.gr/en/"
+                                                                           title="Grnet web site">GRNET</a> and <a
+            href="https://www.srce.unizg.hr/en/" title="SRCE web site">SRCE</a> co-funded by <a
+            href="https://ni4os.eu/">Ni4OS project</a> (Horizon 2020) under Grant number 857645.<img class="m-2" src="/resource/app/img/cee.png" width="50px"/>
+    </div>
+
+    <div tpl:else="contains(/root/@tenant,'eosc') or /root/@tenant='neanias'">ARGO is a service jointly developed and maintained by <a
+            href="http://www.cnrs.fr/en" title="cnrs website">CNRS</a>, <a href="https://grnet.gr/en/"
+                                                                           title="Grnet web site">GRNET</a> and <a
+            href="https://www.srce.unizg.hr/en/" title="SRCE web site">SRCE</a> co-funded by <a
+            href="https://eoscfuture.eu/">EOSC Future project</a> (Horizon 2020) under Grant number 01017536. <img class="m-2" src="/resource/app/img/cee.png" width="50px"/>
+    </div>
 
     <div tpl:else="">ARGO is a service jointly developed and maintained by <a
             href="http://www.cnrs.fr/en" title="cnrs website">CNRS</a>, <a href="https://grnet.gr/en/"
                                                                            title="Grnet web site">GRNET</a> and <a
-            href="https://www.srce.unizg.hr/en/" title="SRCE web site">SRCE</a> co-funded by <a
-            href="https://www.eosc-hub.eu/">EOSC-Hub</a> (Horizon 2020) under Grant number 777536.<img class="m-2" src="/resource/app/img/logo-eosc-hub.png" width="130px"/><img class="m-2" src="/resource/app/img/cee.png" width="50px"/>
+            href="https://www.srce.unizg.hr/en/" title="SRCE web site">SRCE</a>
     </div>
 
 
