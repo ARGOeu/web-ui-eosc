@@ -35,16 +35,13 @@
 
     <link href="/resource/app/html/adminlte/plugins/select2/select2.min.css?v={$app.version}" rel="stylesheet" type="text/css"/>
 
-    <script type="text/javascript">
+    <script type="text/javascript" tpl:foreach="/root/@tenant">
         var _paq = window._paq = window._paq || [];
         /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
         _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
         _paq.push(['trackPageView']);
         _paq.push(['enableLinkTracking']);
-        _paq.push(['setCustomVariable', 1, 'Category', '{.}', 'page']);
-        _paq.push(['setCustomVariable', 1, 'Category', '{.}', 'visit']);
-        _paq.push(['setCustomDimension', 1, '{/root/@tenant}']);
-
+        _paq.push(['setCustomDimension', 1, '{.}']);
 
 
         (function() {
