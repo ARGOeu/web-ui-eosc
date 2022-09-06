@@ -2,7 +2,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
-    <meta name="tenant" tpl:if="{{/root/@tenant}}" content="{{/root/@tenant}}"/>
+    <meta name="tenant" tpl:if="/root/@tenant" content="{/root/@tenant}"/>
 
     <title tpl:if="$app.instance='prod'">ARGO | Monitor your services</title>
     <title tpl:else="">ARGO Development instance</title>
