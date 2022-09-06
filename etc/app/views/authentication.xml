@@ -56,9 +56,13 @@
     <view name="userInfo">
         <argument name="token"/>
         <connector type="HTTPConnector">
-            <parameter name="url" eval="concat(property('egi.oidc.userInfo'),$token)"/>
+            <parameter name="url" eval="property('egi.oidc.userInfo')"/>
             <parameter name="certificate" eval="property('certificate.path')"/>
             <parameter name="passphrase" eval="property('certificate.password')"/>
+            <parameter name="header">
+                <entry key="Content-Type">application/json</entry>
+                <entry key="Authorization" eval="concat('Bearer ',$token)"></entry>
+            </parameter>
         </connector>
                 <serializer type="JSONStreamSerializer"/>
     </view>

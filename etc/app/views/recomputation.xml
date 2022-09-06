@@ -148,8 +148,7 @@
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="report">$report</attribute-create>
                 <attribute-create out="view">'recomputationList'</attribute-create>
-                <element-create>user('*')</element-create>
-                <element-create>entry('token',user('token'))</element-create>
+
                 <element-create>view('userInfo', entry('token',user('token')))</element-create>
 
             </element>
@@ -187,19 +186,15 @@
         </processors>
 
 
+
         <renderers>
             <renderer type="DefaultRenderer">
-                <parameter name="contentType">text/xml</parameter>
+                <parameter name="template">app/html/recomputation/recomputationList.html</parameter>
+            </renderer>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/recomputation/recomputationList.html</parameter>
             </renderer>
         </renderers>
-<!--        <renderers>-->
-<!--            <renderer type="DefaultRenderer">-->
-<!--                <parameter name="template">app/html/recomputation/recomputationList.html</parameter>-->
-<!--            </renderer>-->
-<!--            <renderer type="HTMLRenderer">-->
-<!--                <parameter name="template">app/html/recomputation/recomputationList.html</parameter>-->
-<!--            </renderer>-->
-<!--        </renderers>-->
 
 
     </view>
