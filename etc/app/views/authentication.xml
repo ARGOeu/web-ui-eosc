@@ -61,7 +61,6 @@
             <parameter name="passphrase" eval="property('certificate.password')"/>
         </connector>
                 <serializer type="JSONStreamSerializer"/>
-
     </view>
 
 
@@ -73,7 +72,7 @@
 
         <processors>
             <element in="root">
-                <!--                <element-create>new_element('user',user())</element-create>-->
+                <element-create>new_element('user',user())</element-create>
             </element>
         </processors>
 
