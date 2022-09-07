@@ -110,7 +110,9 @@
 
     <script async="true" type="text/javascript">
         var _paq = window._paq = window._paq || [];
-        var tenant = document.getElementById("root_tenant").val();
+        var tenant = document.getElementById("root_tenant").value;
+        console.log(tenant);
+
         _paq.push(['setCustomDimension', 1, tenant]);
         /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
         _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
