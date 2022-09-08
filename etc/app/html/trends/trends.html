@@ -155,15 +155,19 @@
                                   <table  class="dataTable table flappingTable">
                                       <thead>
                                       <tr>
-                                          <th tpl:foreach="object[1]/*">{{name()}}</th>
+                                          <th tpl:foreach="object[1]/*[name()!='flapping']">{{name()}}</th>
+                                          <th>flapping</th>
                                       </tr>
 
                                       </thead>
 
                                       <tbody>
                                       <tr tpl:foreach="object">
-                                          <td tpl:foreach="*">{{text()}}</td>
+                                          <td tpl:foreach="*[not(@link) and name()!='flapping']"><span class="badge bg-light border border-dark m-1">{{text()}}</span></td>
+                                          <td tpl:foreach="*[@link and name()!='flapping']"><a href="{@link}" alt="link to status"><span class="badge bg-light border border-dark m-1">{{text()}}</span></a></td>
+                                          <td tpl:foreach="*[name()='flapping']"><span class="badge bg-light border border-dark m-1">{{text()}}</span></td>
                                       </tr>
+
                                       </tbody>
 
                                   </table>

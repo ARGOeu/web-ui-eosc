@@ -507,7 +507,8 @@
                 <attribute-create out="trends">$trends</attribute-create>
                 <attribute-create out="view">'trends'</attribute-create>
 
-
+                <attribute-create out="topology2">view('tenants.reports')/tenants/tenant[@id=$tenant]/report[@name=$report]/@topology2</attribute-create>
+                <attribute-create out="topology3">view('tenants.reports')/tenants/tenant[@id=$tenant]/report[@name=$report]/@topology3</attribute-create>
 
                 <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
 
@@ -624,6 +625,7 @@
                         <element in="dates" out="flappings">
                             <element in="date" out="flapping">
                                 <attribute-create out="date">../text()</attribute-create>
+
                                 <text-ignore/>
                                 <text-create if="../../../flapping[@date=current()/../text()]/text()">../../../flapping[@date=current()/../text()]/text()</text-create>
                                 <text-create if="not(../../../flapping[@date=current()/../text()]/text())">0</text-create>
@@ -635,6 +637,24 @@
                 <element-ignore/>
             </element>
 
+                <element in="root">
+                    <element>
+                        <element in="object">
+                            <element in="endpoint_group">
+                                <attribute-create out="link">concat('/',/root/@tenant,'/report-status/',/root/@report,'/',/root/@topology2,'/',../text())</attribute-create>
+                            </element>
+                            <element in="service">
+                                <attribute-create out="link">concat('/',/root/@tenant,'/report-status/',/root/@report,'/',/root/@topology2,'/',../../endpoint_group/text(),'/',../text())</attribute-create>
+                            </element>
+                            <element in="endpoint">
+                                <attribute-create out="link">concat('/',/root/@tenant,'/report-status/',/root/@report,'/',/root/@topology2,'/',../../endpoint_group/text(),'/',../../service/text(),'/',../text())</attribute-create>
+                            </element>
+                            <element in="metric">
+                                <attribute-create out="link">concat('/',/root/@tenant,'/report-status/',/root/@report,'/',/root/@topology2,'/',../../endpoint_group/text(),'/',../../service/text(),'/',../../endpoint/text())</attribute-create>
+                            </element>
+                        </element>
+                    </element>
+                </element>
 
 
         </processors>
