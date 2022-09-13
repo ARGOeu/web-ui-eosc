@@ -29,29 +29,5 @@
         </authenticator>
     </authenticators>
 
-    <!--<authenticators name="b2safe">-->
-
-        <!--<authenticator type="OAuth2Authenticator">-->
-            <!--&lt;!&ndash; required: The URL of the OAuth2 Authorization URL (String) &ndash;&gt;-->
-            <!--<parameter name="authz_location">https://unity.eudat-aai.fz-juelich.de/oauth2-as/oauth2-authz</parameter>-->
-            <!--&lt;!&ndash; required: The URL of the OAuth2 Token URL (String) &ndash;&gt;-->
-            <!--<parameter name="token_location">https://unity.eudat-aai.fz-juelich.de/oauth2/token</parameter>-->
-            <!--&lt;!&ndash; required: The set of permissions requested (String) &ndash;&gt;-->
-            <!--<parameter name="scope">openid profile email eduperson_entitlement eduperson_scoped_affiliation</parameter>-->
-            <!--&lt;!&ndash; required: The Client ID (or App ID) (String) &ndash;&gt;-->
-            <!--<parameter name="client_id" eval="property('eudat.client_id')"/>-->
-            <!--&lt;!&ndash; required: The Client secret (or App secret) (String) &ndash;&gt;-->
-            <!--<parameter name="client_secret" eval="property('eudat.client_secret')"/>-->
-        <!--</authenticator>-->
-
-    <!--</authenticators>-->
-
-
-
-
-
-
-
-
 
 </authenticators-list>
