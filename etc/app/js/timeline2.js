@@ -33,7 +33,13 @@
 
                 var bg;
 
-                tempArray[0] = decodeURIComponent(unescape(tempArray[0])) ;
+                try {
+                    tempArray[0] = decodeURIComponent(unescape(tempArray[0]));
+                }
+                catch (e)
+                {
+                    tempArray[0]='Unrecognized_Name_'+j;
+                }
 
                 bg=tempArray[1].split("_")[0];
 
