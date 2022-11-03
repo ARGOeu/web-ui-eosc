@@ -19,10 +19,10 @@
                 <entry key="x-api-key" eval="$api-key"/>
                 <entry key="Accept">application/json</entry>
             </parameter>
-            <fallback
-                    eval="new_element('exception',new_attribute('exception',concat('exception with topology endpoints ',$url)))">
-                <exception type="java.io.IOException"/>
-            </fallback>
+<!--            <fallback-->
+<!--                    eval="new_element('exception',new_attribute('exception',concat('exception with topology endpoints ',$url)))">-->
+<!--                <exception type="java.io.IOException"/>-->
+<!--            </fallback>-->
         </connector>
 
         <serializer type="JSONStreamSerializer"></serializer>
@@ -40,13 +40,13 @@
             </element>
         </processors>
 
-        <cache type="FileCache">
-            <trigger type="DeltaTimeTrigger">
-                <parameter name="minutes">11</parameter>
-            </trigger>
-            <trigger type="ViewNotifiedTrigger"/>
-            <trigger type="ViewCreatedTrigger"/>
-        </cache>
+<!--        <cache type="FileCache">-->
+<!--            <trigger type="DeltaTimeTrigger">-->
+<!--                <parameter name="minutes">11</parameter>-->
+<!--            </trigger>-->
+<!--            <trigger type="ViewNotifiedTrigger"/>-->
+<!--            <trigger type="ViewCreatedTrigger"/>-->
+<!--        </cache>-->
 
 
         <renderers>
