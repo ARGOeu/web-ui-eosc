@@ -56,6 +56,49 @@
         </renderers>
     </view>
 
+    <view name="api.topology.groups_endpoints">
+        <argument name="tenant">eosc</argument>
+
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="url" eval="property('api.topology.endpoints')"/>
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+            <fallback
+                    eval="new_element('exception',new_attribute('exception',concat('exception with topology endpoints ',$url)))">
+                <exception type="java.io.IOException"/>
+            </fallback>
+        </connector>
+
+        <serializer type="JSONStreamSerializer"></serializer>
+
+        <processors>
+            <element in="object" out="results">
+                <element-ignore in="data">
+                    <element in="object" out="endpoint">
+                        <attribute-create out="group">../group/text()</attribute-create>
+                        <attribute-create out="service">../service/text()</attribute-create>
+                        <attribute-create out="hostname">../hostname/text()</attribute-create>
+                        <element-ignore/>
+                    </element>
+                </element-ignore>
+                <element-ignore/>
+            </element>
+        </processors>
+
+
+
+        <renderers>
+            <renderer type="DefaultRenderer">
+                <parameter name="contentType">text/xml</parameter>
+            </renderer>
+        </renderers>
+    </view>
 
     <view name="api.topology.groups">
         <argument name="tenant">eosc</argument>

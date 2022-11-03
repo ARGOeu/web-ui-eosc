@@ -1,8 +1,8 @@
 <div class="col-5" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
-    <div class="card card-primary" tpl:if="/root/@tenant!='eosc' and /root/@tenant!='neanias'">
+    <div class="card card-primary">
         <div class="card-header">
             <h3 class="card-title">
-                Downtimes
+                Downtimes - Outage Severity
             </h3>
 
 
@@ -15,6 +15,7 @@
 
                     <thead>
                     <tr>
+                        <th>Group</th>
                         <th>Endpoint</th>
                         <th>Service</th>
                         <th>Start (UTC)</th>
@@ -24,8 +25,9 @@
 
                     <tbody>
                     <tr tpl:foreach="root/downtimes/downtime">
-                        <td class="text-truncate" style="max-width:250px;">{{hostname/text()}}</td>
-                        <td class="text-truncate" style="max-width:250px;">
+                        <td class="text-truncate" style="max-width:200px;">{{group/text()}}</td>
+                        <td class="text-truncate" style="max-width:200px;">{{hostname/text()}}</td>
+                        <td class="text-truncate" style="max-width:200px;">
                             <span class="badge badge-light border-dark">{{service/text()}}</span>
                         </td>
 

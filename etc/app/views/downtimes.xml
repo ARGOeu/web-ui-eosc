@@ -436,9 +436,10 @@
 
         <processors>
             <element in="object" out="downtimes">
+                <set variable="group_endpoint" index="@hostname">uniq(view('api.topology.groups_endpoints',entry('tenant',$tenant))/results/endpoint,'@hostname')</set>
                 <elements-ignore path="data/object/endpoints">
                     <element in="object" out="downtime">
-
+                        <element-create>new_element('group',new_text(find($group_endpoint,../hostname/text())/@group))</element-create>
                     </element>
                 </elements-ignore>
             <element-ignore/>
