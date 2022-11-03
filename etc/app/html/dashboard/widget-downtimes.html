@@ -15,8 +15,8 @@
 
                     <thead>
                     <tr>
-                        <th>Site</th>
-                        <th>Type</th>
+                        <th>Endpoint</th>
+                        <th>Service</th>
                         <th>Start (UTC)</th>
                         <th>End (UTC)</th>
                         <th></th>
@@ -24,15 +24,14 @@
                     </thead>
 
                     <tbody>
-                    <tr tpl:foreach="root/downtimes/DOWNTIME">
-                        <td class="text-truncate" style="max-width:250px;">{{HOSTED_BY/text()}}</td>
-                        <td>
-                            <span tpl:if="SEVERITY/text()!='OUTAGE'" class="badge bg-success">{{SEVERITY/text()}}</span>
-                            <span tpl:else="" class="badge bg-warning">{{SEVERITY/text()}}</span>
+                    <tr tpl:foreach="root/downtimes/downtime">
+                        <td class="text-truncate" style="max-width:250px;">{{hostname/text()}}</td>
+                        <td class="text-truncate" style="max-width:250px;">
+                            <span class="badge badge-light border-dark">{{service/text()}}</span>
                         </td>
 
-                        <td class="text-nowrap"> {{FORMATED_START_DATE/text()}}</td>
-                        <td class="text-nowrap">{{FORMATED_END_DATE/text()}}</td>
+                        <td class="text-nowrap"> {{start_time/text()}}</td>
+                        <td class="text-nowrap">{{end_time/text()}}</td>
                         <td>
 
                             <!-- Button trigger modal -->

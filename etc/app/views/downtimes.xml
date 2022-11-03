@@ -6,420 +6,420 @@
         Created by cyril on 2019/04/16 
     -->
 
-    <view name="eudat.downtimes" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd"
-          xmlns:str="http://exslt.org/strings">
-
-        <connector type="HTTPConnector">
-            <parameter name="url"
-                       eval="concat('https://',property('eudat-api-user'),':',property('eudat-api-pwd'),'@dp.eudat.eu/gocdbpi/get_downtime')"/>
-            <parameter name="force-redirect">true</parameter>
-        </connector>
-
-        <processors>
-
-            <element in="results" out="downtimes">
-                <element-ignore/>
-                <element-create>sort_by_string(../DOWNTIME,'@ID')</element-create>
-            </element>
-
-            <element in="downtimes">
-                <element-create-as-parent out="downtimes" group-by="@ID" attributes="@*">
-                    <element in="DOWNTIME">
-                        <element-create>
-                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'
-                            ')))
-                        </element-create>
-                        <element-ignore in="HOSTED_BY"/>
-                    </element>
-                </element-create-as-parent>
-
-            </element>
-
-
-            <element in="downtimes">
-                <element in="downtimes">
-                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))
-                    </element-create>
-                </element>
-            </element>
-
-            <element in="downtimes">
-                <element-ignore in="downtimes">
-                    <element in="DOWNTIME" if="not(preceding-sibling::DOWNTIME)">
-                        <element in="ENDPOINT" out="HOSTED_BY"/>
-                        <element-create>new_element('service_endpoints',../../service_endpoints/text())</element-create>
-                    </element>
-                </element-ignore>
-            </element>
-
-
-        </processors>
-
-        <cache type="FileCache">
-            <!--<trigger type="ViewCreatedTrigger"/>-->
-            <trigger type="DeltaTimeTrigger">
-                <parameter name="hours">4</parameter>
-            </trigger>
-            <trigger type="ViewNotifiedTrigger"/>
-            <trigger type="ViewCreatedTrigger"/>
-        </cache>
-
-        <renderers>
-            <renderer type="DefaultRenderer">
-                <parameter name="contentType">text/xml</parameter>
-            </renderer>
-        </renderers>
-
-    </view>
-
-    <view name="egi.downtimes" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd"
-          xmlns:str="http://exslt.org/strings">
-
-        <connector type="HTTPConnector">
-            <parameter name="url" eval="property('gocdb.get_downtime')"/>
-            <parameter name="certificate" eval="property('certificate.path')"/>
-            <parameter name="passphrase" eval="property('certificate.password')"/>
-        </connector>
-
-        <processors>
-
-            <element in="results" out="downtimes">
-                <element-ignore/>
-                <element-create>sort_by_string(../DOWNTIME,'@PRIMARY_KEY')</element-create>
-            </element>
-
-            <element in="downtimes">
-                <element-create-as-parent out="downtimes" group-by="@PRIMARY_KEY" attributes="@*">
-                    <element in="DOWNTIME">
-                        <element-create>
-                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'
-                            ')))
-                        </element-create>
-                    </element>
-                </element-create-as-parent>
-            </element>
-
-
-            <element in="downtimes">
-                <element in="downtimes">
-                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))
-                    </element-create>
-                </element>
-            </element>
-
-            <element in="downtimes">
-                <element-ignore in="downtimes">
-                    <element in="DOWNTIME" if="not(preceding-sibling::DOWNTIME)">
-                        <element-create>new_element('service_endpoints',../../service_endpoints/text())</element-create>
-                    </element>
-                </element-ignore>
-            </element>
-
-
-        </processors>
-
-        <cache type="FileCache">
-            <trigger type="DeltaTimeTrigger">
-                <parameter name="minutes">8</parameter>
-            </trigger>
-            <trigger type="ViewNotifiedTrigger"/>
-            <trigger type="ViewCreatedTrigger"/>
-
-        </cache>
-
-        <renderers>
-            <renderer type="DefaultRenderer">
-                <parameter name="contentType">text/xml</parameter>
-            </renderer>
-        </renderers>
-
-    </view>
-
-    <view name="eosccore.downtimes" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd"
-          xmlns:str="http://exslt.org/strings">
-
-        <connector type="HTTPConnector">
-            <parameter name="url" eval="property('gocdb.eosccore.get_downtime')"/>
-            <parameter name="certificate" eval="property('certificate.path')"/>
-            <parameter name="passphrase" eval="property('certificate.password')"/>
-        </connector>
-
-        <processors>
-
-            <element in="results" out="downtimes">
-                <element-ignore/>
-                <element-create>sort_by_string(../DOWNTIME,'@PRIMARY_KEY')</element-create>
-            </element>
-
-            <element in="downtimes">
-                <element-create-as-parent out="downtimes" group-by="@PRIMARY_KEY" attributes="@*">
-                    <element in="DOWNTIME">
-                        <element-create>
-                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'
-                            ')))
-                        </element-create>
-                    </element>
-                </element-create-as-parent>
-            </element>
-
-
-            <element in="downtimes">
-                <element in="downtimes">
-                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))
-                    </element-create>
-                </element>
-            </element>
-
-            <element in="downtimes">
-                <element-ignore in="downtimes">
-                    <element in="DOWNTIME" if="not(preceding-sibling::DOWNTIME)">
-                        <element-create>new_element('service_endpoints',../../service_endpoints/text())</element-create>
-                    </element>
-                </element-ignore>
-            </element>
-
-
-        </processors>
-
-        <cache type="FileCache">
-            <trigger type="DeltaTimeTrigger">
-                <parameter name="minutes">7</parameter>
-            </trigger>
-            <trigger type="ViewNotifiedTrigger"/>
-            <trigger type="ViewCreatedTrigger"/>
-
-        </cache>
-
-        <renderers>
-            <renderer type="DefaultRenderer">
-                <parameter name="contentType">text/xml</parameter>
-            </renderer>
-        </renderers>
-
-    </view>
-
-
-    <view name="ni4os.downtimes" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd"
-          xmlns:str="http://exslt.org/strings">
-
-        <connector type="HTTPConnector">
-            <parameter name="url" eval="property('gocdb.ni4os.get_downtime')"/>
-            <parameter name="certificate" eval="property('certificate.path')"/>
-            <parameter name="passphrase" eval="property('certificate.password')"/>
-        </connector>
-
-        <processors>
-
-            <element in="results" out="downtimes">
-                <element-ignore/>
-                <element-create>sort_by_string(../DOWNTIME,'@PRIMARY_KEY')</element-create>
-            </element>
-
-            <element in="downtimes">
-                <element-create-as-parent out="downtimes" group-by="@PRIMARY_KEY" attributes="@*">
-                    <element in="DOWNTIME">
-                        <element-create>
-                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'
-                            ')))
-                        </element-create>
-                    </element>
-                </element-create-as-parent>
-            </element>
-
-
-            <element in="downtimes">
-                <element in="downtimes">
-                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))
-                    </element-create>
-                </element>
-            </element>
-
-            <element in="downtimes">
-                <element-ignore in="downtimes">
-                    <element in="DOWNTIME" if="not(preceding-sibling::DOWNTIME)">
-                        <element-create>new_element('service_endpoints',../../service_endpoints/text())</element-create>
-                    </element>
-                </element-ignore>
-            </element>
-
-
-        </processors>
-
-        <cache type="FileCache">
-            <trigger type="DeltaTimeTrigger">
-                <parameter name="minutes">7</parameter>
-            </trigger>
-            <trigger type="ViewNotifiedTrigger"/>
-            <trigger type="ViewCreatedTrigger"/>
-
-        </cache>
-
-        <renderers>
-            <renderer type="DefaultRenderer">
-                <parameter name="contentType">text/xml</parameter>
-            </renderer>
-        </renderers>
-
-    </view>
-
-    <view name="sdc.downtimes" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd"
-          xmlns:str="http://exslt.org/strings">
-
-        <connector type="HTTPConnector">
-            <parameter name="url" eval="property('gocdb.sdc.get_downtime')"/>
-            <parameter name="certificate" eval="property('certificate.path')"/>
-            <parameter name="passphrase" eval="property('certificate.password')"/>
-        </connector>
-
-        <processors>
-
-            <element in="results" out="downtimes">
-                <element-ignore/>
-                <element-create>sort_by_string(../DOWNTIME,'@PRIMARY_KEY')</element-create>
-            </element>
-
-            <element in="downtimes">
-                <element-create-as-parent out="downtimes" group-by="@PRIMARY_KEY" attributes="@*">
-                    <element in="DOWNTIME">
-                        <element-create>
-                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'
-                            ')))
-                        </element-create>
-                    </element>
-                </element-create-as-parent>
-            </element>
-
-
-            <element in="downtimes">
-                <element in="downtimes">
-                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))
-                    </element-create>
-                </element>
-            </element>
-
-            <element in="downtimes">
-                <element-ignore in="downtimes">
-                    <element in="DOWNTIME" if="not(preceding-sibling::DOWNTIME)">
-                        <element-create>new_element('service_endpoints',../../service_endpoints/text())</element-create>
-                    </element>
-                </element-ignore>
-            </element>
-
-
-        </processors>
-
-        <cache type="FileCache">
-            <trigger type="DeltaTimeTrigger">
-                <parameter name="minutes">8</parameter>
-            </trigger>
-            <trigger type="ViewNotifiedTrigger"/>
-            <trigger type="ViewCreatedTrigger"/>
-
-        </cache>
-
-        <renderers>
-            <renderer type="DefaultRenderer">
-                <parameter name="contentType">text/xml</parameter>
-            </renderer>
-        </renderers>
-
-    </view>
-
-    <view name="training.downtimes" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd"
-          xmlns:str="http://exslt.org/strings">
-
-        <connector type="HTTPConnector">
-            <parameter name="url" eval="property('gocdb.training.get_downtime')"/>
-            <parameter name="certificate" eval="property('certificate.path')"/>
-            <parameter name="passphrase" eval="property('certificate.password')"/>
-        </connector>
-
-        <processors>
-
-            <element in="results" out="downtimes">
-                <element-ignore/>
-                <element-create>sort_by_string(../DOWNTIME,'@PRIMARY_KEY')</element-create>
-            </element>
-
-            <element in="downtimes">
-                <element-create-as-parent out="downtimes" group-by="@PRIMARY_KEY" attributes="@*">
-                    <element in="DOWNTIME">
-                        <element-create>
-                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'
-                            ')))
-                        </element-create>
-                    </element>
-                </element-create-as-parent>
-            </element>
-
-
-            <element in="downtimes">
-                <element in="downtimes">
-                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))
-                    </element-create>
-                </element>
-            </element>
-
-            <element in="downtimes">
-                <element-ignore in="downtimes">
-                    <element in="DOWNTIME" if="not(preceding-sibling::DOWNTIME)">
-                        <element-create>new_element('service_endpoints',../../service_endpoints/text())</element-create>
-                    </element>
-                </element-ignore>
-            </element>
-
-
-        </processors>
-
-        <cache type="FileCache">
-            <trigger type="DeltaTimeTrigger">
-                <parameter name="minutes">8</parameter>
-            </trigger>
-            <trigger type="ViewNotifiedTrigger"/>
-            <trigger type="ViewCreatedTrigger"/>
-
-        </cache>
-
-        <renderers>
-            <renderer type="DefaultRenderer">
-                <parameter name="contentType">text/xml</parameter>
-            </renderer>
-        </renderers>
-
-    </view>
+<!--    <view name="eudat.downtimes" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd"-->
+<!--          xmlns:str="http://exslt.org/strings">-->
+
+<!--        <connector type="HTTPConnector">-->
+<!--            <parameter name="url"-->
+<!--                       eval="concat('https://',property('eudat-api-user'),':',property('eudat-api-pwd'),'@dp.eudat.eu/gocdbpi/get_downtime')"/>-->
+<!--            <parameter name="force-redirect">true</parameter>-->
+<!--        </connector>-->
+
+<!--        <processors>-->
+
+<!--            <element in="results" out="downtimes">-->
+<!--                <element-ignore/>-->
+<!--                <element-create>sort_by_string(../DOWNTIME,'@ID')</element-create>-->
+<!--            </element>-->
+
+<!--            <element in="downtimes">-->
+<!--                <element-create-as-parent out="downtimes" group-by="@ID" attributes="@*">-->
+<!--                    <element in="DOWNTIME">-->
+<!--                        <element-create>-->
+<!--                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'-->
+<!--                            ')))-->
+<!--                        </element-create>-->
+<!--                        <element-ignore in="HOSTED_BY"/>-->
+<!--                    </element>-->
+<!--                </element-create-as-parent>-->
+
+<!--            </element>-->
+
+
+<!--            <element in="downtimes">-->
+<!--                <element in="downtimes">-->
+<!--                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))-->
+<!--                    </element-create>-->
+<!--                </element>-->
+<!--            </element>-->
+
+<!--            <element in="downtimes">-->
+<!--                <element-ignore in="downtimes">-->
+<!--                    <element in="DOWNTIME" if="not(preceding-sibling::DOWNTIME)">-->
+<!--                        <element in="ENDPOINT" out="HOSTED_BY"/>-->
+<!--                        <element-create>new_element('service_endpoints',../../service_endpoints/text())</element-create>-->
+<!--                    </element>-->
+<!--                </element-ignore>-->
+<!--            </element>-->
+
+
+<!--        </processors>-->
+
+<!--        <cache type="FileCache">-->
+<!--            &lt;!&ndash;<trigger type="ViewCreatedTrigger"/>&ndash;&gt;-->
+<!--            <trigger type="DeltaTimeTrigger">-->
+<!--                <parameter name="hours">4</parameter>-->
+<!--            </trigger>-->
+<!--            <trigger type="ViewNotifiedTrigger"/>-->
+<!--            <trigger type="ViewCreatedTrigger"/>-->
+<!--        </cache>-->
+
+<!--        <renderers>-->
+<!--            <renderer type="DefaultRenderer">-->
+<!--                <parameter name="contentType">text/xml</parameter>-->
+<!--            </renderer>-->
+<!--        </renderers>-->
+
+<!--    </view>-->
+
+<!--    <view name="egi.downtimes" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd"-->
+<!--          xmlns:str="http://exslt.org/strings">-->
+
+<!--        <connector type="HTTPConnector">-->
+<!--            <parameter name="url" eval="property('gocdb.get_downtime')"/>-->
+<!--            <parameter name="certificate" eval="property('certificate.path')"/>-->
+<!--            <parameter name="passphrase" eval="property('certificate.password')"/>-->
+<!--        </connector>-->
+
+<!--        <processors>-->
+
+<!--            <element in="results" out="downtimes">-->
+<!--                <element-ignore/>-->
+<!--                <element-create>sort_by_string(../DOWNTIME,'@PRIMARY_KEY')</element-create>-->
+<!--            </element>-->
+
+<!--            <element in="downtimes">-->
+<!--                <element-create-as-parent out="downtimes" group-by="@PRIMARY_KEY" attributes="@*">-->
+<!--                    <element in="DOWNTIME">-->
+<!--                        <element-create>-->
+<!--                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'-->
+<!--                            ')))-->
+<!--                        </element-create>-->
+<!--                    </element>-->
+<!--                </element-create-as-parent>-->
+<!--            </element>-->
+
+
+<!--            <element in="downtimes">-->
+<!--                <element in="downtimes">-->
+<!--                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))-->
+<!--                    </element-create>-->
+<!--                </element>-->
+<!--            </element>-->
+
+<!--            <element in="downtimes">-->
+<!--                <element-ignore in="downtimes">-->
+<!--                    <element in="DOWNTIME" if="not(preceding-sibling::DOWNTIME)">-->
+<!--                        <element-create>new_element('service_endpoints',../../service_endpoints/text())</element-create>-->
+<!--                    </element>-->
+<!--                </element-ignore>-->
+<!--            </element>-->
+
+
+<!--        </processors>-->
+
+<!--        <cache type="FileCache">-->
+<!--            <trigger type="DeltaTimeTrigger">-->
+<!--                <parameter name="minutes">8</parameter>-->
+<!--            </trigger>-->
+<!--            <trigger type="ViewNotifiedTrigger"/>-->
+<!--            <trigger type="ViewCreatedTrigger"/>-->
+
+<!--        </cache>-->
+
+<!--        <renderers>-->
+<!--            <renderer type="DefaultRenderer">-->
+<!--                <parameter name="contentType">text/xml</parameter>-->
+<!--            </renderer>-->
+<!--        </renderers>-->
+
+<!--    </view>-->
+
+<!--    <view name="eosccore.downtimes" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd"-->
+<!--          xmlns:str="http://exslt.org/strings">-->
+
+<!--        <connector type="HTTPConnector">-->
+<!--            <parameter name="url" eval="property('gocdb.eosccore.get_downtime')"/>-->
+<!--            <parameter name="certificate" eval="property('certificate.path')"/>-->
+<!--            <parameter name="passphrase" eval="property('certificate.password')"/>-->
+<!--        </connector>-->
+
+<!--        <processors>-->
+
+<!--            <element in="results" out="downtimes">-->
+<!--                <element-ignore/>-->
+<!--                <element-create>sort_by_string(../DOWNTIME,'@PRIMARY_KEY')</element-create>-->
+<!--            </element>-->
+
+<!--            <element in="downtimes">-->
+<!--                <element-create-as-parent out="downtimes" group-by="@PRIMARY_KEY" attributes="@*">-->
+<!--                    <element in="DOWNTIME">-->
+<!--                        <element-create>-->
+<!--                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'-->
+<!--                            ')))-->
+<!--                        </element-create>-->
+<!--                    </element>-->
+<!--                </element-create-as-parent>-->
+<!--            </element>-->
+
+
+<!--            <element in="downtimes">-->
+<!--                <element in="downtimes">-->
+<!--                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))-->
+<!--                    </element-create>-->
+<!--                </element>-->
+<!--            </element>-->
+
+<!--            <element in="downtimes">-->
+<!--                <element-ignore in="downtimes">-->
+<!--                    <element in="DOWNTIME" if="not(preceding-sibling::DOWNTIME)">-->
+<!--                        <element-create>new_element('service_endpoints',../../service_endpoints/text())</element-create>-->
+<!--                    </element>-->
+<!--                </element-ignore>-->
+<!--            </element>-->
+
+
+<!--        </processors>-->
+
+<!--        <cache type="FileCache">-->
+<!--            <trigger type="DeltaTimeTrigger">-->
+<!--                <parameter name="minutes">7</parameter>-->
+<!--            </trigger>-->
+<!--            <trigger type="ViewNotifiedTrigger"/>-->
+<!--            <trigger type="ViewCreatedTrigger"/>-->
+
+<!--        </cache>-->
+
+<!--        <renderers>-->
+<!--            <renderer type="DefaultRenderer">-->
+<!--                <parameter name="contentType">text/xml</parameter>-->
+<!--            </renderer>-->
+<!--        </renderers>-->
+
+<!--    </view>-->
+
+
+<!--    <view name="ni4os.downtimes" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd"-->
+<!--          xmlns:str="http://exslt.org/strings">-->
+
+<!--        <connector type="HTTPConnector">-->
+<!--            <parameter name="url" eval="property('gocdb.ni4os.get_downtime')"/>-->
+<!--            <parameter name="certificate" eval="property('certificate.path')"/>-->
+<!--            <parameter name="passphrase" eval="property('certificate.password')"/>-->
+<!--        </connector>-->
+
+<!--        <processors>-->
+
+<!--            <element in="results" out="downtimes">-->
+<!--                <element-ignore/>-->
+<!--                <element-create>sort_by_string(../DOWNTIME,'@PRIMARY_KEY')</element-create>-->
+<!--            </element>-->
+
+<!--            <element in="downtimes">-->
+<!--                <element-create-as-parent out="downtimes" group-by="@PRIMARY_KEY" attributes="@*">-->
+<!--                    <element in="DOWNTIME">-->
+<!--                        <element-create>-->
+<!--                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'-->
+<!--                            ')))-->
+<!--                        </element-create>-->
+<!--                    </element>-->
+<!--                </element-create-as-parent>-->
+<!--            </element>-->
+
+
+<!--            <element in="downtimes">-->
+<!--                <element in="downtimes">-->
+<!--                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))-->
+<!--                    </element-create>-->
+<!--                </element>-->
+<!--            </element>-->
+
+<!--            <element in="downtimes">-->
+<!--                <element-ignore in="downtimes">-->
+<!--                    <element in="DOWNTIME" if="not(preceding-sibling::DOWNTIME)">-->
+<!--                        <element-create>new_element('service_endpoints',../../service_endpoints/text())</element-create>-->
+<!--                    </element>-->
+<!--                </element-ignore>-->
+<!--            </element>-->
+
+
+<!--        </processors>-->
+
+<!--        <cache type="FileCache">-->
+<!--            <trigger type="DeltaTimeTrigger">-->
+<!--                <parameter name="minutes">7</parameter>-->
+<!--            </trigger>-->
+<!--            <trigger type="ViewNotifiedTrigger"/>-->
+<!--            <trigger type="ViewCreatedTrigger"/>-->
+
+<!--        </cache>-->
+
+<!--        <renderers>-->
+<!--            <renderer type="DefaultRenderer">-->
+<!--                <parameter name="contentType">text/xml</parameter>-->
+<!--            </renderer>-->
+<!--        </renderers>-->
+
+<!--    </view>-->
+
+<!--    <view name="sdc.downtimes" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd"-->
+<!--          xmlns:str="http://exslt.org/strings">-->
+
+<!--        <connector type="HTTPConnector">-->
+<!--            <parameter name="url" eval="property('gocdb.sdc.get_downtime')"/>-->
+<!--            <parameter name="certificate" eval="property('certificate.path')"/>-->
+<!--            <parameter name="passphrase" eval="property('certificate.password')"/>-->
+<!--        </connector>-->
+
+<!--        <processors>-->
+
+<!--            <element in="results" out="downtimes">-->
+<!--                <element-ignore/>-->
+<!--                <element-create>sort_by_string(../DOWNTIME,'@PRIMARY_KEY')</element-create>-->
+<!--            </element>-->
+
+<!--            <element in="downtimes">-->
+<!--                <element-create-as-parent out="downtimes" group-by="@PRIMARY_KEY" attributes="@*">-->
+<!--                    <element in="DOWNTIME">-->
+<!--                        <element-create>-->
+<!--                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'-->
+<!--                            ')))-->
+<!--                        </element-create>-->
+<!--                    </element>-->
+<!--                </element-create-as-parent>-->
+<!--            </element>-->
+
+
+<!--            <element in="downtimes">-->
+<!--                <element in="downtimes">-->
+<!--                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))-->
+<!--                    </element-create>-->
+<!--                </element>-->
+<!--            </element>-->
+
+<!--            <element in="downtimes">-->
+<!--                <element-ignore in="downtimes">-->
+<!--                    <element in="DOWNTIME" if="not(preceding-sibling::DOWNTIME)">-->
+<!--                        <element-create>new_element('service_endpoints',../../service_endpoints/text())</element-create>-->
+<!--                    </element>-->
+<!--                </element-ignore>-->
+<!--            </element>-->
+
+
+<!--        </processors>-->
+
+<!--        <cache type="FileCache">-->
+<!--            <trigger type="DeltaTimeTrigger">-->
+<!--                <parameter name="minutes">8</parameter>-->
+<!--            </trigger>-->
+<!--            <trigger type="ViewNotifiedTrigger"/>-->
+<!--            <trigger type="ViewCreatedTrigger"/>-->
+
+<!--        </cache>-->
+
+<!--        <renderers>-->
+<!--            <renderer type="DefaultRenderer">-->
+<!--                <parameter name="contentType">text/xml</parameter>-->
+<!--            </renderer>-->
+<!--        </renderers>-->
+
+<!--    </view>-->
+
+<!--    <view name="training.downtimes" xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd"-->
+<!--          xmlns:str="http://exslt.org/strings">-->
+
+<!--        <connector type="HTTPConnector">-->
+<!--            <parameter name="url" eval="property('gocdb.training.get_downtime')"/>-->
+<!--            <parameter name="certificate" eval="property('certificate.path')"/>-->
+<!--            <parameter name="passphrase" eval="property('certificate.password')"/>-->
+<!--        </connector>-->
+
+<!--        <processors>-->
+
+<!--            <element in="results" out="downtimes">-->
+<!--                <element-ignore/>-->
+<!--                <element-create>sort_by_string(../DOWNTIME,'@PRIMARY_KEY')</element-create>-->
+<!--            </element>-->
+
+<!--            <element in="downtimes">-->
+<!--                <element-create-as-parent out="downtimes" group-by="@PRIMARY_KEY" attributes="@*">-->
+<!--                    <element in="DOWNTIME">-->
+<!--                        <element-create>-->
+<!--                            new_element('service_endpoint',new_text(concat(../HOSTNAME/text(),'::',../SERVICE_TYPE/text(),'-->
+<!--                            ')))-->
+<!--                        </element-create>-->
+<!--                    </element>-->
+<!--                </element-create-as-parent>-->
+<!--            </element>-->
+
+
+<!--            <element in="downtimes">-->
+<!--                <element in="downtimes">-->
+<!--                    <element-create>new_element('service_endpoints',str:concat(../DOWNTIME/service_endpoint))-->
+<!--                    </element-create>-->
+<!--                </element>-->
+<!--            </element>-->
+
+<!--            <element in="downtimes">-->
+<!--                <element-ignore in="downtimes">-->
+<!--                    <element in="DOWNTIME" if="not(preceding-sibling::DOWNTIME)">-->
+<!--                        <element-create>new_element('service_endpoints',../../service_endpoints/text())</element-create>-->
+<!--                    </element>-->
+<!--                </element-ignore>-->
+<!--            </element>-->
+
+
+<!--        </processors>-->
+
+<!--        <cache type="FileCache">-->
+<!--            <trigger type="DeltaTimeTrigger">-->
+<!--                <parameter name="minutes">8</parameter>-->
+<!--            </trigger>-->
+<!--            <trigger type="ViewNotifiedTrigger"/>-->
+<!--            <trigger type="ViewCreatedTrigger"/>-->
+
+<!--        </cache>-->
+
+<!--        <renderers>-->
+<!--            <renderer type="DefaultRenderer">-->
+<!--                <parameter name="contentType">text/xml</parameter>-->
+<!--            </renderer>-->
+<!--        </renderers>-->
+
+<!--    </view>-->
+
+<!--    <view name="downtimes">-->
+<!--        <argument name="tenant"/>-->
+<!--        <argument name="report"/>-->
+
+<!--        <connector type="XMLConnector" xmlns:l="http://software.in2p3.fr/lavoisier/application.xsd">-->
+<!--            <parameter name="content"-->
+<!--                       eval="view(choose(view('configuration')/l:views/l:view/@name=concat(lower-case($tenant),'.downtimes'),concat(lower-case($tenant),'.downtimes'),'egi.downtimes'))"/>-->
+<!--        </connector>-->
+
+<!--        <processors>-->
+
+<!--            <element in="downtimes"-->
+<!--                     if="view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/endpoint_group_type/text()='SITES'">-->
+<!--                <set variable="site_list">-->
+<!--                    view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/endpoint_group_list-->
+<!--                </set>-->
+<!--                <element-ignore in="DOWNTIME" if="not(HOSTED_BY/text()=$site_list/item/text())"/>-->
+<!--            </element>-->
+
+<!--            <element in="downtimes"-->
+<!--                     if="$tenant='egi' and view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/endpoint_group_type/text()='SERVICEGROUPS'">-->
+<!--                <set variable="service_list">-->
+<!--                    view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/service_list-->
+<!--                </set>-->
+<!--                <element-ignore in="DOWNTIME" if="not(contains(service_endpoints,$service_list/item/text()))"/>-->
+<!--            </element>-->
+
+<!--        </processors>-->
+
+<!--    </view>-->
 
     <view name="downtimes">
-        <argument name="tenant"/>
-        <argument name="report"/>
-
-        <connector type="XMLConnector" xmlns:l="http://software.in2p3.fr/lavoisier/application.xsd">
-            <parameter name="content"
-                       eval="view(choose(view('configuration')/l:views/l:view/@name=concat(lower-case($tenant),'.downtimes'),concat(lower-case($tenant),'.downtimes'),'egi.downtimes'))"/>
-        </connector>
-
-        <processors>
-
-            <element in="downtimes"
-                     if="view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/endpoint_group_type/text()='SITES'">
-                <set variable="site_list">
-                    view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/endpoint_group_list
-                </set>
-                <element-ignore in="DOWNTIME" if="not(HOSTED_BY/text()=$site_list/item/text())"/>
-            </element>
-
-            <element in="downtimes"
-                     if="$tenant='egi' and view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/endpoint_group_type/text()='SERVICEGROUPS'">
-                <set variable="service_list">
-                    view('tenants.reports')/tenants/tenant/report[@tenant=$tenant][@report=$report]/service_list
-                </set>
-                <element-ignore in="DOWNTIME" if="not(contains(service_endpoints,$service_list/item/text()))"/>
-            </element>
-
-        </processors>
-
-    </view>
-
-    <view name="downtimes-ng">
         <argument name="tenant"></argument>
         <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
         <variable name="url" eval="property('api.downtimes')"/>
@@ -433,6 +433,17 @@
             </parameter>
         </connector>
         <serializer type="JSONStreamSerializer"/>
+
+        <processors>
+            <element in="object" out="downtimes">
+                <elements-ignore path="data/endpoints">
+                    <element in="object" out="downtime">
+
+                    </element>
+                </elements-ignore>
+                <element-ignore/>
+            </element>
+        </processors>
     </view>
 
 
