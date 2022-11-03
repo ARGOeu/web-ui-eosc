@@ -26,9 +26,9 @@
                     <tbody>
                     <tr tpl:foreach="root/downtimes/downtime">
                         <td class="text-truncate" style="max-width:200px;">{{group/text()}}</td>
-                        <td class="text-truncate" style="max-width:200px;">{{hostname/text()}}</td>
-                        <td class="text-truncate" style="max-width:200px;">
-                            <span class="badge badge-light border-dark">{{service/text()}}</span>
+                        <td class="small text-truncate" style="max-width:200px;">{{hostname/text()}}</td>
+                        <td class="small" >
+                            <span class="badge badge-light border-dark text-truncate" style="max-width:200px;">{{service/text()}}</span>
                         </td>
 
                         <td class="text-nowrap"> {{start_time/text()}}</td>
