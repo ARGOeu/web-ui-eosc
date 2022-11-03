@@ -377,10 +377,12 @@
 
             <element in="root" if="$tenant='eosc'">
             <set variable="api.topology.endpoints" index="@ugly_name">uniq(view('api.topology.endpoints')/results/group,'@ugly_name')</set>
-                <element in="group">
+                <element in="group" if="not(@url)">
                     <attribute-create out="url">find($api.topology.endpoints,../@name)/@nice_name</attribute-create>
                 </element>
             </element>
+
+
 
             <element in="root">
                 <element in="group">

@@ -33,6 +33,7 @@
                     <element in="object" out="group">
                         <attribute-create out="ugly_name">../group/text()</attribute-create>
                         <attribute-create out="nice_name">../tags/info_groupname/text()</attribute-create>
+
                         <element-ignore/>
                     </element>
                 </element-ignore>
