@@ -19,7 +19,6 @@
                         <th>Service</th>
                         <th>Start (UTC)</th>
                         <th>End (UTC)</th>
-                        <th></th>
                     </tr>
                     </thead>
 
@@ -32,47 +31,47 @@
 
                         <td class="text-nowrap"> {{start_time/text()}}</td>
                         <td class="text-nowrap">{{end_time/text()}}</td>
-                        <td>
+
 
                             <!-- Button trigger modal -->
-                            <span class="showModal fa fa-search" data-toggle="modal" data-target="#{{@ID}}"></span>
+<!--                            <span class="showModal fa fa-search" data-toggle="modal" data-target="#{{@ID}}"></span>-->
 
                             <!-- Modal -->
-                            <div class="modal fade" id="{{@ID}}" tabindex="-1" role="dialog"
-                                 aria-labelledby="downtimesModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content ">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="downtimesModalLabel">{{@CLASSIFICATION}}
-                                                DOWNTIME : {{HOSTED_BY/text()}}</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">x</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body text-justify">
-                                            <div><p class="font-weight-bold">Start Date</p>
-                                                {{FORMATED_START_DATE/text()}}
-                                            </div>
-                                            <div><p class="font-weight-bold">End Date</p> {{FORMATED_END_DATE/text()}}
-                                            </div>
-                                            <div><p class="font-weight-bold">Description</p>
-                                                <pre>{{DESCRIPTION/text()}}</pre>
-                                            </div>
-                                            <div><p class="font-weight-bold">Affected Endpoints</p>
-                                                <pre>{{service_endpoints/text()}}</pre>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
-                                            </button>
+<!--                            <div class="modal fade" id="{{@ID}}" tabindex="-1" role="dialog"-->
+<!--                                 aria-labelledby="downtimesModalLabel" aria-hidden="true">-->
+<!--                                <div class="modal-dialog modal-lg" role="document">-->
+<!--                                    <div class="modal-content ">-->
+<!--                                        <div class="modal-header">-->
+<!--                                            <h5 class="modal-title" id="downtimesModalLabel">{{@CLASSIFICATION}}-->
+<!--                                                DOWNTIME : {{HOSTED_BY/text()}}</h5>-->
+<!--                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                                                <span aria-hidden="true">x</span>-->
+<!--                                            </button>-->
+<!--                                        </div>-->
+<!--                                        <div class="modal-body text-justify">-->
+<!--                                            <div><p class="font-weight-bold">Start Date</p>-->
+<!--                                                {{FORMATED_START_DATE/text()}}-->
+<!--                                            </div>-->
+<!--                                            <div><p class="font-weight-bold">End Date</p> {{FORMATED_END_DATE/text()}}-->
+<!--                                            </div>-->
+<!--                                            <div><p class="font-weight-bold">Description</p>-->
+<!--                                                <pre>{{DESCRIPTION/text()}}</pre>-->
+<!--                                            </div>-->
+<!--                                            <div><p class="font-weight-bold">Affected Endpoints</p>-->
+<!--                                                <pre>{{service_endpoints/text()}}</pre>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="modal-footer">-->
+<!--                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close-->
+<!--                                            </button>-->
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
 
-                        </td>
+
 
                     </tr>
 

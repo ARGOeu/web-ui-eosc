@@ -436,12 +436,12 @@
 
         <processors>
             <element in="object" out="downtimes">
-                <elements-ignore path="data/endpoints">
+                <elements-ignore path="data/object/endpoints">
                     <element in="object" out="downtime">
 
                     </element>
                 </elements-ignore>
-                <element-ignore/>
+            <element-ignore/>
             </element>
         </processors>
     </view>
