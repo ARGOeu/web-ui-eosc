@@ -66,11 +66,11 @@
 
                     <div class="card col-lg-12 col-md-8">
                         <div class="card-header">Status for {{root/@tenant}} tenant - {{root/@report}} Report</div>
-                        <div class="card-body" tpl:if="/root/group[count(status/@original_status)&gt;0]">
+                        <div class="card-body" tpl:if="/root/group[count(status/@original_status)&gt;0] or /root/group[count(status/@affected_by_threshold_rule)&gt;0] ">
                             <div class="row m-2">
                                 <i class="fa fa-exclamation-triangle m-1 text-primary"/> Some sites/groups/endpoints in this page are affected by applying custom thresholds (drilldown to the endpoints page for details) :
                                 <span class="m-1 badge bg-light text-secondary border border-dark" tpl:foreach="/root/group[status/@original_status]">{{@name}}</span>
-
+                                <span class="m-1 badge bg-light text-secondary border border-dark" tpl:foreach="/root/group[status/@affected_by_threshold_rule]">{{@name}}</span>
                             </div>
 
                             <div class="row border-bottom text-light"> </div>
@@ -105,8 +105,12 @@
 
 
                         <div class="card-body" tpl:if="count(/root/group)&gt;0">
-                            <div tpl:if="/root/@message" class="alert alert-primary" role="alert">{{/root/@message}} </div>
-
+<!--                            <div tpl:if="/root/@message" >-->
+<!--                                <div class="row">-->
+<!--                                    <i class="fa fa-exclamation-triangle m-1 text-primary"/> {{/root/@message}}-->
+<!--                                </div>-->
+<!--                                <div class="row border-bottom text-light"> </div>-->
+<!--                            </div>-->
 
                             <div class="row"      tpl:if="root/@tenant='egi' and root/@topology='SITES' and root/@entity1='_entity_'">
 
