@@ -105,12 +105,12 @@
 
 
                         <div class="card-body" tpl:if="count(/root/group)&gt;0">
-<!--                            <div tpl:if="/root/@message" >-->
-<!--                                <div class="row">-->
-<!--                                    <i class="fa fa-exclamation-triangle m-1 text-primary"/> {{/root/@message}}-->
-<!--                                </div>-->
-<!--                                <div class="row border-bottom text-light"> </div>-->
-<!--                            </div>-->
+                            <div tpl:if="/root/@message" >
+                                <div class="row">
+                                    <i class="fa fa-exclamation-triangle m-1 text-primary"/> {{/root/@message}}
+                                </div>
+                                <div class="row border-bottom text-light"> </div>
+                            </div>
 
                             <div class="row"      tpl:if="root/@tenant='egi' and root/@topology='SITES' and root/@entity1='_entity_'">
 
