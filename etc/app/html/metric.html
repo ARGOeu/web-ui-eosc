@@ -68,8 +68,11 @@
                                 <p><label class="m-1">Metric : </label> {{root/host/metric/@name}}</p>
                                 <p><label class="m-1">Timestamp : </label> {{root/host/metric/status/@timestamp}}</p>
                                 <p tpl:if="root/host/info/URL"><label class="m-1">Endpoint URL : </label><a href="{{root/host/info/URL}}">{{root/host/info/URL}}</a></p>
-                                <code>{{root/host/metric/status/summary/text()}}</code>
-                                <code>{{root/host/metric/status/message/text()}}</code>
+                                <pre style="color: #861717;"><code id="summary" style="white-space: pre-line;">{{root/host/metric/status/summary/text()}}</code></pre><br/>
+                                <pre style="color: #861717;white-space: pre-line;"><code id="message" style="white-space: pre-line;">{{root/host/metric/status/message/text()}}</code></pre>
+
+
+
                             </div>
 
                         </div>
@@ -139,6 +142,16 @@
 <script src="/resource/app/html/adminlte/dist/js/adminlte.js"></script>
 <script src="/resource/app/html/adminlte/plugins/select2/select2.full.min.js?v={$app.version}"></script>
 <script src="/resource/app/js/select.js?v={$app.version}"></script>
+
+<script>
+
+
+        $( "code" ).each(function( index ) {
+            $(this).text($(this).text().replace(/\\n/g,'\n'));
+        });
+
+
+</script>
 
 </body>
 </html>
