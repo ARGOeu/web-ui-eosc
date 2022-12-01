@@ -168,7 +168,7 @@
                             </a>
                         </li>
 
-                        <li class="nav-item"  tpl:if="/root/@tenant='egi' and /root/@report='Critical'">
+                        <li class="nav-item"  tpl:if="/root/@tenant='egi' and /root/@report='Critical' and /root/@view!='console'">
 
                             <a href="/recomputation" class="nav-link">
                                 <i class="fa  fa-retweet nav-icon"></i>
@@ -181,7 +181,7 @@
                 <li class="nav-header" tpl:if="/root/@tenant='egi'">
                     <h5>ADMIN</h5>
                 </li>
-                <li class="nav-item" tpl:if="/root/@tenant='egi' and /root/@report='Critical'">
+                <li class="nav-item" tpl:if="/root/@tenant='egi' and /root/@report='Critical' and /root/@view!='console'">
                     <a href="/recomputationList" class="nav-link">
                         <i class="fa fa fa-lock nav-icon"></i>
                         <p>Recomputation List</p>
