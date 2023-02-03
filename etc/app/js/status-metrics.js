@@ -17,7 +17,6 @@ var endpoint=tabDetails[3];
 var timestamp=tabDetails[4];
 var status=tabDetails[5];
 
-//$("#content_"+id).removeClass('d-none');
 
 
   var element = document.getElementById("content_"+id);

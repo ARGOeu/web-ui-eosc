@@ -448,12 +448,17 @@
         <argument name="tenant">egi</argument>
         <argument name="endpoint">SITES</argument>
         <argument name="metric_name">_entity_</argument>
+        <argument name="service">_service_</argument>
         <argument name="exec_time"/>
         <argument name="status"/>
 
 
         <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
-        <variable name="url" eval="choose($status!='MISSING',concat(property('api.metrics'),'/',$endpoint,'/',$metric_name,'?exec_time=',$exec_time),'http://localhost:8080/lavoisier/missing?accept=json')"/>
+        <variable name="url" eval="choose($status!='MISSING',
+        choose($service!='_service_',
+        concat(property('api.metrics'),'/',$endpoint,'/',$metric_name,'?exec_time=',$exec_time,'&amp;service=',$service),
+        concat(property('api.metrics'),'/',$endpoint,'/',$metric_name,'?exec_time=',$exec_time)),
+        'http://localhost:8080/lavoisier/missing?accept=json')"/>
 
         <connector type="HTTPConnector">
             <parameter name="url" eval="$url"/>
@@ -467,6 +472,7 @@
         <processors>
 
             <element in="object" out="root">
+                <attribute-create out="url">$url</attribute-create>
                 <elements-ignore path="root">
                     <element in="object" out="host">
                         <attribute-create out="name">../Name/text()</attribute-create>
