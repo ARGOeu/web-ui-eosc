@@ -9,7 +9,7 @@
 
 
     <view name="downtimes">
-        <argument name="tenant"></argument>
+        <argument name="tenant">ni4osnb</argument>
         <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
         <variable name="url" eval="property('api.downtimes')"/>
 
