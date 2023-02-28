@@ -170,7 +170,6 @@
                 <attribute-create out="tenant">$tenant</attribute-create>
                 <attribute-create out="details">'level0'</attribute-create>
                 <attribute-create out="view">'dashboard'</attribute-create>
-
                 <element-create>view('tenants.reports')/tenants/tenant[@name=upper-case($tenant)]/report</element-create>
             </element>
 
