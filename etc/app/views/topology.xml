@@ -7,7 +7,7 @@
     -->
 
     <view name="api.topology.endpoints">
-        <argument name="tenant">eosc</argument>
+        <variable name="tenant">eosc</variable>
 
         <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
         <variable name="url" eval="property('api.topology.endpoints')"/>

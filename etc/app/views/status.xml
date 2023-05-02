@@ -63,17 +63,224 @@
         </processors>
     </view>
 
+    <view name="report-status-eosc"  xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd"
+          xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings"
+          xmlns:e="http://software.in2p3.fr/lavoisier/entries.xsd">
+
+        <variable name="tenant">eosc</variable>
+        <variable name="report">Default</variable>
+        <variable name="topology">SERVICEGROUPS</variable>
+        <variable name="entity1">_entity_</variable>
+        <variable name="entity2">_entity_</variable>
+        <variable name="entity3">_entity_</variable>
+        <variable name="entity4">_entity_</variable>
+
+        <variable name="nbdays">3</variable>
+        <variable name="site">_site_</variable>
+
+        <variable name="start_date">_start_</variable>
+        <variable name="end_date">_end_</variable>
+
+
+        <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
+        <variable name="start_time"
+                  eval="choose($start_date='_start_',concat(str:replace(substring(date:add(function:date-UTC(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z'),concat($start_date,'T00:00:00Z'))"/>
+
+        <variable name="end_time"
+                  eval="choose($end_date='_end_' or( date:seconds(function:date-UTC()) &lt;= date:seconds($end_date)) ,concat(str:replace(substring(function:date-UTC(),0,20),' ','T'),'Z'),concat($end_date,'T23:59:59Z'))"/>
+
+
+        <variable name="url"   eval="function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,$start_time,$end_time)"/>
+
+
+        <connector type="HTTPConnector">
+            <parameter name="url" eval="$url"/>
+            <parameter name="force-redirect">true</parameter>
+            <parameter name="header">
+                <entry key="x-api-key" eval="$api-key"/>
+                <entry key="Accept">application/json</entry>
+            </parameter>
+            <fallback eval="new_element('root',new_attribute('exception','empty dataset for status report')|new_attribute('tenant',$tenant)|new_attribute('report',$report)|new_attribute('topology',$topology))">
+                <exception type="org.xml.sax.SAXException"/>
+                <exception type="java.io.IOException"/>
+            </fallback>
+        </connector>
+
+        <serializer type="JSONStreamSerializer"/>
+
+        <processors>
+
+        <element>
+            <attribute-create out="urlApi">$url</attribute-create>
+        </element>
+
+
+        <element in="object" out="root" if="groups/object/statuses" >
+            <element-ignore in="groups">
+                <element in="object" out="group">
+                    <attribute from-element="true" if="name()!='statuses'"/>
+                    <element-ignore in="statuses">
+                        <element in="object" out="status">
+                            <attribute from-element="true"/>
+                            <element-ignore/>
+                        </element>
+                    </element-ignore>
+                    <element-ignore/>
+                </element>
+            </element-ignore>
+        </element>
+
+
+
+            <elements path="root">
+                <attribute-create out="count">count(../group/status)</attribute-create>
+
+                <element-ignore in="group"/>
+                <element-create>
+                    sort_by_string(../group,'@name')
+                </element-create>
+            </elements>
+
+            <elements path="root">
+                <element-create-as-parent out="group" attributes="@*" group-by="@name">
+                    <element in="group"/>
+                </element-create-as-parent>
+            </elements>
+
+            <elements path="root/group">
+                <element-ignore in="group">
+                    <element/>
+                </element-ignore>
+            </elements>
+
+            <elements path="root/group">
+                <element-ignore in="status"/>
+                <element-create>sort_by_string(../status,'@timestamp')</element-create>
+            </elements>
+
+
+            <element in="root">
+                <attribute-create out="tenant">$tenant</attribute-create>
+                <attribute-create out="report">$report</attribute-create>
+                <attribute-create out="topology">$topology</attribute-create>
+                <attribute-create out="url">$url</attribute-create>
+                <attribute-create out="view">'report-status'</attribute-create>
+                <attribute-create out="link">
+                    function:buildStatusLink($report,$topology,str:replace($entity1,'+','%252B'),str:replace($entity2,'+','%252B'),str:replace($entity3,'+','%252B'),$entity4,$start_time,$end_time)
+                </attribute-create>
+
+
+                <attribute-create out="entity1">str:replace($entity1,'+','%252B')</attribute-create>
+                <attribute-create out="entity2">str:replace($entity2,'+','%252B')</attribute-create>
+                <attribute-create out="entity3">str:replace($entity3,'+','%252B')</attribute-create>
+                <attribute-create out="end_time">$end_time</attribute-create>
+
+
+                <attribute-create out="start_date" if="$start_date!='_start_'">$start_date</attribute-create>
+                <attribute-create out="end_date" if="$end_date!='_end_'">$end_date</attribute-create>
+
+                <attribute-create out="start_date_0" if="$start_date!='_start_'">
+                    substring(date:add($start_date,concat('-P',1,'D')),0,11)
+                </attribute-create>
+                <attribute-create out="end_date_0" if="$end_date!='_end_'">
+                    substring(date:add($end_date,concat('-P',1,'D')),0,11)
+                </attribute-create>
+
+                <attribute-create out="start_date_0" if="$start_date='_start_'">
+                    substring(date:add($start_time,concat('-P',1,'D')),0,11)
+                </attribute-create>
+                <attribute-create out="end_date_0" if="$end_date='_end_'">
+                    substring(date:add($end_time,concat('-P',1,'D')),0,11)
+                </attribute-create>
+
+
+                <attribute-create out="start_date_1" if="$start_date!='_start_'">
+                    substring(date:add($start_date,concat('P',1,'D')),0,11)
+                </attribute-create>
+                <attribute-create out="end_date_1"
+                                  if="$end_date!='_end_' and date:seconds(date:difference(function:date-UTC(),date:add($end_date,concat('P',1,'D'))))&lt;=0">
+                    substring(date:add($end_date,concat('P',1,'D')),0,11)
+                </attribute-create>
+
+                <attribute-create out="start_date_1" if="$start_date='_start_'">
+                    substring(date:add($start_time,concat('P',1,'D')),0,11)
+                </attribute-create>
+                <attribute-create out="end_date_1"
+                                  if="$end_date='_end_' and date:seconds(date:difference(function:date-UTC(),date:add($end_time,concat('P',1,'D'))))&lt;0">
+                    substring(date:add($end_time,concat('P',1,'D')),0,11)
+                </attribute-create>
+
+
+                <element-create>view('tenants.reports')/tenants/tenant/report</element-create>
+
+
+            </element>
+
+
+            <element in="root">
+                <element in="group">
+                    <element-ignore in="status" if="preceding-sibling::status/@value=current()/@value and following-sibling::status"/>
+                </element>
+            </element>
+
+            <element in="root">
+                <set variable="StateColor" index="@key">uniq(view('StateColor')/e:entries/e:entry,'@key')</set>
+
+                <element in="group">
+                    <attribute in="name">str:replace(.,'+','%252B')</attribute>
+                    <element in="status">
+                        <attribute-create out="color">find($StateColor,current()/../@value)/text()</attribute-create>
+
+                        <attribute-create out="end_time" if="current()/../following-sibling::status[1]">
+                            current()/../following-sibling::status[1]/@timestamp
+                        </attribute-create>
+
+                        <attribute-create out="end_time" if="not(current()/../following-sibling::status[1])">
+                            choose(date:seconds(date:difference(date:add(../@timestamp,concat('P',1,'D')),function:date-UTC())) &gt;0 , ../@timestamp, date:add(../@timestamp,concat('PT',10,'M')))
+                        </attribute-create>
+
+                    </element>
+                </element>
+            </element>
+
+            <element in="root" if="$tenant='eosc'">
+                <set variable="api.topology.endpoints" index="@ugly_name">uniq(view('api.topology.endpoints')/results/group,'@ugly_name')</set>
+                <element in="group" if="not(@url)">
+                    <attribute-create out="url">find($api.topology.endpoints,../@name)/@nice_name</attribute-create>
+                </element>
+            </element>
+
+        </processors>
+
+        <cache type="FileCache">
+            <trigger type="DeltaTimeTrigger">
+                <parameter name="minutes">4</parameter>
+            </trigger>
+            <trigger type="ViewNotifiedTrigger"/>
+            <trigger type="ViewCreatedTrigger"/>
+        </cache>
+
+        <renderers>
+            <renderer type="HTMLRenderer">
+                <parameter name="template">app/html/status.html</parameter>
+            </renderer>
+        </renderers>
+
+    </view>
 
     <view name="report-status-eudat" authenticators="eudat">
         <connector type="XMLConnector">
             <parameter name="content" eval="view('report-status',arguments())"/>
         </connector>
-        <renderers>
 
+
+        <renderers>
             <renderer type="HTMLRenderer">
                 <parameter name="template">app/html/status.html</parameter>
             </renderer>
         </renderers>
+
+
     </view>
 
     <view name="report-status" xmlns:function="http://software.in2p3.fr/lavoisier/functions.xsd"
