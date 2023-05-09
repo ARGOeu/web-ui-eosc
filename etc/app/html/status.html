@@ -78,11 +78,15 @@
                         </div>
 
                         <div style="display: none"  id="local_groups">
-                            <div tpl:foreach="/root/group[@url and @url!='']/status" class="url">
-                                {{ancestor::group/@url}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@actual_data}},{{@threshold_rule_applied}},{{@original_status}},{{@color}}
-                            </div>
-                            <div tpl:foreach="/root/group[not(@url) or @url='']/status" class="names">
-                                {{ancestor::group/@name}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@actual_data}},{{@threshold_rule_applied}},{{@original_status}},{{@color}}
+<!--                            <div tpl:foreach="/root/group[@url and @url!='']/status" class="url">-->
+<!--                                {{ancestor::group/@url}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@actual_data}},{{@threshold_rule_applied}},{{@original_status}},{{@color}}-->
+<!--                            </div>-->
+<!--                            <div tpl:foreach="/root/group[not(@url) or @url='']/status" class="names">-->
+<!--                                {{ancestor::group/@name}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@actual_data}},{{@threshold_rule_applied}},{{@original_status}},{{@color}}-->
+<!--                            </div>-->
+
+                            <div tpl:foreach="/root/group/status" class="names">
+                                {{ancestor::group/@key}},{{@value}}_{{position()}},{{@timestamp}},{{@end_time}},{{@actual_data}},{{@threshold_rule_applied}},{{@original_status}},{{@color}}
                             </div>
                         </div>
 
@@ -91,16 +95,20 @@
                             <div tpl:foreach="/root/group/status">
                                 /{{ancestor::root/@tenant}}/report-status/{{ancestor::root/@link}}/{{ancestor::group/@name}}/{{@timestamp}}/{{@value}}/{{ancestor::root/@entity2}}
                             </div>
+
                         </div>
+
                         <div style="display: none" tpl:else="/root/@start_date and /root/@end_date" id="local_links">
                             <div tpl:foreach="/root/group/status">
                                 /{{ancestor::root/@tenant}}/report-status/{{ancestor::root/@link}}/{{ancestor::group/@name}}?start_date={{/root/@start_date}}&amp;end_date={{/root/@end_date}}
                             </div>
+
                         </div>
                         <div style="display: none" tpl:else="" id="local_links">
                             <div tpl:foreach="/root/group/status">
                                 /{{ancestor::root/@tenant}}/report-status/{{ancestor::root/@link}}/{{ancestor::group/@name}}
                             </div>
+
                         </div>
 
 

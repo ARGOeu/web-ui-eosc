@@ -307,16 +307,12 @@
         <variable name="api-key" eval="view('tenants')/tenants/tenant[name/text()=upper-case($tenant)]/api_key/text()"/>
         <variable name="start_time"
                   eval="choose($start_date='_start_',concat(str:replace(substring(date:add(function:date-UTC(),concat('-P',$nbdays,'D')),0,20),' ','T'),'Z'),concat($start_date,'T00:00:00Z'))"/>
-    <!--
-        <variable name="end_time"
-                  eval="choose($end_date='_end_',concat(str:replace(substring(function:date-UTC(),0,20),' ','T'),'Z'),concat($end_date,'T23:59:59Z'))"/>-->
+
         <variable name="end_time"
                   eval="choose($end_date='_end_' or( date:seconds(function:date-UTC()) &lt;= date:seconds($end_date)) ,concat(str:replace(substring(function:date-UTC(),0,20),' ','T'),'Z'),concat($end_date,'T23:59:59Z'))"/>
 
-        <variable name="diff"
-                  eval="choose($entity3!='_entity_',date:seconds(date:difference($start_time,$end_time)),0)"/>
-<!--        <variable name="url"-->
-<!--                  eval="choose($diff &lt;= 4320000,function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,$start_time,$end_time),function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,concat(str:replace(substring(date:add(function:date-UTC(),'-P3D'),0,20),' ','T'),'Z'),$end_time))"/>-->
+
+
         <variable name="url"
                   eval="function:buildApiStatusUrl($report,$topology,$entity1,$entity2,$entity3,$entity4,$start_time,$end_time)"/>
 
@@ -468,8 +464,7 @@
                 <attribute-create out="entity3">str:replace($entity3,'+','%252B')</attribute-create>
                 <attribute-create out="end_time">$end_time</attribute-create>
                 <attribute-create out="filter">$filter</attribute-create>
-<!--                <attribute-create out="message" if="$diff &gt; 4320000">'Your query generates too much data. We have limited the results to the end date day (when available). Please limit the period to 5 days'-->
-<!--                </attribute-create>-->
+
                 <attribute-create out="start_date" if="$start_date!='_start_'">$start_date</attribute-create>
                 <attribute-create out="end_date" if="$end_date!='_end_'">$end_date</attribute-create>
 
@@ -592,12 +587,21 @@
             </element>
 
 
-
             <element in="root">
                 <element in="group">
                     <attribute-ignore in="url" if=".=''"/>
                 </element>
             </element>
+
+            <element in="root">
+                <element in="group">
+                    <attribute-create out="key">choose(../@url,concat(../@url,'-',../@name),../@name)</attribute-create>
+                    <attribute-ignore in="url"/>
+                </element>
+
+            </element>
+
+
 
 
 
