@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:tpl="http://software.in2p3.fr/lavoisier/template.xsd">
+
+<head tpl:include="/resource/app/html/header.html">
+  <!-- Cookie #1 -->
+  <meta http-equiv="set-cookie" content="Value=_ga, Site=.grafana.net/; SameSite=None; Secure;"/>
+  <!-- Cookie #2 -->
+  <meta http-equiv="set-cookie" content="Value=_gid, Site=.grafana.net/; SameSite=None; Secure;"/>
+  <!-- Other things like title etc -->
+</head>
+
+<body class="sidebar-mini layout-fixed layout-navbar-fixed" style="height: auto;" cz-shortcut-listen="true">
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav tpl:include="/resource/app/html/navbar.html"></nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside tpl:include="/resource/app/html/sidebar.html"></aside>
+  <!-- /sidebar -->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-9">
+
+          </div><!-- /.col -->
+          <div class="col-sm-3">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item active">EOSC CORE dashboard</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="container-fluid" >
+        <iframe src="https://timeseriesdb.devel.argo.grnet.gr:3000/d/ef673db3-c773-4211-8ff1-ffe1dbd4e9b8/performance?orgId=1&amp;from=1686014753199&amp;to=1686057953199"></iframe>
+      </div>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Main Footer -->
+
+    <footer tpl:include="/resource/app/html/footer.html"></footer>
+
+  </div>
+</div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+
+  <!-- jQuery -->
+  <script src="/resource/app/html/adminlte/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="/resource/app/html/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- adminlte -->
+  <script src="/resource/app/html/adminlte/dist/js/adminlte.js"></script>
+  <script src="/resource/app/html/adminlte/plugins/select2/select2.full.min.js?v={$app.version}"></script>
+  <script src="/resource/app/js/select.js?v={$app.version}"></script>
+</body>
+</html>
