@@ -395,6 +395,7 @@
 
     <view name="sla_reports"  xmlns:date="http://exslt.org/dates-and-times" xmlns:str="http://exslt.org/strings">
 
+        <argument name="api">_false_</argument>
         <argument name="report">SLA</argument>
         <argument name="tenant">egi</argument>
         <argument name="topology">SERVICEGROUPS</argument>
@@ -406,6 +407,12 @@
         <connector type="XMLConnector">
             <parameter name="content" eval="view('report-ar-dates',arguments())"></parameter>
         </connector>
+
+        <processors>
+            <element in="root" if="$api!='_false_'">
+                <attribute-ignore/>
+            </element>
+        </processors>
     </view>
 
 
