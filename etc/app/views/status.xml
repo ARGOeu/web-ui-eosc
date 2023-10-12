@@ -574,7 +574,6 @@
                         <attribute-create out="end_time" if="not(current()/../following-sibling::status[1])">
                            choose(date:seconds(date:difference(date:add(../@timestamp,concat('P',1,'D')),function:date-UTC())) &gt;0 , ../@timestamp, date:add(../@timestamp,concat('PT',10,'M')))
                         </attribute-create>
-
                     </element>
                 </element>
             </element>
@@ -595,13 +594,25 @@
 
             <element in="root">
                 <element in="group">
-                    <attribute-create out="key">choose(../@url,concat(../@url,'-',../@name),../@name)</attribute-create>
+                    <attribute-create out="key">choose(../@url and $tenant='eosc',concat(../@url,'-',../@name),../@name)</attribute-create>
                     <attribute-ignore in="url"/>
                 </element>
-
             </element>
 
 
+            <element in="root">
+                <element in="group">
+                        <element-ignore in="status" if="@timestamp=@end_time"/>
+                </element>
+            </element>
+
+            <element in="root">
+                <element in="group">
+                    <element in="status">
+                        <attribute-ignore in="actual_data" if="string-length(.)&gt;1280"/>
+                    </element>
+                </element>
+            </element>
 
 
 
