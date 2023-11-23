@@ -101,20 +101,41 @@
                             <tbody tpl:if="group[1]/@type!='endpoint' and group[1]/@type!='service'">
                             <tr tpl:foreach="group">
                                 <td tpl:if="@type='PROJECT'"><a
-                                        href="/{/root/@tenant}/report-ar/{/root/@report}/SERVICEGROUPS?filter={@name}" class="urlenc">{{@name}}</a>
+                                        href="/{/root/@tenant}/report-ar/{/root/@report}/SERVICEGROUPS?filter={@name}" class="urlenc">
+                                  <span tpl:if="@fancy_name">
+                                      {{@fancy_name}}
+                                  </span>
+                                    <span tpl:else="">{{@name}}</span>
+                                </a>
                                 </td>
                                 <td tpl:else="@type='NGI'"><a
-                                        href="/{/root/@tenant}/report-ar/{/root/@report}/SITES?filter={@name}" class="urlenc">{{@name}}</a>
+                                        href="/{/root/@tenant}/report-ar/{/root/@report}/SITES?filter={@name}" class="urlenc">
+                                    <span tpl:if="@fancy_name">
+                                      {{@fancy_name}}
+                                  </span>
+                                    <span tpl:else="">{{@name}}</span>
+                                </a>
                                 </td>
                                 <td tpl:else="@type='SITES'"><a
-                                        href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{@type}/{@name}/details" class="urlenc">{{@name}}</a>
+                                        href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{@type}/{@name}/details" class="urlenc">
+                                    <span tpl:if="@fancy_name">
+                                      {{@fancy_name}}
+                                  </span>
+                                    <span tpl:else="">{{@name}}</span>
+                                </a>
                                 </td>
                                 <td tpl:else="@type='SERVICEGROUPS'"><a
-                                        href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{@type}/{@name}/details" class="urlenc">{{@name}}</a>
+                                        href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{@type}/{@name}/details" class="urlenc"> <span tpl:if="@fancy_name">
+                                      {{@fancy_name}}
+                                  </span>
+                                    <span tpl:else="">{{@name}}</span></a>
                                 </td>
 
                                 <td tpl:else="@type='service'"><a
-                                        href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}/{@name}/endpoints" class="urlenc">{{@name}}</a>
+                                        href="/{/root/@tenant}/report-ar-group-details/{/root/@report}/{/root/@topology}/{/root/@group}/{@name}/endpoints" class="urlenc"> <span tpl:if="@fancy_name">
+                                      {{@fancy_name}}
+                                  </span>
+                                    <span tpl:else="">{{@name}}</span></a>
                                 </td>
 
                                 <td tpl:if="$pdf!= 'pdf'" class="text-right">

@@ -219,12 +219,15 @@
 
             <element in="root">
 
+                <set variable="api.topology.endpoints" index="@ugly_name">uniq(view('api.topology.endpoints')/results/group,'@ugly_name')</set>
+
                 <attribute-create out="level1">../report[@tenant=../@tenant][@report=../@report]/@thresholdAv
                 </attribute-create>
                 <attribute-create out="level2">../report[@tenant=../@tenant][@report=../@report]/@thresholdRe
                 </attribute-create>
 
                 <element in="group">
+                    <attribute-create out="fancy_name" if="find($api.topology.endpoints,../@name)/@nice_name">find($api.topology.endpoints,../@name)/@nice_name</attribute-create>
                     <attribute in="name">str:replace(.,'+','%252B')</attribute>
                     <element in="results">
                         <attribute if="name()!='timestamp'">round(. * 100 ) div 100</attribute>
