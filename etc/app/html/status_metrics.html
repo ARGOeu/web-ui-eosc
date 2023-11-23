@@ -42,14 +42,11 @@
                     <div class="title" ><h4><span class="badge badge-primary m-1 p-1">Select your metric</span></h4> </div><hr/>
 
                     <div class="input-group m-1">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" ><i class="m-1 fas fa-cog"></i></span>
-                        </div>
-                        <select id="metric" class="form-control">
+                        <button class="btn btn-outline-secondary" type="button"  aria-expanded="false"><i class="m-1 fas fa-cog"></i></button>
+                        <select id="metric" class="select2-class" style="width: 300px" >
                             <option>--Select a metric--</option>
                             <option tpl:foreach="/root/e:entries/e:entry" value="/{/root/@tenant}/{/root/@report}/metrics/{text()}">{{text()}}</option>
                         </select>
-
                     </div>
                 </div>
 

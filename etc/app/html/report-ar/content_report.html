@@ -36,9 +36,10 @@
                 <div tpl:if="$pdf!= 'pdf'" class="card-body">
                     <div class="row" tpl:if="@tenant='egi' and group[1]/@type='SITES'">
 
-                        <div class="m-2" tpl:if="@filter='_filter_' or not(@filter)">
+                        <div class="input_group m-2" tpl:if="@filter='_filter_' or not(@filter)">
+                            <button class="btn btn-outline-secondary" type="button"  aria-expanded="false"><i class="m-1 fas fa-filter"></i></button>
 
-                            <select id="filter_select" tpl:foreach="filter">
+                            <select id="filter_select" class="select2-class" style="width: 300px" tpl:foreach="filter">
                                 <option>--Filter entries --</option>
                                 <optgroup label="Scopes">
                                     <option tpl:foreach="scope">{{text()}}</option>
@@ -47,8 +48,10 @@
                                     <option tpl:foreach="ngi">{{text()}}</option>
                                 </optgroup>
                             </select>
-
                         </div>
+
+
+
                         <div class="m-2" tpl:else="">
 
                             <em>Filter : </em><span class="badge badge-primary">{{@filter}}</span><a
