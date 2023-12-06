@@ -406,6 +406,7 @@
         <argument name="start_date"></argument>
         <argument name="end_date"></argument>
         <argument name="level">0</argument>
+        <argument name="group">_group_</argument>
 
         <connector type="XMLConnector">
             <parameter name="content" eval="view('report-ar-dates',arguments())"></parameter>
@@ -415,6 +416,11 @@
             <element in="root" if="$api!='_false_'">
                 <attribute-ignore/>
             </element>
+
+            <element in="root" if="$group!='_group_'">
+                <element-ignore in="group" if="@name!=$group"/>
+            </element>
+
         </processors>
     </view>
 
