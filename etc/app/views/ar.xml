@@ -413,8 +413,9 @@
         </connector>
 
         <processors>
-            <element in="root" if="$api!='_false_'">
+            <element in="root" if="$api!='_false_'" out="results">
                 <attribute-ignore/>
+                <element-ignore if="name()!='group'"/>
             </element>
 
             <element in="root" if="$group!='_group_'">
