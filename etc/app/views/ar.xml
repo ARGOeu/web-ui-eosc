@@ -418,7 +418,7 @@
                 <element-ignore if="name()!='group'"/>
             </element>
 
-            <element in="root" if="$group!='_group_'">
+            <element in="results" if="$group!='_group_'">
                 <element-ignore in="group" if="@name!=$group"/>
             </element>
 
