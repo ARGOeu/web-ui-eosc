@@ -31,7 +31,10 @@
           <div class="col-sm-3">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/">Home</a></li>
-              <li class="breadcrumb-item active">EOSC CORE dashboard</li>
+
+              <li tpl:if="/root/@tenant='eosccore'" class="breadcrumb-item active">EOSC CORE dashboard</li>
+              <li tpl:if="/root/@tenant='eudat'" class="breadcrumb-item active">EUDAT dashboard</li>
+
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -42,7 +45,8 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid" >
-        <iframe src="https://timeseriesdb.devel.argo.grnet.gr:3000/d/ef673db3-c773-4211-8ff1-ffe1dbd4e9b8/performance?orgId=1&amp;theme=light&amp;kiosk" width="98%" height="100%" style="margin:10px;padding:4px;border:none"></iframe>
+        <iframe tpl:if="/root/@tenant='eosccore'" src="https://timeseriesdb.devel.argo.grnet.gr:3000/d/ef673db3-c773-4211-8ff1-ffe1dbd4e9b8/performance?orgId=1&amp;theme=light&amp;kiosk" width="98%" height="100%" style="margin:10px;padding:4px;border:none"></iframe>
+        <iframe tpl:if="/root/@tenant='eudat'" src="https://timeseriesdb.devel.argo.grnet.gr:3000/d/f97887b4-f56d-4d55-b9cd-5d5a89d85278/eudat?orgId=1&var-group=All&var-service=All;theme=light&amp;kiosk" width="98%" height="100%" style="margin:10px;padding:4px;border:none"></iframe>
 
       </div>
       <!-- /.content -->
