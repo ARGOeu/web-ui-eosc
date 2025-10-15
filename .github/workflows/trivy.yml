@@ -4,7 +4,6 @@
 # documentation.
 
 name: trivy
-
 on:
   push:
     branches: [ "devel" ]
