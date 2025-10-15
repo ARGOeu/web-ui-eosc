@@ -69,10 +69,6 @@ enabled=1
     eudat.oidc.userInfo=
 ```
 
-
-
-
-
 ## Links and further reading
 
 * http://software.in2p3.fr/lavoisier/
